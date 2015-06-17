@@ -1,3 +1,11 @@
+Env config params
+    MONGOLAB_URI - mongodb://tmol:iquest1234@ds034878.mongolab.com:34878/carate
+    NODE_ENV - production
+
+Run:
+    grunt debug
+    grunt
+
 Yo generators for Mean
     yo meanjs:crud-module 
     yo meanjs:angular-controller {{name}}
