@@ -1,0 +1,12 @@
+Yo generators for Mean
+    yo meanjs:crud-module 
+    yo meanjs:angular-controller {{name}}
+    yo meanjs:angular-view {{name}}
+    
+Git - commit changes from command line
+    git add -A
+    git commit -m "Comment"
+    git push {{remot name}} master
+    
+Git - get changes
+    git pull {{remote name}}
