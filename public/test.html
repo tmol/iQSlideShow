@@ -1,24 +1,77 @@
-
-<!DOCTYPE html>
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
-
-<head>
-	<title>iQSlideShow - Development Environment</title>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"><head><style type="text/css">.ng-animate.item:not(.left):not(.right){-webkit-transition:0s ease-in-out left;transition:0s ease-in-out left}</style><style type="text/css">@charset "UTF-8";[ng\:cloak],[ng-cloak],[data-ng-cloak],[x-ng-cloak],.ng-cloak,.x-ng-cloak,.ng-hide:not(.ng-hide-animate){display:none !important;}ng\:form{display:block;}.ng-animate-shim{visibility:hidden;}.ng-anchor{position:absolute;}</style>
+	<title>iQSlideShow</title>
 
 	<!--Application CSS Files-->
-	<link rel="stylesheet" href="lib/bootstrap/dist/css/bootstrap.css"><link rel="stylesheet" href="lib/bootstrap/dist/css/bootstrap-theme.css">
-    <script src="lib/bootstrap/dist/js/bootstrap.js"></script>
-    
-
-
-	<!-- HTML5 Shim -->
-	<!--[if lt IE 9]>
-		<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
-	<![endif]-->
+	<link rel="stylesheet" href="lib/bootstrap/dist/css/bootstrap.min.css"><link rel="stylesheet" href="lib/bootstrap/dist/css/bootstrap-theme.min.css"><link rel="stylesheet" href="modules/core/css/core.css"><link rel="stylesheet" href="modules/users/css/users.css">
 </head>
 
-<body >
-	<nav class="navbar navbar-default">
+<body class="">
+  
+
+<link href="lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script src="lib/bootstrap/dist//js/bootstrap.min.js"></script>
+
+
+
+	<!-- ngInclude: '/modules/core/views/header.client.view.html' --><header class="navbar navbar-fixed-top navbar-inverse ng-scope"><div class="container ng-scope" data-ng-controller="HeaderController">
+	<div class="navbar-header">
+		<button class="navbar-toggle" type="button" data-ng-click="toggleCollapsibleMenu()">
+			<span class="sr-only">Toggle navigation</span>
+			<span class="icon-bar"></span>
+			<span class="icon-bar"></span>
+			<span class="icon-bar"></span>
+		</button>
+		<a href="/#!/" class="navbar-brand">iQSlideShow</a>
+	</div>
+	<nav class="navbar-collapse collapse" collapse="!isCollapsed" role="navigation" style="height: 0px;">
+		<!-- ngIf: menu.shouldRender(authentication.user); -->
+		<ul class="nav navbar-nav ng-scope" data-ng-if="menu.shouldRender(authentication.user);">
+			<!-- ngRepeat: item in menu.items | orderBy: 'position' --><!-- ngIf: item.shouldRender(authentication.user); --><li data-ng-repeat="item in menu.items | orderBy: 'position'" data-ng-if="item.shouldRender(authentication.user);" ng-switch="item.menuItemType" ui-route="/slideshows(/create)?" class="dropdown" ng-class="{active: ($uiRoute)}" dropdown="item.menuItemType === 'dropdown'">
+				<!-- ngSwitchWhen: dropdown -->
+				<a href="#" ng-switch-when="dropdown" class="dropdown-toggle ng-scope">
+					<span data-ng-bind="item.title" class="ng-binding">Slideshows</span>
+					<b class="caret"></b>
+				</a><!-- end ngSwitchWhen: -->
+				<!-- ngSwitchWhen: dropdown --><ul ng-switch-when="dropdown" class="dropdown-menu ng-scope">
+					<!-- ngRepeat: subitem in item.items | orderBy: 'position' --><!-- ngIf: subitem.shouldRender(authentication.user); --><li data-ng-repeat="subitem in item.items | orderBy: 'position'" data-ng-if="subitem.shouldRender(authentication.user);" ui-route="/slideshows" ng-class="{active: $uiRoute}" class="ng-scope">
+						<a href="/#!/slideshows" data-ng-bind="subitem.title" class="ng-binding">List Slideshows</a>
+					</li><!-- end ngIf: subitem.shouldRender(authentication.user); --><!-- end ngRepeat: subitem in item.items | orderBy: 'position' --><!-- ngIf: subitem.shouldRender(authentication.user); --><li data-ng-repeat="subitem in item.items | orderBy: 'position'" data-ng-if="subitem.shouldRender(authentication.user);" ui-route="/slideshows/create" ng-class="{active: $uiRoute}" class="ng-scope">
+						<a href="/#!/slideshows/create" data-ng-bind="subitem.title" class="ng-binding">New Slideshow</a>
+					</li><!-- end ngIf: subitem.shouldRender(authentication.user); --><!-- end ngRepeat: subitem in item.items | orderBy: 'position' -->
+				</ul><!-- end ngSwitchWhen: -->
+				<!-- ngSwitchDefault:  -->
+			</li><!-- end ngIf: item.shouldRender(authentication.user); --><!-- end ngRepeat: item in menu.items | orderBy: 'position' -->
+		</ul><!-- end ngIf: menu.shouldRender(authentication.user); -->
+		<ul class="nav navbar-nav navbar-right" data-ng-show="authentication.user">
+			<li class="dropdown">
+				<a href="#" class="dropdown-toggle" data-toggle="dropdown">
+					<span data-ng-bind="authentication.user.displayName" class="ng-binding">a a</span> <b class="caret"></b>
+				</a>
+				<ul class="dropdown-menu">
+					<li>
+						<a href="/#!/settings/profile">Edit Profile</a>
+					</li>
+					<li>
+						<a href="/#!/settings/accounts">Manage Social Accounts</a>
+					</li>
+					<li data-ng-show="authentication.user.provider === 'local'" class="">
+						<a href="/#!/settings/password">Change Password</a>
+					</li>
+					<li class="divider"></li>
+					<li>
+						<a href="/auth/signout">Signout</a>
+					</li>
+				</ul>
+			</li>
+		</ul>
+	</nav>
+</div>
+
+
+<div>
+  
+  <nav class="navbar navbar-default">
   <div class="container-fluid">
     <!-- Brand and toggle get grouped for better mobile display -->
     <div class="navbar-header">
@@ -71,7 +124,45 @@
     </div><!-- /.navbar-collapse -->
   </div><!-- /.container-fluid -->
 </nav>
-	
-</body>
+  
+</div>
+</header>
 
-</html>
+
+	<!--Embedding The User Object-->
+	<script type="text/javascript">
+		var user = {"_id":"556a226c9ae74808968003e8","displayName":"a a","provider":"local","username":"a","__v":0,"created":"2015-05-30T20:49:48.862Z","roles":["user"],"email":"a@a.com","lastName":"a","firstName":"a"};
+	</script>
+
+	<!--Application JavaScript Files-->
+	<!--script type="text/javascript" src="lib/angular/angular.min.js"></script>
+	<script type="text/javascript" src="lib/angular-resource/angular-resource.js"></script>
+	<script type="text/javascript" src="lib/angular-cookies/angular-cookies.js"></script>
+	<script type="text/javascript" src="lib/angular-animate/angular-animate.js"></script>
+	<script type="text/javascript" src="lib/angular-touch/angular-touch.js"></script>
+	<script type="text/javascript" src="lib/angular-sanitize/angular-sanitize.js"></script>
+	<script type="text/javascript" src="lib/angular-ui-router/release/angular-ui-router.min.js"></script>
+	<script type="text/javascript" src="lib/angular-ui-utils/ui-utils.min.js"></script>
+	<script type="text/javascript" src="lib/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
+	<script type="text/javascript" src="config.js"></script>
+	<script type="text/javascript" src="application.js"></script>
+	<script type="text/javascript" src="modules/core/core.client.module.js"></script>
+	<script type="text/javascript" src="modules/slideshows/slideshows.client.module.js"></script>
+	<script type="text/javascript" src="modules/users/users.client.module.js"></script>
+	<script type="text/javascript" src="modules/core/config/core.client.routes.js"></script>
+	<script type="text/javascript" src="modules/core/controllers/header.client.controller.js"></script>
+	<script type="text/javascript" src="modules/core/controllers/home.client.controller.js"></script>
+	<script type="text/javascript" src="modules/core/services/menus.client.service.js"></script>
+	<script type="text/javascript" src="modules/slideshows/config/slideshows.client.config.js"></script>
+	<script type="text/javascript" src="modules/slideshows/config/slideshows.client.routes.js"></script>
+	<script type="text/javascript" src="modules/slideshows/controllers/slideshows.client.controller.js"></script>
+	<script type="text/javascript" src="modules/slideshows/services/slideshows.client.service.js"></script>
+	<script type="text/javascript" src="modules/users/config/users.client.config.js"></script>
+	<script type="text/javascript" src="modules/users/config/users.client.routes.js"></script>
+	<script type="text/javascript" src="modules/users/controllers/authentication.client.controller.js"></script>
+	<script type="text/javascript" src="modules/users/controllers/password.client.controller.js"></script>
+	<script type="text/javascript" src="modules/users/controllers/settings.client.controller.js"></script>
+	<script type="text/javascript" src="modules/users/services/authentication.client.service.js"></script>
+	<script type="text/javascript" src="modules/users/services/users.client.service.js"></script--> 
+
+</body></html>
