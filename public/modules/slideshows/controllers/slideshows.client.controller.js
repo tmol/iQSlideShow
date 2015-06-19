@@ -72,15 +72,23 @@ angular.module('slideshows').controller('SlideshowsController', ['$scope', '$sta
         $scope.setCurrentSlide = function(slide) {
             $scope.templateElements={};
             $scope.currentSlide = slide;
-            $scope.currentSlide.templateUrl = '';
-            $timeout(function(){
-                $scope.currentSlide.templateUrl = 'modules/slideshows/slideTemplates/'+(slide.template||'default')+'/slide.html';
-                $scope.$apply();
-            },1);
+            updateTemplate();
         }
         
         $scope.addNewSlide = function() {
-            $scope.slideshow.slides.push({ templateName: $scope.selectedTemplate });
+            $scope.currentSlide =  { 
+                    templateName: $scope.selectedTemplate                    
+                };
+            $scope.slideshow.slides.push($scope.currentSlide);
+            updateTemplate();
+        }
+        
+        var updateTemplate = function() {
+            $scope.currentSlide.templateUrl = '';
+            $timeout(function(){
+                $scope.currentSlide.templateUrl = 'modules/slideshows/slideTemplates/'+($scope.currentSlide.templateName||'default')+'/slide.html';
+                $scope.$apply();
+            },1);
         }
 	}
 ]);
