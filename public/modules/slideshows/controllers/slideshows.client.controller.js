@@ -107,5 +107,6 @@ angular.module('slideshows').controller('SlideshowsController', ['$scope', '$sta
             $scope.slideshow.slides[currentIndex+1] = slide;
             $scope.slideshow.slides[currentIndex] = tmp;
         };
+        
 	}
 ]);

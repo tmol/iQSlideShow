@@ -19,7 +19,7 @@
                 <a href="#!/player/{{slideshow._id}}" target="_blank">Start</a>
             </span> 
         </div>
-        <span class="col-md-6" style="max-height:180px;"><iframe style="width:800px; height:500px; transform: scale(0.3); transform-origin: 0 0;" src="#!/player/5583d0f14b4943140ce86b4f"></iframe></span>           
+        <span class="col-md-6" style="max-height:180px;"><iframe style="width:800px; height:500px; transform: scale(0.3); transform-origin: 0 0;" src="{{'#!/player/' + slideshow._id}}"></iframe></span>           
     </div>
     <div class="alert alert-warning text-center" data-ng-hide="!slideshows.$resolved || slideshows.length">
     	No Slideshows yet, why don't you <a href="/#!/slideshows/create">create one</a>?
