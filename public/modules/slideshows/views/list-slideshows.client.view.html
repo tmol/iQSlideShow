@@ -2,8 +2,8 @@
     <div class="page-header">
         <h1>Slideshows</h1>
     </div>
-    <div class="list-group">
-        <a data-ng-repeat="slideshow in slideshows" data-ng-href="#!/slideshows/{{slideshow._id}}" class="list-group-item">
+    <div class="list-group" data-ng-repeat="slideshow in slideshows" >           
+        <a data-ng-href="#!/slideshows/{{slideshow._id}}" class="list-group-item">
 			<small class="list-group-item-text">
 				Posted on
 				<span data-ng-bind="slideshow.created | date:'medium'"></span>
@@ -12,6 +12,7 @@
 			</small>
 			<h4 class="list-group-item-heading" data-ng-bind="slideshow.name"></h4>
         </a>
+        <a class="list-group-item" href="#!/player/{{slideshow._id}}" target="_blank">Start</a>
     </div>
     <div class="alert alert-warning text-center" data-ng-hide="!slideshows.$resolved || slideshows.length">
     	No Slideshows yet, why don't you <a href="/#!/slideshows/create">create one</a>?
