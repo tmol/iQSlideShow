@@ -13,7 +13,7 @@
                 </div>
                 
                 <div class="col-md-12">                   
-                    <div class="col-md-1">
+                    <div class="col-md-2">
                         <div class="form-group">
                             <select ng-options="template for template in templates" ng-model="selectedTemplate"></select>
                             <button type="button" ng-click="addNewSlide()">+</button>
@@ -55,7 +55,7 @@
                          
                         
                     </div>  
-                    <div ng-show="currentSlide" class="col-md-6 col-md-offset-1">
+                    <div ng-show="currentSlide" class="col-md-5 col-md-offset-1">
                         <label class="control-label" for="durationInSeconds">Preview</label>
                         <div ng-include="currentSlide.templateUrl" style="zoom:70%">
                             

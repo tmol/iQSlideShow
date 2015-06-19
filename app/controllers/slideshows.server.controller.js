@@ -109,7 +109,7 @@ exports.hasAuthorization = function(req, res, next) {
 };
 
 exports.getTemplates = function(req, res) {
-    fs.readdir('public\\modules\\slideshows\\slideTemplates', function(err, files) {
+    fs.readdir('public/modules/slideshows/slideTemplates', function(err, files) {
         if (err) {
 			return res.status(400).send('Canot read templates');
 		} else {
