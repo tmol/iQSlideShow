@@ -9,7 +9,8 @@ angular.module('slideshows').controller('SlideshowsController', ['$scope', '$sta
 		$scope.create = function() {
 			// Create new Slideshow object
 			var slideshow = new Slideshows ({
-				name: this.name
+				name: this.name,
+				slides: this.slides
 			});
 
 			// Redirect after save

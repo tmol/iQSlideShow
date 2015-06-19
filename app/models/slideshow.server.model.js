@@ -9,6 +9,27 @@ var mongoose = require('mongoose'),
 /**
  * Slideshow Schema
  */
+var SlideSchema = new Schema ({
+	templateName : {
+		type: String,
+		default: '',
+		required: 'Please fill the Template name',
+		trim: true
+	},
+	durationInSeconds : {
+		type: Number,
+		default: 3,
+		required: 'Please fill the Duration in seconds',
+		trim: true
+	},
+	animationType : {
+		type: String,
+		default: '',
+		required: 'Please fill the Animaion type',
+		trim: true
+	}
+});
+
 var SlideshowSchema = new Schema({
 	name: {
 		type: String,

@@ -105,3 +105,32 @@ exports.hasAuthorization = function(req, res, next) {
 	}
 	next();
 };
+
+exports.getMock = function(req, res) {
+
+	res.json({slides:[
+			{
+				title:"Slide one",
+				content:"Bla bla bla bla",
+				animation:'enter-left',
+				image:'http://images.clipartpanda.com/teacher-apple-border-clipart-KTjgkqLTq.jpeg',
+				duration:5000
+			},
+			{
+				title:"Slide two",
+				content:"This is the seccond slide, looks nice",
+				animation:'enter-left',
+				image:'http://www.wellclean.com/wp-content/themes/artgallery_3.0/images/car3.png',
+				duration:2000
+			},
+			{
+				title:"Slide number three",
+				content:"This is the third slide",
+				animation:'enter-bottom',
+				image:'http://www.billboard.com/files/styles/promo_650/public/media/lady-gaga-2013-650-430d.jpg?itok=-ljxT5uP',
+				template:'anotherTemplate',
+				duration:2000
+			}		
+		]}
+		)
+};
