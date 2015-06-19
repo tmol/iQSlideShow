@@ -19,7 +19,12 @@
                             <button type="button" ng-click="addNewSlide()">+</button>
                         </div>                       
                         <div data-ng-repeat="slide in slideshow.slides" class="form-group ">
-                            <span ng-click="setCurrentSlide(slide)" class="control-label">{{$index +1}} {{slide.templateName}}</span>
+                            <span ng-click="setCurrentSlide(slide)" class="control-label slide-label">{{$index +1}} {{slide.templateName}}
+                                <div class="move-slide">
+                                    <div class="move-slide-button" ng-click="moveSlideUp(slide)">▲</div>
+                                    <div class="move-slide-button" ng-click="moveSlideDown(slide)">▼</div>
+                                </div>
+                            </span>
                         </div>                        
                     </div> 
                     <div ng-show="currentSlide" class="col-md-3 col-md-offset-1">

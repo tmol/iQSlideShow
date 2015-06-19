@@ -90,5 +90,21 @@ angular.module('slideshows').controller('SlideshowsController', ['$scope', '$sta
                 $scope.$apply();
             },1);
         }
+        
+        $scope.moveSlideUp = function(slide){
+            var currentIndex = $scope.slideshow.slides.indexOf(slide);
+            if (currentIndex==0) return;
+            var tmp = $scope.slideshow.slides[currentIndex-1];
+            $scope.slideshow.slides[currentIndex-1] = slide;
+            $scope.slideshow.slides[currentIndex] = tmp;
+        };
+        
+        $scope.moveSlideDown = function(slide){
+            var currentIndex = $scope.slideshow.slides.indexOf(slide);
+            if (currentIndex==$scope.slideshow.slides.length-1) return;
+            var tmp = $scope.slideshow.slides[currentIndex+1];
+            $scope.slideshow.slides[currentIndex+1] = slide;
+            $scope.slideshow.slides[currentIndex] = tmp;
+        };
 	}
 ]);
