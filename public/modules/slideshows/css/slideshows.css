@@ -1,0 +1,11 @@
+.move-slide {
+    display: inline-block;
+    float: right;
+}
+.move-slide-button {
+    font-size: 11px;
+    cursor: pointer;
+}
+.slide-label{
+     line-height: 12px;
+}
