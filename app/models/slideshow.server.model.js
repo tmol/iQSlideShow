@@ -37,6 +37,7 @@ var SlideshowSchema = new Schema({
 		required: 'Please fill Slideshow name',
 		trim: true
 	},
+    slides: [SlideSchema],
 	created: {
 		type: Date,
 		default: Date.now

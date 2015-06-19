@@ -40,6 +40,19 @@ exports.update = function(req, res) {
 	var slideshow = req.slideshow ;
 
 	slideshow = _.extend(slideshow , req.body);
+    
+    slideshow.slides = [
+        {
+            templateName: 'iQuestNews',
+            durationInSeconds: 3,
+            animationType: 'tranisent'
+        },
+        {
+            templateName: 'MSEvents',
+            durationInSeconds: 3,
+            animationType: 'opaque'
+        }        
+    ];
 
 	slideshow.save(function(err) {
 		if (err) {
