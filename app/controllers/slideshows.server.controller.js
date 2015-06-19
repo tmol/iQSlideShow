@@ -47,13 +47,34 @@ exports.update = function(req, res) {
         {
             templateName: 'iQuestNews',
             durationInSeconds: 3,
-            animationType: 'tranisent'
+            animationType: 'enter-left',
+            content: {
+				title:"Slide one",
+				content:"Bla bla bla bla",
+				animation:'enter-left',
+				image:'http://images.clipartpanda.com/teacher-apple-border-clipart-KTjgkqLTq.jpeg'
+			}
         },
         {
             templateName: 'MSEvents',
             durationInSeconds: 3,
-            animationType: 'opaque'
-        }        
+            animationType: 'enter-left',
+            content:{
+				title:"Slide two",
+				content:"This is the seccond slide, looks nice",
+				animation:'enter-left',
+				image:'http://www.wellclean.com/wp-content/themes/artgallery_3.0/images/car3.png'
+			}
+        },
+        {
+            durationInSeconds: 3,
+            animationType: 'enter-bottom',
+            content:{
+				title:"Slide number three",
+				content:"This is the third slide",
+				animation:'enter-bottom'
+			}
+        }
     ];
 
 	slideshow.save(function(err) {

@@ -1,0 +1,114 @@
+
+.weel-animation.ng-enter,.weel-animation.ng-leave {
+  -webkit-transition:all .5s ease-in-out;
+  -moz-transition:all .5s ease-in-out;
+  -o-transition:all .5s ease-in-out;
+  transition:all .5s ease-in-out;
+}
+
+.weel-animation.ng-enter {
+  opacity: 0;
+  -webkit-transform:scale3d(0.5, 0.5, 0.5);
+  -moz-transform:scale3d(0.5, 0.5, 0.5);
+  transform:scale3d(0.5, 0.5, 0.5);
+}
+
+.weel-animation.ng-enter-active {
+  opacity: 1;
+  -webkit-transform:scale3d(1, 1, 1);
+  -moz-transform:scale3d(1, 1, 1);
+  transform:scale3d(1, 1, 1);
+}
+
+.weel-animation.ng-leave {
+  opacity: 1;
+  /*padding-left: 0px;*/  
+  -webkit-transform:translate3d(0, 0, 0);
+  -moz-transform:translate3d(0, 0, 0);
+  transform:translate3d(0, 0, 0);
+}
+
+.weel-animation.ng-leave-active {
+  opacity: 0;
+  /*padding-left: 100px;*/
+  -webkit-transform:translate3d(100px, 0, 0);
+  -moz-transform:translate3d(100px, 0, 0);
+  transform:translate3d(100px, 0, 0);
+}
+
+
+
+.enter-left.ng-enter,.enter-left.ng-leave {
+  -webkit-transition:all .5s ease-in-out;
+  -moz-transition:all .5s ease-in-out;
+  -o-transition:all .5s ease-in-out;
+  transition:all .5s ease-in-out;
+}
+
+.enter-left.ng-enter {
+  opacity: 0;
+  -ms-transform: translate(5000px,0px); /* IE 9 */
+  -webkit-transform: translate(5000px,0px); /* Safari */
+  transform: translate(5000px,0px);
+}
+
+.enter-left.ng-enter-active {
+  opacity: 1;
+  -ms-transform: translate(0px,0px); /* IE 9 */
+  -webkit-transform: translate(0px,0px); /* Safari */
+  transform: translate(0px,0px);
+}
+
+.enter-left.ng-leave {
+  opacity: 1;
+  /*padding-left: 0px;*/  
+  -ms-transform: translate(0px,0px); /* IE 9 */
+  -webkit-transform: translate(0px,0px); /* Safari */
+  transform: translate(0px,0px);
+}
+
+.enter-left.ng-leave-active {
+  opacity: 1;
+  /*padding-left: 0px;*/  
+  -ms-transform: translate(-5000px,0px); /* IE 9 */
+  -webkit-transform: translate(-5000px,0px); /* Safari */
+  transform: translate(-5000px,0px);
+}
+
+
+.enter-bottom.ng-enter,.enter-bottom.ng-leave {
+  -webkit-transition:all .5s ease-in-out;
+  -moz-transition:all .5s ease-in-out;
+  -o-transition:all .5s ease-in-out;
+  transition:all .5s ease-in-out;
+}
+
+.enter-bottom.ng-enter {
+  opacity: 0;
+  -ms-transform: translate(0px,5000px); /* IE 9 */
+  -webkit-transform: translate(0px,5000px); /* Safari */
+  transform: translate(0px,5000px);
+}
+
+.enter-bottom.ng-enter-active {
+  opacity: 1;
+  -ms-transform: translate(0px,0px); /* IE 9 */
+  -webkit-transform: translate(0px,0px); /* Safari */
+  transform: translate(0px,0px);
+}
+
+.enter-bottom.ng-leave {
+  opacity: 1;
+  /*padding-left: 0px;*/  
+  -ms-transform: translate(0px,0px); /* IE 9 */
+  -webkit-transform: translate(0px,0px); /* Safari */
+  transform: translate(0px,0px);
+}
+
+.enter-bottom.ng-leave-active {
+  opacity: 1;
+  /*padding-left: 0px;*/  
+  -ms-transform: translate(0px,-5000px); /* IE 9 */
+  -webkit-transform: translate(0px,-5000px); /* Safari */
+  transform: translate(0px,-5000px);
+}
