@@ -5,6 +5,7 @@ angular.module('slideshows').controller('SlideshowsController', ['$scope', '$sta
 	function($scope, $stateParams, $location, Authentication, Slideshows, Templates,$timeout) {
 		$scope.authentication = Authentication;
         $scope.currentSlide = null;
+        $scope.animationTypes = ["enter-left", "enter-right", "enter-bottom", "enter-top"]
         
         Templates.getAll(function(response, err){
             $scope.templates = response;
