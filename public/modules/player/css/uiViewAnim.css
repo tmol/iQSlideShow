@@ -1,4 +1,7 @@
-
+@media (min-width: 1200px) {
+.container{
+    width: 100% !important; 
+}
 .weel-animation.ng-enter,.weel-animation.ng-leave {
   -webkit-transition:all .5s ease-in-out;
   -moz-transition:all .5s ease-in-out;
