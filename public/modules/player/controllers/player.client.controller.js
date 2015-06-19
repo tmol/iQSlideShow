@@ -12,8 +12,9 @@ angular.module('player').controller('PlayerController', ['$scope','$stateParams'
 				if (slideNumber==slides.length){
 					slideNumber=0;
 				}
+                
 				var slide=slides[slideNumber];
-                if (!slide.content) {
+                if (!slide || !slide.content) {
                     $timeout(loadNextSlide,1);
                     return;
                 }
