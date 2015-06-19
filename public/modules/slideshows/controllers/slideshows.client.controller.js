@@ -4,6 +4,7 @@
 angular.module('slideshows').controller('SlideshowsController', ['$scope', '$stateParams', '$location', 'Authentication', 'Slideshows',
 	function($scope, $stateParams, $location, Authentication, Slideshows) {
 		$scope.authentication = Authentication;
+        $scope.currentSlide = null;
 
 		// Create new Slideshow
 		$scope.create = function() {
@@ -63,5 +64,9 @@ angular.module('slideshows').controller('SlideshowsController', ['$scope', '$sta
 				slideshowId: $stateParams.slideshowId
 			});
 		};
+        
+        $scope.setCurrentSlide = function(slide) {
+            $scope.currentSlide = slide;
+        }
 	}
 ]);
