@@ -1,6 +1,7 @@
 'use strict';
 angular.module('player').directive('ngSlide', [
 	function() {
+        
         return {
             link: function postLink(scope, element, attrs) {
                 scope.$parent.templateElements=scope.$parent.templateElements||{};
