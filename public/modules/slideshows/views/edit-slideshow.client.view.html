@@ -13,7 +13,7 @@
                 </div>
                 
                 <div class="col-md-12">                   
-                    <div class="col-md-3">
+                    <div class="col-md-1">
                         <div class="form-group">
                             <select ng-options="template for template in templates" ng-model="selectedTemplate"></select>
                             <button type="button" ng-click="addNewSlide()">+</button>
@@ -22,7 +22,7 @@
                             <span ng-click="setCurrentSlide(slide)" class="control-label">{{slide.templateName}}</span>
                         </div>                        
                     </div> 
-                    <div ng-show="currentSlide" class="col-md-7 col-md-offset-1">
+                    <div ng-show="currentSlide" class="col-md-3 col-md-offset-1">
                         <div class="form-group">
                             <select ng-options="template for template in templates" ng-model="currentSlide.templateName"></select>
                         </div>
@@ -47,12 +47,15 @@
                                     <input type="text" ng-model="currentSlide.content[templateElement]" class="form-control">
                             </div>
                         </div> 
+                         
+                        
+                    </div>  
+                    <div ng-show="currentSlide" class="col-md-6 col-md-offset-1">
                         <label class="control-label" for="durationInSeconds">Preview</label>
                         <div ng-include="currentSlide.templateUrl" style="zoom:70%">
                             
-                        </div>   
-                        
-                    </div>  
+                        </div>  
+                    </div>
                     
                 </div>
                                
