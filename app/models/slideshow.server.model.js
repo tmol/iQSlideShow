@@ -13,7 +13,6 @@ var SlideSchema = new Schema ({
 	templateName : {
 		type: String,
 		default: '',
-		required: 'Please fill the Template name',
 		trim: true
 	},
 	durationInSeconds : {
@@ -27,6 +26,10 @@ var SlideSchema = new Schema ({
 		default: '',
 		required: 'Please fill the Animaion type',
 		trim: true
+	},
+	content : {
+		type: Object,
+		default: {}
 	}
 });
 

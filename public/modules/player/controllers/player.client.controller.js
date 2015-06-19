@@ -13,23 +13,23 @@ angular.module('player').controller('PlayerController', ['$scope','$stateParams'
 					slideNumber=0;
 				}
 				var slide=slides[slideNumber];
-				$scope.animation=slide.animation;
-				slide.templateUrl = 'modules/slideshows/slideTemplates/'+(slide.template||'default')+'/slide.html';
+				$scope.animationType=slide.animationType;
+				slide.content.templateUrl = 'modules/slideshows/slideTemplates/'+(slide.template||'default')+'/slide.html';
 				
 				CssInjector.inject($scope,'modules/slideshows/slideTemplates/'+(slide.template||'default')+'/slide.css');
 				
 				$state.go("player.slide",{
-					slide:slides[slideNumber]
+					slide:slide.content
 				})
 				
 				//load the next slide after the configured delay.
-				$timeout(loadNextSlide,slides[slideNumber].duration)
+				$timeout(loadNextSlide,slides[slideNumber].durationInSeconds*1000)
 			}
 		
 			$timeout(loadNextSlide,1);
 		}
 		var loadSildes =function(){
-			Slides.get({slideId:"firstSlide"}, function(result){
+			Slides.get({slideId:$stateParams.slideName}, function(result){
 				slideShow(result.slides);
 			})
 		}	
