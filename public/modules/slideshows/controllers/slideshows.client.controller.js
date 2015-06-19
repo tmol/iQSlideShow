@@ -1,8 +1,8 @@
 'use strict';
 
 // Slideshows controller
-angular.module('slideshows').controller('SlideshowsController', ['$scope', '$stateParams', '$location', 'Authentication', 'Slideshows', 'Templates',
-	function($scope, $stateParams, $location, Authentication, Slideshows, Templates) {
+angular.module('slideshows').controller('SlideshowsController', ['$scope', '$stateParams', '$location', 'Authentication', 'Slideshows', 'Templates','$timeout',
+	function($scope, $stateParams, $location, Authentication, Slideshows, Templates,$timeout) {
 		$scope.authentication = Authentication;
         $scope.currentSlide = null;
         
@@ -70,7 +70,13 @@ angular.module('slideshows').controller('SlideshowsController', ['$scope', '$sta
 		};
         
         $scope.setCurrentSlide = function(slide) {
+            $scope.templateElements={};
             $scope.currentSlide = slide;
+            $scope.currentSlide.templateUrl = '';
+            $timeout(function(){
+                $scope.currentSlide.templateUrl = 'modules/slideshows/slideTemplates/'+(slide.template||'default')+'/slide.html';
+                $scope.$apply();
+            },1);
         }
         
         $scope.addNewSlide = function() {
