@@ -1,12 +1,13 @@
 'use strict';
 angular.module('player').controller('PlayerController', ['$scope','$stateParams','$state','$timeout','Slides','CssInjector',
 	function($scope, $stateParams, $state, $timeout,Slides,CssInjector) {
-		
+		jQuery("#app-header").hide();
 		$scope.slideName=$stateParams.slideName;
 		var slideNumber = -1;
 		
 		
 		var slideShow = function(slides){
+            jQuery("#app-header").hide();
 			var loadNextSlide = function(){
 				slideNumber++;
 				if (slideNumber==slides.length){
