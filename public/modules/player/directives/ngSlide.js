@@ -14,7 +14,7 @@ angular.module('player').directive('ngSlide', [
                     }
                     if (element[0].tagName=="IMG")
                     {
-                        element[0].src=content[attrs.member];
+                        element[0].src=content[attrs.member] || 'modules/slideshows/css/img/default.jpg';
                         return;
                     }
 

@@ -78,7 +78,8 @@ angular.module('slideshows').controller('SlideshowsController', ['$scope', '$sta
         
         $scope.addNewSlide = function() {
             $scope.currentSlide =  { 
-                    templateName: $scope.selectedTemplate                    
+                    templateName: $scope.selectedTemplate,
+                    content:{}
                 };
             $scope.slideshow.slides.push($scope.currentSlide);
             updateTemplate();
@@ -89,7 +90,7 @@ angular.module('slideshows').controller('SlideshowsController', ['$scope', '$sta
             $timeout(function(){
                 $scope.currentSlide.templateUrl = 'modules/slideshows/slideTemplates/'+($scope.currentSlide.templateName||'default')+'/slide.html';
                 $scope.$apply();
-            },1);
+            },10);
         }
         
         $scope.moveSlideUp = function(slide){
