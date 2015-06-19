@@ -1,0 +1,36 @@
+.enter-bottom.ng-enter,.enter-bottom.ng-leave {
+  -webkit-transition:all .5s ease-in-out;
+  -moz-transition:all .5s ease-in-out;
+  -o-transition:all .5s ease-in-out;
+  transition:all .5s ease-in-out;
+}
+
+.enter-bottom.ng-enter {
+  opacity: 0;
+  -ms-transform: translate(0px,5000px); /* IE 9 */
+  -webkit-transform: translate(0px,5000px); /* Safari */
+  transform: translate(0px,5000px);
+}
+
+.enter-bottom.ng-enter-active {
+  opacity: 1;
+  -ms-transform: translate(0px,0px); /* IE 9 */
+  -webkit-transform: translate(0px,0px); /* Safari */
+  transform: translate(0px,0px);
+}
+
+.enter-bottom.ng-leave {
+  opacity: 1;
+  /*padding-left: 0px;*/  
+  -ms-transform: translate(0px,0px); /* IE 9 */
+  -webkit-transform: translate(0px,0px); /* Safari */
+  transform: translate(0px,0px);
+}
+
+.enter-bottom.ng-leave-active {
+  opacity: 1;
+  /*padding-left: 0px;*/  
+  -ms-transform: translate(0px,-5000px); /* IE 9 */
+  -webkit-transform: translate(0px,-5000px); /* Safari */
+  transform: translate(0px,-5000px);
+}
