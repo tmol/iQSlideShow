@@ -80,7 +80,7 @@ angular.module('slideshows').controller('SlideshowsController', ['$scope', '$sta
         }
         
         $scope.addNewSlide = function() {
-            $scope.slideshow.slides.push({ templateName: $scope.templates[0] });
+            $scope.slideshow.slides.push({ templateName: $scope.selectedTemplate });
         }
 	}
 ]);
