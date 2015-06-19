@@ -1,10 +1,14 @@
 'use strict';
 
 // Slideshows controller
-angular.module('slideshows').controller('SlideshowsController', ['$scope', '$stateParams', '$location', 'Authentication', 'Slideshows',
-	function($scope, $stateParams, $location, Authentication, Slideshows) {
+angular.module('slideshows').controller('SlideshowsController', ['$scope', '$stateParams', '$location', 'Authentication', 'Slideshows', 'Templates',
+	function($scope, $stateParams, $location, Authentication, Slideshows, Templates) {
 		$scope.authentication = Authentication;
         $scope.currentSlide = null;
+        
+        /*Templates.getAll(function(response, err){
+            $scope.templates = response;
+        });*/
 
 		// Create new Slideshow
 		$scope.create = function() {
