@@ -6,9 +6,9 @@ angular.module('slideshows').controller('SlideshowsController', ['$scope', '$sta
 		$scope.authentication = Authentication;
         $scope.currentSlide = null;
         
-        /*Templates.getAll(function(response, err){
+        Templates.getAll(function(response, err){
             $scope.templates = response;
-        });*/
+        });
 
 		// Create new Slideshow
 		$scope.create = function() {
@@ -71,6 +71,10 @@ angular.module('slideshows').controller('SlideshowsController', ['$scope', '$sta
         
         $scope.setCurrentSlide = function(slide) {
             $scope.currentSlide = slide;
+        }
+        
+        $scope.addNewSlide = function() {
+            $scope.slideshow.slides.push({ templateName: $scope.templates[0] });
         }
 	}
 ]);

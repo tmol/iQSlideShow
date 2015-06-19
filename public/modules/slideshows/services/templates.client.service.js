@@ -4,7 +4,7 @@
 angular.module('slideshows').factory('Templates', ['$resource',
 	function($resource) {
 		return $resource('templates', {}, {
-			getAll : {method:'GET', params:{isArray:true}}
+			getAll : {method:'GET', isArray:true}
 		});
 	}
 ]);
