@@ -14,8 +14,9 @@ module.exports = function(app) {
 		.put(users.requiresLogin, slideshows.hasAuthorization, slideshows.update)
 		.delete(users.requiresLogin, slideshows.hasAuthorization, slideshows.delete);
 
-	app.route('/mock/:slideId')
-		.get(slideshows.getMock);
+	app.route('/templates')
+		.get(slideshows.getTemplates);
+    
 		
 	// Finish by binding the Slideshow middleware
 	app.param('slideshowId', slideshows.slideshowByID);
