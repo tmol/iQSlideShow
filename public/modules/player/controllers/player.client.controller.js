@@ -4,42 +4,55 @@ angular.module('player').controller('PlayerController', ['$scope','$stateParams'
 		jQuery("#app-header").hide();
 		$scope.slideName=$stateParams.slideName;
 		var slideNumber = -1;
-		
-		
-		var slideShow = function(slides){
-            jQuery("#app-header").hide();
-			var loadNextSlide = function(){
-				slideNumber++;
-				if (slideNumber==slides.length){
-					slideNumber=0;
-				}
-                
-				var slide=slides[slideNumber];
-                if (!slide || !slide.content) {
-                    $timeout(loadNextSlide,1);
-                    return;
-                }
-				$scope.animationType=slide.animationType;
-				slide.content.templateUrl = 'modules/slideshows/slideTemplates/'+(slide.templateName||'default')+'/slide.html';
-				
-				CssInjector.inject($scope,'modules/slideshows/slideTemplates/'+(slide.templateName||'default')+'/slide.css');
-				
-				$state.go("player.slide",{
-					slide:slide.content
-				})
-				
-				//load the next slide after the configured delay.
-				$timeout(loadNextSlide,slides[slideNumber].durationInSeconds*1000)
-			}
-		
-			$timeout(loadNextSlide,1);
+		$scope.slides = [];
+        $scope.$parent.hideHeader = true;
+        $scope.lastTimeout = null;
+		var loadNextSlide = function(){            
+            
+            if ($scope.lastTimeout) $timeout.cancel($scope.lastTimeout);
+            
+            slideNumber++;
+            if (slideNumber==$scope.slides.length){
+                slideNumber=0;
+            }
+
+            var slide=$scope.slides[slideNumber];
+            if (!slide || !slide.content) {
+                $timeout(loadNextSlide,1);
+                return;
+            }
+
+            var duration = slide.durationInSeconds;
+            $scope.animationType=slide.animationType;
+            slide.content.templateUrl = 'modules/slideshows/slideTemplates/'+(slide.templateName||'default')+'/slide.html';
+
+            CssInjector.inject($scope,'modules/slideshows/slideTemplates/'+(slide.templateName||'default')+'/slide.css');
+
+            $state.go("player.slide",{
+                slide:slide.content
+            })
+
+            if (duration) {
+                $scope.lastTimeout = $timeout(loadNextSlide,duration*1000);
+            }
 		}
-		var loadSildes =function(){
+        
+		var slideShow = function(s){
+            $scope.slides = s;
+            $scope.lastTimeout = $timeout(loadNextSlide,1);
+		}
+        
+		var loadSildes = function(){
 			Slides.get({slideId:$stateParams.slideName}, function(result){
-				slideShow(result.slides);
+                slideShow(result.slides);
 			})
 		}	
+        
 		loadSildes();
-		
+        
+        $scope.$on("onApplicationclick",loadNextSlide);	
+        $scope.$on("$destroy",function(){
+            $timeout.cancel($scope.lastTimeout);
+        });
 	}
 ]);
