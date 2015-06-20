@@ -7,12 +7,16 @@ angular.module('player').controller('PlayerController', ['$scope','$stateParams'
 		$scope.slides = [];
         $scope.$parent.playerMode = true;
         $scope.lastTimeout = null;
+        
+        var cancelTimeOut = function(){
+            if ($scope.lastTimeout) $timeout.cancel($scope.lastTimeout);
+        }
 		var loadNextSlide = function(){            
             
-            if ($scope.lastTimeout) $timeout.cancel($scope.lastTimeout);
+            cancelTimeOut();
             
             slideNumber++;
-            if (slideNumber==$scope.slides.length){
+            if (slideNumber<0 || slideNumber>=$scope.slides.length){
                 slideNumber=0;
             }
 
@@ -51,6 +55,19 @@ angular.module('player').controller('PlayerController', ['$scope','$stateParams'
 		loadSildes();
         
         $scope.$on("onApplicationclick",loadNextSlide);	
+        $scope.$on("rightArrowPressed",function(){
+            cancelTimeOut();
+            loadNextSlide();
+        });	
+        $scope.$on("leftArrowPressed",function(){
+            cancelTimeOut();
+            slideNumber-=2;
+            if (slideNumber<-1) {
+                slideNumber = $scope.slides.length-2;
+            }
+            loadNextSlide();
+        });	
+        
         $scope.$on("$destroy",function(){
             $timeout.cancel($scope.lastTimeout);
         });
