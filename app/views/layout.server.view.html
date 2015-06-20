@@ -44,8 +44,8 @@
 </head>
 
 <body style="width:100%;height:100%" class="ng-cloak" data-ng-controller="ApplicationController" >
-    <div style="width:100%;height:100%" data-ng-click="onClick()">
-        <header ng-show="!hideHeader" id="app-header" data-ng-include="'/modules/core/views/header.client.view.html'" class="navbar navbar-fixed-top navbar-inverse"></header>
+    <div style="width:100%;height:100%" ng-class="{'player':playerMode}" data-ng-click="onClick()">
+        <header ng-show="!playerMode" id="app-header" data-ng-include="'/modules/core/views/header.client.view.html'" class="navbar navbar-fixed-top navbar-inverse"></header>
         <section class="content" >
             <section class="container">
                 {% block content %}{% endblock %}

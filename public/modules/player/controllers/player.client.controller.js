@@ -5,7 +5,7 @@ angular.module('player').controller('PlayerController', ['$scope','$stateParams'
 		$scope.slideName=$stateParams.slideName;
 		var slideNumber = -1;
 		$scope.slides = [];
-        $scope.$parent.hideHeader = true;
+        $scope.$parent.playerMode = true;
         $scope.lastTimeout = null;
 		var loadNextSlide = function(){            
             
