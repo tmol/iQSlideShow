@@ -27,7 +27,7 @@
                             </span>
                         </div>                        
                     </div> 
-                    <div ng-show="currentSlide" class="col-md-3 col-md-offset-1">
+                    <div ng-show="currentSlide" class="col-md-6 col-md-offset-1">
                         <div class="form-group">
                             <select ng-options="template for template in templates" ng-model="currentSlide.templateName"></select>
                         </div>
@@ -45,17 +45,18 @@
                         </div>                                                 
                         
                         <div class="form-group" ng-repeat="(templateElement, value) in templateElements">
-                            <label class="control-label">{{templateElement}}
+                            <label class="control-label">{{value.label}}
                                 
                             </label>  
-                            <div class="controls">
-                                    <input type="text" ng-model="currentSlide.content[templateElement]" class="form-control">
+                            <div class="controls" >
+                                <input ng-if="value.type=='text'" type="text" ng-model="currentSlide.content[templateElement]" class="form-control">
+                                <div text-angular ng-if="value.type=='html'" type="text" ng-model="currentSlide.content[templateElement]" ></div>
                             </div>
                         </div> 
                          
                         
                     </div>  
-                    <div ng-show="currentSlide" class="col-md-5 col-md-offset-1">
+                    <div ng-show="currentSlide" class="col-md-2  col-md-offset-1" >
                         <label class="control-label" for="durationInSeconds">Preview</label>
                         <div ng-include="currentSlide.templateUrl" style="zoom:70%">
                             
