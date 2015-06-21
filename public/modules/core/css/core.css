@@ -1,6 +1,4 @@
-.content {
-	margin-top: 50px;
-}
+
 .undecorated-link:hover {
 	text-decoration: none;
 }
@@ -16,30 +14,6 @@
 .player {
     overflow: hidden;
 }
-.zoom1-2{
-    zoom:120%;
-}
-.zoom1-3{
-    zoom:130%;
-}
-.zoom1-4{
-    zoom:140%;
-}
-.zoom1-5{
-    zoom:150%;
-}
-.zoom1-6{
-    zoom:160%;
-}
-.zoom1-7{
-    zoom:170%;
-}
-.zoom1-8{
-    zoom:180%;
-}
-.zoom1-9{
-    zoom:190%;
-}
-.zoom2{
-    zoom:200%;
+.container{
+    width:100% !important;
 }

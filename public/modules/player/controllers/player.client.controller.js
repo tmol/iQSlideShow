@@ -28,6 +28,7 @@ angular.module('player').controller('PlayerController', ['$scope','$stateParams'
 
             var duration = slide.durationInSeconds;
             $scope.animationType=slide.animationType;
+            $scope.zoomPercent=slide.zoomPercent||100;
             slide.content.templateUrl = 'modules/slideshows/slideTemplates/'+(slide.templateName||'default')+'/slide.html';
 
             CssInjector.inject($scope,'modules/slideshows/slideTemplates/'+(slide.templateName||'default')+'/slide.css');

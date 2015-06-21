@@ -1,3 +1,10 @@
 .slideShow{
     background-color: #FFFFFF;
 }
+.player-container{
+    width: 100% !important;
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: #ffffff;
+}
