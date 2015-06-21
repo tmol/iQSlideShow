@@ -28,14 +28,14 @@ module.exports = {
 				'public/lib/angular-bootstrap/ui-bootstrap-tpls.js',
                 'public/lib/jquery/dist/jquery.js',                
                 'public/lib/bootstrap/dist/js/bootstrap.js',                
-                'public/lib/textangular/textAngular-rangy.min.js',
-                'public/lib/textangular/textAngular-sanitize.min.js',
-                'public/lib/textangular/textAngular.min.js'
+                'public/lib/textAngular/dist/textAngular-rangy.min.js',
+                'public/lib/textAngular/dist/textAngular-sanitize.min.js',
+                'public/lib/textAngular/dist/textAngular.min.js'
 			]
 		},
 		css: [
             'public/lib/font-awesome/css/font-awesome.min.css',
-            'public/lib/textangular/textAngular.css',
+            'public/lib/textAngular/dist/textAngular.css',
 			'public/modules/**/css/*.css'
 		],
 		js: [

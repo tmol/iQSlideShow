@@ -15,7 +15,8 @@
         "angular-ui-utils": "~0.2",      
         "angular-ui-router": "~0.2",
         "angular-ui-grid": "~3.0.0-rc.21",
-        "angular-google-maps": "~2.0.12"
+        "angular-google-maps": "~2.0.12",
+        "textAngular":"1.4.1"
 	},
     "resolutions": {
         "angular": "~1.4.x"
