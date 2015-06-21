@@ -95,20 +95,31 @@ angular.module('slideshows').controller('SlideshowsController', ['$scope', '$sta
         }
         
         $scope.moveSlideUp = function(slide){
-            var currentIndex = $scope.slideshow.slides.indexOf(slide);
-            if (currentIndex==0) return;
-            var tmp = $scope.slideshow.slides[currentIndex-1];
-            $scope.slideshow.slides[currentIndex-1] = slide;
-            $scope.slideshow.slides[currentIndex] = tmp;
+            var slideIndex = $scope.slideshow.slides.indexOf(slide);
+            if (slideIndex==0) return;
+            var tmp = $scope.slideshow.slides[slideIndex-1];
+            $scope.slideshow.slides[slideIndex-1] = slide;
+            $scope.slideshow.slides[slideIndex] = tmp;
         };
         
         $scope.moveSlideDown = function(slide){
-            var currentIndex = $scope.slideshow.slides.indexOf(slide);
-            if (currentIndex==$scope.slideshow.slides.length-1) return;
-            var tmp = $scope.slideshow.slides[currentIndex+1];
-            $scope.slideshow.slides[currentIndex+1] = slide;
-            $scope.slideshow.slides[currentIndex] = tmp;
+            var slideIndex = $scope.slideshow.slides.indexOf(slide);
+            if (slideIndex==$scope.slideshow.slides.length-1) return;
+            var tmp = $scope.slideshow.slides[slideIndex+1];
+            $scope.slideshow.slides[slideIndex+1] = slide;
+            $scope.slideshow.slides[slideIndex] = tmp;
         };
+        
+        $scope.isCurrentSlide = function(slide){
+            if (!$scope.currentSlide) return false;
+            return $scope.currentSlide._id==slide._id;
+        }
+        
+        $scope.removeCurrentSlide = function(){
+            if (!$scope.currentSlide) return;
+            var slideIndex = $scope.slideshow.slides.indexOf($scope.currentSlide);
+            $scope.slideshow.slides.splice(slideIndex, 1);
+        }
         
 	}
 ]);

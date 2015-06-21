@@ -1,12 +1,45 @@
 
 .move-slide {
     display: inline-block;
-    float: right;
+  float: right;
+  margin-top: 5px;
 }
 .move-slide-button {
     font-size: 11px;
     cursor: pointer;
+    line-height: 11px;
 }
 .slide-label{
      line-height: 12px;
+}
+.slide {
+    cursor: pointer;
+    height: 36px;
+    line-height: 36px;
+    padding-left: 8px;
+    padding-right: 8px;
+}
+
+.current-slide{
+    background-color: #CCCCCC;
+}
+.slides-continer{
+    border-right: 1px solid #CCCCCC;
+}
+.slides-controllers{
+  border-bottom: 1px solid #CCCCCC;
+  padding-bottom: 11px;
+  line-height: 10px;    
+}
+.slides-ops{
+  display: inline-block;
+}
+.slides-ops button{
+  width: 17px;
+  padding-left: 2px;
+  padding-right: 2px;
+}
+.slides-update{
+  border-top: 1px solid #CCCCCC;
+  padding-top: 10px;
 }

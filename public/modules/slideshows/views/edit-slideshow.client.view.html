@@ -13,19 +13,25 @@
                 </div>
                 
                 <div class="col-md-12">                   
-                    <div class="col-md-2">
-                        <div class="form-group">
+                    <div class="col-md-1 slides-continer">
+                        <div class="form-group slides-controllers">
                             <select ng-options="template for template in templates" ng-model="selectedTemplate"></select>
-                            <button type="button" ng-click="addNewSlide()">+</button>
+                            <div class="slides-ops">
+                                <button type="button" ng-click="addNewSlide()">+</button>
+                                <button type="button" ng-click="removeCurrentSlide()">-</button>
+                            </div>
                         </div>                       
-                        <div data-ng-repeat="slide in slideshow.slides" class="form-group ">
-                            <span ng-click="setCurrentSlide(slide)" class="control-label slide-label">{{$index +1}} {{slide.templateName}}
+                        <div ng-class="{'current-slide':isCurrentSlide(slide)}" data-ng-repeat="slide in slideshow.slides" class="form-group slide">
+                            <span  ng-click="setCurrentSlide(slide)" class="control-label slide-label">{{$index +1}} {{slide.templateName}}
                                 <div class="move-slide">
                                     <div class="move-slide-button" ng-click="moveSlideUp(slide)">▲</div>
                                     <div class="move-slide-button" ng-click="moveSlideDown(slide)">▼</div>
                                 </div>
                             </span>
-                        </div>                        
+                        </div>  
+                        <div class="form-group slides-update">
+                            <input type="submit" value="Update" class="btn btn-default">
+                        </div>
                     </div> 
                     <div ng-show="currentSlide" class="col-md-6 col-md-offset-1">
                         <div class="form-group">
@@ -56,7 +62,7 @@
                          
                         
                     </div>  
-                    <div ng-show="currentSlide" class="col-md-2  col-md-offset-1" >
+                    <div ng-show="currentSlide" class="col-md-3  col-md-offset-1" >
                         <label class="control-label" for="durationInSeconds">Preview</label>
                         <div ng-include="currentSlide.templateUrl" style="zoom:70%">
                             
@@ -64,11 +70,7 @@
                     </div>
                     
                 </div>
-                               
-                <div class="form-group col-md-12">
-                    
-                    <input type="submit" value="Update" class="btn btn-default">
-                </div>
+                 
 				<div data-ng-show="error" class="text-danger">
 					<strong data-ng-bind="error"></strong>
 				</div>
