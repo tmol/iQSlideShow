@@ -1,5 +1,5 @@
 'use strict';
-angular.module('player').controller('PlayerController', ['$scope','$stateParams','$state','$timeout','Slides','CssInjector','$interval'
+angular.module('player').controller('PlayerController', ['$scope','$stateParams','$state','$timeout','Slides','CssInjector','$interval',
 	function($scope, $stateParams, $state, $timeout,Slides,CssInjector,$interval) {
 		jQuery("#app-header").hide();
 		$scope.slideName=$stateParams.slideName;
