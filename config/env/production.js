@@ -19,10 +19,15 @@ module.exports = {
 				'public/lib/angular-ui-utils/ui-utils.min.js',
 				'public/lib/angular-bootstrap/ui-bootstrap-tpls.min.js',
 				'public/lib/jquery/dist/jquery.js',                
-                'public/lib/bootstrap/dist/js/bootstrap.js'
+                'public/lib/bootstrap/dist/js/bootstrap.js',
+                'public/lib/textAngular/dist/textAngular-rangy.min.js',
+                'public/lib/textAngular/dist/textAngular-sanitize.min.js',
+                'public/lib/textAngular/dist/textAngular.min.js'
 			]
 		},
 		css: [
+			'public/lib/font-awesome/css/font-awesome.min.css',
+            'public/lib/textAngular/dist/textAngular.css',
 			'public/modules/**/css/*.css'
 		],
 		js: [
