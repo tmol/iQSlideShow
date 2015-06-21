@@ -55,6 +55,14 @@ angular.module('player').controller('PlayerController', ['$scope','$stateParams'
         
 		loadSildes();
         
+        var updateSildes = function(){
+			Slides.get({slideId:$stateParams.slideName}, function(result){
+                $scope.slides = result.slides;
+			})
+		}	
+        
+        var updateSlidesHandle = $timeout(updateSildes,10*1000);
+        
         $scope.$on("onApplicationclick",loadNextSlide);	
         $scope.$on("rightArrowPressed",function(){
             cancelTimeOut();
@@ -71,6 +79,7 @@ angular.module('player').controller('PlayerController', ['$scope','$stateParams'
         
         $scope.$on("$destroy",function(){
             $timeout.cancel($scope.lastTimeout);
+            $timeout.cancel(updateSlidesHandle);
         });
 	}
 ]);
