@@ -1,6 +1,6 @@
 'use strict';
-angular.module('player').controller('PlayerController', ['$scope','$stateParams','$state','$timeout','Slides','CssInjector',
-	function($scope, $stateParams, $state, $timeout,Slides,CssInjector) {
+angular.module('player').controller('PlayerController', ['$scope','$stateParams','$state','$timeout','Slides','CssInjector','$interval'
+	function($scope, $stateParams, $state, $timeout,Slides,CssInjector,$interval) {
 		jQuery("#app-header").hide();
 		$scope.slideName=$stateParams.slideName;
 		var slideNumber = -1;
@@ -61,7 +61,7 @@ angular.module('player').controller('PlayerController', ['$scope','$stateParams'
 			})
 		}	
         
-        var updateSlidesHandle = $timeout(updateSildes,10*1000);
+        var updateSlidesHandle = $interval(updateSildes,10*1000);
         
         $scope.$on("onApplicationclick",loadNextSlide);	
         $scope.$on("rightArrowPressed",function(){
@@ -79,7 +79,7 @@ angular.module('player').controller('PlayerController', ['$scope','$stateParams'
         
         $scope.$on("$destroy",function(){
             $timeout.cancel($scope.lastTimeout);
-            $timeout.cancel(updateSlidesHandle);
+            $interval.cancel(updateSlidesHandle);
         });
 	}
 ]);
