@@ -81,6 +81,7 @@ angular.module('player').controller('PlayerController', ['$scope','$stateParams'
         $scope.$on("$destroy",function(){
             $timeout.cancel($scope.lastTimeout);
             $interval.cancel(updateSlidesHandle);
+            if ($scope.setPlayerMode) $scope.setPlayerMode(false);
         });
 	}
 ]);
