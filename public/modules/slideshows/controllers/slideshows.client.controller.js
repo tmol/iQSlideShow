@@ -7,6 +7,7 @@ angular.module('slideshows').controller('SlideshowsController', ['$scope', '$sta
         $scope.currentSlide = null;
         $scope.animationTypes = ["enter-left", "enter-right", "enter-bottom", "enter-top"]
         $scope.$parent.hideHeader = false;
+        $scope.$parent.playerMode = false;
         
         Templates.getAll(function(response, err){
             $scope.templates = response;
