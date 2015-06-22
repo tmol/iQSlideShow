@@ -15,5 +15,8 @@ angular.module('core').controller('ApplicationController', ['$scope', 'Authentic
             else if ($event.keyCode == 37)
                 $rootScope.$broadcast("leftArrowPressed");
         }
+        $scope.setPlayerMode = function(value){
+            $scope.playerMode = value;
+        }
 	}
 ]);

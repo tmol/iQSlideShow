@@ -5,7 +5,8 @@ angular.module('player').controller('PlayerController', ['$scope','$stateParams'
 		$scope.slideName=$stateParams.slideName;
 		var slideNumber = -1;
 		$scope.slides = [];
-        $scope.$parent.playerMode = true;
+        if ($scope.setPlayerMode) $scope.setPlayerMode(true);
+        
         $scope.lastTimeout = null;
         
         var cancelTimeOut = function(){

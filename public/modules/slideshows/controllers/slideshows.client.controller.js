@@ -6,8 +6,7 @@ angular.module('slideshows').controller('SlideshowsController', ['$scope', '$sta
 		$scope.authentication = Authentication;
         $scope.currentSlide = null;
         $scope.animationTypes = ["enter-left", "enter-right", "enter-bottom", "enter-top"]
-        $scope.$parent.hideHeader = false;
-        $scope.$parent.playerMode = false;
+        if ($scope.setPlayerMode) $scope.setPlayerMode(false);
         
         Templates.getAll(function(response, err){
             $scope.templates = response;
