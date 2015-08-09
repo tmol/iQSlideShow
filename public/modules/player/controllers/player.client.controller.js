@@ -1,9 +1,21 @@
 'use strict';
-angular.module('player').controller('PlayerController', ['$scope','$stateParams','$state','$timeout','Slides','CssInjector','$interval',
-	function($scope, $stateParams, $state, $timeout,Slides,CssInjector,$interval) {
+angular.module('player').controller('PlayerController', ['$scope','$stateParams','$state','$timeout','Slides','CssInjector','$interval','$location',
+	function($scope, $stateParams, $state, $timeout,Slides,CssInjector,$interval,$location) {
 		jQuery("#app-header").hide();
 		$scope.slideName=$stateParams.slideName;
+        $scope.qrConfig ={
+            slideUrl: $location.$$absUrl,
+            size:100,
+          correctionLevel:'',
+          typeNumber:0,
+          inputMode:'',
+          image:true
+        }
+        
 		var slideNumber = -1;
+        if ($stateParams.slideNumber){
+            slideNumber = $stateParams.slideNumber-1;
+        }
 		$scope.slides = [];
         if ($scope.setPlayerMode) $scope.setPlayerMode(true);
         
@@ -33,7 +45,9 @@ angular.module('player').controller('PlayerController', ['$scope','$stateParams'
             slide.content.templateUrl = 'modules/slideshows/slideTemplates/'+(slide.templateName||'default')+'/slide.html';
 
             CssInjector.inject($scope,'modules/slideshows/slideTemplates/'+(slide.templateName||'default')+'/slide.css');
-
+            
+            $scope.qrConfig.slideUrl = $location.$$absUrl; 
+            
             $state.go("player.slide",{
                 slide:slide.content
             })
@@ -43,24 +57,20 @@ angular.module('player').controller('PlayerController', ['$scope','$stateParams'
             }
 		}
         
-		var slideShow = function(s){
-            $scope.slides = s;
+		var slideShow = function(){
             $scope.lastTimeout = $timeout(loadNextSlide,1);
 		}
         
-		var loadSildes = function(){
+        
+		var updateSildes = function(callback){           
+            
 			Slides.get({slideId:$stateParams.slideName}, function(result){
-                slideShow(result.slides);
+               $scope.slides = result.slides;
+               if (callback) callback(result); 
 			})
 		}	
         
-		loadSildes();
-        
-        var updateSildes = function(){
-			Slides.get({slideId:$stateParams.slideName}, function(result){
-                $scope.slides = result.slides;
-			})
-		}	
+        updateSildes(slideShow);
         
         var updateSlidesHandle = $interval(updateSildes,10*1000);
         

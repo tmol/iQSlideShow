@@ -6,7 +6,7 @@ angular.module('player').config(['$stateProvider',
 		// Player state routing
 		$stateProvider.
 		state('player', {
-			url: '/player/:slideName',
+			url: '/player/:slideName/:slideNumber',
 			templateUrl: 'modules/player/views/player.client.view.html',
 			controller:'PlayerController'
 		});
