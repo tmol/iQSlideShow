@@ -13,9 +13,7 @@ angular.module('player').controller('PlayerController', ['$scope','$stateParams'
         }
         
 		var slideNumber = -1;
-        if ($stateParams.slideNumber){
-            slideNumber = $stateParams.slideNumber-1;
-        }
+        
 		$scope.slides = [];
         if ($scope.setPlayerMode) $scope.setPlayerMode(true);
         
@@ -24,19 +22,15 @@ angular.module('player').controller('PlayerController', ['$scope','$stateParams'
         var cancelTimeOut = function(){
             if ($scope.lastTimeout) $timeout.cancel($scope.lastTimeout);
         }
-		var loadNextSlide = function(){            
-            
-            cancelTimeOut();
-            
-            slideNumber++;
-            if (slideNumber<0 || slideNumber>=$scope.slides.length){
-                slideNumber=0;
+        
+        var loadSlide = function(slideIndex) {
+            if (slideIndex<0 || slideIndex>=$scope.slides.length){
+                slideIndex=0;
             }
 
-            var slide=$scope.slides[slideNumber];
+            var slide=$scope.slides[slideIndex];
             if (!slide || !slide.content) {
-                $timeout(loadNextSlide,1);
-                return;
+                return null;
             }
 
             var duration = slide.durationInSeconds;
@@ -46,16 +40,37 @@ angular.module('player').controller('PlayerController', ['$scope','$stateParams'
 
             CssInjector.inject($scope,'modules/slideshows/slideTemplates/'+(slide.templateName||'default')+'/slide.css');
             
-            $scope.qrConfig.slideUrl = $location.$$absUrl; 
+            $scope.qrConfig.slideUrl = $state.href("player",{
+                slideName:$stateParams.slideName,
+                slideNumber:slideNumber
+            },{absolute:true}); 
             
             $state.go("player.slide",{
                 slide:slide.content
             })
 
-            if (duration) {
-                $scope.lastTimeout = $timeout(loadNextSlide,duration*1000);
+            return slide;
+        }
+        
+		var loadNextSlide = function(){            
+            
+            cancelTimeOut();
+            
+            slideNumber++;
+            if (slideNumber<0 || slideNumber>=$scope.slides.length){
+                slideNumber=0;
+            }
+            var slide = loadSlide(slideNumber);
+            if (!slide){
+                $timeout(loadNextSlide,1);
+                return;
+            }
+
+            if (slide.durationInSeconds) {
+                $scope.lastTimeout = $timeout(loadNextSlide,slide.durationInSeconds*1000);
             }
 		}
+        
         
 		var slideShow = function(){
             $scope.lastTimeout = $timeout(loadNextSlide,1);
@@ -69,10 +84,8 @@ angular.module('player').controller('PlayerController', ['$scope','$stateParams'
                if (callback) callback(result); 
 			})
 		}	
+        $scope.updateSlidesHandle = null;
         
-        updateSildes(slideShow);
-        
-        var updateSlidesHandle = $interval(updateSildes,10*1000);
         
         $scope.$on("onApplicationclick",loadNextSlide);	
         $scope.$on("rightArrowPressed",function(){
@@ -90,8 +103,18 @@ angular.module('player').controller('PlayerController', ['$scope','$stateParams'
         
         $scope.$on("$destroy",function(){
             $timeout.cancel($scope.lastTimeout);
-            $interval.cancel(updateSlidesHandle);
+            $interval.cancel($scope.updateSlidesHandle);
             if ($scope.setPlayerMode) $scope.setPlayerMode(false);
         });
+        
+        if ($stateParams.slideNumber){
+            updateSildes(function(){
+                loadSlide($stateParams.slideNumber);                
+            });  
+            return;
+        }
+        
+        $scope.updateSlidesHandle = $interval(function(){updateSildes()},10*1000);
+        updateSildes(slideShow);                
 	}
 ]);
