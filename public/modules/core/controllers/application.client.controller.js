@@ -14,10 +14,10 @@ angular.module('core').controller('ApplicationController', ['$scope', 'Authentic
                 $rootScope.$broadcast("leftArrowPressed");
         }
         $scope.swipeLeft = function(){
-            $rootScope.$broadcast("rightArrowPressed");
+            $rootScope.$broadcast("leftArrowPressed");
         }
         $scope.swipeRight = function(){
-            $rootScope.$broadcast("leftArrowPressed");
+            $rootScope.$broadcast("rightArrowPressed");
         }
         $scope.setPlayerMode = function(value){
             $scope.playerMode = value;
