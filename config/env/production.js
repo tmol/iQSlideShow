@@ -22,7 +22,9 @@ module.exports = {
                 'public/lib/bootstrap/dist/js/bootstrap.js',
                 'public/lib/textAngular/dist/textAngular-rangy.min.js',
                 'public/lib/textAngular/dist/textAngular-sanitize.min.js',
-                'public/lib/textAngular/dist/textAngular.min.js'
+                'public/lib/textAngular/dist/textAngular.min.js',
+                'public/lib/qrcode/lib/qrcode.min.js',
+                'public/lib/angular-qr/angular-qr.min.js'
 			]
 		},
 		css: [
