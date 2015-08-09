@@ -2,9 +2,7 @@
 angular.module('core').controller('ApplicationController', ['$scope', 'Authentication','$rootScope',
 	function($scope, Authentication,$rootScope) {
 		// This provides Authentication context.
-		$scope.onClick = function(){
-            $rootScope.$broadcast("onApplicationclick");
-        }        
+		     
         $scope.keyDown = function($event){
             if ($event.keyCode == 38)
                 $rootScope.$broadcast("upArrowPressed");
@@ -16,10 +14,10 @@ angular.module('core').controller('ApplicationController', ['$scope', 'Authentic
                 $rootScope.$broadcast("leftArrowPressed");
         }
         $scope.swipeLeft = function(){
-            $rootScope.$broadcast("leftArrowPressed");
+            $rootScope.$broadcast("rightArrowPressed");
         }
         $scope.swipeRight = function(){
-            $rootScope.$broadcast("rightArrowPressed");
+            $rootScope.$broadcast("leftArrowPressed");
         }
         $scope.setPlayerMode = function(value){
             $scope.playerMode = value;

@@ -87,7 +87,6 @@ angular.module('player').controller('PlayerController', ['$scope','$stateParams'
         $scope.updateSlidesHandle = null;
         
         
-        $scope.$on("onApplicationclick",loadNextSlide);	
         $scope.$on("rightArrowPressed",function(){
             cancelTimeOut();
             loadNextSlide();
