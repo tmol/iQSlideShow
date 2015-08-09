@@ -12,6 +12,8 @@
                     </div>
                 </div>
                 
+                
+                
                 <div class="col-md-12">                   
                     <div class="col-md-1 slides-continer">
                         <div class="form-group slides-controllers">
@@ -56,6 +58,12 @@
                                 </div>
                         </div>
                         
+                        <div class="form-group">
+                            <label class="control-label" for="detailsUrl">Details URL</label>
+                            <div class="controls">
+                                <input type="text" data-ng-model="currentSlide.detailsUrl" id="detailsUrl" class="form-control" placeholder="detailsUrl" required>
+                            </div>
+                        </div>
                         <div class="form-group" ng-repeat="(templateElement, value) in templateElements">
                             <label class="control-label">{{value.label}}
                                 

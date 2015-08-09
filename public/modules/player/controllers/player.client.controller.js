@@ -40,7 +40,7 @@ angular.module('player').controller('PlayerController', ['$scope','$stateParams'
 
             CssInjector.inject($scope,'modules/slideshows/slideTemplates/'+(slide.templateName||'default')+'/slide.css');
             
-            $scope.qrConfig.slideUrl = $state.href("player",{
+            $scope.qrConfig.slideUrl = slide.detailsUrl || $state.href("player",{
                 slideName:$stateParams.slideName,
                 slideNumber:slideNumber
             },{absolute:true}); 

@@ -33,6 +33,11 @@ var SlideSchema = new Schema ({
 		required: 'Please fill the Animaion type',
 		trim: true
 	},
+    detailsUrl : {
+		type: String,
+		default: '',
+		trim: true
+	},
 	content : {
 		type: Object,
 		default: {}
