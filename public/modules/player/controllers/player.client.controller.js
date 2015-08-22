@@ -1,34 +1,38 @@
 'use strict';
-angular.module('player').controller('PlayerController', ['$scope','$stateParams','$state','$timeout','Slides','CssInjector','$interval','$location',
-	function($scope, $stateParams, $state, $timeout,Slides,CssInjector,$interval,$location) {
+angular.module('player').controller('PlayerController', ['$scope', '$stateParams', '$state', '$timeout', 'Slides', 'CssInjector', '$interval', '$location', 'PubNub',
+	function ($scope, $stateParams, $state, $timeout, Slides, CssInjector, $interval, $location, PubNub) {
 		jQuery("#app-header").hide();
-		$scope.slideName=$stateParams.slideName;
-        $scope.qrConfig ={
+		$scope.slideName = $stateParams.slideName;
+        $scope.qrConfig = {
             slideUrl: $location.$$absUrl,
-            size:100,
-          correctionLevel:'',
-          typeNumber:0,
-          inputMode:'',
-          image:true
-        }
+            size: 100,
+            correctionLevel: '',
+            typeNumber: 0,
+            inputMode: '',
+            image: true
+        };
         
 		var slideNumber = -1;
         
 		$scope.slides = [];
-        if ($scope.setPlayerMode) $scope.setPlayerMode(true);
+        if ($scope.setPlayerMode) {
+            $scope.setPlayerMode(true);
+        }
         
         $scope.lastTimeout = null;
         
-        var cancelTimeOut = function(){
-            if ($scope.lastTimeout) $timeout.cancel($scope.lastTimeout);
-        }
+        var cancelTimeOut = function () {
+            if ($scope.lastTimeout) {
+                $timeout.cancel($scope.lastTimeout);
+            }
+        };
         
-        var loadSlide = function(slideIndex) {
-            if (slideIndex<0 || slideIndex>=$scope.slides.length){
-                slideIndex=0;
+        var loadSlide = function (slideIndex) {
+            if (slideIndex < 0 || slideIndex >= $scope.slides.length) {
+                slideIndex = 0;
             }
 
-            var slide=$scope.slides[slideIndex];
+            var slide = $scope.slides[slideIndex];
             if (!slide || !slide.content) {
                 return null;
             }
@@ -76,6 +80,17 @@ angular.module('player').controller('PlayerController', ['$scope','$stateParams'
             $scope.lastTimeout = $timeout(loadNextSlide,1);
 		}
         
+        var theChannel = 'iQSlideShow';
+        PubNub.ngSubscribe({ channel: theChannel });
+
+        $scope.$on(PubNub.ngMsgEv(theChannel), function(event, payload) {
+            // payload contains message, channel, env...
+            console.log('got a message event:', payload);
+        })
+        $scope.$on(PubNub.ngPrsEv(theChannel), function(event, payload) {
+            // payload contains message, channel, env...
+            console.log('got a presence event:', payload);
+        })
         
 		var updateSildes = function(callback){           
             
@@ -83,14 +98,25 @@ angular.module('player').controller('PlayerController', ['$scope','$stateParams'
                $scope.slides = result.slides;
                if (callback) callback(result); 
 			})
-		}	
+
+            PubNub.ngPublish({
+                channel: theChannel,
+                message: {
+                            action : 'presence',
+                            id : $scope.id,
+                            slideShowId : $scope.slideName
+                         }
+            });
+
+		}
+        
         $scope.updateSlidesHandle = null;
-        
-        
+
         $scope.$on("rightArrowPressed",function(){
             cancelTimeOut();
             loadNextSlide();
         });	
+
         $scope.$on("leftArrowPressed",function(){
             cancelTimeOut();
             slideNumber-=2;
@@ -114,6 +140,14 @@ angular.module('player').controller('PlayerController', ['$scope','$stateParams'
         }
         
         $scope.updateSlidesHandle = $interval(function(){updateSildes()},10*1000);
+        $scope.id = PUBNUB.unique();
+
+        PubNub.init({
+          publish_key : 'pub-c-906ea9e7-a221-48ed-a2d8-5475a6214f45',
+          subscribe_key : 'sub-c-dd5eeffe-481e-11e5-b63d-02ee2ddab7fe',
+          uuid : $scope.id
+        });
+
         updateSildes(slideShow);                
 	}
 ]);

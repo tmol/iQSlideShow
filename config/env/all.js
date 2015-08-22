@@ -14,25 +14,27 @@ module.exports = {
 		lib: {
 			css: [
 				'public/lib/bootstrap/dist/css/bootstrap.css',
-				'public/lib/bootstrap/dist/css/bootstrap-theme.css',
+				'public/lib/bootstrap/dist/css/bootstrap-theme.css'
 			],
 			js: [
 				'public/lib/angular/angular.js',
-				'public/lib/angular-resource/angular-resource.js', 
-				'public/lib/angular-cookies/angular-cookies.js', 
-				'public/lib/angular-animate/angular-animate.js', 
-				'public/lib/angular-touch/angular-touch.js', 
-				'public/lib/angular-sanitize/angular-sanitize.js', 
+				'public/lib/angular-resource/angular-resource.js',
+				'public/lib/angular-cookies/angular-cookies.js',
+				'public/lib/angular-animate/angular-animate.js',
+				'public/lib/angular-touch/angular-touch.js',
+				'public/lib/angular-sanitize/angular-sanitize.js',
 				'public/lib/angular-ui-router/release/angular-ui-router.js',
 				'public/lib/angular-ui-utils/ui-utils.js',
 				'public/lib/angular-bootstrap/ui-bootstrap-tpls.js',
-                'public/lib/jquery/dist/jquery.js',                
-                'public/lib/bootstrap/dist/js/bootstrap.js',                
+                'public/lib/jquery/dist/jquery.js',
+                'public/lib/bootstrap/dist/js/bootstrap.js',
                 'public/lib/textAngular/dist/textAngular-rangy.min.js',
                 'public/lib/textAngular/dist/textAngular-sanitize.min.js',
                 'public/lib/textAngular/dist/textAngular.min.js',
                 'public/lib/qrcode/lib/qrcode.min.js',
-                'public/lib/angular-qr/angular-qr.min.js'
+                'public/lib/angular-qr/angular-qr.min.js',
+                'http://cdn.pubnub.com/pubnub.min.js',
+                'public/lib/pubnub-angular/lib/pubnub-angular.js'
 			]
 		},
 		css: [
