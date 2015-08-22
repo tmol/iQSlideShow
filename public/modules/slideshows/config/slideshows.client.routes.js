@@ -5,6 +5,10 @@ angular.module('slideshows').config(['$stateProvider',
 	function($stateProvider) {
 		// Slideshows state routing
 		$stateProvider.
+		state('controller', {
+			url: '/controller',
+			templateUrl: 'modules/slideshows/views/controller.client.view.html'
+		}).
 		state('listSlideshows', {
 			url: '/slideshows',
 			templateUrl: 'modules/slideshows/views/list-slideshows.client.view.html'

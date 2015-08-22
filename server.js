@@ -5,7 +5,8 @@
 var init = require('./config/init')(),
 	config = require('./config/config'),
 	mongoose = require('mongoose'),
-	chalk = require('chalk');
+	chalk = require('chalk'),
+    connectedDevies = require('./app/modules/connectedDevices');
 
 /**
  * Main application entry file.
@@ -25,6 +26,9 @@ var app = require('./config/express')(db);
 
 // Bootstrap passport config
 require('./config/passport')();
+
+// init connectedDevies
+connectedDevies.connectedDevicesSingleton.getInstance().init();
 
 // Start the app by listening on <port>
 app.listen(config.port);

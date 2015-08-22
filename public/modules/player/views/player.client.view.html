@@ -1,12 +1,17 @@
-    <div style="text-align:center;background-color: #ffffff;height:100%;width:100%">
-        <section data-ng-controller="PlayerController"   style=" margin-left: auto;  margin-right: auto;  text-align: initial;display:inline-block">	
-            <section class="{{animationType}} slideShow" style="zoom:{{zoomPercent}}%" ui-view="" style="position:absolute">
+        <div style="text-align:center;background-color: #ffffff;height:100%;width:100%">
+            <section data-ng-controller="PlayerController"   style=" margin-left: auto;  margin-right: auto;  text-align: initial;display:inline-block">
+                <section class="{{animationType}} slideShow" style="zoom:{{zoomPercent}}%" ui-view="" style="position:absolute">
+                </section>
             </section>
-        </section>
-    </div>
-    <div style="position: fixed;
-      right: 10px;
-      bottom: 10px;
-      background-color: red;">
-        <qr text="qrConfig.slideUrl" type-number="qrConfig.typeNumber" correction-level="qrConfig.correctionLevel" size="qrConfig.size" input-mode="qrConfig.inputMode" image="qrConfig.image"></qr>
-    </div>
+        </div>
+        <div style="position: fixed;
+          left: 10px;
+          bottom: 10px;">
+            PlayerID : {{id}}
+        </div>
+        <div style="position: fixed;
+          right: 10px;
+          bottom: 10px;
+          background-color: red;">
+            <qr text="qrConfig.slideUrl" type-number="qrConfig.typeNumber" correction-level="qrConfig.correctionLevel" size="qrConfig.size" input-mode="qrConfig.inputMode" image="qrConfig.image">                </qr>
+        </div>
