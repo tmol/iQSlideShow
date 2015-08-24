@@ -3,27 +3,31 @@ var messageEngineFactory = require('../modules/messaging/messagingEngineFactory'
 
 exports.connectedDevicesSingleton = (function () {
     'use strict';
+
     var instance;
 
     function init() {
+
+        var devices = [],
+            device;
+
         return {
+
+            devices : devices,
+
             init : function () {
-                var devices = [],
-                    device;
+                messageEngineFactory.initEngine(messageReceived);
 
                 function messageReceived(message) {
                     console.log('Action is ' +  message.action + ' for device with id: ' + message.id + ' playing slideshow ' + message.slideShowId);
                     if (message.action === 'presence') {
-                        var existingDeviceIndex = lodash.findIndex(devices, function (device) {
-                            return devices.id === message.id;
+                        var existingDeviceIndex = lodash.remove(devices, function (device) {
+                            return device.id === message.id;
                         });
                         device = { id : message.id, slideShowId : message.slideShowId };
-                        if (existingDeviceIndex !== 0) {
-                            device = devices[existingDeviceIndex];
-                        }
+                        devices.push(device);
+                        console.log('number of devices: ' + devices.length);
                     }
-
-                    messageEngineFactory.initEngine(messageReceived);
                 }
             }
         };

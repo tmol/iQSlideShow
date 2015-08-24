@@ -1,0 +1,16 @@
+<section data-ng-controller="DevicesController" style="margin-top: 58px;">
+    <div class="page-header">
+        <h1>Manage connected devices</h1>
+    </div>
+    <div class="col-md-12">
+        <div ng-repeat="device in devices" class="form-group col-md-12">
+            <label class="control-label" for="name">{{device.id}}</label>
+            <div class="form-group slides-controllers">
+                <select ng-options="device.id for device in devices" ng-model="selectedTemplate"></select>
+                <div class="slides-ops">
+                    <input type="button" class="btn btn-default" ng-click="setSlideShow(device.id)" value="Set"></input>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

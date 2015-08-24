@@ -116,5 +116,4 @@ exports.getTemplates = function(req, res) {
 			res.jsonp(files);
 		}        
     });
-    
 }

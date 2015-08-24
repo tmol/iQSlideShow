@@ -2,9 +2,9 @@
 
 (function() {
 	// Controller Controller Spec
-	describe('Controller Controller Tests', function() {
+	describe('Devices Controller Tests', function() {
 		// Initialize global variables
-		var ControllerController,
+		var DevicesController,
 			scope,
 			$httpBackend,
 			$stateParams,
@@ -45,7 +45,7 @@
 			$location = _$location_;
 
 			// Initialize the Controller controller.
-			ControllerController = $controller('ControllerController', {
+			ControllerController = $controller('DevicesController', {
 				$scope: scope
 			});
 		}));
