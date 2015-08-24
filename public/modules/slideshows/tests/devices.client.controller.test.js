@@ -1,8 +1,10 @@
-'use strict';
+/*jslint nomen: true, vars: true*/
+/*global describe, jasmine, angular, beforeEach, module, ApplicationConfiguration, inject, it*/
+(function () {
+    'use strict';
 
-(function() {
 	// Controller Controller Spec
-	describe('Devices Controller Tests', function() {
+	describe('Devices Controller Tests', function () {
 		// Initialize global variables
 		var DevicesController,
 			scope,
@@ -15,11 +17,11 @@
 		// the responses exactly. To solve the problem, we define a new toEqualData Jasmine matcher.
 		// When the toEqualData matcher compares two objects, it takes only object properties into
 		// account and ignores methods.
-		beforeEach(function() {
+		beforeEach(function () {
 			jasmine.addMatchers({
-				toEqualData: function(util, customEqualityTesters) {
+				toEqualData: function (util, customEqualityTesters) {
 					return {
-						compare: function(actual, expected) {
+						compare: function (actual, expected) {
 							return {
 								pass: angular.equals(actual, expected)
 							};
@@ -35,7 +37,7 @@
 		// The injector ignores leading and trailing underscores here (i.e. _$httpBackend_).
 		// This allows us to inject a service but then attach it to a variable
 		// with the same name as the service.
-		beforeEach(inject(function($controller, $rootScope, _$location_, _$stateParams_, _$httpBackend_) {
+		beforeEach(inject(function ($controller, $rootScope, _$location_, _$stateParams_, _$httpBackend_) {
 			// Set a new global scope
 			scope = $rootScope.$new();
 
@@ -45,12 +47,12 @@
 			$location = _$location_;
 
 			// Initialize the Controller controller.
-			ControllerController = $controller('DevicesController', {
+			var ControllerController = $controller('DevicesController', {
 				$scope: scope
 			});
 		}));
 
-		it('Should do some controller test', inject(function() {
+		it('Should do some controller test', inject(function () {
 			// The test logic
 			// ...
 		}));
