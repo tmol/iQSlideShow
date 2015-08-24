@@ -1,8 +1,9 @@
+/*global angular*/
 (function () {
     'use strict';
 
     //Slideshows service used to communicate Slideshows REST endpoints
-    window.angular.module('slideshows').factory('Slideshows', ['$resource',
+    angular.module('slideshows').factory('Slideshows', ['$resource',
         function ($resource) {
             return $resource('slideshows/:slideshowId',
                              { slideshowId: '@_id' },

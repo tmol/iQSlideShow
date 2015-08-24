@@ -1,9 +1,10 @@
 /*jslint nomen: true, vars: true*/
+/*global angular*/
 (function () {
     'use strict';
 
     // Slideshows controller
-    window.angular.module('slideshows').controller('SlideshowsController', ['$scope', '$stateParams', '$location', 'Authentication', 'Slideshows', 'Templates', '$timeout',
+    angular.module('slideshows').controller('SlideshowsController', ['$scope', '$stateParams', '$location', 'Authentication', 'Slideshows', 'Templates', '$timeout',
         function ($scope, $stateParams, $location, Authentication, Slideshows, Templates, $timeout) {
             $scope.authentication = Authentication;
             $scope.currentSlide = null;

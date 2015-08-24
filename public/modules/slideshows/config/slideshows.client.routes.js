@@ -1,8 +1,9 @@
+/*global angular*/
 (function () {
     'use strict';
 
     //Setting up route
-    window.angular.module('slideshows').config(['$stateProvider',
+    angular.module('slideshows').config(['$stateProvider',
         function ($stateProvider) {
             // Slideshows state routing
             $stateProvider.
