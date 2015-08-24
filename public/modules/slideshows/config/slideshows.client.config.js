@@ -8,6 +8,5 @@
             Menus.addMenuItem('topbar', 'Slideshows', 'slideshows', 'dropdown', '/slideshows(/create)?');
             Menus.addSubMenuItem('topbar', 'slideshows', 'List Slideshows', 'slideshows');
             Menus.addSubMenuItem('topbar', 'slideshows', 'New Slideshow', 'slideshows/create');
-        }
-        ]);
+        }]);
 }());
