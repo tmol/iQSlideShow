@@ -1,125 +1,144 @@
-'use strict';
+/*jslint nomen: true, vars: true*/
+(function () {
+    'use strict';
 
-// Slideshows controller
-angular.module('slideshows').controller('SlideshowsController', ['$scope', '$stateParams', '$location', 'Authentication', 'Slideshows', 'Templates','$timeout',
-	function($scope, $stateParams, $location, Authentication, Slideshows, Templates,$timeout) {
-		$scope.authentication = Authentication;
-        $scope.currentSlide = null;
-        $scope.animationTypes = ["enter-left", "enter-right", "enter-bottom", "enter-top"]
-        if ($scope.setPlayerMode) $scope.setPlayerMode(false);
-        
-        Templates.getAll(function(response, err){
-            $scope.templates = response;
-        });
+    // Slideshows controller
+    window.angular.module('slideshows').controller('SlideshowsController', ['$scope', '$stateParams', '$location', 'Authentication', 'Slideshows', 'Templates', '$timeout',
+        function ($scope, $stateParams, $location, Authentication, Slideshows, Templates, $timeout) {
+            $scope.authentication = Authentication;
+            $scope.currentSlide = null;
+            $scope.animationTypes = ["enter-left", "enter-right", "enter-bottom", "enter-top"];
+            if ($scope.setPlayerMode) {
+                $scope.setPlayerMode(false);
+            }
 
-		// Create new Slideshow
-		$scope.create = function() {
-			// Create new Slideshow object
-			var slideshow = new Slideshows ({
-				name: this.name,
-				slides: this.slides
-			});
+            Templates.getAll(function (response, err) {
+                $scope.templates = response;
+            });
 
-			// Redirect after save
-			slideshow.$save(function(response) {
-				$location.path('slideshows/' + response._id);
+            // Create new Slideshow
+            $scope.create = function () {
+                // Create new Slideshow object
+                var slideshow = new Slideshows({
+                    name: this.name,
+                    slides: this.slides
+                });
 
-				// Clear form fields
-				$scope.name = '';
-			}, function(errorResponse) {
-				$scope.error = errorResponse.data.message;
-			});
-		};
+                // Redirect after save
+                slideshow.$save(function (response) {
+                    $location.path('slideshows/' + response._id);
 
-		// Remove existing Slideshow
-		$scope.remove = function(slideshow) {
-			if ( slideshow ) { 
-				slideshow.$remove();
+                    // Clear form fields
+                    $scope.name = '';
+                }, function (errorResponse) {
+                    $scope.error = errorResponse.data.message;
+                });
+            };
 
-				for (var i in $scope.slideshows) {
-					if ($scope.slideshows [i] === slideshow) {
-						$scope.slideshows.splice(i, 1);
-					}
-				}
-			} else {
-				$scope.slideshow.$remove(function() {
-					$location.path('slideshows');
-				});
-			}
-		};
+            // Remove existing Slideshow
+            $scope.remove = function (slideshow) {
+                if (slideshow) {
+                    slideshow.$remove();
+                    var i;
+                    for (i in $scope.slideshows) {
+                        if ($scope.slideshows[i] === slideshow) {
+                            $scope.slideshows.splice(i, 1);
+                        }
+                    }
+                } else {
+                    $scope.slideshow.$remove(function () {
+                        $location.path('slideshows');
+                    });
+                }
+            };
 
-		// Update existing Slideshow
-		$scope.update = function() {
-			var slideshow = $scope.slideshow;
+            // Update existing Slideshow
+            $scope.update = function () {
+                var slideshow = $scope.slideshow;
 
-			slideshow.$update(function() {
-				$location.path('slideshows/' + slideshow._id);
-			}, function(errorResponse) {
-				$scope.error = errorResponse.data.message;
-			});
-		};
+                slideshow.$update(function () {
+                    $location.path('slideshows/' + slideshow._id);
+                }, function (errorResponse) {
+                    $scope.error = errorResponse.data.message;
+                });
+            };
 
-		// Find a list of Slideshows
-		$scope.find = function() {
-			$scope.slideshows = Slideshows.query();
-		};
+            // Find a list of Slideshows
+            $scope.find = function () {
+                $scope.slideshows = Slideshows.query();
+            };
 
-		// Find existing Slideshow
-		$scope.findOne = function() {
-			$scope.slideshow = Slideshows.get({ 
-				slideshowId: $stateParams.slideshowId
-			});
-		};
-        
-        $scope.setCurrentSlide = function(slide) {
-            $scope.templateElements={};
-            $scope.currentSlide = slide;
-            updateTemplate();
-        }
-        
-        $scope.addNewSlide = function() {
-            $scope.currentSlide =  { 
+            // Find existing Slideshow
+            $scope.findOne = function () {
+                $scope.slideshow = Slideshows.get({
+                    slideshowId: $stateParams.slideshowId
+                });
+            };
+
+            var updateTemplate = function () {
+                $scope.currentSlide.templateUrl = '';
+                $timeout(function () {
+                    $scope.currentSlide.templateUrl = 'modules/slideshows/slideTemplates/' + ($scope.currentSlide.templateName || 'default') + '/slide.html';
+                    $scope.$apply();
+                }, 10);
+            };
+
+            $scope.setCurrentSlide = function (slide) {
+                $scope.templateElements = {};
+                $scope.currentSlide = slide;
+                updateTemplate();
+            };
+
+            $scope.addNewSlide = function () {
+                $scope.currentSlide =  {
                     templateName: $scope.selectedTemplate,
-                    content:{}
+                    content : {}
                 };
-            $scope.slideshow.slides.push($scope.currentSlide);
-            updateTemplate();
-        }
-        
-        var updateTemplate = function() {
-            $scope.currentSlide.templateUrl = '';
-            $timeout(function(){
-                $scope.currentSlide.templateUrl = 'modules/slideshows/slideTemplates/'+($scope.currentSlide.templateName||'default')+'/slide.html';
-                $scope.$apply();
-            },10);
-        }
-        
-        $scope.moveSlideUp = function(slide){
-            var slideIndex = $scope.slideshow.slides.indexOf(slide);
-            if (slideIndex==0) return;
-            var tmp = $scope.slideshow.slides[slideIndex-1];
-            $scope.slideshow.slides[slideIndex-1] = slide;
-            $scope.slideshow.slides[slideIndex] = tmp;
-        };
-        
-        $scope.moveSlideDown = function(slide){
-            var slideIndex = $scope.slideshow.slides.indexOf(slide);
-            if (slideIndex==$scope.slideshow.slides.length-1) return;
-            var tmp = $scope.slideshow.slides[slideIndex+1];
-            $scope.slideshow.slides[slideIndex+1] = slide;
-            $scope.slideshow.slides[slideIndex] = tmp;
-        };
-        
-        $scope.isCurrentSlide = function(slide){
-            if (!$scope.currentSlide) return false;
-            return $scope.currentSlide._id==slide._id;
-        }
-        
-        $scope.removeCurrentSlide = function(){
-            if (!$scope.currentSlide) return;
-            var slideIndex = $scope.slideshow.slides.indexOf($scope.currentSlide);
-            $scope.slideshow.slides.splice(slideIndex, 1);
-        }
-        
-	}
-]);
+                $scope.slideshow.slides.push($scope.currentSlide);
+                updateTemplate();
+            };
+
+
+
+            $scope.moveSlideUp = function (slide) {
+                var slideIndex, tmp;
+
+                slideIndex = $scope.slideshow.slides.indexOf(slide);
+                if (slideIndex === 0) {
+                    return;
+                }
+
+                tmp = $scope.slideshow.slides[slideIndex - 1];
+                $scope.slideshow.slides[slideIndex - 1] = slide;
+                $scope.slideshow.slides[slideIndex] = tmp;
+            };
+
+            $scope.moveSlideDown = function (slide) {
+                var slideIndex, tmp;
+
+                slideIndex = $scope.slideshow.slides.indexOf(slide);
+                if (slideIndex === $scope.slideshow.slides.length - 1) {
+                    return;
+                }
+
+                tmp = $scope.slideshow.slides[slideIndex + 1];
+                $scope.slideshow.slides[slideIndex + 1] = slide;
+                $scope.slideshow.slides[slideIndex] = tmp;
+            };
+
+            $scope.isCurrentSlide = function (slide) {
+                if (!$scope.currentSlide) {
+                    return false;
+                }
+                return $scope.currentSlide._id === slide._id;
+            };
+
+            $scope.removeCurrentSlide = function () {
+                if (!$scope.currentSlide) {
+                    return;
+                }
+                var slideIndex = $scope.slideshow.slides.indexOf($scope.currentSlide);
+                $scope.slideshow.slides.splice(slideIndex, 1);
+            };
+        }]);
+}());
