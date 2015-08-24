@@ -1,25 +1,22 @@
-'use strict';
-
-(function() {
+/*jslint nomen: true, vars: true*/
+/*global describe, jasmine, angular, beforeEach, module, ApplicationConfiguration, inject, it, expect*/
+(function () {
+    'use strict';
 	// Slideshows Controller Spec
-	describe('Slideshows Controller Tests', function() {
+	describe('Slideshows Controller Tests', function () {
 		// Initialize global variables
-		var SlideshowsController,
-		scope,
-		$httpBackend,
-		$stateParams,
-		$location;
+		var SlideshowsController, scope, $httpBackend, $stateParams, $location;
 
 		// The $resource service augments the response object with methods for updating and deleting the resource.
 		// If we were to use the standard toEqual matcher, our tests would fail because the test values would not match
 		// the responses exactly. To solve the problem, we define a new toEqualData Jasmine matcher.
 		// When the toEqualData matcher compares two objects, it takes only object properties into
 		// account and ignores methods.
-		beforeEach(function() {
+		beforeEach(function () {
 			jasmine.addMatchers({
-				toEqualData: function(util, customEqualityTesters) {
+				toEqualData: function (util, customEqualityTesters) {
 					return {
-						compare: function(actual, expected) {
+						compare: function (actual, expected) {
 							return {
 								pass: angular.equals(actual, expected)
 							};
@@ -35,7 +32,7 @@
 		// The injector ignores leading and trailing underscores here (i.e. _$httpBackend_).
 		// This allows us to inject a service but then attach it to a variable
 		// with the same name as the service.
-		beforeEach(inject(function($controller, $rootScope, _$location_, _$stateParams_, _$httpBackend_) {
+		beforeEach(inject(function ($controller, $rootScope, _$location_, _$stateParams_, _$httpBackend_) {
 			// Set a new global scope
 			scope = $rootScope.$new();
 
@@ -50,7 +47,7 @@
 			});
 		}));
 
-		it('$scope.find() should create an array with at least one Slideshow object fetched from XHR', inject(function(Slideshows) {
+		it('$scope.find() should create an array with at least one Slideshow object fetched from XHR', inject(function (Slideshows) {
 			// Create sample Slideshow using the Slideshows service
 			var sampleSlideshow = new Slideshows({
 				name: 'New Slideshow'
@@ -70,7 +67,7 @@
 			expect(scope.slideshows).toEqualData(sampleSlideshows);
 		}));
 
-		it('$scope.findOne() should create an array with one Slideshow object fetched from XHR using a slideshowId URL parameter', inject(function(Slideshows) {
+		it('$scope.findOne() should create an array with one Slideshow object fetched from XHR using a slideshowId URL parameter', inject(function (Slideshows) {
 			// Define a sample Slideshow object
 			var sampleSlideshow = new Slideshows({
 				name: 'New Slideshow'
@@ -90,7 +87,7 @@
 			expect(scope.slideshow).toEqualData(sampleSlideshow);
 		}));
 
-		it('$scope.create() with valid form data should send a POST request with the form input values and then locate to new object URL', inject(function(Slideshows) {
+		it('$scope.create() with valid form data should send a POST request with the form input values and then locate to new object URL', inject(function (Slideshows) {
 			// Create a sample Slideshow object
 			var sampleSlideshowPostData = new Slideshows({
 				name: 'New Slideshow'
@@ -119,7 +116,7 @@
 			expect($location.path()).toBe('/slideshows/' + sampleSlideshowResponse._id);
 		}));
 
-		it('$scope.update() should update a valid Slideshow', inject(function(Slideshows) {
+		it('$scope.update() should update a valid Slideshow', inject(function (Slideshows) {
 			// Define a sample Slideshow put data
 			var sampleSlideshowPutData = new Slideshows({
 				_id: '525cf20451979dea2c000001',
@@ -140,7 +137,7 @@
 			expect($location.path()).toBe('/slideshows/' + sampleSlideshowPutData._id);
 		}));
 
-		it('$scope.remove() should send a DELETE request with a valid slideshowId and remove the Slideshow from the scope', inject(function(Slideshows) {
+		it('$scope.remove() should send a DELETE request with a valid slideshowId and remove the Slideshow from the scope', inject(function (Slideshows) {
 			// Create new Slideshow object
 			var sampleSlideshow = new Slideshows({
 				_id: '525a8422f6d0f87f0e407a33'
