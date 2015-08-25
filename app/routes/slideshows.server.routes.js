@@ -24,8 +24,12 @@ module.exports = function(app) {
 	app.route('/devices')
 		.get(devices.getDevices);
 
+    app.route('/devices/:deviceId')
+		.get(devices.renderDevice);
 		
 	// Finish by binding the Slideshow middleware
 	app.param('slideshowId', slideshows.slideshowByID);
     app.param('slideNumber', slideshows.slideByNumber);
+
+    app.param('deviceId', devices.getDeviceById);
 };
