@@ -6,9 +6,9 @@
         <div ng-repeat="device in devices" class="form-group col-md-12">
             <label class="control-label" for="name">{{device.id}}</label>
             <div class="form-group slides-controllers">
-                <select ng-options="device.id for device in devices" ng-model="selectedTemplate"></select>
+                <select ng-model="device.slideShowId" ng-options="slideshow._id as slideshow.name for slideshow in slideshows"></select>
                 <div class="slides-ops">
-                    <input type="button" class="btn btn-default" ng-click="setSlideShow(device.id)" value="Set"></input>
+                    <input type="button" class="btn btn-default" ng-click="setSlideShow(device)" value="Set"></input>
                 </div>
             </div>
         </div>
