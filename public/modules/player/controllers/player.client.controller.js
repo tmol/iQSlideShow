@@ -5,9 +5,6 @@ angular.module('player').controller('PlayerController', ['$scope', '$stateParams
             return;
         }
         $scope.initialised = true;
-        if ($state.current.name == "player.slide") {
-            return;
-        }
         $scope.deviceId = $stateParams.deviceId || PUBNUB.unique();
 
         PubNub.init({
