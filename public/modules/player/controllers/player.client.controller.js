@@ -33,7 +33,7 @@ angular.module('player').controller('PlayerController', ['$scope', '$stateParams
         
         $scope.lastTimeout = null;
         
-        var cancelTimeOut = function () {
+        var cancelLastTimeout = function () {
             if ($scope.lastTimeout) {
                 $timeout.cancel($scope.lastTimeout);
             }
@@ -77,7 +77,7 @@ angular.module('player').controller('PlayerController', ['$scope', '$stateParams
         
 		var loadNextSlide = function(){            
             
-            cancelTimeOut();
+            cancelLastTimeout();
             
             slideNumber++;
             if (slideNumber<0 || slideNumber>=$scope.slides.length){
@@ -104,29 +104,40 @@ angular.module('player').controller('PlayerController', ['$scope', '$stateParams
 
         PubNub.ngSubscribe({ channel: theChannel });
 
-
         $scope.delayedRequest = null;
 
         $scope.$on(PubNub.ngMsgEv(theChannel), function(event, payload) {
             var pub = PubNub;
             // payload contains message, channel, env...
-            if (payload.message.action === "setSlideShow" && payload.message.id === $scope.deviceId) {
-                //If the state is changed to quick, errors can occur.
-                $timeout.cancel($scope.delayedRequest);
-                $scope.delayedRequest = $timeout(function() {
-                    $timeout.cancel($scope.lastTimeout);
-                    $interval.cancel($scope.updateSlidesHandle);
-                    $scope.slides = [];
-                    $state.go("player",{ slideName : payload.message.slideShowId , deviceId : $scope.deviceId},{reload : true});
-                    console.log('change slide to :', payload.message.slideShowId);
-                },1000);
+            if (payload.message.action === "deviceSetup"
+                && payload.message.deviceId === $scope.deviceId
+                && payload.message.content.slideShowIdToPlay) {
+
+                switchSlideShow(payload.message.content.slideShowIdToPlay);
+
+                if (payload.message.content.minutesToPlayBeforeGoingBackToDefaultSlideShow) {
+                    $scope.revertToOriginalSlideShow = null;
+                    $scope.revertToOriginalSlideShow = $timeout(function() {
+                        switchSlideShow($scope.slideName);
+                    }, payload.message.content.minutesToPlayBeforeGoingBackToDefaultSlideShow * 60 * 1000);
+                }
             }
         })
 
-        $scope.$on(PubNub.ngPrsEv(theChannel), function(event, payload) {
-            // payload contains message, channel, env...
-            console.log('got a presence event:', payload);
-        })
+        var switchSlideShow = function(slideShowId) {
+            //If the state is changed to quick, errors can occur.
+            $timeout.cancel($scope.delayedRequest);
+            $scope.delayedRequest = $timeout(function() {
+                cancelLastTimeout();
+                $interval.cancel($scope.updateSlidesHandle);
+                if ($scope.revertToOriginalSlideShow) {
+                    $timeout.cancel($scope.revertToOriginalSlideShow);
+                }
+                $scope.slides = [];
+                $state.go("player",{ slideName : slideShowId , deviceId : $scope.deviceId},{reload : true});
+                console.log('change slide to :', slideShowId);
+            },1000);
+        }
         
 		var updateSildes = function(callback){           
             
@@ -135,26 +146,29 @@ angular.module('player').controller('PlayerController', ['$scope', '$stateParams
                if (callback) callback(result); 
 			})
 
-            PubNub.ngPublish({
-                channel: theChannel,
-                message: {
-                            action : 'presence',
-                            id : $scope.deviceId,
-                            slideShowId : $scope.slideName
-                         }
-            });
+            if ('true' !== $stateParams.preview)
+            {
+                PubNub.ngPublish({
+                    channel: theChannel,
+                    message: {
+                                action : 'presence',
+                                id : $scope.deviceId,
+                                slideShowId : $scope.slideName
+                             }
+                });
+            }
 
 		}
         
         $scope.updateSlidesHandle = null;
 
         $scope.$on("rightArrowPressed",function(){
-            cancelTimeOut();
+            cancelLastTimeout();
             loadNextSlide();
         });	
 
         $scope.$on("leftArrowPressed",function(){
-            cancelTimeOut();
+            cancelLastTimeout();
             slideNumber-=2;
             if (slideNumber<-1) {
                 slideNumber = $scope.slides.length-2;

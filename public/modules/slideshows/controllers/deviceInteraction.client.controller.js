@@ -28,9 +28,12 @@
                 PubNub.ngPublish({
                     channel: theChannel,
                     message: {
-                        action : 'setSlideShow',
-                        id : $stateParams.deviceId,
-                        slideShowId : device.slideShowId
+                        action : 'deviceSetup',
+                        deviceId  : $stateParams.deviceId,
+                        content : {
+                            slideShowIdToPlay: device.slideShowId,
+                            minutesToPlayBeforeGoingBackToDefaultSlideShow : ApplicationConfiguration.minutesToPlayBeforeGoingBackToDefaultSlideShow
+                        }
                     }
                 });
             };
