@@ -35,6 +35,10 @@ exports.read = function(req, res) {
 	res.jsonp(req.slideshow);
 };
 
+exports.readSlide = function(req, res) {
+    res.jsonp(req.slide);
+};
+
 /**
  * Update a Slideshow
  */
@@ -96,6 +100,12 @@ exports.slideshowByID = function(req, res, next, id) {
 		req.slideshow = slideshow ;
 		next();
 	});
+};
+
+exports.slideByNumber = function(req, res, next, number) {
+    if (!req.slideshow) return next(new Error('Failed to load slide'));
+	req.slide = req.slideshow.slides[number] ;
+	next();
 };
 
 /**

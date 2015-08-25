@@ -11,6 +11,10 @@
                     url: '/devices',
                     templateUrl: 'modules/slideshows/views/devices.client.view.html'
                 }).
+                state('deviceInteraction', {
+                    url: '/deviceInteraction/:deviceId/:slideshowId/:slideNumber',
+                    templateUrl: 'modules/slideshows/views/deviceInteraction.client.view.html'
+                }).
                 state('listSlideshows', {
                     url: '/slideshows',
                     templateUrl: 'modules/slideshows/views/list-slideshows.client.view.html'

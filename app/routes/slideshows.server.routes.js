@@ -15,6 +15,9 @@ module.exports = function(app) {
 		.put(users.requiresLogin, slideshows.hasAuthorization, slideshows.update)
 		.delete(users.requiresLogin, slideshows.hasAuthorization, slideshows.delete);
 
+    app.route('/slideshows/:slideshowId/:slideNumber')
+		.get(slideshows.readSlide)
+
 	app.route('/templates')
 		.get(slideshows.getTemplates);
     
@@ -24,4 +27,5 @@ module.exports = function(app) {
 		
 	// Finish by binding the Slideshow middleware
 	app.param('slideshowId', slideshows.slideshowByID);
+    app.param('slideNumber', slideshows.slideByNumber);
 };

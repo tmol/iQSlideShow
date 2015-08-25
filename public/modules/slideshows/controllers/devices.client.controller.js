@@ -7,12 +7,12 @@
                 $scope.devices = res.devices;
             });
 
-            Slideshows.query(function(res) {
+            Slideshows.query(function (res) {
                 $scope.slideshows = res;
             });
 
-            $scope.setSlideShow = function(device) {
-                idx = 0;
-            }
+            $scope.setSlideShow = function (device) {
+                var idx = 0;
+            };
         }]);
 }());

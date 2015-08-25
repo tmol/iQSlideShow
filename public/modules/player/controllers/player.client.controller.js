@@ -1,7 +1,15 @@
 'use strict';
 angular.module('player').controller('PlayerController', ['$scope', '$stateParams', '$state', '$timeout', 'Slides', 'CssInjector', '$interval', '$location', 'PubNub',
 	function ($scope, $stateParams, $state, $timeout, Slides, CssInjector, $interval, $location, PubNub) {
-		jQuery("#app-header").hide();
+		$scope.id = PUBNUB.unique();
+
+        PubNub.init({
+          publish_key : 'pub-c-906ea9e7-a221-48ed-a2d8-5475a6214f45',
+          subscribe_key : 'sub-c-dd5eeffe-481e-11e5-b63d-02ee2ddab7fe',
+          uuid : $scope.id
+        });
+
+        jQuery("#app-header").hide();
 		$scope.slideName = $stateParams.slideName;
         $scope.qrConfig = {
             slideUrl: $location.$$absUrl,
@@ -44,9 +52,10 @@ angular.module('player').controller('PlayerController', ['$scope', '$stateParams
 
             CssInjector.inject($scope,'modules/slideshows/slideTemplates/'+(slide.templateName||'default')+'/slide.css');
             
-            $scope.qrConfig.slideUrl = slide.detailsUrl || $state.href("player",{
-                slideName:$stateParams.slideName,
-                slideNumber:slideNumber
+            $scope.qrConfig.slideUrl = $state.href("deviceInteraction",{
+                deviceId : $scope.id,
+                slideshowId : $stateParams.slideName,
+                slideNumber : slideNumber
             },{absolute:true}); 
             
             $state.go("player.slide",{
@@ -140,13 +149,6 @@ angular.module('player').controller('PlayerController', ['$scope', '$stateParams
         }
         
         $scope.updateSlidesHandle = $interval(function(){updateSildes()},10*1000);
-        $scope.id = PUBNUB.unique();
-
-        PubNub.init({
-          publish_key : 'pub-c-906ea9e7-a221-48ed-a2d8-5475a6214f45',
-          subscribe_key : 'sub-c-dd5eeffe-481e-11e5-b63d-02ee2ddab7fe',
-          uuid : $scope.id
-        });
 
         updateSildes(slideShow);                
 	}
