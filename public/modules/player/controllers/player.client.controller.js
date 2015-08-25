@@ -1,12 +1,15 @@
 'use strict';
 angular.module('player').controller('PlayerController', ['$scope', '$stateParams', '$state', '$timeout', 'Slides', 'CssInjector', '$interval', '$location', 'PubNub',
 	function ($scope, $stateParams, $state, $timeout, Slides, CssInjector, $interval, $location, PubNub) {
-		$scope.id = PUBNUB.unique();
+		if ($state.current.name == "player.slide") {
+            return;
+        }
+        $scope.deviceId = $stateParams.deviceId || PUBNUB.unique();
 
         PubNub.init({
           publish_key : 'pub-c-906ea9e7-a221-48ed-a2d8-5475a6214f45',
           subscribe_key : 'sub-c-dd5eeffe-481e-11e5-b63d-02ee2ddab7fe',
-          uuid : $scope.id
+          uuid : $scope.deviceId
         });
 
         jQuery("#app-header").hide();
@@ -53,7 +56,7 @@ angular.module('player').controller('PlayerController', ['$scope', '$stateParams
             CssInjector.inject($scope,'modules/slideshows/slideTemplates/'+(slide.templateName||'default')+'/slide.css');
             
             $scope.qrConfig.slideUrl = $state.href("deviceInteraction",{
-                deviceId : $scope.id,
+                deviceId : $scope.deviceId,
                 slideshowId : $stateParams.slideName,
                 slideNumber : slideNumber
             },{absolute:true}); 
@@ -90,12 +93,21 @@ angular.module('player').controller('PlayerController', ['$scope', '$stateParams
 		}
         
         var theChannel = 'iQSlideShow';
+
         PubNub.ngSubscribe({ channel: theChannel });
 
         $scope.$on(PubNub.ngMsgEv(theChannel), function(event, payload) {
+            var pub = PubNub;
             // payload contains message, channel, env...
-            console.log('got a message event:', payload);
+            if (payload.message.action === "setSlideShow" && payload.message.id === $scope.deviceId) {
+                $timeout.cancel($scope.lastTimeout);
+                $interval.cancel($scope.updateSlidesHandle);
+                $scope.slides = [];
+                $state.go("player",{ slideName : payload.message.slideShowId , deviceId : $scope.deviceId},{reload : true});
+                console.log('change slide to :', payload.message.slideShowId);
+            }
         })
+
         $scope.$on(PubNub.ngPrsEv(theChannel), function(event, payload) {
             // payload contains message, channel, env...
             console.log('got a presence event:', payload);
@@ -112,7 +124,7 @@ angular.module('player').controller('PlayerController', ['$scope', '$stateParams
                 channel: theChannel,
                 message: {
                             action : 'presence',
-                            id : $scope.id,
+                            id : $scope.deviceId,
                             slideShowId : $scope.slideName
                          }
             });
