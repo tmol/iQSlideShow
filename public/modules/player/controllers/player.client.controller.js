@@ -1,7 +1,11 @@
 'use strict';
 angular.module('player').controller('PlayerController', ['$scope', '$stateParams', '$state', '$timeout', 'Slides', 'CssInjector', '$interval', '$location', 'PubNub',
 	function ($scope, $stateParams, $state, $timeout, Slides, CssInjector, $interval, $location, PubNub) {
-		if ($state.current.name == "player.slide") {
+		if ($scope.initialised) {
+            return;
+        }
+        $scope.initialised = true;
+        if ($state.current.name == "player.slide") {
             return;
         }
         $scope.deviceId = $stateParams.deviceId || PUBNUB.unique();
@@ -44,7 +48,17 @@ angular.module('player').controller('PlayerController', ['$scope', '$stateParams
             }
 
             var slide = $scope.slides[slideIndex];
-            if (!slide || !slide.content) {
+            if (!slide) {
+                return null;
+            }
+
+            $scope.qrConfig.slideUrl = $state.href("deviceInteraction",{
+                deviceId : $scope.deviceId,
+                slideshowId : $stateParams.slideName,
+                slideNumber : slideNumber
+            },{absolute:true});
+
+            if (!slide.content) {
                 return null;
             }
 
@@ -55,11 +69,7 @@ angular.module('player').controller('PlayerController', ['$scope', '$stateParams
 
             CssInjector.inject($scope,'modules/slideshows/slideTemplates/'+(slide.templateName||'default')+'/slide.css');
             
-            $scope.qrConfig.slideUrl = $state.href("deviceInteraction",{
-                deviceId : $scope.deviceId,
-                slideshowId : $stateParams.slideName,
-                slideNumber : slideNumber
-            },{absolute:true}); 
+
             
             $state.go("player.slide",{
                 slide:slide.content
@@ -78,9 +88,10 @@ angular.module('player').controller('PlayerController', ['$scope', '$stateParams
             }
             var slide = loadSlide(slideNumber);
             if (!slide){
-                $timeout(loadNextSlide,1);
+                $scope.lastTimeout = $timeout(loadNextSlide,1000);
                 return;
             }
+            console.log($scope.$id);
 
             if (slide.durationInSeconds) {
                 $scope.lastTimeout = $timeout(loadNextSlide,slide.durationInSeconds*1000);
@@ -96,15 +107,22 @@ angular.module('player').controller('PlayerController', ['$scope', '$stateParams
 
         PubNub.ngSubscribe({ channel: theChannel });
 
+
+        $scope.delayedRequest = null;
+
         $scope.$on(PubNub.ngMsgEv(theChannel), function(event, payload) {
             var pub = PubNub;
             // payload contains message, channel, env...
             if (payload.message.action === "setSlideShow" && payload.message.id === $scope.deviceId) {
-                $timeout.cancel($scope.lastTimeout);
-                $interval.cancel($scope.updateSlidesHandle);
-                $scope.slides = [];
-                $state.go("player",{ slideName : payload.message.slideShowId , deviceId : $scope.deviceId},{reload : true});
-                console.log('change slide to :', payload.message.slideShowId);
+                //If the state is changed to quick, errors can occur.
+                $timeout.cancel($scope.delayedRequest);
+                $scope.delayedRequest = $timeout(function() {
+                    $timeout.cancel($scope.lastTimeout);
+                    $interval.cancel($scope.updateSlidesHandle);
+                    $scope.slides = [];
+                    $state.go("player",{ slideName : payload.message.slideShowId , deviceId : $scope.deviceId},{reload : true});
+                    console.log('change slide to :', payload.message.slideShowId);
+                },1000);
             }
         })
 
