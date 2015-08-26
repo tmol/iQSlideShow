@@ -2,17 +2,10 @@
 /*global angular, ApplicationConfiguration*/
 (function () {
     'use strict';
-    angular.module('slideshows').controller('DeviceInteractionController', ['$scope', '$state', '$stateParams', 'Slides', 'Devices', 'Slideshows', 'PubNub',
-        function ($scope, $state, $stateParams, Slides, Devices, Slideshows, PubNub) {
-            PubNub.init({
-                publish_key : 'pub-c-906ea9e7-a221-48ed-a2d8-5475a6214f45',
-                subscribe_key : 'sub-c-dd5eeffe-481e-11e5-b63d-02ee2ddab7fe',
-                uuid : $stateParams.deviceId,
-                ssl : true
-            });
-            var theChannel = 'iQSlideShow';
-
+    angular.module('slideshows').controller('DeviceInteractionController', ['$scope', '$state', '$stateParams', 'Slides', 'Devices', 'Slideshows', 'MessagingEngineFactory',
+        function ($scope, $state, $stateParams, Slides, Devices, Slideshows, MessagingEngineFactory) {
             $scope.deviceId = $stateParams.deviceId;
+            var messagingEngine = MessagingEngineFactory.getEngine($scope.deviceId);
             Slideshows.query(function (res) {
                 $scope.slideshows = res;
             });
@@ -28,14 +21,7 @@
 
             var publishMessage = function (action, content) {
                 content = content || {};
-                PubNub.ngPublish({
-                    channel: theChannel,
-                    message: {
-                        action : action,
-                        deviceId  : $stateParams.deviceId,
-                        content : content
-                    }
-                });
+                messagingEngine.publish(action, content);
             };
 
             $scope.setSlideShow = function (device) {

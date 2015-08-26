@@ -45,6 +45,7 @@ module.exports = {
 		js: [
 			'public/config.js',
 			'public/application.js',
+            'public/messaging/*.js',
 			'public/modules/*/*.js',
 			'public/modules/*/*[!tests]*/*.js'
 		],
