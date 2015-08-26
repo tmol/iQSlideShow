@@ -54,11 +54,11 @@
 
             $scope.holdSlideShow = function () {
                 publishMessage('holdSlideShow');
-            }
+            };
 
             $scope.resetSlideShow = function () {
                 publishMessage('resetSlideShow');
-            }
+            };
 
         }]);
 }());
