@@ -24,6 +24,24 @@ angular.module('player').controller('PlayerController', ['$scope', '$stateParams
             image: true
         };
         
+        var timeoutCollection = {};
+
+        var registerTimeout = function (key, func, delay) {
+            $timeout.cancel(timeoutCollection[key]);
+            timeoutCollection[key] = $timeout(func,delay);
+        }
+        var unRegisterTimeout = function (key, func, delay) {
+            $timeout.cancel(timeoutCollection[key]);
+            delete timeoutCollection[key];
+        }
+
+        var resetTimeouts = function() {
+            for (var prop in timeoutCollection) {
+                $timeout.cancel(timeoutCollection[prop]);
+            }
+            timeoutCollection = {};
+        }
+
 		var slideNumber = -1;
         
 		$scope.slides = [];
@@ -32,13 +50,7 @@ angular.module('player').controller('PlayerController', ['$scope', '$stateParams
         }
         
         $scope.lastTimeout = null;
-        
-        var cancelLastTimeout = function () {
-            if ($scope.lastTimeout) {
-                $timeout.cancel($scope.lastTimeout);
-            }
-        };
-        
+
         var loadSlide = function (slideIndex) {
             if (slideIndex < 0 || slideIndex >= $scope.slides.length) {
                 slideIndex = 0;
@@ -75,29 +87,26 @@ angular.module('player').controller('PlayerController', ['$scope', '$stateParams
             return slide;
         }
         
-		var loadNextSlide = function(){            
-            
-            cancelLastTimeout();
-            
+		var loadNextSlide = function(){
             slideNumber++;
             if (slideNumber<0 || slideNumber>=$scope.slides.length){
                 slideNumber=0;
             }
+
             var slide = loadSlide(slideNumber);
             if (!slide){
-                $scope.lastTimeout = $timeout(loadNextSlide,1000);
+                registerTimeout('loadNextSlide', loadNextSlide, 1000)
                 return;
             }
-            console.log($scope.$id);
 
             if (slide.durationInSeconds) {
-                $scope.lastTimeout = $timeout(loadNextSlide,slide.durationInSeconds*1000);
+                registerTimeout('loadNextSlide', loadNextSlide, slide.durationInSeconds*1000)
             }
 		}
         
         
 		var slideShow = function(){
-            $scope.lastTimeout = $timeout(loadNextSlide,1);
+            registerTimeout('loadNextSlide', loadNextSlide, 1);
 		}
         
         var theChannel = 'iQSlideShow';
@@ -108,30 +117,32 @@ angular.module('player').controller('PlayerController', ['$scope', '$stateParams
 
         $scope.$on(PubNub.ngMsgEv(theChannel), function(event, payload) {
             var pub = PubNub;
+            var content = payload.message.content;
             // payload contains message, channel, env...
-            if (payload.message.action === "deviceSetup"
+            if (!(payload.message.action === "deviceSetup"
                 && payload.message.deviceId === $scope.deviceId
-                && payload.message.content.slideShowIdToPlay) {
+                && content.slideShowIdToPlay)) {
 
-                switchSlideShow(payload.message.content.slideShowIdToPlay);
+                return;
 
-                if (payload.message.content.minutesToPlayBeforeGoingBackToDefaultSlideShow) {
-                    $scope.revertToOriginalSlideShow = $timeout(function() {
-                        switchSlideShow($scope.slideName);
-                    }, payload.message.content.minutesToPlayBeforeGoingBackToDefaultSlideShow * 60 * 1000);
-                }
+            }
+
+            switchSlideShow(content.slideShowIdToPlay);
+
+            var duration = content.minutesToPlayBeforeGoingBackToDefaultSlideShow;
+            if (duration) {
+                registerTimeout("revertToOriginalSlideShow", function () {
+                    switchSlideShow($scope.slideName);
+                }, duration * 60 * 1000);
             }
         })
 
         var switchSlideShow = function(slideShowId) {
+            resetTimeouts();
+            $interval.cancel($scope.updateSlidesHandle);
+
             //If the state is changed to quick, errors can occur.
-            $timeout.cancel($scope.delayedRequest);
-            $scope.delayedRequest = $timeout(function() {
-                cancelLastTimeout();
-                $interval.cancel($scope.updateSlidesHandle);
-                if ($scope.revertToOriginalSlideShow) {
-                    $timeout.cancel($scope.revertToOriginalSlideShow);
-                }
+            $timeout(function () {
                 $scope.slides = [];
                 $state.go("player",{ slideName : slideShowId , deviceId : $scope.deviceId},{reload : true});
                 console.log('change slide to :', slideShowId);
@@ -162,21 +173,25 @@ angular.module('player').controller('PlayerController', ['$scope', '$stateParams
         $scope.updateSlidesHandle = null;
 
         $scope.$on("rightArrowPressed",function(){
-            cancelLastTimeout();
+            unRegisterTimeout('loadNextSlide');
             loadNextSlide();
         });	
 
         $scope.$on("leftArrowPressed",function(){
-            cancelLastTimeout();
+
+            unRegisterTimeout('loadNextSlide');
+
             slideNumber-=2;
             if (slideNumber<-1) {
                 slideNumber = $scope.slides.length-2;
             }
+
             loadNextSlide();
+
         });	
         
         $scope.$on("$destroy",function(){
-            $timeout.cancel($scope.lastTimeout);
+            resetTimeouts();
             $interval.cancel($scope.updateSlidesHandle);
             if ($scope.setPlayerMode) $scope.setPlayerMode(false);
         });
@@ -188,7 +203,9 @@ angular.module('player').controller('PlayerController', ['$scope', '$stateParams
             return;
         }
         
-        $scope.updateSlidesHandle = $interval(function(){updateSildes()},10*1000);
+        $scope.updateSlidesHandle = $interval(function(){
+            updateSildes()
+        },10*1000);
 
         updateSildes(slideShow);                
 	}
