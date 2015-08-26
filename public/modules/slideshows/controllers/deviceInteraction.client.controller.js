@@ -7,7 +7,8 @@
             PubNub.init({
                 publish_key : 'pub-c-906ea9e7-a221-48ed-a2d8-5475a6214f45',
                 subscribe_key : 'sub-c-dd5eeffe-481e-11e5-b63d-02ee2ddab7fe',
-                uuid : $stateParams.deviceId
+                uuid : $stateParams.deviceId,
+                ssl : true
             });
             var theChannel = 'iQSlideShow';
 
