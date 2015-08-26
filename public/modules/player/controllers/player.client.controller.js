@@ -2,20 +2,14 @@
 /*global angular, PUBNUB*/
 (function () {
     'use strict';
-    angular.module('player').controller('PlayerController', ['$scope', '$stateParams', '$state', '$timeout', 'Slides', 'CssInjector', '$interval', '$location', 'PubNub',
-        function ($scope, $stateParams, $state, $timeout, Slides, CssInjector, $interval, $location, PubNub) {
+    angular.module('player').controller('PlayerController', ['$scope', '$stateParams', '$state', '$timeout', 'Slides', 'CssInjector', '$interval', '$location', 'MessagingEngineFactory',
+        function ($scope, $stateParams, $state, $timeout, Slides, CssInjector, $interval, $location, MessagingEngineFactory) {
             if ($scope.initialised) {
                 return;
             }
             $scope.initialised = true;
             $scope.deviceId = $stateParams.deviceId || PUBNUB.unique();
-
-            PubNub.init({
-                publish_key : 'pub-c-906ea9e7-a221-48ed-a2d8-5475a6214f45',
-                subscribe_key : 'sub-c-dd5eeffe-481e-11e5-b63d-02ee2ddab7fe',
-                uuid : $scope.deviceId,
-                ssl : true
-            });
+            var messagingEngine = MessagingEngineFactory.getEngine($scope.deviceId);
 
             //jQuery("#app-header").hide();
             $scope.slideName = $stateParams.slideName;
@@ -126,9 +120,16 @@
                 registerTimeout('loadNextSlide', loadNextSlide, 1);
             };
 
-            var theChannel = 'iQSlideShow';
-
-            PubNub.ngSubscribe({ channel: theChannel });
+            messagingEngine.subscribe($scope, function (event, payload) {
+                var message = payload.message;
+                var deviceId = $scope.deviceId;
+                if (message.deviceId !== deviceId) {
+                    return;
+                }
+                if (messageHandler[message.action]) {
+                    messageHandler[message.action](message);
+                }
+            });
 
             $scope.delayedRequest = null;
 
@@ -156,14 +157,7 @@
                 });
 
                 if ('true' !== $stateParams.preview) {
-                    PubNub.ngPublish({
-                        channel: theChannel,
-                        message: {
-                            action : 'presence',
-                            id : $scope.deviceId,
-                            slideShowId : $scope.slideName
-                        }
-                    });
+                    // todo implement hi message on player startup, move from here
                 }
             };
 
@@ -194,7 +188,6 @@
                 moveSlideRight : moveSlideRight,
                 moveSlideLeft : moveSlideLeft,
                 deviceSetup : function (message) {
-                    var pub = PubNub;
                     var content = message.content;
                     // payload contains message, channel, env...
                     if (!content.slideShowIdToPlay) {
@@ -222,18 +215,6 @@
                     loadNextSlide();
                 }
             };
-
-
-            $scope.$on(PubNub.ngMsgEv(theChannel), function (event, payload) {
-                var message = payload.message;
-                var deviceId = $scope.deviceId;
-                if (message.deviceId !== deviceId) {
-                    return;
-                }
-                if (messageHandler[message.action]) {
-                    messageHandler[message.action](message);
-                }
-            });
 
             $scope.$on("rightArrowPressed", function () {
                 moveSlideRight();
