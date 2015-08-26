@@ -175,28 +175,42 @@
                 loadNextSlide();
             };
 
-            var onPubNubMessage = function (message) {
-                var pub = PubNub;
-                var content = message.content;
-                // payload contains message, channel, env...
-                if (!(message.action === "deviceSetup"
-                    && message.deviceId === $scope.deviceId
-                    && content.slideShowIdToPlay)) {
-                    return;
-                }
+            var PubNubMessageHandler = {
+                deviceSetup : function (message) {
+                    var pub = PubNub;
+                    var content = message.content;
+                    // payload contains message, channel, env...
+                    if (!content.slideShowIdToPlay) {
+                        return;
+                    }
 
-                switchSlideShow(content.slideShowIdToPlay);
+                    switchSlideShow(content.slideShowIdToPlay);
 
-                var duration = content.minutesToPlayBeforeGoingBackToDefaultSlideShow;
-                if (duration) {
-                    registerTimeout("revertToOriginalSlideShow", function () {
-                        switchSlideShow($scope.slideName);
-                    }, duration * 60 * 1000);
+                    var duration = content.minutesToPlayBeforeGoingBackToDefaultSlideShow;
+                    if (duration) {
+                        registerTimeout("revertToOriginalSlideShow", function () {
+                            switchSlideShow($scope.slideName);
+                        }, duration * 60 * 1000);
+                    }
+                },
+                moveSlideRight : function () {
+                    onRightArrowPressed();
+                },
+                moveSlideLeft : function () {
+                    onLeftArrowPressed();
                 }
-            }
+            };
+
 
             $scope.$on(PubNub.ngMsgEv(theChannel), function (event, payload) {
-                onPubNubMessage(payload.message);
+                var message = payload.message;
+                var deviceId = $scope.deviceId;
+                if (message.deviceId !== deviceId) {
+                    return;
+                }
+                if (PubNubMessageHandler[message.action]) {
+                    PubNubMessageHandler[message.action](message);
+                }
             });
 
             $scope.$on("rightArrowPressed", function () {
