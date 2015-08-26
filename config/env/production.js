@@ -24,7 +24,9 @@ module.exports = {
                 'public/lib/textAngular/dist/textAngular-sanitize.min.js',
                 'public/lib/textAngular/dist/textAngular.min.js',
                 'public/lib/qrcode/lib/qrcode.min.js',
-                'public/lib/angular-qr/angular-qr.min.js'
+                'public/lib/angular-qr/angular-qr.min.js',
+                'http://cdn.pubnub.com/pubnub.min.js',
+                'public/lib/pubnub-angular/lib/pubnub-angular.js'
 			]
 		},
 		css: [
