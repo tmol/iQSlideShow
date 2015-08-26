@@ -189,7 +189,7 @@
                 loadNextSlide();
             };
 
-            var PubNubMessageHandler = {
+            var messageHandler = {
                 moveSlideRight : moveSlideRight,
                 moveSlideLeft : moveSlideLeft,
                 deviceSetup : function (message) {
@@ -229,8 +229,8 @@
                 if (message.deviceId !== deviceId) {
                     return;
                 }
-                if (PubNubMessageHandler[message.action]) {
-                    PubNubMessageHandler[message.action](message);
+                if (messageHandler[message.action]) {
+                    messageHandler[message.action](message);
                 }
             });
 
