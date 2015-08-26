@@ -25,6 +25,7 @@
                 typeNumber: 0,
                 inputMode: '',
                 image: true
+
             };
 
             var timeoutCollection = {};
@@ -94,20 +95,28 @@
                 return slide;
             };
 
+            $scope.slideIsOnHold = false;
             var loadNextSlide = function () {
+
                 slideNumber += 1;
                 if (slideNumber < 0 || slideNumber >= $scope.slides.length) {
                     slideNumber = 0;
                 }
 
+                var advanceSlide = function (delay) {
+                    if (!$scope.slideIsOnHold) {
+                        registerTimeout('loadNextSlide', loadNextSlide, delay);
+                    }
+                };
+
                 var slide = loadSlide(slideNumber);
                 if (!slide) {
-                    registerTimeout('loadNextSlide', loadNextSlide, 1000);
+                    advanceSlide(1000);
                     return;
                 }
 
                 if (slide.durationInSeconds) {
-                    registerTimeout('loadNextSlide', loadNextSlide, slide.durationInSeconds * 1000);
+                    advanceSlide(slide.durationInSeconds * 1000);
                 }
             };
 
@@ -175,7 +184,14 @@
                 loadNextSlide();
             };
 
+            var resetOnHold = function () {
+                $scope.slideIsOnHold = false;
+                loadNextSlide();
+            };
+
             var PubNubMessageHandler = {
+                moveSlideRight : moveSlideRight,
+                moveSlideLeft : moveSlideLeft,
                 deviceSetup : function (message) {
                     var pub = PubNub;
                     var content = message.content;
@@ -193,8 +209,17 @@
                         }, duration * 60 * 1000);
                     }
                 },
-                moveSlideRight : moveSlideRight,
-                moveSlideLeft : moveSlideLeft
+                holdSlideShow : function () {
+                    $scope.slideIsOnHold = true;
+                    registerTimeout('resetOnHold', function () {
+                        resetOnHold();
+                    }, 60 * 1000);
+                },
+                resetSlideShow : function () {
+                    slideNumber = -1;
+                    resetOnHold();
+                    loadNextSlide();
+                }
             };
 
 

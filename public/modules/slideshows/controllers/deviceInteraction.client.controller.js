@@ -1,3 +1,4 @@
+/*jslint nomen: true, vars: true*/
 /*global angular, ApplicationConfiguration*/
 (function () {
     'use strict';
@@ -24,40 +25,40 @@
                 }, {absolute : true});
             });
 
-            $scope.setSlideShow = function (device) {
+            var publishMessage = function (action, content) {
+                content = content || {};
                 PubNub.ngPublish({
                     channel: theChannel,
                     message: {
-                        action : 'deviceSetup',
+                        action : action,
                         deviceId  : $stateParams.deviceId,
-                        content : {
-                            slideShowIdToPlay: device.slideShowId,
-                            minutesToPlayBeforeGoingBackToDefaultSlideShow : ApplicationConfiguration.minutesToPlayBeforeGoingBackToDefaultSlideShow
-                        }
-                    }
-                });
-            };
-            $scope.goToPreviousSlide = function () {
-                PubNub.ngPublish({
-                    channel: theChannel,
-                    message: {
-                        action : 'moveSlideLeft',
-                        deviceId  : $stateParams.deviceId,
-                        content : {}
+                        content : content
                     }
                 });
             };
 
-            $scope.goToNextSlide = function () {
-                PubNub.ngPublish({
-                    channel: theChannel,
-                    message: {
-                        action : 'moveSlideRight',
-                        deviceId  : $stateParams.deviceId,
-                        content : {}
-                    }
+            $scope.setSlideShow = function (device) {
+                publishMessage('deviceSetup', {
+                    slideShowIdToPlay: device.slideShowId,
+                    minutesToPlayBeforeGoingBackToDefaultSlideShow : ApplicationConfiguration.minutesToPlayBeforeGoingBackToDefaultSlideShow
                 });
             };
+
+            $scope.goToPreviousSlide = function () {
+                publishMessage('moveSlideLeft');
+            };
+
+            $scope.goToNextSlide = function () {
+                publishMessage('moveSlideRight');
+            };
+
+            $scope.holdSlideShow = function () {
+                publishMessage('holdSlideShow');
+            }
+
+            $scope.resetSlideShow = function () {
+                publishMessage('resetSlideShow');
+            }
 
         }]);
 }());
