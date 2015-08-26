@@ -133,12 +133,13 @@
                 }, 1000);
             };
             
-            $scope.$on(PubNub.ngMsgEv(theChannel), function (event, payload) {
+
+            var onPubNubMessage = function (message) {
                 var pub = PubNub;
-                var content = payload.message.content;
+                var content = message.content;
                 // payload contains message, channel, env...
-                if (!(payload.message.action === "deviceSetup"
-                    && payload.message.deviceId === $scope.deviceId
+                if (!(message.action === "deviceSetup"
+                    && message.deviceId === $scope.deviceId
                     && content.slideShowIdToPlay)) {
                     return;
                 }
@@ -151,6 +152,10 @@
                         switchSlideShow($scope.slideName);
                     }, duration * 60 * 1000);
                 }
+            }
+
+            $scope.$on(PubNub.ngMsgEv(theChannel), function (event, payload) {
+                onPubNubMessage(payload.message);
             });
 
             var updateSildes = function (callback) {
@@ -176,13 +181,12 @@
 
             $scope.updateSlidesHandle = null;
 
-            $scope.$on("rightArrowPressed", function () {
+            var onRightArrowPressed = function () {
                 unRegisterTimeout('loadNextSlide');
                 loadNextSlide();
-            });
+            };
 
-            $scope.$on("leftArrowPressed", function () {
-
+            var onLeftArrowPressed = function () {
                 unRegisterTimeout('loadNextSlide');
 
                 slideNumber -= 2;
@@ -191,7 +195,14 @@
                 }
 
                 loadNextSlide();
+            };
 
+            $scope.$on("rightArrowPressed", function () {
+                onRightArrowPressed();
+            });
+
+            $scope.$on("leftArrowPressed", function () {
+                onLeftArrowPressed();
             });
 
             $scope.$on("$destroy", function () {
