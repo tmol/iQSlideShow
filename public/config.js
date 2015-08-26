@@ -4,6 +4,7 @@
 var ApplicationConfiguration = (function() {
 	// Init module configuration options
 	var applicationModuleName = 'iqslideshow';
+    var minutesToPlayBeforeGoingBackToDefaultSlideShow = 1;
 	var applicationModuleVendorDependencies = ['ngResource', 'ngCookies',  'ngAnimate',  'ngTouch',  'ngSanitize',  'ui.router', 'ui.bootstrap', 'ui.utils','textAngular','ja.qr', 'pubnub.angular.service'];
 
 	// Add a new vertical module
@@ -18,6 +19,7 @@ var ApplicationConfiguration = (function() {
 	return {
 		applicationModuleName: applicationModuleName,
 		applicationModuleVendorDependencies: applicationModuleVendorDependencies,
-		registerModule: registerModule
+		registerModule: registerModule,
+        minutesToPlayBeforeGoingBackToDefaultSlideShow: minutesToPlayBeforeGoingBackToDefaultSlideShow
 	};
 })();
