@@ -134,29 +134,7 @@
             };
             
 
-            var onPubNubMessage = function (message) {
-                var pub = PubNub;
-                var content = message.content;
-                // payload contains message, channel, env...
-                if (!(message.action === "deviceSetup"
-                    && message.deviceId === $scope.deviceId
-                    && content.slideShowIdToPlay)) {
-                    return;
-                }
 
-                switchSlideShow(content.slideShowIdToPlay);
-
-                var duration = content.minutesToPlayBeforeGoingBackToDefaultSlideShow;
-                if (duration) {
-                    registerTimeout("revertToOriginalSlideShow", function () {
-                        switchSlideShow($scope.slideName);
-                    }, duration * 60 * 1000);
-                }
-            }
-
-            $scope.$on(PubNub.ngMsgEv(theChannel), function (event, payload) {
-                onPubNubMessage(payload.message);
-            });
 
             var updateSildes = function (callback) {
 
@@ -196,6 +174,30 @@
 
                 loadNextSlide();
             };
+
+            var onPubNubMessage = function (message) {
+                var pub = PubNub;
+                var content = message.content;
+                // payload contains message, channel, env...
+                if (!(message.action === "deviceSetup"
+                    && message.deviceId === $scope.deviceId
+                    && content.slideShowIdToPlay)) {
+                    return;
+                }
+
+                switchSlideShow(content.slideShowIdToPlay);
+
+                var duration = content.minutesToPlayBeforeGoingBackToDefaultSlideShow;
+                if (duration) {
+                    registerTimeout("revertToOriginalSlideShow", function () {
+                        switchSlideShow($scope.slideName);
+                    }, duration * 60 * 1000);
+                }
+            }
+
+            $scope.$on(PubNub.ngMsgEv(theChannel), function (event, payload) {
+                onPubNubMessage(payload.message);
+            });
 
             $scope.$on("rightArrowPressed", function () {
                 onRightArrowPressed();
