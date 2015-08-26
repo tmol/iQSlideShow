@@ -116,7 +116,6 @@ angular.module('player').controller('PlayerController', ['$scope', '$stateParams
                 switchSlideShow(payload.message.content.slideShowIdToPlay);
 
                 if (payload.message.content.minutesToPlayBeforeGoingBackToDefaultSlideShow) {
-                    $scope.revertToOriginalSlideShow = null;
                     $scope.revertToOriginalSlideShow = $timeout(function() {
                         switchSlideShow($scope.slideName);
                     }, payload.message.content.minutesToPlayBeforeGoingBackToDefaultSlideShow * 60 * 1000);
