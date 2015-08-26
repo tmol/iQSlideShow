@@ -3,6 +3,10 @@
         <h1>Device {{deviceId}} interaction</h1>
     </div>
     <div class="form-group slides-controllers">
+        <input type="button" class="btn btn-default" ng-click="goToPreviousSlide()" value="Previous Slide"></input>
+        <input type="button" class="btn btn-default" ng-click="goToNextSlide()" value="Next slide"></input>
+    </div>
+    <div class="form-group slides-controllers">
         <select ng-model="device.slideShowId" ng-options="slideshow._id as slideshow.name for slideshow in slideshows"></select>
         <div class="slides-ops">
             <input type="button" class="btn btn-default" ng-click="setSlideShow(device)" value="Set"></input>

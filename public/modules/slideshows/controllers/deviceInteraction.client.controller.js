@@ -1,4 +1,4 @@
-/*global angular*/
+/*global angular, ApplicationConfiguration*/
 (function () {
     'use strict';
     angular.module('slideshows').controller('DeviceInteractionController', ['$scope', '$state', '$stateParams', 'Slides', 'Devices', 'Slideshows', 'PubNub',
@@ -37,5 +37,27 @@
                     }
                 });
             };
+            $scope.goToPreviousSlide = function () {
+                PubNub.ngPublish({
+                    channel: theChannel,
+                    message: {
+                        action : 'moveSlideLeft',
+                        deviceId  : $stateParams.deviceId,
+                        content : {}
+                    }
+                });
+            };
+
+            $scope.goToNextSlide = function () {
+                PubNub.ngPublish({
+                    channel: theChannel,
+                    message: {
+                        action : 'moveSlideRight',
+                        deviceId  : $stateParams.deviceId,
+                        content : {}
+                    }
+                });
+            };
+
         }]);
 }());

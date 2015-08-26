@@ -159,12 +159,12 @@
 
             $scope.updateSlidesHandle = null;
 
-            var onRightArrowPressed = function () {
+            var moveSlideRight = function () {
                 unRegisterTimeout('loadNextSlide');
                 loadNextSlide();
             };
 
-            var onLeftArrowPressed = function () {
+            var moveSlideLeft = function () {
                 unRegisterTimeout('loadNextSlide');
 
                 slideNumber -= 2;
@@ -193,12 +193,8 @@
                         }, duration * 60 * 1000);
                     }
                 },
-                moveSlideRight : function () {
-                    onRightArrowPressed();
-                },
-                moveSlideLeft : function () {
-                    onLeftArrowPressed();
-                }
+                moveSlideRight : moveSlideRight,
+                moveSlideLeft : moveSlideLeft
             };
 
 
@@ -214,11 +210,11 @@
             });
 
             $scope.$on("rightArrowPressed", function () {
-                onRightArrowPressed();
+                moveSlideRight();
             });
 
             $scope.$on("leftArrowPressed", function () {
-                onLeftArrowPressed();
+                moveSlideLeft();
             });
 
             $scope.$on("$destroy", function () {
