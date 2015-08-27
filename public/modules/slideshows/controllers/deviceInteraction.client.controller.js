@@ -2,15 +2,12 @@
 /*global angular, ApplicationConfiguration*/
 (function () {
     'use strict';
-    angular.module('slideshows').controller('DeviceInteractionController', ['$scope', '$state', '$stateParams', 'Slides', 'Devices', 'Slideshows', 'MessagingEngineFactory',
-        function ($scope, $state, $stateParams, Slides, Devices, Slideshows, MessagingEngineFactory) {
+    angular.module('slideshows').controller('DeviceInteractionController', ['$scope', '$state', '$stateParams', 'Slides','Slideshows', 'MessagingEngineFactory',
+        function ($scope, $state, $stateParams, Slides, Slideshows, MessagingEngineFactory) {
             $scope.deviceId = $stateParams.deviceId;
             var messagingEngine = MessagingEngineFactory.getEngine($scope.deviceId);
             Slideshows.query(function (res) {
                 $scope.slideshows = res;
-            });
-            Devices.get({deviceId : $stateParams.deviceId}, function (res) {
-                $scope.device = res.device;
             });
             Slides.get({slideId : $stateParams.slideshowId, slideNumber : $stateParams.slideNumber}, function (slide) {
                 $scope.slideUrl = slide.detailsUrl || $state.href("player", {
