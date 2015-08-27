@@ -11,11 +11,14 @@ angular.module('devices').controller('DevicesController', ['$scope', '$statePara
 		// Create new Device
 		$scope.create = function() {
 			// Create new Device object
+            if (!this.active) {
+                this.active = false;
+            }
 			var device = new Devices ({
 				name: this.name,
                 location: this.location,
-                defaultSlideShowId: this.defaultSlideShowId
-
+                defaultSlideShowId: this.defaultSlideShowId,
+                active: this.active
 			});
 
 			// Redirect after save
@@ -49,6 +52,9 @@ angular.module('devices').controller('DevicesController', ['$scope', '$statePara
 		// Update existing Device
 		$scope.update = function() {
 			var device = $scope.device;
+            if (!device.active) {
+                device.active = false;
+            }
 
 			device.$update(function() {
 				$location.path('devices');

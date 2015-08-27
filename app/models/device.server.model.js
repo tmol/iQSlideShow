@@ -27,6 +27,10 @@ var DeviceSchema = new Schema({
 		ref: 'Slideshow',
         required: 'Please select default slideshow.',
 	},
+    active: {
+		type: Boolean,
+		default: false
+	},
 	created: {
 		type: Date,
 		default: Date.now
