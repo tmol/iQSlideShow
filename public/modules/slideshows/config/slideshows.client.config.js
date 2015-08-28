@@ -1,7 +1,6 @@
 /*global angular*/
 (function () {
     'use strict';
-    // Configuring the Articles module
     angular.module('slideshows').run(['Menus',
         function (Menus) {
             // Set top bar menu items

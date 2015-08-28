@@ -3,11 +3,11 @@
     'use strict';
 
     //Devices service used to communicate Devices REST endpoints
-    angular.module('slideshows').factory('MessagingEngineFactory', ['PubNub',
-        function (PubNub) {
+    angular.module('core').factory('MessagingEngineFactory', ['PubNubFacade',
+        function (PubNubFacade) {
             return {
                 getEngine : function (deviceId) {
-                    return pubNubEngine.getInstance(PubNub, deviceId);
+                    return PubNubFacade.getInstance(deviceId);
                 }
             };
         }]);
