@@ -151,6 +151,7 @@
                 if (deviceId !== null) {
                     updateSildes(slideShow);
                 } else {
+                    deviceId = PUBNUB.unique();
                     modalInstance = $modal.open({
                         animation: true,
                         templateUrl: 'waitingForActivation.html',
