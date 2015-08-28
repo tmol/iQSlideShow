@@ -20,12 +20,10 @@
 
                 return {
 
-                    subscribe : function (scope, callback) {
-                        pubNub.ngSubscribe({ channel: theChannel });
+                    messageEvent: pubNub.ngMsgEv(theChannel),
 
-                        scope.$on(pubNub.ngMsgEv(theChannel), function (event, payload) {
-                            callback(event, payload);
-                        });
+                    subscribe : function () {
+                        pubNub.ngSubscribe({ channel: theChannel });
                     },
 
                     publish : function (action, content) {

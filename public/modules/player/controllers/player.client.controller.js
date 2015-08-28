@@ -9,7 +9,9 @@
             }
             $scope.initialised = true;
             $scope.deviceId = $stateParams.deviceId || PUBNUB.unique();
+
             var messagingEngine = MessagingEngineFactory.getEngine($scope.deviceId);
+            messagingEngine.subscribe();
 
             //jQuery("#app-header").hide();
             $scope.slideName = $stateParams.slideName;
@@ -120,17 +122,6 @@
                 registerTimeout('loadNextSlide', loadNextSlide, 1);
             };
 
-            messagingEngine.subscribe($scope, function (event, payload) {
-                var message = payload.message;
-                var deviceId = $scope.deviceId;
-                if (message.deviceId !== deviceId) {
-                    return;
-                }
-                if (messageHandler[message.action]) {
-                    messageHandler[message.action](message);
-                }
-            });
-
             $scope.delayedRequest = null;
 
             var switchSlideShow = function (slideShowId) {
@@ -143,9 +134,6 @@
                     $state.go("player", { slideName : slideShowId, deviceId : $scope.deviceId}, {reload : true});
                 }, 1000);
             };
-            
-
-
 
             var updateSildes = function (callback) {
 
@@ -155,10 +143,6 @@
                         callback(result);
                     }
                 });
-
-                if ('true' !== $stateParams.preview) {
-                    // todo implement hi message on player startup, move from here
-                }
             };
 
             $scope.updateSlidesHandle = null;
@@ -215,6 +199,17 @@
                     loadNextSlide();
                 }
             };
+
+            $scope.$on(messagingEngine.messageEvent, function (event, payload) {
+                var message = payload.message;
+                var deviceId = $scope.deviceId;
+                if (message.deviceId !== deviceId) {
+                    return;
+                }
+                if (messageHandler[message.action]) {
+                    messageHandler[message.action](message);
+                }
+            });
 
             $scope.$on("rightArrowPressed", function () {
                 moveSlideRight();
