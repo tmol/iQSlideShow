@@ -8,3 +8,7 @@
     /*transform: translateY(-50%);*/
     background-color: #ffffff;
 }
+.waitingForActivationDialog .modal-dialog {
+    width :90%;
+    height: 90%;
+}

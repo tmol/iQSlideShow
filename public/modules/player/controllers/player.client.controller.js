@@ -2,8 +2,8 @@
 /*global angular, PUBNUB*/
 (function () {
     'use strict';
-    angular.module('player').controller('PlayerController', ['$scope', '$stateParams', '$state', '$timeout', 'Slides', 'CssInjector', '$interval', '$location', 'MessagingEngineFactory',
-        function ($scope, $stateParams, $state, $timeout, Slides, CssInjector, $interval, $location, MessagingEngineFactory) {
+    angular.module('player').controller('PlayerController', ['$scope', '$stateParams', '$state', '$timeout', 'Slides', 'CssInjector', '$interval', '$location', 'MessagingEngineFactory', 'LocalStorage', '$modal',
+        function ($scope, $stateParams, $state, $timeout, Slides, CssInjector, $interval, $location, MessagingEngineFactory, LocalStorage, $modal) {
             if ($scope.initialised) {
                 return;
             }
@@ -22,8 +22,16 @@
                 typeNumber: 0,
                 inputMode: '',
                 image: true
-
             };
+
+            var slideNumber = -1;
+
+            $scope.slides = [];
+            if ($scope.setPlayerMode) {
+                $scope.setPlayerMode(true);
+            }
+
+            $scope.lastTimeout = null;
 
             var timeoutCollection = {};
 
@@ -46,15 +54,6 @@
                 }
                 timeoutCollection = {};
             };
-
-            var slideNumber = -1;
-
-            $scope.slides = [];
-            if ($scope.setPlayerMode) {
-                $scope.setPlayerMode(true);
-            }
-
-            $scope.lastTimeout = null;
 
             var loadSlide = function (slideIndex) {
                 if (slideIndex < 0 || slideIndex >= $scope.slides.length) {
@@ -143,6 +142,22 @@
                         callback(result);
                     }
                 });
+            };
+
+            var modalInstance;
+
+            var start = function () {
+                var deviceId = LocalStorage.getDeviceId();
+                if (deviceId !== null) {
+                    updateSildes(slideShow);
+                } else {
+                    modalInstance = $modal.open({
+                        animation: true,
+                        templateUrl: 'waitingForActivation.html',
+                        windowClass: 'waitingForActivationDialog',
+                        backdrop: 'static'
+                    });
+                }
             };
 
             $scope.updateSlidesHandle = null;
@@ -238,6 +253,7 @@
                 updateSildes();
             }, 10 * 1000);
 
-            updateSildes(slideShow);
+            start();
+
         }]);
 }());
