@@ -27,7 +27,7 @@
                     },
 
                     publish : function (action, content) {
-
+                        content = content || {};
                         pubNub.ngPublish({
                             channel: theChannel,
                             message: {

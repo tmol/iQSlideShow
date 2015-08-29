@@ -158,6 +158,8 @@
                         windowClass: 'waitingForActivationDialog',
                         backdrop: 'static'
                     });
+
+                    messagingEngine.publish('hi');
                 }
             };
 
@@ -255,6 +257,5 @@
             }, 10 * 1000);
 
             start();
-
         }]);
 }());

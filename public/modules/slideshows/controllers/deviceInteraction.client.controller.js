@@ -2,7 +2,7 @@
 /*global angular, ApplicationConfiguration*/
 (function () {
     'use strict';
-    angular.module('slideshows').controller('DeviceInteractionController', ['$scope', '$state', '$stateParams', 'Slides','Slideshows', 'MessagingEngineFactory',
+    angular.module('slideshows').controller('DeviceInteractionController', ['$scope', '$state', '$stateParams', 'Slides', 'Slideshows', 'MessagingEngineFactory',
         function ($scope, $state, $stateParams, Slides, Slideshows, MessagingEngineFactory) {
             $scope.deviceId = $stateParams.deviceId;
             var messagingEngine = MessagingEngineFactory.getEngine($scope.deviceId);
@@ -16,32 +16,27 @@
                 }, {absolute : true});
             });
 
-            var publishMessage = function (action, content) {
-                content = content || {};
-                messagingEngine.publish(action, content);
-            };
-
             $scope.setSlideShow = function (device) {
-                publishMessage('deviceSetup', {
+                messagingEngine.publish('deviceSetup', {
                     slideShowIdToPlay: device.slideShowId,
                     minutesToPlayBeforeGoingBackToDefaultSlideShow : ApplicationConfiguration.minutesToPlayBeforeGoingBackToDefaultSlideShow
                 });
             };
 
             $scope.goToPreviousSlide = function () {
-                publishMessage('moveSlideLeft');
+                messagingEngine.publish('moveSlideLeft');
             };
 
             $scope.goToNextSlide = function () {
-                publishMessage('moveSlideRight');
+                messagingEngine.publish('moveSlideRight');
             };
 
             $scope.holdSlideShow = function () {
-                publishMessage('holdSlideShow');
+                messagingEngine.publish('holdSlideShow');
             };
 
             $scope.resetSlideShow = function () {
-                publishMessage('resetSlideShow');
+                messagingEngine.publish('resetSlideShow');
             };
 
         }]);
