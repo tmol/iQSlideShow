@@ -8,7 +8,6 @@
         config = require('./config/config'),
         mongoose = require('mongoose'),
         chalk = require('chalk'),
-        messageHandler = require('./app/services/messaging/messageHandler'),
 
     /**
      * Main application entry file.
@@ -24,8 +23,6 @@
         }),
         // Init the express application
         app = require('./config/express')(db);
-
-    messageHandler.init();
 
     // Bootstrap passport config
     require('./config/passport')();

@@ -4,5 +4,6 @@ var pubNub = require('./pubNub');
 
 exports.init = function (messageReceivedCallback) {
     'use strict';
-    pubNub.getInstance().init(messageReceivedCallback);
+    var pubNubInstance = pubNub.getInstance().init(messageReceivedCallback);
+    return pubNubInstance;
 };

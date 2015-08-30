@@ -24,6 +24,18 @@ exports.getInstance = function () {
                 messageReceivedCallback(message);
             }
         });
+
+        return {
+            publish: function (message) {
+                pubNub.publish({
+                    channel   : theChannel,
+                    message   : message,
+                    error     : function (e) {
+                        console.log("Failed to publish message: " + message + ", error was: " + e);
+                    }
+                });
+            }
+        };
     }
 
     return {
@@ -31,6 +43,8 @@ exports.getInstance = function () {
             if (!instance) {
                 instance = init(messageReceivedCallback);
             }
+            console.log("instance: " + instance + ", instance.publish  = " + instance.publish);
+            return instance;
         }
     };
 };

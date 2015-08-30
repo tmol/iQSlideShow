@@ -159,6 +159,8 @@ module.exports = function(db) {
 		return httpsServer;
 	}
 
+    var messageHandler = require('../app/services/messaging/messageHandler');
+    messageHandler.init();
 	// Return Express server instance
 	return app;
 };
