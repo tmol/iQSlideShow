@@ -1,69 +1,45 @@
+/*jslint nomen: true, vars: true*/
 /*global require, exports, console*/
 (function () {
     'use strict';
 
     var messagingEngineFactory = require('./messagingEngineFactory'),
         mongoose = require('mongoose'),
-        errorHandler = require('../../controllers/errors.server.controller'),
         Device = mongoose.model('Device'),
-        messagingEngine,
-        messageHandler = {
-            messagingEngine: null,
+        errorHandler = require('../../controllers/errors.server.controller'),
+        fs = require('fs'),
+        actionsChache = {},
+        messagingEngine;
 
-            hi: function (message) {
-                console.log("Handling hi message, deviceId: " + message.deviceId);
-                console.log("messagingEngine: " + messagingEngine);
-                Device.findOne({deviceId: message.deviceId}).exec(function (err, device) {
-                    if (err) {
-                        throw err;
-                    }
-                    if (!device) {
-                        device = new Device({
-                            deviceId: message.deviceId,
-                            active: false,
-                            location: 'TBD',
-                            name: 'TBD',
-                            defaultSlideShowId: null
-                        });
-                        device.save(function (err) {
-                            if (err) {
-                                console.log('Error during saving new device with id' + message.deviceId + ', error message: ' + errorHandler.getErrorMessage(err));
-                            }
-                        });
-                        messagingEngine.publish({
-                            action: 'newDeviceSaidHi',
-                            deviceId: message.deviceId
-                        });
-                    } else {
-                        if (!device.active) {
-                            messagingEngine.publish({
-                                action: 'inactiveRegisteredDeviceSaidHi',
-                                deviceId: message.deviceId
-                            });
-                        } else {
-                            messagingEngine.publish({
-                                action: 'deviceSetup',
-                                deviceId: message.deviceId,
-                                content: device
-                            });
-                        }
-                    }
-                });
+    var getAction = function (action, callBack) {
+
+        if (actionsChache[action]) {
+            callBack(actionsChache[action]);
+            return;
+        }
+
+        fs.exists('app/services/messaging/actions/' + action + '.js', function (result) {
+            if (result) {
+                actionsChache[action] = require('./actions/' + action);
+                callBack(actionsChache[action]);
+                return;
             }
-        };
+            console.log("No action found for: " + action);
+        });
 
-    function receiveMessage(message) {
+    };
+
+    var onMessageReceived = function (message) {
         console.log("Message received with action: " + message.action);
 
-        if (messageHandler[message.action]) {
-            console.log('messageHandler.messagingEngine = ' + messageHandler.messagingEngine);
-            messageHandler[message.action](message);
-        }
-    }
+        getAction(message.action, function (action) {
+            console.log('messageHandler.messagingEngine = ' + messagingEngine);
+            action(messagingEngine, message);
+        });
+    };
 
     exports.init = function () {
-        messagingEngine = messagingEngineFactory.init(receiveMessage);
-        messageHandler.messagingEngine = messagingEngine;
+        messagingEngine = messagingEngineFactory.init(onMessageReceived);
         console.log('messagingEngine ' + messagingEngine);
     };
 }());
