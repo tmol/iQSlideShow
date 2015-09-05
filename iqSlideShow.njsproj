@@ -1,0 +1,293 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{74fc5266-76b7-4efb-84c7-7f017ba46b88}</ProjectGuid>
+    <ProjectHome />
+    <ProjectView>ProjectFiles</ProjectView>
+    <StartupFile>server.js</StartupFile>
+    <WorkingDirectory>.</WorkingDirectory>
+    <OutputPath>.</OutputPath>
+    <ProjectTypeGuids>{3AF33F2E-1136-4D97-BBB7-1795711AC8B8};{349c5851-65df-11da-9384-00065b846f21};{9092AA53-FB77-4645-B42D-1CCCA6BD08BD}</ProjectTypeGuids>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">11.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+    <NodejsPort>3000</NodejsPort>
+    <StartWebBrowser>True</StartWebBrowser>
+    <DebuggerPort>5858</DebuggerPort>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)' == 'Debug'" />
+  <PropertyGroup Condition="'$(Configuration)' == 'Release'" />
+  <ItemGroup>
+    <Content Include="JSLintNet.json" />
+    <Content Include="notes.txt" />
+    <Content Include="bower.json" />
+    <Content Include="package.json" />
+    <Content Include="LICENSE.md" />
+    <Content Include="public\modules\player\views\waitingForActivation.html" />
+    <Content Include="README.md" />
+    <Compile Include="gruntfile.js" />
+    <Compile Include="karma.conf.js" />
+    <Compile Include="public\modules\core\services\path.js" />
+    <Compile Include="server.js" />
+    <Compile Include="config\config.js" />
+    <Compile Include="config\express.js" />
+    <Compile Include="config\init.js" />
+    <Compile Include="config\passport.js" />
+    <Content Include="public\humans.txt" />
+    <Content Include="public\robots.txt" />
+    <Content Include="public\test.html" />
+    <Compile Include="public\application.js" />
+    <Compile Include="public\config.js" />
+    <Compile Include="app\controllers\core.server.controller.js" />
+    <Compile Include="app\controllers\devices.server.controller.js" />
+    <Compile Include="app\controllers\errors.server.controller.js" />
+    <Compile Include="app\controllers\slideshows.server.controller.js" />
+    <Compile Include="app\controllers\users.server.controller.js" />
+    <Compile Include="app\models\device.server.model.js" />
+    <Compile Include="app\models\slideshow.server.model.js" />
+    <Compile Include="app\models\user.server.model.js" />
+    <Compile Include="app\routes\core.server.routes.js" />
+    <Compile Include="app\routes\devices.server.routes.js" />
+    <Compile Include="app\routes\slideshows.server.routes.js" />
+    <Compile Include="app\routes\users.server.routes.js" />
+    <Compile Include="app\tests\device.server.model.test.js" />
+    <Compile Include="app\tests\device.server.routes.test.js" />
+    <Compile Include="app\tests\slideshow.server.model.test.js" />
+    <Compile Include="app\tests\slideshow.server.routes.test.js" />
+    <Compile Include="app\tests\user.server.model.test.js" />
+    <Content Include="app\views\404.server.view.html" />
+    <Content Include="app\views\500.server.view.html" />
+    <Content Include="app\views\index.server.view.html" />
+    <Content Include="app\views\layout.server.view.html" />
+    <Content Include="app\views\slideshow.server.view.html" />
+    <Compile Include="app\controllers\users\users.authentication.server.controller.js" />
+    <Compile Include="app\controllers\users\users.authorization.server.controller.js" />
+    <Compile Include="app\controllers\users\users.password.server.controller.js" />
+    <Compile Include="app\controllers\users\users.profile.server.controller.js" />
+    <Compile Include="app\services\messaging\messageHandler.js" />
+    <Compile Include="app\services\messaging\messagingEngineFactory.js" />
+    <Compile Include="app\services\messaging\pubNub.js" />
+    <Compile Include="app\services\messaging\actions\hi.js" />
+    <Content Include="app\views\templates\reset-password-confirm-email.server.view.html" />
+    <Content Include="app\views\templates\reset-password-email.server.view.html" />
+    <Compile Include="config\env\all.js" />
+    <Compile Include="config\env\development.js" />
+    <Compile Include="config\env\production.js" />
+    <Compile Include="config\env\secure.js" />
+    <Compile Include="config\env\test.js" />
+    <Compile Include="config\strategies\facebook.js" />
+    <Compile Include="config\strategies\github.js" />
+    <Compile Include="config\strategies\google.js" />
+    <Compile Include="config\strategies\linkedin.js" />
+    <Compile Include="config\strategies\local.js" />
+    <Compile Include="config\strategies\twitter.js" />
+    <Compile Include="public\modules\core\core.client.module.js" />
+    <Compile Include="public\modules\devices\devices.client.module.js" />
+    <Compile Include="public\modules\player\player.client.module.js" />
+    <Compile Include="public\modules\slideshows\slideshows.client.module.js" />
+    <Compile Include="public\modules\users\users.client.module.js" />
+    <Compile Include="public\modules\core\config\core.client.routes.js" />
+    <Compile Include="public\modules\core\controllers\application.client.controller.js" />
+    <Compile Include="public\modules\core\controllers\header.client.controller.js" />
+    <Compile Include="public\modules\core\controllers\home.client.controller.js" />
+    <Content Include="public\modules\core\css\batch.css" />
+    <Content Include="public\modules\core\css\codeHighlighter.css" />
+    <Content Include="public\modules\core\css\core.css" />
+    <Compile Include="public\modules\core\services\menus.client.service.js" />
+    <Compile Include="public\modules\core\tests\header.client.controller.test.js" />
+    <Compile Include="public\modules\core\tests\home.client.controller.test.js" />
+    <Content Include="public\modules\core\views\header.client.view.html" />
+    <Content Include="public\modules\core\views\home.client.view.html" />
+    <Content Include="public\modules\core\img\brand\logo.png" />
+    <Content Include="public\modules\core\img\brand\favicon.ico" />
+    <Content Include="public\modules\core\img\loaders\loader.gif" />
+    <Compile Include="public\modules\core\services\messaging\messagingEngineFactory.js" />
+    <Compile Include="public\modules\core\services\messaging\pubNubFacade.js" />
+    <Compile Include="public\modules\devices\config\devices.client.config.js" />
+    <Compile Include="public\modules\devices\config\devices.client.routes.js" />
+    <Compile Include="public\modules\devices\controllers\devices.client.controller.js" />
+    <Compile Include="public\modules\devices\services\devices.client.service.js" />
+    <Compile Include="public\modules\devices\tests\devices.client.controller.test.js" />
+    <Content Include="public\modules\devices\views\create-device.client.view.html" />
+    <Content Include="public\modules\devices\views\edit-device.client.view.html" />
+    <Content Include="public\modules\devices\views\list-devices.client.view.html" />
+    <Compile Include="public\modules\player\config\player.client.routes.js" />
+    <Compile Include="public\modules\player\controllers\player.client.controller.js" />
+    <Compile Include="public\modules\player\controllers\slide.client.controller.js" />
+    <Content Include="public\modules\player\css\player.css" />
+    <Content Include="public\modules\player\css\uiViewAnim.css" />
+    <Content Include="public\modules\player\css\uiViewAnimEnterBottom.css" />
+    <Content Include="public\modules\player\css\uiViewAnimEnterLeft.css" />
+    <Content Include="public\modules\player\css\uiViewAnimEnterRight.css" />
+    <Content Include="public\modules\player\css\uiViewAnimEnterTop.css" />
+    <Compile Include="public\modules\player\directives\ngSlide.js" />
+    <Compile Include="public\modules\player\services\css.injector.js" />
+    <Compile Include="public\modules\player\services\localStorage.client.service.js" />
+    <Compile Include="public\modules\player\services\slides.service.js" />
+    <Compile Include="public\modules\player\tests\player.client.controller.test.js" />
+    <Content Include="public\modules\player\views\player.client.view.html" />
+    <Content Include="public\modules\player\views\slide.client.view.html" />
+    <Compile Include="public\modules\slideshows\config\slideshows.client.config.js" />
+    <Compile Include="public\modules\slideshows\config\slideshows.client.routes.js" />
+    <Compile Include="public\modules\slideshows\controllers\deviceInteraction.client.controller.js" />
+    <Compile Include="public\modules\slideshows\controllers\slideshows.client.controller.js" />
+    <Content Include="public\modules\slideshows\css\slideshows.css" />
+    <Compile Include="public\modules\slideshows\services\slideshows.client.service.js" />
+    <Compile Include="public\modules\slideshows\services\templates.client.service.js" />
+    <Compile Include="public\modules\slideshows\tests\slideshows.client.controller.test.js" />
+    <Content Include="public\modules\slideshows\views\create-slideshow.client.view.html" />
+    <Content Include="public\modules\slideshows\views\deviceInteraction.client.view.html" />
+    <Content Include="public\modules\slideshows\views\edit-slideshow.client.view.html" />
+    <Content Include="public\modules\slideshows\views\list-slideshows.client.view.html" />
+    <Content Include="public\modules\slideshows\views\view-slideshow.client.view.html" />
+    <Content Include="public\modules\slideshows\css\img\default.jpg" />
+    <Content Include="public\modules\slideshows\slideTemplates\default\slide.html" />
+    <Content Include="public\modules\slideshows\slideTemplates\default\slide.css" />
+    <Content Include="public\modules\slideshows\slideTemplates\FreeText\slide.html" />
+    <Content Include="public\modules\slideshows\slideTemplates\FreeText\slide.css" />
+    <Content Include="public\modules\slideshows\slideTemplates\img\georgiana.iancu-ad-export.png" />
+    <Content Include="public\modules\slideshows\slideTemplates\img\image2015-6-22 9-39-45.png" />
+    <Content Include="public\modules\slideshows\slideTemplates\img\irina.rusneac-ad-export.png" />
+    <Content Include="public\modules\slideshows\slideTemplates\img\oana.vezentan-ad-export.png" />
+    <Content Include="public\modules\slideshows\slideTemplates\img\rares.smeu-ad-export.png" />
+    <Content Include="public\modules\slideshows\slideTemplates\img\emccstn3c.ra8_preview.jpg" />
+    <Content Include="public\modules\slideshows\slideTemplates\iQuestNews\slide.html" />
+    <Content Include="public\modules\slideshows\slideTemplates\iQuestNews\slide.css" />
+    <Content Include="public\modules\slideshows\slideTemplates\MSEvents\slide.html" />
+    <Content Include="public\modules\slideshows\slideTemplates\MSEvents\slide.css" />
+    <Compile Include="public\modules\users\config\users.client.config.js" />
+    <Compile Include="public\modules\users\config\users.client.routes.js" />
+    <Compile Include="public\modules\users\controllers\authentication.client.controller.js" />
+    <Compile Include="public\modules\users\controllers\password.client.controller.js" />
+    <Compile Include="public\modules\users\controllers\settings.client.controller.js" />
+    <Content Include="public\modules\users\css\users.css" />
+    <Compile Include="public\modules\users\services\authentication.client.service.js" />
+    <Compile Include="public\modules\users\services\users.client.service.js" />
+    <Compile Include="public\modules\users\tests\authentication.client.controller.test.js" />
+    <Content Include="public\modules\users\img\buttons\facebook.png" />
+    <Content Include="public\modules\users\img\buttons\github.png" />
+    <Content Include="public\modules\users\img\buttons\google.png" />
+    <Content Include="public\modules\users\img\buttons\linkedin.png" />
+    <Content Include="public\modules\users\img\buttons\twitter.png" />
+    <Content Include="public\modules\users\views\authentication\signin.client.view.html" />
+    <Content Include="public\modules\users\views\authentication\signup.client.view.html" />
+    <Content Include="public\modules\users\views\password\forgot-password.client.view.html" />
+    <Content Include="public\modules\users\views\password\reset-password-invalid.client.view.html" />
+    <Content Include="public\modules\users\views\password\reset-password-success.client.view.html" />
+    <Content Include="public\modules\users\views\password\reset-password.client.view.html" />
+    <Content Include="public\modules\users\views\settings\change-password.client.view.html" />
+    <Content Include="public\modules\users\views\settings\edit-profile.client.view.html" />
+    <Content Include="public\modules\users\views\settings\social-accounts.client.view.html" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="app" />
+    <Folder Include="app\controllers" />
+    <Folder Include="app\controllers\users" />
+    <Folder Include="app\models" />
+    <Folder Include="app\routes" />
+    <Folder Include="app\services" />
+    <Folder Include="app\services\messaging" />
+    <Folder Include="app\services\messaging\actions" />
+    <Folder Include="app\tests" />
+    <Folder Include="app\views" />
+    <Folder Include="app\views\templates" />
+    <Folder Include="config" />
+    <Folder Include="config\env" />
+    <Folder Include="config\strategies" />
+    <Folder Include="public" />
+    <Folder Include="public\lib" />
+    <Folder Include="public\modules" />
+    <Folder Include="public\modules\core" />
+    <Folder Include="public\modules\core\config" />
+    <Folder Include="public\modules\core\controllers" />
+    <Folder Include="public\modules\core\css" />
+    <Folder Include="public\modules\core\img" />
+    <Folder Include="public\modules\core\img\brand" />
+    <Folder Include="public\modules\core\img\loaders" />
+    <Folder Include="public\modules\core\services" />
+    <Folder Include="public\modules\core\services\messaging" />
+    <Folder Include="public\modules\core\tests" />
+    <Folder Include="public\modules\core\views" />
+    <Folder Include="public\modules\devices" />
+    <Folder Include="public\modules\devices\config" />
+    <Folder Include="public\modules\devices\controllers" />
+    <Folder Include="public\modules\devices\services" />
+    <Folder Include="public\modules\devices\tests" />
+    <Folder Include="public\modules\devices\views" />
+    <Folder Include="public\modules\player" />
+    <Folder Include="public\modules\player\config" />
+    <Folder Include="public\modules\player\controllers" />
+    <Folder Include="public\modules\player\css" />
+    <Folder Include="public\modules\player\directives" />
+    <Folder Include="public\modules\player\services" />
+    <Folder Include="public\modules\player\tests" />
+    <Folder Include="public\modules\player\views" />
+    <Folder Include="public\modules\slideshows" />
+    <Folder Include="public\modules\slideshows\config" />
+    <Folder Include="public\modules\slideshows\controllers" />
+    <Folder Include="public\modules\slideshows\css" />
+    <Folder Include="public\modules\slideshows\css\img" />
+    <Folder Include="public\modules\slideshows\services" />
+    <Folder Include="public\modules\slideshows\slideTemplates" />
+    <Folder Include="public\modules\slideshows\slideTemplates\default" />
+    <Folder Include="public\modules\slideshows\slideTemplates\FreeText" />
+    <Folder Include="public\modules\slideshows\slideTemplates\img" />
+    <Folder Include="public\modules\slideshows\slideTemplates\iQuestNews" />
+    <Folder Include="public\modules\slideshows\slideTemplates\MSEvents" />
+    <Folder Include="public\modules\slideshows\tests" />
+    <Folder Include="public\modules\slideshows\views" />
+    <Folder Include="public\modules\users" />
+    <Folder Include="public\modules\users\config" />
+    <Folder Include="public\modules\users\controllers" />
+    <Folder Include="public\modules\users\css" />
+    <Folder Include="public\modules\users\img" />
+    <Folder Include="public\modules\users\img\buttons" />
+    <Folder Include="public\modules\users\services" />
+    <Folder Include="public\modules\users\tests" />
+    <Folder Include="public\modules\users\views" />
+    <Folder Include="public\modules\users\views\authentication" />
+    <Folder Include="public\modules\users\views\password" />
+    <Folder Include="public\modules\users\views\settings" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.Common.targets" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <Import Project="$(VSToolsPath)\Node.js Tools\Microsoft.NodejsTools.targets" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>False</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>0</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost:48022/</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>True</UseCustomServer>
+          <CustomServerUrl>http://localhost:1337</CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}" User="">
+        <WebProjectProperties>
+          <StartPageUrl>
+          </StartPageUrl>
+          <StartAction>CurrentPage</StartAction>
+          <AspNetDebugging>True</AspNetDebugging>
+          <SilverlightDebugging>False</SilverlightDebugging>
+          <NativeDebugging>False</NativeDebugging>
+          <SQLDebugging>False</SQLDebugging>
+          <ExternalProgram>
+          </ExternalProgram>
+          <StartExternalURL>
+          </StartExternalURL>
+          <StartCmdLineArguments>
+          </StartCmdLineArguments>
+          <StartWorkingDirectory>
+          </StartWorkingDirectory>
+          <EnableENC>False</EnableENC>
+          <AlwaysStartWebServerOnDebug>False</AlwaysStartWebServerOnDebug>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+</Project>

@@ -9,3 +9,7 @@ public/lib/*
 app/tests/coverage/
 .bower-*/
 .idea/
+obj/
+packages/
+.ntvs_analysis.dat
+iqSlideShow.v12.suo

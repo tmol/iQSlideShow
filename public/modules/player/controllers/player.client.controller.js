@@ -2,21 +2,30 @@
 /*global angular, PUBNUB*/
 (function () {
     'use strict';
-    angular.module('player').controller('PlayerController', ['$scope', '$stateParams', '$state', '$timeout', 'Slides', 'CssInjector', '$interval', '$location', 'MessagingEngineFactory', 'LocalStorage', '$modal',
-        function ($scope, $stateParams, $state, $timeout, Slides, CssInjector, $interval, $location, MessagingEngineFactory, LocalStorage, $modal) {
+    angular.module('player').controller('PlayerController', ['$scope', '$stateParams', '$state', '$timeout', 'Slides', 'CssInjector', '$interval', '$location', 'MessagingEngineFactory', 'LocalStorage', '$modal', 'Path',
+        function ($scope, $stateParams, $state, $timeout, Slides, CssInjector, $interval, $location, MessagingEngineFactory, LocalStorage, $modal, Path) {
             if ($scope.initialised) {
                 return;
             }
             $scope.initialised = true;
             $scope.deviceId = $stateParams.deviceId || PUBNUB.unique();
-
             var messagingEngine = MessagingEngineFactory.getEngine($scope.deviceId);
             messagingEngine.subscribe();
-
             //jQuery("#app-header").hide();
             $scope.slideName = $stateParams.slideName;
             $scope.qrConfig = {
                 slideUrl: $location.$$absUrl,
+                size: 100,
+                correctionLevel: '',
+                typeNumber: 0,
+                inputMode: '',
+                image: true
+            };
+
+            $scope.slideActivationQr = {
+                slideUrl: $state.href("editDevice", {
+                    deviceId : $scope.deviceId
+                }, { absolute : true }),
                 size: 100,
                 correctionLevel: '',
                 typeNumber: 0,
@@ -40,7 +49,7 @@
                 timeoutCollection[key] = $timeout(func, delay);
             };
 
-            var unRegisterTimeout = function (key, func, delay) {
+            var unRegisterTimeout = function (key) {
                 $timeout.cancel(timeoutCollection[key]);
                 delete timeoutCollection[key];
             };
@@ -75,7 +84,6 @@
                     return null;
                 }
 
-                var duration = slide.durationInSeconds;
                 $scope.animationType = slide.animationType;
                 $scope.zoomPercent = slide.zoomPercent || 100;
                 slide.content.templateUrl = 'modules/slideshows/slideTemplates/' + (slide.templateName || 'default') + '/slide.html';
@@ -144,19 +152,18 @@
                 });
             };
 
-            var modalInstance;
-
             var start = function () {
                 var deviceId = LocalStorage.getDeviceId();
                 if (deviceId !== null) {
                     updateSildes(slideShow);
                 } else {
                     deviceId = PUBNUB.unique();
-                    modalInstance = $modal.open({
+                    $modal.open({
                         animation: true,
-                        templateUrl: 'waitingForActivation.html',
+                        templateUrl: Path.getViewUrl('waitingForActivation'),
                         windowClass: 'waitingForActivationDialog',
-                        backdrop: 'static'
+                        backdrop: 'static',
+                        scope: $scope
                     });
 
                     messagingEngine.publish('hi');
