@@ -2,9 +2,13 @@
 (function () {
     'use strict';
 
-// Devices controller
-    angular.module('devices').controller('DevicesController', ['$scope', '$stateParams', '$location', 'Authentication', 'Slideshows', 'Devices',
-        function ($scope, $stateParams, $location, Authentication, Slideshows, Devices) {
+    // Devices controller
+    angular.module('devices').controller('DevicesController', ['$scope', '$stateParams', '$location', 'Authentication', 'Slideshows', 'Devices', 'MessagingEngineFactory', '$modal',
+        function ($scope, $stateParams, $location, Authentication, Slideshows, Devices, MessagingEngineFactory, $modal) {
+            var messagingEngine = MessagingEngineFactory.getEngine($scope.deviceId),
+                modalInstance;
+            messagingEngine.subscribe();
+
             $scope.authentication = Authentication;
             Slideshows.query(function (res) {
                 $scope.slideshows = res;
@@ -55,12 +59,26 @@
 
             // Update existing Device
             $scope.update = function () {
-                var device = $scope.device;
+                var device = $scope.device,
+                    storedDevice = Devices.get({
+                            deviceId: device.id
+                        }, function(value, responseHeaders) {
+                            console.log(dev);
+                        }, function (errorResponse) {
+                            $scope.error = errorResponse.data.message;
+                        });
+
                 if (!device.active) {
                     device.active = false;
                 }
 
                 device.$update(function () {
+                    /*if (storedDevice.active === false
+                       && device.active === false) {
+                        messagingEngine.publish('deviceSetup', {
+                            slideShowIdToPlay: device.slideShowId
+                        });
+                    }*/
                     $location.path('devices');
                 }, function (errorResponse) {
                     $scope.error = errorResponse.data.message;
@@ -82,6 +100,44 @@
             $scope.cancel = function () {
                 $location.path('devices');
             };
+
+            $scope.cancelModal = function () {
+                modalInstance.dismiss('cancel');
+            };
+
+            var messageHandler = {
+                newDeviceSaidHi: function (message) {
+                    modalInstance = $modal.open({
+                        animation: false,
+                        templateUrl: 'receivedDeviceEventPopup.html',
+                        windowClass: 'waitingForActivationDialog',
+                        backdrop: 'static',
+                        controller: 'EventHandlerModalController',
+                        resolve: {
+                            deviceEvent: function() {
+                                return {
+                                    title: 'New device available',
+                                    description: 'A new device with id ' + message.deviceId + ' is available. You can activate it by clicking on the Edit button from below.',
+                                    deviceId: message.deviceId,
+                                    deviceObjectId: message.content.objectId
+                                }
+                            }
+                        }
+                    });
+                },
+                inactiveRegisteredDeviceSaidHi: function (message) {
+
+                }
+            };
+
+            // todo cde duplication, factor out, see player.client.controller
+            $scope.$on(messagingEngine.messageEvent, function (event, payload) {
+                var message = payload.message,
+                    deviceId = message.deviceId;
+                if (messageHandler[message.action]) {
+                    messageHandler[message.action](message);
+                }
+            });
         }
         ]);
 }());
