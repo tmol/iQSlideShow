@@ -22,6 +22,17 @@
                 image: true
             };
 
+            $scope.slideActivationQr = {
+                slideUrl: $state.href("editDevice", {
+                    deviceId : $scope.deviceId
+                }, { absolute : true }),
+                size: 100,
+                correctionLevel: '',
+                typeNumber: 0,
+                inputMode: '',
+                image: true
+            };
+
             var slideNumber = -1;
 
             $scope.slides = [];
@@ -151,7 +162,8 @@
                         animation: true,
                         templateUrl: Path.getViewUrl('waitingForActivation'),
                         windowClass: 'waitingForActivationDialog',
-                        backdrop: 'static'
+                        backdrop: 'static',
+                        scope: $scope
                     });
 
                     messagingEngine.publish('hi');

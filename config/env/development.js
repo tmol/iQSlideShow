@@ -1,7 +1,7 @@
 'use strict';
 
 module.exports = {
-	db: 'mongodb://localhost/iqslideshow-dev',
+	db: 'mongodb://tmol:iquest1234@ds034878.mongolab.com:34878/carate',
 	app: {
 		title: 'iQSlideShow - Development Environment'
 	},
