@@ -18,7 +18,11 @@
                     location: 'TBD',
                     name: 'TBD',
                     defaultSlideShowId: null
+<<<<<<< HEAD
                 });
+=======
+            });
+>>>>>>> tmol/master
 
             User.findOne({username: 'admin'}, function (err, adminUser) {
                 if (err) {

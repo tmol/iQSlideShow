@@ -176,7 +176,6 @@
                     $scope.deviceId = PUBNUB.unique();
                     LocalStorage.setDeviceId($scope.deviceId);
                 }
-
                 if ($stateParams.deviceSetupMessage) {
                     if (!$stateParams.deviceSetupMessage.device.active) {
                         enterInactiveState();
@@ -212,13 +211,27 @@
                 loadNextSlide();
             };
 
+            var showActivateDialog = function () {
+                $scope.modalInstance = $modal.open({
+                    animation: false,
+                    templateUrl: Path.getViewUrl('waitingForActivation'),
+                    windowClass: 'waitingForActivationDialog',
+                    backdrop: 'static',
+                    scope: $scope
+                });
+            };
+
             var messageHandler = {
                 moveSlideRight : moveSlideRight,
                 moveSlideLeft : moveSlideLeft,
                 deviceSetup : function (message) {
                     var content = message.content;
-
                     if (!content.slideShowIdToPlay) {
+                        return;
+                    }
+
+                    if (!content.active) {
+                        showActivateDialog();
                         return;
                     }
 
@@ -242,6 +255,9 @@
                     slideNumber = -1;
                     resetOnHold();
                     loadNextSlide();
+                },
+                inactiveRegisteredDeviceSaidHi : function (message) {
+                    showActivateDialog();
                 }
             };
 

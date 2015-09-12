@@ -68,7 +68,6 @@
                 if (!device.active) {
                     device.active = false;
                 }
-
                 device.$update(function () {
                     $state.go('listDevices');
                 }, function (errorResponse) {
