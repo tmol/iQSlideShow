@@ -4,8 +4,8 @@
     'use strict';
 
     // Devices controller
-    angular.module('devices').controller('DevicesController', ['$scope', '$stateParams', '$location', 'Authentication', 'Slideshows', 'Devices', 'MessagingEngineFactory', '$modal',
-        function ($scope, $stateParams, $location, Authentication, Slideshows, Devices, MessagingEngineFactory, $modal) {
+    angular.module('devices').controller('DevicesController', ['$scope', '$stateParams', '$state', 'Authentication', 'Slideshows', 'Devices', 'MessagingEngineFactory', '$modal',
+        function ($scope, $stateParams, $state, Authentication, Slideshows, Devices, MessagingEngineFactory, $modal) {
             var messagingEngine = MessagingEngineFactory.getEngine(),
                 modalInstance,
                 messageHandler;
@@ -32,7 +32,7 @@
 
                 // Redirect after save
                 device.$save(function (response) {
-                    $location.path('devices');
+                    $state.go('listDevices');
 
                     // Clear form fields
                     $scope.name = '';
@@ -54,7 +54,7 @@
                     }
                 } else {
                     $scope.device.$remove(function () {
-                        $location.path('devices');
+                        $state.go('listDevices');
                     });
                 }
             };
@@ -87,7 +87,7 @@
                         if (deviceSetupMessageContent !== null) {
                             messagingEngine.publish('deviceSetup', device.deviceId, deviceSetupMessageContent);
                         }
-                        $location.path('devices');
+                        $state.go('listDevices');
                     }, function (errorResponse) {
                         $scope.error = errorResponse.data.message;
                     });
@@ -109,7 +109,7 @@
             };
 
             $scope.cancel = function () {
-                $location.path('devices');
+                $state.go('listDevices');
             };
 
             $scope.cancelModal = function () {
