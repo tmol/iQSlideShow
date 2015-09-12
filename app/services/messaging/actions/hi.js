@@ -18,12 +18,7 @@
                     location: 'TBD',
                     name: 'TBD',
                     defaultSlideShowId: null
-<<<<<<< HEAD
                 });
-=======
-            });
->>>>>>> tmol/master
-
             User.findOne({username: 'admin'}, function (err, adminUser) {
                 if (err) {
                     console.log('Admin user cannot be found, error message: ' + errorHandler.getErrorMessage(err));

@@ -8,7 +8,7 @@
             function init() {
 
                 var pubNub = PubNub,
-                    theChannel = 'iQSlideShowTibi';
+                    theChannel = 'iQSlideShow';
 
                 PubNub.init({
                     publish_key : 'pub-c-906ea9e7-a221-48ed-a2d8-5475a6214f45',

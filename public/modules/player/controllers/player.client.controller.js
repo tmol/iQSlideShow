@@ -162,7 +162,6 @@
 
                 enterInactiveState();
                 messagingEngine.publish('hi', $scope.deviceId);
-                updateSildes(slideShow);
             };
 
             var start = function () {
@@ -211,27 +210,12 @@
                 loadNextSlide();
             };
 
-            var showActivateDialog = function () {
-                $scope.modalInstance = $modal.open({
-                    animation: false,
-                    templateUrl: Path.getViewUrl('waitingForActivation'),
-                    windowClass: 'waitingForActivationDialog',
-                    backdrop: 'static',
-                    scope: $scope
-                });
-            };
-
             var messageHandler = {
                 moveSlideRight : moveSlideRight,
                 moveSlideLeft : moveSlideLeft,
                 deviceSetup : function (message) {
                     var content = message.content;
                     if (!content.slideShowIdToPlay) {
-                        return;
-                    }
-
-                    if (!content.active) {
-                        showActivateDialog();
                         return;
                     }
 
