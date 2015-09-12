@@ -7,6 +7,8 @@
      */
     var mongoose = require('mongoose'),
         Schema = mongoose.Schema,
+        messagingEngineFactory = require('../services/messaging/messagingEngineFactory'),
+        messagingEngine = messagingEngineFactory.init(),
         DeviceSchema = new Schema({
             name: {
                 type: String,
@@ -46,8 +48,14 @@
             isNewDevice: {
                 type: Boolean,
                 default: true
-            }
+            }            
         });
-
+    DeviceSchema.methods.sendMessage = function (message, content) {
+        messagingEngine.publish({
+            action: message,
+            deviceId: this.deviceId,
+            content: content || this
+        });
+    };
     mongoose.model('Device', DeviceSchema);
 }());

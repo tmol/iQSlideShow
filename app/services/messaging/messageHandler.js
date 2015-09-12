@@ -40,6 +40,7 @@
 
     exports.init = function () {
         messagingEngine = messagingEngineFactory.init(onMessageReceived);
+        messagingEngine.subscribe(onMessageReceived);
         console.log('messagingEngine ' + messagingEngine);
     };
 }());

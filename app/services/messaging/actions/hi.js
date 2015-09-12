@@ -53,19 +53,14 @@
             };
 
             if (!device) {
-                storeNewDevice(message.deviceId, function(newDevice) {
-                    publishAction('newDeviceSaidHi', {objectId: newDevice.id});
+                storeNewDevice(message.deviceId, function (newDevice) {
+                    publishAction('newDeviceSaidHi', { objectId: newDevice.id });
+                    device.sendMessage('deviceSetup');
                 });
                 return;
             }
-
-            if (!device.active) {
-                console.log("inactive device: " + device);
-                publishAction('inactiveRegisteredDeviceSaidHi');
-                return;
-            }
-            
-            publishAction('deviceSetup', device);
+                        
+            device.sendMessage('deviceSetup');
         };
 
         Device.findOne({deviceId: message.deviceId}).exec(onFindOne);

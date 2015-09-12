@@ -4,9 +4,11 @@
  * Module dependencies.
  */
 var mongoose = require('mongoose'),
-	errorHandler = require('./errors.server.controller'),
-	Device = mongoose.model('Device'),
-	_ = require('lodash');
+    errorHandler = require('./errors.server.controller'),
+    Device = mongoose.model('Device'),
+    _ = require('lodash'),
+    messagingEngineFactory = require('../services/messaging/messagingEngineFactory'),
+    messagingEngine = messagingEngineFactory.init();
 
 /**
  * Create a Device
@@ -46,7 +48,8 @@ exports.update = function(req, res) {
 				message: errorHandler.getErrorMessage(err)
 			});
 		} else {
-			res.jsonp(device);
+            res.jsonp(device);
+            device.sendMessage("deviceSetup");
 		}
 	});
 };

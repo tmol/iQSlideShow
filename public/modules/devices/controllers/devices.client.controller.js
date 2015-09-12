@@ -84,9 +84,6 @@
                         };
                     }
                     device.$update(function () {
-                        if (deviceSetupMessageContent !== null) {
-                            messagingEngine.publish('deviceSetup', device.deviceId, deviceSetupMessageContent);
-                        }
                         $state.go('listDevices');
                     }, function (errorResponse) {
                         $scope.error = errorResponse.data.message;

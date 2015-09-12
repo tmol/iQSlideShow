@@ -6,7 +6,7 @@ angular.module('player').config(['$stateProvider',
 		// Player state routing
 		$stateProvider.state('player', {
 			url: '/player/:slideName/:slideNumber/:preview',
-            params: {deviceId: null},
+            params: {deviceId: null, isSwitching: false},
 			templateUrl: 'modules/player/views/player.client.view.html',
 			controller:'PlayerController'
 		});
