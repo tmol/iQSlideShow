@@ -85,7 +85,7 @@
                     }
                     device.$update(function () {
                         if (deviceSetupMessageContent !== null) {
-                            messagingEngine.publish('deviceSetup', device.deviceId, deviceSetupMessageContent);
+                            //messagingEngine.publish('deviceSetup', device.deviceId, deviceSetupMessageContent);
                         }
                         $location.path('devices');
                     }, function (errorResponse) {

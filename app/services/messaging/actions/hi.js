@@ -38,6 +38,7 @@
         };
 
         var onFindOne = function (err, device) {
+            console.log("foudn device: " + device);
             if (err) {
                 throw err;
             }
@@ -45,7 +46,7 @@
             var publishAction = function (action, content) {
                 content = content || null;
                 messagingEngine.publish({
-                    action: 'newDeviceSaidHi',
+                    action: action,
                     deviceId: message.deviceId,
                     content: content
                 });
@@ -64,9 +65,12 @@
                 return;
             }
 
+            console.log("Publish deviceSetup!");
+            device.slideShowIdToPlay = device.defaultSlideShowId;
             publishAction('deviceSetup', device);
         };
 
+        console.log("searching for : " + message.deviceId);
         Device.findOne({deviceId: message.deviceId}).exec(onFindOne);
     };
 }());

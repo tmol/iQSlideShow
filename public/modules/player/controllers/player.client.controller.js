@@ -2,8 +2,8 @@
 /*global angular, PUBNUB*/
 (function () {
     'use strict';
-    angular.module('player').controller('PlayerController', ['$scope', '$stateParams', '$state', '$timeout', 'Slides', 'CssInjector', '$interval', '$location', 'MessagingEngineFactory', 'LocalStorage', '$modal', 'Path',
-        function ($scope, $stateParams, $state, $timeout, Slides, CssInjector, $interval, $location, MessagingEngineFactory, LocalStorage, $modal, Path) {
+    angular.module('player').controller('PlayerController', ['$scope', '$stateParams', '$state', '$timeout', 'Slides', 'CssInjector', '$interval', '$location', 'MessagingEngineFactory', 'LocalStorage', 'Path', 'Admin',
+        function ($scope, $stateParams, $state, $timeout, Slides, CssInjector, $interval, $location, MessagingEngineFactory, LocalStorage, Path, Admin) {
             if ($scope.initialised) {
                 return;
             }
@@ -159,18 +159,17 @@
                     $scope.deviceId = PUBNUB.unique();
                     LocalStorage.setDeviceId($scope.deviceId);
                 }
-                $scope.modalInstance = $modal.open({
-                    animation: false,
-                    templateUrl: Path.getViewUrl('waitingForActivation'),
-                    windowClass: 'waitingForActivationDialog',
-                    backdrop: 'static',
-                    scope: $scope
-                });
-                messagingEngine.publish('hi', $scope.deviceId);
-            };
 
-            $scope.waitingForActivation = function () {
-                return $scope.modalInstance !== null;
+                var config = Admin.get(function (value) {
+                    if (config !== null) {
+                        $stateParams.slideName = value.defaultSlideShowId;
+                        updateSildes(slideShow);
+                    }
+                }, function (httpResponse) {
+                    // todo handle error
+                });
+
+                messagingEngine.publish('hi', $scope.deviceId);
             };
 
             $scope.updateSlidesHandle = null;
@@ -206,14 +205,8 @@
                         return;
                     }
 
-                    if ($scope.waitingForActivation()) {
-                        $stateParams.slideNumber = content.slideShowIdToPlay;
-                        updateSildes(slideShow);
-                        $scope.modalInstance.close();
-                        $scope.modalInstance = null;
-                    } else {
-                        switchSlideShow(content.slideShowIdToPlay);
-                    }
+                    $stateParams.slideNumber = content.slideShowIdToPlay;
+                    updateSildes(slideShow);
 
                     var duration = content.minutesToPlayBeforeGoingBackToDefaultSlideShow;
                     if (duration) {
