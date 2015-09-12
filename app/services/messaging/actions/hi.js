@@ -46,7 +46,7 @@
             var publishAction = function (action, content) {
                 content = content || null;
                 messagingEngine.publish({
-                    action: 'newDeviceSaidHi',
+                    action: action,
                     deviceId: message.deviceId,
                     content: content
                 });
@@ -64,7 +64,7 @@
                 publishAction('inactiveRegisteredDeviceSaidHi');
                 return;
             }
-
+            
             publishAction('deviceSetup', device);
         };
 
