@@ -17,9 +17,9 @@
                     active: false,
                     location: 'TBD',
                     name: 'TBD',
-                defaultSlideShowId: null,
-                isNew: true
-                });
+                    defaultSlideShowId: null
+            });
+
             User.findOne({username: 'admin'}, function (err, adminUser) {
                 if (err) {
                     console.log('Admin user cannot be found, error message: ' + errorHandler.getErrorMessage(err));

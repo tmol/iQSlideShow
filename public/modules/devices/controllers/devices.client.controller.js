@@ -70,7 +70,7 @@
                 }
 
                 storedDevice = Devices.get({
-                    deviceId: device._id
+                    deviceId: device.deviceId
                 }, function (value, responseHeaders) {
                     if (storedDevice.active === false && device.active === true) {
                         deviceSetupMessageContent = {

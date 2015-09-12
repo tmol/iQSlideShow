@@ -21,17 +21,6 @@
                 image: true
             };
 
-            $scope.slideActivationQr = {
-                slideUrl: $state.href("editDevice", {
-                    deviceId : $scope.deviceId
-                }, { absolute : true }),
-                size: 100,
-                correctionLevel: '',
-                typeNumber: 0,
-                inputMode: '',
-                image: true
-            };
-
             var slideNumber = -1;
 
             $scope.slides = [];
@@ -159,6 +148,16 @@
                     $scope.deviceId = PUBNUB.unique();
                     LocalStorage.setDeviceId($scope.deviceId);
                 }
+                $scope.slideActivationQr = {
+                    slideUrl: $state.href("editDevice", {
+                        deviceId : $scope.deviceId
+                    }, { absolute : true }),
+                    size: 100,
+                    correctionLevel: '',
+                    typeNumber: 0,
+                    inputMode: '',
+                    image: true
+                };
                 $scope.modalInstance = $modal.open({
                     animation: false,
                     templateUrl: Path.getViewUrl('waitingForActivation'),

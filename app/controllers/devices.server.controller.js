@@ -40,10 +40,6 @@ exports.update = function(req, res) {
 	var device = req.device ;
 
     device = _.extend(device , req.body);
-    if (device.isNew && !device.user) {
-        device.user = req.user;
-    }
-    device.isNew = false;
 	device.save(function(err) {
 		if (err) {
 			return res.status(400).send({
@@ -103,10 +99,6 @@ exports.deviceByID = function (req, res, next, id) {
  * Device authorization middleware
  */
 exports.hasAuthorization = function (req, res, next) {
-    if (!req.device.user && req.device.isNewDevice) {
-        next();
-        return;
-    }
 	if (req.device.user.id !== req.user.id) {
 		return res.status(403).send('User is not authorized');
 	}
