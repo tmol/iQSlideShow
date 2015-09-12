@@ -1,0 +1,29 @@
+<section data-ng-controller="AdminController" data-ng-init="getConfig()" style="margin-top: 58px;">
+    <div class="page-header">
+        <h1>Configuration</h1>
+    </div>
+    <div class="col-md-12">
+        <form class="form-horizontal" data-ng-submit="update()" novalidate>
+            <fieldset>
+                <div class="form-group">
+                    <label class="control-label" for="name">User selected slide shows play time in minutes</label>
+                    <div class="controls">
+                        <input type="text" data-ng-model="admin.userSelectedSlideShowsPlayTimeInMinutes" id="a" class="form-control" placeholder="a" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label" for="locationk">Default Player Slide Show</label>
+                    <div class="controls">
+                        <select ng-model="admin.defaultSlideShowId" ng-options="slideshow._id as slideshow.name for slideshow in slideshows"></select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Update" class="btn btn-default">
+                </div>
+				<div data-ng-show="error" class="text-danger">
+					<strong data-ng-bind="error"></strong>
+				</div>
+            </fieldset>
+        </form>
+    </div>
+</section>

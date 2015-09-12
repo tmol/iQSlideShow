@@ -5,7 +5,7 @@
     angular.module('slideshows').controller('DeviceInteractionController', ['$scope', '$state', '$stateParams', 'Slides', 'Slideshows', 'MessagingEngineFactory',
         function ($scope, $state, $stateParams, Slides, Slideshows, MessagingEngineFactory) {
             $scope.deviceId = $stateParams.deviceId;
-            var messagingEngine = MessagingEngineFactory.getEngine($scope.deviceId);
+            var messagingEngine = MessagingEngineFactory.getEngine();
             Slideshows.query(function (res) {
                 $scope.slideshows = res;
             });
@@ -17,26 +17,26 @@
             });
 
             $scope.setSlideShow = function (device) {
-                messagingEngine.publish('deviceSetup', {
+                messagingEngine.publish('deviceSetup', device.deviceId, {
                     slideShowIdToPlay: device.slideShowId,
                     minutesToPlayBeforeGoingBackToDefaultSlideShow : ApplicationConfiguration.minutesToPlayBeforeGoingBackToDefaultSlideShow
                 });
             };
 
             $scope.goToPreviousSlide = function () {
-                messagingEngine.publish('moveSlideLeft');
+                messagingEngine.publish('moveSlideLeft', $scope.deviceId);
             };
 
             $scope.goToNextSlide = function () {
-                messagingEngine.publish('moveSlideRight');
+                messagingEngine.publish('moveSlideRight', $scope.deviceId);
             };
 
             $scope.holdSlideShow = function () {
-                messagingEngine.publish('holdSlideShow');
+                messagingEngine.publish('holdSlideShow', $scope.deviceId);
             };
 
             $scope.resetSlideShow = function () {
-                messagingEngine.publish('resetSlideShow');
+                messagingEngine.publish('resetSlideShow', $scope.deviceId);
             };
 
         }]);

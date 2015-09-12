@@ -6,8 +6,8 @@
     angular.module('core').factory('MessagingEngineFactory', ['PubNubFacade',
         function (PubNubFacade) {
             return {
-                getEngine : function (deviceId) {
-                    return PubNubFacade.getInstance(deviceId);
+                getEngine : function () {
+                    return PubNubFacade.getInstance();
                 }
             };
         }]);

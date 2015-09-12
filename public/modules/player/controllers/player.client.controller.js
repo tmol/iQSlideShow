@@ -8,8 +8,7 @@
                 return;
             }
             $scope.initialised = true;
-            $scope.deviceId = $stateParams.deviceId || PUBNUB.unique();
-            var messagingEngine = MessagingEngineFactory.getEngine($scope.deviceId);
+            var messagingEngine = MessagingEngineFactory.getEngine();
             messagingEngine.subscribe();
             //jQuery("#app-header").hide();
             $scope.slideName = $stateParams.slideName;
@@ -89,9 +88,6 @@
                 slide.content.templateUrl = 'modules/slideshows/slideTemplates/' + (slide.templateName || 'default') + '/slide.html';
 
                 CssInjector.inject($scope, 'modules/slideshows/slideTemplates/' + (slide.templateName || 'default') + '/slide.css');
-
-
-
                 $state.go("player.slide", {
                     slide : slide.content
                 });
@@ -153,21 +149,28 @@
             };
 
             var start = function () {
-                var deviceId = LocalStorage.getDeviceId();
-                if (deviceId !== null) {
+                if ('true' === $stateParams.preview) {
                     updateSildes(slideShow);
-                } else {
-                    deviceId = PUBNUB.unique();
-                    $modal.open({
-                        animation: true,
-                        templateUrl: Path.getViewUrl('waitingForActivation'),
-                        windowClass: 'waitingForActivationDialog',
-                        backdrop: 'static',
-                        scope: $scope
-                    });
-
-                    messagingEngine.publish('hi');
+                    return;
                 }
+
+                $scope.deviceId = LocalStorage.getDeviceId();
+                if ($scope.deviceId === null) {
+                    $scope.deviceId = PUBNUB.unique();
+                    LocalStorage.setDeviceId($scope.deviceId);
+                }
+                $scope.modalInstance = $modal.open({
+                    animation: false,
+                    templateUrl: Path.getViewUrl('waitingForActivation'),
+                    windowClass: 'waitingForActivationDialog',
+                    backdrop: 'static',
+                    scope: $scope
+                });
+                messagingEngine.publish('hi', $scope.deviceId);
+            };
+
+            $scope.waitingForActivation = function () {
+                return $scope.modalInstance !== null;
             };
 
             $scope.updateSlidesHandle = null;
@@ -203,7 +206,14 @@
                         return;
                     }
 
-                    switchSlideShow(content.slideShowIdToPlay);
+                    if ($scope.waitingForActivation()) {
+                        $stateParams.slideNumber = content.slideShowIdToPlay;
+                        updateSildes(slideShow);
+                        $scope.modalInstance.close();
+                        $scope.modalInstance = null;
+                    } else {
+                        switchSlideShow(content.slideShowIdToPlay);
+                    }
 
                     var duration = content.minutesToPlayBeforeGoingBackToDefaultSlideShow;
                     if (duration) {
@@ -227,8 +237,7 @@
 
             $scope.$on(messagingEngine.messageEvent, function (event, payload) {
                 var message = payload.message;
-                var deviceId = $scope.deviceId;
-                if (message.deviceId !== deviceId) {
+                if (message.deviceId !== $scope.deviceId) {
                     return;
                 }
                 if (messageHandler[message.action]) {
