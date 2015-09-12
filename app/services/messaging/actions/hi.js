@@ -17,7 +17,8 @@
                 active: false,
                 location: 'TBD',
                 name: 'TBD',
-                defaultSlideShowId: null
+                defaultSlideShowId: null,
+                isNew: true
             });
             newDevice.save(function (err) {
                 if (err) {

@@ -42,6 +42,10 @@
             user: {
                 type: Schema.ObjectId,
                 ref: 'User'
+            },
+            isNewDevice: {
+                type: Boolean,
+                default: true
             }
         });
 
