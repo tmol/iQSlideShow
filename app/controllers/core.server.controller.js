@@ -3,15 +3,15 @@
 /**
  * Module dependencies.
  */
-exports.index = function(req, res) {
-	res.render('index', {
-		user: req.user || null,
-		request: req
-	});
+exports.index = function (req, res) {
+    res.render('index', {
+        user: req.user || null,
+        request: req
+    });
 };
-exports.slideshow = function(req, res) {
-	res.render('slideshow', {
-		user: req.user || null,
-		request: req
-	});
+exports.slideshow = function (req, res) {
+    res.render('slideshow', {
+        user: req.user || null,
+        request: req
+    });
 };

@@ -48,8 +48,10 @@
             return this.device.active === false && this.updatedDevice.active === true;
         };
 
-        this.defaultSlideShowChanged = function () {
-            return this.device.defaultSlideShowId !== this.updatedDevice.defaultSlideShowId;
+        this.defaultSlideShowChangedInActiveMode = function () {
+            return this.device.defaultSlideShowId !== this.updatedDevice.defaultSlideShowId
+                && this.device.active === this.updatedDevice.active
+                && this.device.active;
         };
 
         this.deviceJustSetInactive = function (updatedDevice, device) {
@@ -63,28 +65,24 @@
     exports.update = function (req, res) {
         var device = req.device,
             updatedDevice = req.body,
-            deviceSetupMessageContent,
+            slideShowIdToPlay,
             config,
             deviceAttributesChanges = new DeviceAttributesChanges(device, updatedDevice);
 
-        if (deviceAttributesChanges.deviceJustSetActive() || deviceAttributesChanges.defaultSlideShowChanged()) {
-            console.log("devise set active or slude changed");
-            deviceSetupMessageContent = {
-                deviceId: device.deviceId,
-                defaultSlideShowId: updatedDevice.defaultSlideShowId,
-                slideShowIdToPlay: updatedDevice.defaultSlideShowId
-            };
+        if (deviceAttributesChanges.deviceJustSetActive() || deviceAttributesChanges.defaultSlideShowChangedInActiveMode()) {
+            console.log("devise set active or default slide show changed");
+            device.sendDeviceSetupMessage(
+                { slideShowIdToPlay: updatedDevice.defaultSlideShowId }
+            );
         } else if (deviceAttributesChanges.deviceJustSetInactive()) {
             console.log("devise set inactive");
             Admin.findOne(function (err, config) {
                 if (err) {
                     throw err;
                 }
-                deviceSetupMessageContent = {
-                    deviceId: device.deviceId,
-                    defaultSlideShowId: updatedDevice.defaultSlideShowId,
-                    slideShowIdToPlay: config.defaultSlideShowId
-                };
+                device.sendDeviceSetupMessage(
+                    { slideShowIdToPlay: config.defaultSlideShowId }
+                );
             });
         }
 
@@ -96,11 +94,6 @@
                     message: errorHandler.getErrorMessage(err)
                 });
             } else {
-                if (deviceSetupMessageContent) {
-                    console.log("publishing deviceSetupMessageContent " + deviceSetupMessageContent);
-                    deviceSetupMessageContent.fuck = 'shit';
-                    messageHandler.publish('deviceSetup', device.deviceId, deviceSetupMessageContent);
-                }
                 res.jsonp(device);
             }
         });
@@ -142,7 +135,7 @@
      * Device middleware
      */
     exports.deviceByID = function (req, res, next, id) {
-        Device.findById(id).populate('user', '_id').exec(function (err, device) {
+        Device.findById(id).populate('user').exec(function (err, device) {
             if (err) {
                 return next(err);
             }

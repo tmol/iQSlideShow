@@ -7,6 +7,8 @@
      */
     var mongoose = require('mongoose'),
         Schema = mongoose.Schema,
+        messagingEngineFactory = require('../services/messaging/messagingEngineFactory'),
+        messagingEngine = messagingEngineFactory.init(),
         DeviceSchema = new Schema({
             name: {
                 type: String,
@@ -44,6 +46,14 @@
                 ref: 'User'
             }
         });
-
+    DeviceSchema.methods.sendDeviceSetupMessage = function (content) {
+        console.log("sendDeviceSetupMessage");
+        messagingEngine.publish({
+            action: 'deviceSetup',
+            deviceId: this.deviceId,
+            device: this,
+            content: content
+        });
+    };
     mongoose.model('Device', DeviceSchema);
 }());

@@ -19,11 +19,12 @@
                     name: 'TBD',
                     defaultSlideShowId: null
                 });
+
             User.findOne({username: 'admin'}, function (err, adminUser) {
                 if (err) {
                     console.log('Admin user cannot be found, error message: ' + errorHandler.getErrorMessage(err));
                     throw err;
-                };
+                }
 
                 newDevice.user = adminUser;
 
@@ -38,7 +39,7 @@
         };
 
         var onFindOne = function (err, device) {
-            console.log("foudn device: " + device);
+            console.log("found device: " + device);
             if (err) {
                 throw err;
             }
@@ -53,21 +54,14 @@
             };
 
             if (!device) {
-                storeNewDevice(message.deviceId, function(newDevice) {
-                    publishAction('newDeviceSaidHi', {objectId: newDevice.id});
+                storeNewDevice(message.deviceId, function (newDevice) {
+                    publishAction('newDeviceSaidHi', { objectId: newDevice.id });
+                    newDevice.sendDeviceSetupMessage();
                 });
                 return;
             }
 
-            if (!device.active) {
-                console.log("inactive device: " + device);
-                publishAction('inactiveRegisteredDeviceSaidHi');
-                return;
-            }
-
-            console.log("Publish deviceSetup!");
-            device.slideShowIdToPlay = device.defaultSlideShowId;
-            publishAction('deviceSetup', device);
+            device.sendDeviceSetupMessage();
         };
 
         console.log("searching for : " + message.deviceId);
