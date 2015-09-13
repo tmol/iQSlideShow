@@ -1,8 +1,6 @@
 <div style="text-align:center;background-color: #ffffff;height:100%;width:100%">
     <section style=" margin-left: auto;  margin-right: auto;  text-align: initial;display:inline-block">
-        <section ng-repeat="slide in slides track by $index">
-            <section ng-if="$index==currentIndex" class="{{slide.animationType}} slideShow" style='position:absolute' ng-player-slide animation-type="" player-slide='slide.content'></section>
-        </section>
+        <section ng-player slides="slides" on-hold="slideIsOnHold"></section>
     </section>
 </div>
 <div style="position: fixed;
