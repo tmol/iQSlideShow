@@ -11,9 +11,9 @@
         <input type="button" class="btn btn-default" ng-click="resetSlideShow()" value="Reset slideshow"></input>
     </div>
     <div class="form-group slides-controllers">
-        <select ng-model="device.slideShowId" ng-options="slideshow._id as slideshow.name for slideshow in slideshows"></select>
+        <select ng-model="slideShowId" ng-options="slideshow._id as slideshow.name for slideshow in slideshows"></select>
         <div class="slides-ops">
-            <input type="button" class="btn btn-default" ng-click="setSlideShow(device)" value="Set"></input>
+            <input type="button" class="btn btn-default" ng-click="setSlideShow()" value="Set"></input>
         </div>
     </div>
     <div class="col-md-12">

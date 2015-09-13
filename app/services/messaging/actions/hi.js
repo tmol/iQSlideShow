@@ -60,7 +60,7 @@
                 return;
             }
 
-            device.sendDeviceSetupMessage();
+            device.sendDeviceSetupMessageWithSlideShowIdToPlay(device.defaultSlideShowId);
         };
 
         console.log("searching for : " + message.deviceId);

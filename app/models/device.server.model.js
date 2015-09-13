@@ -49,7 +49,10 @@
                 type: Boolean,
                 default: true
             }
-        });
+        }),
+        publishDeviceSetup = function(device) {
+        }
+
     DeviceSchema.methods.sendDeviceSetupMessage = function (content) {
         console.log("sendDeviceSetupMessage");
         messagingEngine.publish({
@@ -59,5 +62,13 @@
             content: content
         });
     };
+
+    DeviceSchema.methods.sendDeviceSetupMessageWithSlideShowIdToPlay = function (slideShowIdToPlay) {
+        console.log("sendDeviceSetupMessageWithSlideShowIdToPlay");
+        this.sendDeviceSetupMessage(
+            { slideShowIdToPlay: slideShowIdToPlay }
+        );
+    };
+
     mongoose.model('Device', DeviceSchema);
 }());

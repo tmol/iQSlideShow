@@ -8,6 +8,8 @@
                 return;
             }
             $scope.initialised = true;
+            $scope.active = false;
+
             var messagingEngine = MessagingEngineFactory.getEngine();
             messagingEngine.subscribe();
             $scope.slideName = $stateParams.slideName;
@@ -116,14 +118,14 @@
 
             $scope.delayedRequest = null;
 
-            var switchSlideShow = function (deviceSetupMessage) {
+            var switchSlideShow = function (switchSlideShowCommand) {
                 resetTimeouts();
                 $interval.cancel($scope.updateSlidesHandle);
 
                 //If the state is changed to quick, errors can occur.
                 $timeout(function () {
                     $scope.slides = [];
-                    $state.go("player", { slideName : deviceSetupMessage.content.slideShowIdToPlay, deviceId : $scope.deviceId, deviceSetupMessage : deviceSetupMessage}, {reload : true});
+                    $state.go("player", { slideName : switchSlideShowCommand.slideShowIdToPlay, deviceId : $scope.deviceId, switchSlideShowCommand : switchSlideShowCommand}, {reload : true});
                 }, 1000);
             };
 
@@ -175,11 +177,12 @@
                     $scope.deviceId = PUBNUB.unique();
                     LocalStorage.setDeviceId($scope.deviceId);
                 }
-                if ($stateParams.deviceSetupMessage) {
-                    if (!$stateParams.deviceSetupMessage.device.active) {
+                if ($stateParams.switchSlideShowCommand) {
+                    $scope.active = $stateParams.switchSlideShowCommand.active;
+                    if (!$scope.active) {
                         enterInactiveState();
                     }
-                    $stateParams.slideName = $stateParams.deviceSetupMessage.content.slideShowIdToPlay;
+                    $stateParams.slideName = $stateParams.switchSlideShowCommand.slideShowIdToPlay;
                     updateSildes(slideShow);
                     return;
                 }
@@ -213,21 +216,38 @@
             var messageHandler = {
                 moveSlideRight : moveSlideRight,
                 moveSlideLeft : moveSlideLeft,
+                changeSlideshow: function(content) {
+
+                },
                 deviceSetup : function (message) {
                     var content = message.content;
                     if (!content.slideShowIdToPlay) {
                         return;
                     }
 
-                    switchSlideShow(message);
-
-                    // todo: manage this with the server side message (ask TB)
-                    var duration = content.minutesToPlayBeforeGoingBackToDefaultSlideShow;
+                    switchSlideShow({
+                        active: message.device.active,
+                        slideShowIdToPlay: message.content.slideShowIdToPlay
+                    });
+                },
+                changeSlideshow: function(message) {
+                    if (!$scope.active || !message || !message.content || !message.content.slideShowIdToPlay) {
+                        return;
+                    }
+                    var duration = message.content.minutesToPlayBeforeGoingBackToDefaultSlideShow;
                     if (duration) {
                         registerTimeout("revertToOriginalSlideShow", function () {
-                            switchSlideShow($scope.slideName);
+                            switchSlideShow({
+                                active: $scope.active,
+                                slideShowIdToPlay: $scope.slideName
+                            });
                         }, duration * 60 * 1000);
                     }
+
+                    switchSlideShow({
+                        active: $scope.active,
+                        slideShowIdToPlay: message.content.slideShowIdToPlay
+                    });
                 },
                 holdSlideShow : function () {
                     $scope.slideIsOnHold = true;

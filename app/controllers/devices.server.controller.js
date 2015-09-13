@@ -67,22 +67,19 @@
             updatedDevice = req.body,
             slideShowIdToPlay,
             config,
-            deviceAttributesChanges = new DeviceAttributesChanges(device, updatedDevice);
+            deviceAttributesChanges = new DeviceAttributesChanges(device, updatedDevice),
+            deviceSetupMessageSlideShowIdToPlay;
 
         if (deviceAttributesChanges.deviceJustSetActive() || deviceAttributesChanges.defaultSlideShowChangedInActiveMode()) {
             console.log("devise set active or default slide show changed");
-            device.sendDeviceSetupMessage(
-                { slideShowIdToPlay: updatedDevice.defaultSlideShowId }
-            );
+            deviceSetupMessageSlideShowIdToPlay = updatedDevice.defaultSlideShowId;
         } else if (deviceAttributesChanges.deviceJustSetInactive()) {
             console.log("devise set inactive");
             Admin.findOne(function (err, config) {
                 if (err) {
                     throw err;
                 }
-                device.sendDeviceSetupMessage(
-                    { slideShowIdToPlay: config.defaultSlideShowId }
-                );
+                deviceSetupMessageSlideShowIdToPlay = config.defaultSlideShowId;
             });
         }
 
@@ -94,6 +91,9 @@
                     message: errorHandler.getErrorMessage(err)
                 });
             } else {
+                if (deviceSetupMessageSlideShowIdToPlay) {
+                    device.sendDeviceSetupMessageWithSlideShowIdToPlay(deviceSetupMessageSlideShowIdToPlay);
+                }
                 res.jsonp(device);
             }
         });

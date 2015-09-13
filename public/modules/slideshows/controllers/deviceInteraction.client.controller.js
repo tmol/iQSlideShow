@@ -2,24 +2,29 @@
 /*global angular, ApplicationConfiguration*/
 (function () {
     'use strict';
-    angular.module('slideshows').controller('DeviceInteractionController', ['$scope', '$state', '$stateParams', 'Slides', 'Slideshows', 'MessagingEngineFactory',
-        function ($scope, $state, $stateParams, Slides, Slideshows, MessagingEngineFactory) {
+    angular.module('slideshows').controller('DeviceInteractionController', ['$scope', '$state', '$stateParams', 'Slides', 'Slideshows', 'MessagingEngineFactory', 'Admin',
+        function ($scope, $state, $stateParams, Slides, Slideshows, MessagingEngineFactory, Admin) {
             $scope.deviceId = $stateParams.deviceId;
+            $scope.slideshowId = $stateParams.slideshowId;
             var messagingEngine = MessagingEngineFactory.getEngine();
             Slideshows.query(function (res) {
                 $scope.slideshows = res;
             });
             Slides.get({slideId : $stateParams.slideshowId, slideNumber : $stateParams.slideNumber}, function (slide) {
                 $scope.slideUrl = slide.detailsUrl || $state.href("player", {
-                    slideName : $stateParams.slideshowId,
-                    slideNumber : $stateParams.slideNumber
+                    slideName : $scope.slideshowId,
+                    slideNumber : $scope.slideNumber
                 }, {absolute : true});
             });
 
-            $scope.setSlideShow = function (device) {
-                messagingEngine.publish('deviceSetup', device.deviceId, {
-                    slideShowIdToPlay: device.slideShowId,
-                    minutesToPlayBeforeGoingBackToDefaultSlideShow : ApplicationConfiguration.minutesToPlayBeforeGoingBackToDefaultSlideShow
+            $scope.setSlideShow = function () {
+                Admin.get(function (config) {
+                    messagingEngine.publish('changeSlideshow', $scope.deviceId, {
+                        slideShowIdToPlay: $scope.slideShowId,
+                        minutesToPlayBeforeGoingBackToDefaultSlideShow : config.userSelectedSlideShowsPlayTimeInMinutes
+                    });
+                }, function (err) {
+                    throw err;
                 });
             };
 
