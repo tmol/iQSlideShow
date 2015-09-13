@@ -5,7 +5,7 @@
         $scope.deviceEvent = deviceEvent;
 
         $scope.editDevice = function () {
-            $state.go('editDevice', {deviceId: deviceEvent.deviceObjectId});
+            $state.go('editDevice', {deviceId: deviceEvent.deviceId});
             $modalInstance.close();
         };
 

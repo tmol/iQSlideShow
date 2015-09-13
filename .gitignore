@@ -12,5 +12,7 @@ app/tests/coverage/
 obj/
 packages/
 .ntvs_analysis.dat
-iqSlideShow.v12.suo
-iqSlideShow.v12.suo
+*.suo
+.vs/*
+*.dll
+

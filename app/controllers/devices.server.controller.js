@@ -135,7 +135,7 @@
      * Device middleware
      */
     exports.deviceByID = function (req, res, next, id) {
-        Device.findById(id).populate('user').exec(function (err, device) {
+        Device.findOne({"deviceId": id}).populate('user').exec(function (err, device) {
             if (err) {
                 return next(err);
             }

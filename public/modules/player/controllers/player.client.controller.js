@@ -1,18 +1,17 @@
-/*jslint nomen: true, vars: true*/
+/*jslint nomen: true, vars: true, unparam: true, todo: true*/
 /*global angular, PUBNUB*/
 (function () {
     'use strict';
-    angular.module('player').controller('PlayerController', ['$scope', '$stateParams', '$state', '$timeout', 'Slides', 'CssInjector', '$interval', '$location', 'MessagingEngineFactory', 'LocalStorage', 'Path', 'Admin',
-        function ($scope, $stateParams, $state, $timeout, Slides, CssInjector, $interval, $location, MessagingEngineFactory, LocalStorage, Path, Admin) {
-            if ($scope.initialised) {
-                return;
-            }
-            $scope.initialised = true;
-            $scope.active = false;
-
+    angular.module('player').controller('PlayerController', ['$scope', '$stateParams', '$state', '$timeout', 'Slides', '$location', 'MessagingEngineFactory', 'LocalStorage', 'Path', 'Admin', 'Timers', '$modal',
+        function ($scope, $stateParams, $state, $timeout, Slides, $location, MessagingEngineFactory, LocalStorage, Path, Admin, Timers, $modal) {
             var messagingEngine = MessagingEngineFactory.getEngine();
             messagingEngine.subscribe();
             $scope.slideName = $stateParams.slideName;
+            var displaySlideNumber = $stateParams.slideNumber;
+            var timers = new Timers();
+            if (!$stateParams.slideNumber) {
+                displaySlideNumber = -1;
+            }
             $scope.qrConfig = {
                 slideUrl: $location.$$absUrl,
                 size: 100,
@@ -22,124 +21,46 @@
                 image: true
             };
 
-            var slideNumber = -1;
-
             $scope.slides = [];
             if ($scope.setPlayerMode) {
                 $scope.setPlayerMode(true);
             }
-
             $scope.lastTimeout = null;
-
-            var timeoutCollection = {};
-
-            var registerTimeout = function (key, func, delay) {
-                $timeout.cancel(timeoutCollection[key]);
-                timeoutCollection[key] = $timeout(func, delay);
-            };
-
-            var unRegisterTimeout = function (key) {
-                $timeout.cancel(timeoutCollection[key]);
-                delete timeoutCollection[key];
-            };
-
-            var resetTimeouts = function () {
-                var prop;
-                for (prop in timeoutCollection) {
-                    if (timeoutCollection.hasOwnProperty(prop)) {
-                        $timeout.cancel(timeoutCollection[prop]);
-                    }
-                }
-                timeoutCollection = {};
-            };
-
-            var loadSlide = function (slideIndex) {
-                if (slideIndex < 0 || slideIndex >= $scope.slides.length) {
-                    slideIndex = 0;
-                }
-
-                var slide = $scope.slides[slideIndex];
-                if (!slide) {
-                    return null;
-                }
-
-                $scope.qrConfig.slideUrl = $state.href("deviceInteraction", {
-                    deviceId : $scope.deviceId,
-                    slideshowId : $stateParams.slideName,
-                    slideNumber : slideNumber
-                }, {absolute : true});
-
-                if (!slide.content) {
-                    return null;
-                }
-
-                $scope.animationType = slide.animationType;
-                $scope.zoomPercent = slide.zoomPercent || 100;
-                slide.content.templateUrl = 'modules/slideshows/slideTemplates/' + (slide.templateName || 'default') + '/slide.html';
-
-                CssInjector.inject($scope, 'modules/slideshows/slideTemplates/' + (slide.templateName || 'default') + '/slide.css');
-
-                $state.go("player.slide", {
-                    slide : slide.content
-                });
-
-                return slide;
-            };
-
             $scope.slideIsOnHold = false;
-            var loadNextSlide = function () {
-
-                slideNumber += 1;
-                if (slideNumber < 0 || slideNumber >= $scope.slides.length) {
-                    slideNumber = 0;
-                }
-
-                var advanceSlide = function (delay) {
-                    if (!$scope.slideIsOnHold) {
-                        registerTimeout('loadNextSlide', loadNextSlide, delay);
-                    }
-                };
-
-                var slide = loadSlide(slideNumber);
-                if (!slide) {
-                    advanceSlide(1000);
-                    return;
-                }
-
-                if (slide.durationInSeconds) {
-                    advanceSlide(slide.durationInSeconds * 1000);
-                }
-            };
-
-
-            var slideShow = function () {
-                registerTimeout('loadNextSlide', loadNextSlide, 1);
-            };
-
-            $scope.delayedRequest = null;
-
-            var switchSlideShow = function (switchSlideShowCommand) {
-                resetTimeouts();
-                $interval.cancel($scope.updateSlidesHandle);
-
-                //If the state is changed to quick, errors can occur.
-                $timeout(function () {
-                    $scope.slides = [];
-                    $state.go("player", { slideName : switchSlideShowCommand.slideShowIdToPlay, deviceId : $scope.deviceId, switchSlideShowCommand : switchSlideShowCommand}, {reload : true});
-                }, 1000);
-            };
 
             var updateSildes = function (callback) {
+                var setupSlides = function () {
+                    $scope.slides.forEach(function (slide, index) {
+                        slide.content.templateUrl = 'modules/slideshows/slideTemplates/' + (slide.templateName || 'default') + '/slide.html';
+                        slide.content.css = 'modules/slideshows/slideTemplates/' + (slide.templateName || 'default') + '/slide.css';
+                        slide.index = index;
+                    });
+                };
 
-                Slides.get({slideId : $stateParams.slideName}, function (result) {
+                Slides.get({slideId : $scope.slideName}, function (result) {
                     $scope.slides = result.slides;
+                    setupSlides();
                     if (callback) {
                         callback(result);
                     }
                 });
             };
 
-            var enterInactiveState = function () {
+            var switchSlideShow = function (slideShowIdToPlay) {
+                timers.resetTimeouts();
+                $scope.slideName = slideShowIdToPlay;
+
+                if (displaySlideNumber >= 0) {
+                    updateSildes(function () {
+                        $scope.$broadcast("goToSlideNumber", displaySlideNumber);
+                    });
+                    return;
+                }
+
+                updateSildes();
+            };
+
+            var showActivateDialog = function () {
                 $scope.slideActivationQr = {
                     slideUrl: $state.href("editDevice", {
                         deviceId : $scope.deviceId
@@ -150,115 +71,63 @@
                     inputMode: '',
                     image: true
                 };
-            };
-
-            var deviceInit = function () {
-                var config = Admin.get(function (value) {
-                    if (config !== null) {
-                        $stateParams.slideName = value.defaultSlideShowId;
-                        updateSildes(slideShow);
-                    }
-                }, function (httpResponse) {
-                    // todo handle error
+                $scope.modalInstance = $modal.open({
+                    animation: false,
+                    templateUrl: Path.getViewUrl('waitingForActivation'),
+                    windowClass: 'waitingForActivationDialog',
+                    backdrop: 'static',
+                    scope: $scope
                 });
-
-                enterInactiveState();
-                messagingEngine.publish('hi', $scope.deviceId);
-            };
-
-            var start = function () {
-                if ('true' === $stateParams.preview) {
-                    updateSildes(slideShow);
-                    return;
-                }
-
-                $scope.deviceId = LocalStorage.getDeviceId();
-                if ($scope.deviceId === null) {
-                    $scope.deviceId = PUBNUB.unique();
-                    LocalStorage.setDeviceId($scope.deviceId);
-                }
-                if ($stateParams.switchSlideShowCommand) {
-                    $scope.active = $stateParams.switchSlideShowCommand.active;
-                    if (!$scope.active) {
-                        enterInactiveState();
-                    }
-                    $stateParams.slideName = $stateParams.switchSlideShowCommand.slideShowIdToPlay;
-                    updateSildes(slideShow);
-                    return;
-                }
-
-                deviceInit();
-            };
-
-            $scope.updateSlidesHandle = null;
-
-            var moveSlideRight = function () {
-                unRegisterTimeout('loadNextSlide');
-                loadNextSlide();
-            };
-
-            var moveSlideLeft = function () {
-                unRegisterTimeout('loadNextSlide');
-
-                slideNumber -= 2;
-                if (slideNumber < -1) {
-                    slideNumber = $scope.slides.length - 2;
-                }
-
-                loadNextSlide();
-            };
-
-            var resetOnHold = function () {
-                $scope.slideIsOnHold = false;
-                loadNextSlide();
             };
 
             var messageHandler = {
-                moveSlideRight : moveSlideRight,
-                moveSlideLeft : moveSlideLeft,
-                changeSlideshow: function(content) {
-
+                moveSlideRight : function () {
+                    $scope.$broadcast("moveSlideRight");
                 },
-                deviceSetup : function (message) {
+                moveSlideLeft : function () {
+                    $scope.$broadcast("moveSlideLeft");
+                },
+                switchSlide : function (message) {
                     var content = message.content;
                     if (!content.slideShowIdToPlay) {
                         return;
                     }
 
-                    switchSlideShow({
-                        active: message.device.active,
-                        slideShowIdToPlay: message.content.slideShowIdToPlay
-                    });
-                },
-                changeSlideshow: function(message) {
-                    if (!$scope.active || !message || !message.content || !message.content.slideShowIdToPlay) {
-                        return;
-                    }
-                    var duration = message.content.minutesToPlayBeforeGoingBackToDefaultSlideShow;
+                    displaySlideNumber = -1;
+                    $scope.$broadcast("resetOnHold");
+                    switchSlideShow(content.slideShowIdToPlay);
+
+                    // todo: manage this with the server side message (ask TB)
+                    var duration = content.minutesToPlayBeforeGoingBackToDefaultSlideShow;
                     if (duration) {
-                        registerTimeout("revertToOriginalSlideShow", function () {
-                            switchSlideShow({
-                                active: $scope.active,
-                                slideShowIdToPlay: $scope.slideName
-                            });
+                        timers.registerTimeout("revertToOriginalSlideShow", function () {
+                            switchSlideShow($scope.slideName);
                         }, duration * 60 * 1000);
                     }
-
-                    switchSlideShow({
-                        active: $scope.active,
-                        slideShowIdToPlay: message.content.slideShowIdToPlay
-                    });
+                },
+                deviceSetup : function (message) {
+                    var content = message.device;
+                    if (!content.active) {
+                        showActivateDialog();
+                        return;
+                    }
+                    if (!content.slideShowIdToPlay) {
+                        return;
+                    }
+                    switchSlideShow(content.slideShowIdToPlay);
                 },
                 holdSlideShow : function () {
                     $scope.slideIsOnHold = true;
-                    registerTimeout('resetOnHold', function () {
-                        resetOnHold();
+                    $scope.$broadcast("putPlayerOnHold");
+                    timers.registerTimeout('resetOnHold', function () {
+                        $scope.slideIsOnHold = false;
+                        $scope.$broadcast("resetOnHold");
                     }, 60 * 1000);
                 },
                 resetSlideShow : function () {
-                    slideNumber = -1;
-                    resetOnHold();
-                    loadNextSlide();
+                    displaySlideNumber = -1;
+                    $scope.slideIsOnHold = false;
+                    $scope.$broadcast("resetSlideShow");
                 },
                 inactiveRegisteredDeviceSaidHi : function (message) {
                     showActivateDialog();
@@ -276,32 +145,53 @@
             });
 
             $scope.$on("rightArrowPressed", function () {
-                moveSlideRight();
+                $scope.$broadcast("moveSlideRight");
             });
 
             $scope.$on("leftArrowPressed", function () {
-                moveSlideLeft();
+                $scope.$broadcast("moveSlideLeft");
+            });
+
+            $scope.$on("slideLoaded", function (slide) {
+                $scope.qrConfig.slideUrl = $state.href("deviceInteraction", {
+                    deviceId : $scope.deviceId,
+                    slideshowId : $scope.slideName,
+                    slideNumber : slide.index
+                }, {absolute : true});
             });
 
             $scope.$on("$destroy", function () {
-                resetTimeouts();
-                $interval.cancel($scope.updateSlidesHandle);
+                timers.resetTimeouts();
                 if ($scope.setPlayerMode) {
                     $scope.setPlayerMode(false);
                 }
             });
 
-            if ($stateParams.slideNumber) {
-                updateSildes(function () {
-                    loadSlide($stateParams.slideNumber);
-                });
-                return;
-            }
+            var startSlideshow = function () {
+                if ('true' === $stateParams.preview) {
+                    updateSildes();
+                    return;
+                }
 
-            $scope.updateSlidesHandle = $interval(function () {
-                updateSildes();
-            }, 10 * 1000);
+                $scope.deviceId = LocalStorage.getDeviceId();
+                if ($scope.deviceId === null) {
+                    $scope.deviceId = PUBNUB.unique();
+                    LocalStorage.setDeviceId($scope.deviceId);
+                }
 
-            start();
+                var deviceInit = function () {
+                    var config = Admin.get(function (value) {
+                        if (config !== null) {
+                            switchSlideShow(value.defaultSlideShowId);
+                        }
+                    }, function (httpResponse) {
+                        // TODO: handle error
+                        return;
+                    });
+                    messagingEngine.publish('hi', $scope.deviceId);
+                };
+                deviceInit();
+            };
+            startSlideshow();
         }]);
 }());

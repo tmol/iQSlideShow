@@ -19,7 +19,7 @@
 
             $scope.setSlideShow = function () {
                 Admin.get(function (config) {
-                    messagingEngine.publish('changeSlideshow', $scope.deviceId, {
+                    messagingEngine.publish('switchSlide', $scope.deviceId, {
                         slideShowIdToPlay: $scope.slideShowId,
                         minutesToPlayBeforeGoingBackToDefaultSlideShow : config.userSelectedSlideShowsPlayTimeInMinutes
                     });
