@@ -90,26 +90,11 @@
                 });
             };
 
-            var switchSlideShow = function (deviceSetupMessage) {
+            var switchSlideShow = function (slideShowIdToPlay) {
                 Timers.resetTimeouts();
                 $interval.cancel($scope.updateSlidesHandle);
-                $scope.slideName = deviceSetupMessage.content.slideShowIdToPlay;
+                $scope.slideName = slideShowIdToPlay;
                 updateSildes(slideShow);
-            };
-
-
-
-            var enterInactiveState = function () {
-                $scope.slideActivationQr = {
-                    slideUrl: $state.href("editDevice", {
-                        deviceId : $scope.deviceId
-                    }, { absolute : true }),
-                    size: 100,
-                    correctionLevel: '',
-                    typeNumber: 0,
-                    inputMode: '',
-                    image: true
-                };
             };
 
             var deviceInit = function () {
@@ -122,8 +107,6 @@
                     // TODO: handle error
                     return;
                 });
-
-                enterInactiveState();
                 messagingEngine.publish('hi', $scope.deviceId);
             };
 
@@ -137,15 +120,6 @@
                 if ($scope.deviceId === null) {
                     $scope.deviceId = PUBNUB.unique();
                     LocalStorage.setDeviceId($scope.deviceId);
-                }
-
-                if ($stateParams.deviceSetupMessage) {
-                    if (!$stateParams.deviceSetupMessage.device.active) {
-                        enterInactiveState();
-                    }
-                    $scope.slideName = $stateParams.deviceSetupMessage.content.slideShowIdToPlay;
-                    updateSildes(slideShow);
-                    return;
                 }
 
                 deviceInit();
@@ -174,6 +148,16 @@
                 loadNextSlide();
             };
             var showActivateDialog = function () {
+                $scope.slideActivationQr = {
+                    slideUrl: $state.href("editDevice", {
+                        deviceId : $scope.deviceId
+                    }, { absolute : true }),
+                    size: 100,
+                    correctionLevel: '',
+                    typeNumber: 0,
+                    inputMode: '',
+                    image: true
+                };
                 $scope.modalInstance = $modal.open({
                     animation: false,
                     templateUrl: Path.getViewUrl('waitingForActivation'),
@@ -191,7 +175,7 @@
                         return;
                     }
 
-                    switchSlideShow(message);
+                    switchSlideShow(content.slideShowIdToPlay);
 
                     // todo: manage this with the server side message (ask TB)
                     var duration = content.minutesToPlayBeforeGoingBackToDefaultSlideShow;
@@ -202,16 +186,15 @@
                     }
                 },
                 deviceSetup : function (message) {
-                    var content = message.content;
-                    if (!content.slideShowIdToPlay) {
-                        return;
-                    }
-
+                    var content = message.device;
                     if (!content.active) {
                         showActivateDialog();
                         return;
                     }
-                    switchSlideShow(message);
+                    if (!content.slideShowIdToPlay) {
+                        return;
+                    }
+                    switchSlideShow(content.slideShowIdToPlay);
                 },
                 holdSlideShow : function () {
                     $scope.slideIsOnHold = true;
@@ -249,7 +232,6 @@
 
             $scope.$on("$destroy", function () {
                 Timers.resetTimeouts();
-                $interval.cancel($scope.updateSlidesHandle);
                 if ($scope.setPlayerMode) {
                     $scope.setPlayerMode(false);
                 }
@@ -261,10 +243,6 @@
                 });
                 return;
             }
-
-            $scope.updateSlidesHandle = $interval(function () {
-                updateSildes();
-            }, 10 * 1000);
 
             start();
         }]);
