@@ -8,7 +8,10 @@
             messagingEngine.subscribe();
             $scope.slideName = $stateParams.slideName;
             var displaySlideNumber = $stateParams.slideNumber;
-
+            var timers = new Timers();
+            if (!$stateParams.slideNumber) {
+                displaySlideNumber = -1;
+            }
             $scope.qrConfig = {
                 slideUrl: $location.$$absUrl,
                 size: 100,
@@ -44,7 +47,7 @@
             };
 
             var switchSlideShow = function (slideShowIdToPlay) {
-                Timers.resetTimeouts();
+                timers.resetTimeouts();
                 $scope.slideName = slideShowIdToPlay;
 
                 if (displaySlideNumber >= 0) {
@@ -97,7 +100,7 @@
                     // todo: manage this with the server side message (ask TB)
                     var duration = content.minutesToPlayBeforeGoingBackToDefaultSlideShow;
                     if (duration) {
-                        Timers.registerTimeout("revertToOriginalSlideShow", function () {
+                        timers.registerTimeout("revertToOriginalSlideShow", function () {
                             switchSlideShow($scope.slideName);
                         }, duration * 60 * 1000);
                     }
@@ -116,7 +119,7 @@
                 holdSlideShow : function () {
                     $scope.slideIsOnHold = true;
                     $scope.$broadcast("putPlayerOnHold");
-                    Timers.registerTimeout('resetOnHold', function () {
+                    timers.registerTimeout('resetOnHold', function () {
                         $scope.slideIsOnHold = false;
                         $scope.$broadcast("resetOnHold");
                     }, 60 * 1000);
@@ -158,7 +161,7 @@
             });
 
             $scope.$on("$destroy", function () {
-                Timers.resetTimeouts();
+                timers.resetTimeouts();
                 if ($scope.setPlayerMode) {
                     $scope.setPlayerMode(false);
                 }

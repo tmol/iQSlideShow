@@ -13,7 +13,7 @@
                 template: '<section ng-repeat="slide in slides() track by $index">' + '<section ng-if="$index==currentIndex" class="{{slide.animationType}} slideShow" style="position:absolute" ng-player-slide animation-type="" player-slide="slide.content"></section>' + '</section>',
                 link: function (scope, element, attrs) {
                     var slideNumber = -1;
-
+                    var timers = new Timers();
                     var loadSlide = function (slideIndex) {
                         if (!scope.slides) {
                             return;
@@ -54,7 +54,7 @@
                         }
 
                         var advanceSlide = function (delay) {
-                            Timers.registerTimeout('loadNextSlide', loadNextSlide, delay);
+                            timers.registerTimeout('loadNextSlide', loadNextSlide, delay);
                         };
 
                         var slide = loadSlide(slideNumber);
@@ -70,12 +70,12 @@
                     loadNextSlide();
 
                     scope.$on("moveSlideRight", function () {
-                        Timers.unRegisterTimeout('loadNextSlide');
+                        timers.unRegisterTimeout('loadNextSlide');
                         loadNextSlide();
                     });
 
                     scope.$on("moveSlideLeft", function () {
-                        Timers.unRegisterTimeout('loadNextSlide');
+                        timers.unRegisterTimeout('loadNextSlide');
 
                         slideNumber -= 2;
                         if (slideNumber < -1) {
@@ -96,7 +96,7 @@
 
                     scope.$on("resetSlideShow", function () {
                         scope.slideIsOnHold = false;
-                        Timers.resetTimeouts();
+                        timers.resetTimeouts();
                         loadNextSlide();
                     });
 
@@ -107,7 +107,7 @@
                     });
 
                     scope.$on("$destroy", function () {
-                        Timers.resetTimeouts();
+                        timers.resetTimeouts();
                     });
                 }
             };
