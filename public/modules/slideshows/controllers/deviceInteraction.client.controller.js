@@ -17,7 +17,7 @@
             });
 
             $scope.setSlideShow = function (device) {
-                messagingEngine.publish('deviceSetup', device.deviceId, {
+                messagingEngine.publish('switchSlide', $scope.deviceId, {
                     slideShowIdToPlay: device.slideShowId,
                     minutesToPlayBeforeGoingBackToDefaultSlideShow : ApplicationConfiguration.minutesToPlayBeforeGoingBackToDefaultSlideShow
                 });

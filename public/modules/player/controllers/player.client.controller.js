@@ -7,6 +7,7 @@
             var messagingEngine = MessagingEngineFactory.getEngine();
             messagingEngine.subscribe();
             $scope.slideName = $stateParams.slideName;
+
             $scope.qrConfig = {
                 slideUrl: $location.$$absUrl,
                 size: 100,
@@ -26,9 +27,6 @@
             $scope.lastTimeout = null;
 
             var loadSlide = function (slideIndex) {
-                if (slideIndex < 0 || slideIndex >= $scope.slides.length) {
-                    slideIndex = 0;
-                }
 
                 var slide = $scope.slides[slideIndex];
                 if (!slide) {
@@ -37,7 +35,7 @@
 
                 $scope.qrConfig.slideUrl = $state.href("deviceInteraction", {
                     deviceId : $scope.deviceId,
-                    slideshowId : $stateParams.slideName,
+                    slideshowId : $scope.slideName,
                     slideNumber : slideNumber
                 }, {absolute : true});
 
@@ -45,12 +43,8 @@
                     return null;
                 }
 
-                $scope.animationType = slide.animationType;
-                $scope.zoomPercent = slide.zoomPercent || 100;
                 slide.content.templateUrl = 'modules/slideshows/slideTemplates/' + (slide.templateName || 'default') + '/slide.html';
-
                 CssInjector.inject($scope, 'modules/slideshows/slideTemplates/' + (slide.templateName || 'default') + '/slide.css');
-
                 $scope.currentIndex = slideIndex;
 
                 return slide;
@@ -83,31 +77,27 @@
 
 
             var slideShow = function () {
+                slideNumber = -1;
                 Timers.registerTimeout('loadNextSlide', loadNextSlide, 1);
             };
 
-            $scope.delayedRequest = null;
-
-            var switchSlideShow = function (deviceSetupMessage) {
-                Timers.resetTimeouts();
-                $interval.cancel($scope.updateSlidesHandle);
-
-                //If the state is changed to quick, errors can occur.
-                $timeout(function () {
-                    $scope.slides = [];
-                    $state.go("player", { slideName : deviceSetupMessage.content.slideShowIdToPlay, deviceId : $scope.deviceId, deviceSetupMessage : deviceSetupMessage}, {reload : true});
-                }, 1000);
-            };
-
             var updateSildes = function (callback) {
-
-                Slides.get({slideId : $stateParams.slideName}, function (result) {
+                Slides.get({slideId : $scope.slideName}, function (result) {
                     $scope.slides = result.slides;
                     if (callback) {
                         callback(result);
                     }
                 });
             };
+
+            var switchSlideShow = function (deviceSetupMessage) {
+                Timers.resetTimeouts();
+                $interval.cancel($scope.updateSlidesHandle);
+                $scope.slideName = deviceSetupMessage.content.slideShowIdToPlay;
+                updateSildes(slideShow);
+            };
+
+
 
             var enterInactiveState = function () {
                 $scope.slideActivationQr = {
@@ -125,7 +115,7 @@
             var deviceInit = function () {
                 var config = Admin.get(function (value) {
                     if (config !== null) {
-                        $stateParams.slideName = value.defaultSlideShowId;
+                        $scope.slideName = value.defaultSlideShowId;
                         updateSildes(slideShow);
                     }
                 }, function (httpResponse) {
@@ -148,11 +138,12 @@
                     $scope.deviceId = PUBNUB.unique();
                     LocalStorage.setDeviceId($scope.deviceId);
                 }
+
                 if ($stateParams.deviceSetupMessage) {
                     if (!$stateParams.deviceSetupMessage.device.active) {
                         enterInactiveState();
                     }
-                    $stateParams.slideName = $stateParams.deviceSetupMessage.content.slideShowIdToPlay;
+                    $scope.slideName = $stateParams.deviceSetupMessage.content.slideShowIdToPlay;
                     updateSildes(slideShow);
                     return;
                 }
@@ -194,6 +185,22 @@
             var messageHandler = {
                 moveSlideRight : moveSlideRight,
                 moveSlideLeft : moveSlideLeft,
+                switchSlide : function (message) {
+                    var content = message.content;
+                    if (!content.slideShowIdToPlay) {
+                        return;
+                    }
+
+                    switchSlideShow(message);
+
+                    // todo: manage this with the server side message (ask TB)
+                    var duration = content.minutesToPlayBeforeGoingBackToDefaultSlideShow;
+                    if (duration) {
+                        Timers.registerTimeout("revertToOriginalSlideShow", function () {
+                            switchSlideShow($scope.slideName);
+                        }, 1 * 60 * 1000);
+                    }
+                },
                 deviceSetup : function (message) {
                     var content = message.content;
                     if (!content.slideShowIdToPlay) {
@@ -205,14 +212,6 @@
                         return;
                     }
                     switchSlideShow(message);
-
-                    // todo: manage this with the server side message (ask TB)
-                    var duration = content.minutesToPlayBeforeGoingBackToDefaultSlideShow;
-                    if (duration) {
-                        Timers.registerTimeout("revertToOriginalSlideShow", function () {
-                            switchSlideShow($scope.slideName);
-                        }, duration * 60 * 1000);
-                    }
                 },
                 holdSlideShow : function () {
                     $scope.slideIsOnHold = true;
