@@ -1,13 +1,9 @@
-/*jslint nomen: true, vars: true*/
+/*jslint nomen: true, vars: true, unparam: true, todo: true*/
 /*global angular, PUBNUB*/
 (function () {
     'use strict';
-    angular.module('player').controller('PlayerController', ['$scope', '$stateParams', '$state', '$timeout', 'Slides', 'CssInjector', '$interval', '$location', 'MessagingEngineFactory', 'LocalStorage', 'Path', 'Admin',
-        function ($scope, $stateParams, $state, $timeout, Slides, CssInjector, $interval, $location, MessagingEngineFactory, LocalStorage, Path, Admin) {
-            if ($scope.initialised) {
-                return;
-            }
-            $scope.initialised = true;
+    angular.module('player').controller('PlayerController', ['$scope', '$stateParams', '$state', '$timeout', 'Slides', 'CssInjector', '$interval', '$location', 'MessagingEngineFactory', 'LocalStorage', 'Path', 'Admin', 'Timers', '$modal',
+        function ($scope, $stateParams, $state, $timeout, Slides, CssInjector, $interval, $location, MessagingEngineFactory, LocalStorage, Path, Admin, Timers, $modal) {
             var messagingEngine = MessagingEngineFactory.getEngine();
             messagingEngine.subscribe();
             $scope.slideName = $stateParams.slideName;
@@ -28,28 +24,6 @@
             }
 
             $scope.lastTimeout = null;
-
-            var timeoutCollection = {};
-
-            var registerTimeout = function (key, func, delay) {
-                $timeout.cancel(timeoutCollection[key]);
-                timeoutCollection[key] = $timeout(func, delay);
-            };
-
-            var unRegisterTimeout = function (key) {
-                $timeout.cancel(timeoutCollection[key]);
-                delete timeoutCollection[key];
-            };
-
-            var resetTimeouts = function () {
-                var prop;
-                for (prop in timeoutCollection) {
-                    if (timeoutCollection.hasOwnProperty(prop)) {
-                        $timeout.cancel(timeoutCollection[prop]);
-                    }
-                }
-                timeoutCollection = {};
-            };
 
             var loadSlide = function (slideIndex) {
                 if (slideIndex < 0 || slideIndex >= $scope.slides.length) {
@@ -92,7 +66,7 @@
 
                 var advanceSlide = function (delay) {
                     if (!$scope.slideIsOnHold) {
-                        registerTimeout('loadNextSlide', loadNextSlide, delay);
+                        Timers.registerTimeout('loadNextSlide', loadNextSlide, delay);
                     }
                 };
 
@@ -109,13 +83,13 @@
 
 
             var slideShow = function () {
-                registerTimeout('loadNextSlide', loadNextSlide, 1);
+                Timers.registerTimeout('loadNextSlide', loadNextSlide, 1);
             };
 
             $scope.delayedRequest = null;
 
             var switchSlideShow = function (deviceSetupMessage) {
-                resetTimeouts();
+                Timers.resetTimeouts();
                 $interval.cancel($scope.updateSlidesHandle);
 
                 //If the state is changed to quick, errors can occur.
@@ -155,7 +129,8 @@
                         updateSildes(slideShow);
                     }
                 }, function (httpResponse) {
-                    // todo handle error
+                    // TODO: handle error
+                    return;
                 });
 
                 enterInactiveState();
@@ -188,12 +163,12 @@
             $scope.updateSlidesHandle = null;
 
             var moveSlideRight = function () {
-                unRegisterTimeout('loadNextSlide');
+                Timers.unRegisterTimeout('loadNextSlide');
                 loadNextSlide();
             };
 
             var moveSlideLeft = function () {
-                unRegisterTimeout('loadNextSlide');
+                Timers.unRegisterTimeout('loadNextSlide');
 
                 slideNumber -= 2;
                 if (slideNumber < -1) {
@@ -207,7 +182,15 @@
                 $scope.slideIsOnHold = false;
                 loadNextSlide();
             };
-
+            var showActivateDialog = function () {
+                $scope.modalInstance = $modal.open({
+                    animation: false,
+                    templateUrl: Path.getViewUrl('waitingForActivation'),
+                    windowClass: 'waitingForActivationDialog',
+                    backdrop: 'static',
+                    scope: $scope
+                });
+            };
             var messageHandler = {
                 moveSlideRight : moveSlideRight,
                 moveSlideLeft : moveSlideLeft,
@@ -217,19 +200,23 @@
                         return;
                     }
 
+                    if (!content.active) {
+                        showActivateDialog();
+                        return;
+                    }
                     switchSlideShow(message);
 
                     // todo: manage this with the server side message (ask TB)
                     var duration = content.minutesToPlayBeforeGoingBackToDefaultSlideShow;
                     if (duration) {
-                        registerTimeout("revertToOriginalSlideShow", function () {
+                        Timers.registerTimeout("revertToOriginalSlideShow", function () {
                             switchSlideShow($scope.slideName);
                         }, duration * 60 * 1000);
                     }
                 },
                 holdSlideShow : function () {
                     $scope.slideIsOnHold = true;
-                    registerTimeout('resetOnHold', function () {
+                    Timers.registerTimeout('resetOnHold', function () {
                         resetOnHold();
                     }, 60 * 1000);
                 },
@@ -262,7 +249,7 @@
             });
 
             $scope.$on("$destroy", function () {
-                resetTimeouts();
+                Timers.resetTimeouts();
                 $interval.cancel($scope.updateSlidesHandle);
                 if ($scope.setPlayerMode) {
                     $scope.setPlayerMode(false);
