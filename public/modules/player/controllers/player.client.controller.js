@@ -198,7 +198,7 @@
                     if (duration) {
                         Timers.registerTimeout("revertToOriginalSlideShow", function () {
                             switchSlideShow($scope.slideName);
-                        }, 1 * 60 * 1000);
+                        }, duration * 60 * 1000);
                     }
                 },
                 deviceSetup : function (message) {
