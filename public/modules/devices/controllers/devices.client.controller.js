@@ -68,26 +68,8 @@
                 if (!device.active) {
                     device.active = false;
                 }
-
-                storedDevice = Devices.get({
-                    deviceId: device.deviceId
-                }, function (value, responseHeaders) {
-                    if (storedDevice.active === false && device.active === true) {
-                        deviceSetupMessageContent = {
-                            active: true,
-                            defaultSlideShowId: device.defaultSlideShowId,
-                            slideShowIdToPlay: device.defaultSlideShowId
-                        };
-                    } else if (storedDevice.active === true && device.active === false) {
-                        deviceSetupMessageContent = {
-                            active: false
-                        };
-                    }
-                    device.$update(function () {
-                        $state.go('listDevices');
-                    }, function (errorResponse) {
-                        $scope.error = errorResponse.data.message;
-                    });
+                device.$update(function () {
+                    $state.go('listDevices');
                 }, function (errorResponse) {
                     $scope.error = errorResponse.data.message;
                 });
@@ -134,22 +116,7 @@
                     });
                 },
                 inactiveRegisteredDeviceSaidHi: function (message) {
-
-                },
-                hi: function (message) {
-                    var storedDevice = Devices.findOne({deviceId: message.deviceId}, 'active', function (err, device) {
-                            if (err) {
-                                throw err;
-                            }
-                            if (storedDevice.active) {
-                                messagingEngine.publish('deviceSetup', device.deviceId, {
-                                    active: true,
-                                    defaultSlideShowId: device.slideShowId,
-                                    slideShowIdToPlay: device.slideShowId
-                                });
-                            }
-                        }
-                                                      );
+                    // todo check if we have to do anything here
                 }
             };
 

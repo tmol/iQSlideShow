@@ -48,13 +48,15 @@
             isNewDevice: {
                 type: Boolean,
                 default: true
-            }            
+            }
         });
-    DeviceSchema.methods.sendMessage = function (message, content) {
+    DeviceSchema.methods.sendDeviceSetupMessage = function (content) {
+        console.log("sendDeviceSetupMessage");
         messagingEngine.publish({
-            action: message,
+            action: 'deviceSetup',
             deviceId: this.deviceId,
-            content: content || this
+            device: this,
+            content: content
         });
     };
     mongoose.model('Device', DeviceSchema);

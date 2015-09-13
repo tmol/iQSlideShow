@@ -18,13 +18,12 @@
                     location: 'TBD',
                     name: 'TBD',
                     defaultSlideShowId: null
-            });
-
+                });
             User.findOne({username: 'admin'}, function (err, adminUser) {
                 if (err) {
                     console.log('Admin user cannot be found, error message: ' + errorHandler.getErrorMessage(err));
                     throw err;
-                };
+                }
 
                 newDevice.user = adminUser;
 
@@ -39,6 +38,7 @@
         };
 
         var onFindOne = function (err, device) {
+            console.log("found device: " + device);
             if (err) {
                 throw err;
             }
@@ -55,14 +55,15 @@
             if (!device) {
                 storeNewDevice(message.deviceId, function (newDevice) {
                     publishAction('newDeviceSaidHi', { objectId: newDevice.id });
-                    device.sendMessage('deviceSetup');
+                    newDevice.sendDeviceSetupMessage();
                 });
                 return;
             }
-                        
-            device.sendMessage('deviceSetup');
+
+            device.sendDeviceSetupMessage();
         };
 
+        console.log("searching for : " + message.deviceId);
         Device.findOne({deviceId: message.deviceId}).exec(onFindOne);
     };
 }());

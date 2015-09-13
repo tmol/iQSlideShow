@@ -35,6 +35,8 @@
                                 content : content
                             }
                         });
+                        console.log("Published to pubnub: action :" +  action +
+                                    ", deviceId: " + deviceId + ", content: " + content);
                     }
                 };
             }

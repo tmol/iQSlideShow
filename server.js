@@ -14,15 +14,15 @@
      * Please note that the order of loading is important.
      */
 
-        // Bootstrap db connection
-        db = mongoose.connect(config.db, function (err) {
-            if (err) {
-                console.error(chalk.red('Could not connect to MongoDB!'));
-                console.log(chalk.red(err));
-            }
-        }),
-        // Init the express application
-        app = require('./config/express')(db);
+    // Bootstrap db connection
+    db = mongoose.connect(config.db, function (err) {
+        if (err) {
+            console.error(chalk.red('Could not connect to MongoDB!'));
+            console.log(chalk.red(err));
+        }
+    }),
+    // Init the express application
+    app = require('./config/express')(db);
 
     // Bootstrap passport config
     require('./config/passport')();

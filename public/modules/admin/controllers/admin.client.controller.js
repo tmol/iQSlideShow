@@ -15,6 +15,7 @@
                 var admin = $scope.admin;
 
                 admin.$update(function () {
+                    $location.path('/');
                 }, function (errorResponse) {
                     $scope.error = errorResponse.data.message;
                 });

@@ -38,6 +38,14 @@
         });
     };
 
+    exports.publish = function (action, deviceId, content) {
+        messagingEngine.publish({
+            action: action,
+            deviceId: deviceId,
+            content: content
+        });
+    };
+
     exports.init = function () {
         messagingEngine = messagingEngineFactory.init(onMessageReceived);
         messagingEngine.subscribe(onMessageReceived);

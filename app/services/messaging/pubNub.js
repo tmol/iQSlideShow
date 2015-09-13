@@ -9,8 +9,8 @@ var pubNub = require("pubnub")({
 exports.getInstance = function () {
     'use strict';
     var instance;
-    
-    
+
+
     var publishMessage = function (message) {
         pubNub.publish({
             channel   : theChannel,
