@@ -55,8 +55,7 @@
         messagingEngine.publish({
             action: 'deviceSetup',
             deviceId: this.deviceId,
-            device: this,
-            content: content
+            device: this
         });
     };
     mongoose.model('Device', DeviceSchema);
