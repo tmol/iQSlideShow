@@ -1,4 +1,4 @@
-/*jslint nomen: true, vars: true*/
+/*jslint nomen: true, vars: true, unparam: true*/
 /*global angular, PUBNUB*/
 (function () {
     'use strict';
@@ -62,7 +62,7 @@
                     return null;
                 }
 
-                $scope.qrConfig.slideUrl = $state.href("deviceInteraction", {
+                $scope.qrConfig.slideUrl = $state.href('deviceInteraction', {
                     deviceId : $scope.deviceId,
                     slideshowId : $stateParams.slideName,
                     slideNumber : slideNumber
@@ -71,16 +71,17 @@
                 if (!slide.content) {
                     return null;
                 }
-
+                $scope.currentIndex = slideIndex;
                 $scope.animationType = slide.animationType;
                 $scope.zoomPercent = slide.zoomPercent || 100;
                 slide.content.templateUrl = 'modules/slideshows/slideTemplates/' + (slide.templateName || 'default') + '/slide.html';
 
                 CssInjector.inject($scope, 'modules/slideshows/slideTemplates/' + (slide.templateName || 'default') + '/slide.css');
 
-                $state.go("player.slide", {
+                $scope.slide = slide.content;
+                /*$state.go("player.slide", {
                     slide : slide.content
-                });
+                });*/
 
                 return slide;
             };
@@ -124,7 +125,7 @@
                 //If the state is changed to quick, errors can occur.
                 $timeout(function () {
                     $scope.slides = [];
-                    $state.go("player", { slideName : slideShowId, deviceId : $scope.deviceId, isSwitching : true}, {reload : true});
+                    $state.go('player', { slideName : slideShowId, deviceId : $scope.deviceId, isSwitching : true}, {reload : true});
                 }, 1000);
             };
 
@@ -150,7 +151,7 @@
                     LocalStorage.setDeviceId($scope.deviceId);
                 }
                 $scope.slideActivationQr = {
-                    slideUrl: $state.href("editDevice", {
+                    slideUrl: $state.href('editDevice', {
                         deviceId : $scope.deviceId
                     }, { absolute : true }),
                     size: 100,
@@ -163,7 +164,7 @@
                 if (!$stateParams.isSwitching) {
                     messagingEngine.publish('hi', $scope.deviceId);
                 }
-                updateSildes(slideShow);    
+                updateSildes(slideShow);
             };
 
             $scope.waitingForActivation = function () {
@@ -195,7 +196,7 @@
                 $scope.slideIsOnHold = false;
                 loadNextSlide();
             };
-            
+
             var showActivateDialog = function () {
                 $scope.modalInstance = $modal.open({
                     animation: false,
@@ -216,7 +217,6 @@
                     if (!content.slideShowIdToPlay) {
                         return;
                     }
-                    
                     if (!content.active) {
                         showActivateDialog();
                         return;
@@ -224,14 +224,13 @@
 
                     if ($scope.waitingForActivation()) {
                         $scope.modalInstance.close();
-                        $scope.modalInstance = null;                      
+                        $scope.modalInstance = null;
                     }
-                    
                     switchSlideShow(content.slideShowIdToPlay);
 
                     var duration = content.minutesToPlayBeforeGoingBackToDefaultSlideShow;
                     if (duration) {
-                        registerTimeout("revertToOriginalSlideShow", function () {
+                        registerTimeout('revertToOriginalSlideShow', function () {
                             switchSlideShow($scope.slideName);
                         }, duration * 60 * 1000);
                     }
@@ -247,7 +246,7 @@
                     resetOnHold();
                     loadNextSlide();
                 },
-                inactiveRegisteredDeviceSaidHi : function (message) {
+                inactiveRegisteredDeviceSaidHi : function () {
                     showActivateDialog();
                 }
             };
@@ -262,15 +261,15 @@
                 }
             });
 
-            $scope.$on("rightArrowPressed", function () {
+            $scope.$on('rightArrowPressed', function () {
                 moveSlideRight();
             });
 
-            $scope.$on("leftArrowPressed", function () {
+            $scope.$on('leftArrowPressed', function () {
                 moveSlideLeft();
             });
 
-            $scope.$on("$destroy", function () {
+            $scope.$on('$destroy', function () {
                 resetTimeouts();
                 $interval.cancel($scope.updateSlidesHandle);
                 if ($scope.setPlayerMode) {
