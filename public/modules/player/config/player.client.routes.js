@@ -10,11 +10,5 @@ angular.module('player').config(['$stateProvider',
 			templateUrl: 'modules/player/views/player.client.view.html',
 			controller:'PlayerController'
 		});
-        
-		$stateProvider.state('player.slide', {
-            params: {slide: null},
-            templateUrl: 'modules/player/views/slide.client.view.html',
-			controller:'SlideController'
-		});
 	}
 ]);
