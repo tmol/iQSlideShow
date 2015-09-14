@@ -58,7 +58,8 @@
         messagingEngine.publish({
             action: 'deviceSetup',
             deviceId: this.deviceId,
-            device: this
+            device: this,
+            content: content
         });
     };
 

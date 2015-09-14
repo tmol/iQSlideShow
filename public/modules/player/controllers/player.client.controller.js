@@ -88,6 +88,9 @@
                     $scope.$broadcast("moveSlideLeft");
                 },
                 switchSlide : function (message) {
+                    if (!$scope.active) {
+                        return;
+                    }
                     var content = message.content;
                     if (!content.slideShowIdToPlay) {
                         return;
@@ -106,14 +109,11 @@
                     }
                 },
                 deviceSetup : function (message) {
-                    var content = message.device;
-                    if (!content.active) {
-                        showActivateDialog();
-                        return;
-                    }
+                    var content = message.content;
                     if (!content.slideShowIdToPlay) {
                         return;
                     }
+                    $scope.active = message.device.active;
                     switchSlideShow(content.slideShowIdToPlay);
                 },
                 holdSlideShow : function () {
@@ -179,18 +179,16 @@
                     LocalStorage.setDeviceId($scope.deviceId);
                 }
 
-                var deviceInit = function () {
-                    var config = Admin.get(function (value) {
-                        if (config !== null) {
-                            switchSlideShow(value.defaultSlideShowId);
-                        }
-                    }, function (httpResponse) {
-                        // TODO: handle error
-                        return;
-                    });
-                    messagingEngine.publish('hi', $scope.deviceId);
-                };
-                deviceInit();
+                messagingEngine.publish('hi', $scope.deviceId);
+
+                var config = Admin.get(function (value) {
+                    if (config !== null) {
+                        switchSlideShow(value.defaultSlideShowId);
+                    }
+                }, function (httpResponse) {
+                    // TODO: handle error
+                    return;
+                });
             };
             startSlideshow();
         }]);
