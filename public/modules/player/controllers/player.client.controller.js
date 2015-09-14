@@ -50,6 +50,7 @@
                 timers.resetTimeouts();
                 $scope.slideName = slideShowIdToPlay;
 
+                activationDialog.close();
                 if (displaySlideNumber >= 0) {
                     updateSildes(function () {
                         $scope.$broadcast("goToSlideNumber", displaySlideNumber);
@@ -60,7 +61,9 @@
                 updateSildes();
             };
 
-            var showActivateDialog = function () {
+            var activationDialog = (function(){
+                var modalInstance;
+
                 $scope.slideActivationQr = {
                     slideUrl: $state.href("editDevice", {
                         deviceId : $scope.deviceId
@@ -71,14 +74,28 @@
                     inputMode: '',
                     image: true
                 };
-                $scope.modalInstance = $modal.open({
-                    animation: false,
-                    templateUrl: Path.getViewUrl('waitingForActivation'),
-                    windowClass: 'waitingForActivationDialog',
-                    backdrop: 'static',
-                    scope: $scope
-                });
-            };
+
+                var show = function () {
+                    modalInstance = $modal.open({
+                        animation: false,
+                        templateUrl: Path.getViewUrl('waitingForActivation'),
+                        windowClass: 'waitingForActivationDialog',
+                        backdrop: 'static',
+                        scope: $scope
+                    });
+                };
+
+                var close = function() {
+                    if (modalInstance) {
+                        modalInstance.close();
+                    }
+                }
+
+                return {
+                    show : show,
+                    close: close
+                }
+            })();
 
             var messageHandler = {
                 moveSlideRight : function () {
@@ -130,7 +147,7 @@
                     $scope.$broadcast("resetSlideShow");
                 },
                 inactiveRegisteredDeviceSaidHi : function (message) {
-                    showActivateDialog();
+                    activationDialog.show();
                 }
             };
 
@@ -179,16 +196,10 @@
                     LocalStorage.setDeviceId($scope.deviceId);
                 }
 
-                messagingEngine.publish('hi', $scope.deviceId);
+                activationDialog.show();
 
-                var config = Admin.get(function (value) {
-                    if (config !== null) {
-                        switchSlideShow(value.defaultSlideShowId);
-                    }
-                }, function (httpResponse) {
-                    // TODO: handle error
-                    return;
-                });
+                messagingEngine.subscribe();
+                messagingEngine.publish('hi', $scope.deviceId);
             };
             startSlideshow();
         }]);

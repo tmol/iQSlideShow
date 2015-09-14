@@ -1,4 +1,4 @@
-/*global angular, PUBNUB*/
+/*global angular, PUBNUB, console*/
 (function () {
     'use strict';
     angular.module('core').service('PubNubFacade', ['PubNub',
