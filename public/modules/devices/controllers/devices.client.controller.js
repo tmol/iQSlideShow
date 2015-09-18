@@ -9,7 +9,7 @@
             var messagingEngine = MessagingEngineFactory.getEngine(),
                 modalInstance,
                 messageHandler;
-            messagingEngine.subscribe();
+            messagingEngine.subscribeToServerChannel();
 
             $scope.authentication = Authentication;
             Slideshows.query(function (res) {
@@ -121,7 +121,7 @@
             };
 
             // todo cde duplication, factor out, see player.client.controller
-            $scope.$on(messagingEngine.messageEvent, function (event, payload) {
+            $scope.$on(messagingEngine.serverChannelMessageEvent, function (event, payload) {
                 var message = payload.message;
                 if (messageHandler[message.action]) {
                     messageHandler[message.action](message);

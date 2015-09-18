@@ -19,7 +19,7 @@
 
             $scope.setSlideShow = function () {
                 Admin.get(function (config) {
-                    messagingEngine.publish('switchSlide', $scope.deviceId, {
+                    messagingEngine.publishToDeviceChannel('switchSlide', $scope.deviceId, {
                         slideShowIdToPlay: $scope.slideShowId,
                         minutesToPlayBeforeGoingBackToDefaultSlideShow : config.userSelectedSlideShowsPlayTimeInMinutes
                     });
@@ -29,19 +29,19 @@
             };
 
             $scope.goToPreviousSlide = function () {
-                messagingEngine.publish('moveSlideLeft', $scope.deviceId);
+                messagingEngine.publishToDeviceChannel('moveSlideLeft', $scope.deviceId);
             };
 
             $scope.goToNextSlide = function () {
-                messagingEngine.publish('moveSlideRight', $scope.deviceId);
+                messagingEngine.publishToDeviceChannel('moveSlideRight', $scope.deviceId);
             };
 
             $scope.holdSlideShow = function () {
-                messagingEngine.publish('holdSlideShow', $scope.deviceId);
+                messagingEngine.publishToDeviceChannel('holdSlideShow', $scope.deviceId);
             };
 
             $scope.resetSlideShow = function () {
-                messagingEngine.publish('resetSlideShow', $scope.deviceId);
+                messagingEngine.publishToDeviceChannel('resetSlideShow', $scope.deviceId);
             };
 
         }]);

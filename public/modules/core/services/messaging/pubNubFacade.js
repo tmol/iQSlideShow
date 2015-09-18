@@ -3,12 +3,24 @@
     'use strict';
     angular.module('core').service('PubNubFacade', ['PubNub',
         function (PubNub) {
-            var instance;
+            var instance,
+                pubNub = PubNub;
+
+            function publishToChannel(channelName, action, deviceId, content) {
+                content = content || {};
+                pubNub.ngPublish({
+                    channel: channelName,
+                    message: {
+                        action : action,
+                        deviceId  : deviceId,
+                        content : content
+                    }
+                });
+            }
 
             function init() {
 
-                var pubNub = PubNub,
-                    theChannel = 'iQSlideShow';
+                var theServerChannel = 'iQSlideShow';
 
                 PubNub.init({
                     publish_key : 'pub-c-906ea9e7-a221-48ed-a2d8-5475a6214f45',
@@ -19,24 +31,26 @@
 
                 return {
 
-                    messageEvent: pubNub.ngMsgEv(theChannel),
+                    serverChannelMessageEvent: pubNub.ngMsgEv(theServerChannel),
 
-                    subscribe : function () {
-                        pubNub.ngSubscribe({ channel: theChannel });
+                    getDeviceChannelMessageEvent: function (deviceId) {
+                        return pubNub.ngMsgEv(deviceId);
                     },
 
-                    publish : function (action, deviceId, content) {
-                        content = content || {};
-                        pubNub.ngPublish({
-                            channel: theChannel,
-                            message: {
-                                action : action,
-                                deviceId  : deviceId,
-                                content : content
-                            }
-                        });
-                        console.log("Published to pubnub: action :" +  action +
-                                    ", deviceId: " + deviceId + ", content: " + content);
+                    subscribeToServerChannel : function () {
+                        pubNub.ngSubscribe({ channel: theServerChannel});
+                    },
+
+                    subscribeToDeviceChannel : function (deviceId) {
+                        pubNub.ngSubscribe({ channel: deviceId});
+                    },
+
+                    publishToServerChannel : function (action, deviceId, content) {
+                        publishToChannel(theServerChannel, action, deviceId, content);
+                    },
+
+                    publishToDeviceChannel : function (action, deviceId, content) {
+                        publishToChannel(deviceId, action, deviceId, content);
                     }
                 };
             }

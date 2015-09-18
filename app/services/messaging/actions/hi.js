@@ -45,9 +45,8 @@
 
             var publishAction = function (action, content) {
                 content = content || null;
-                messagingEngine.publish({
+                messagingEngine.publishToDevice(message.deviceId, {
                     action: action,
-                    deviceId: message.deviceId,
                     content: content
                 });
             };

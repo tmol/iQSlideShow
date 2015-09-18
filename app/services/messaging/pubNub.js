@@ -10,29 +10,48 @@ exports.getInstance = function () {
     'use strict';
     var instance;
 
-
-    var publishMessage = function (message) {
+    function publishMessage(channelName, message) {
         pubNub.publish({
-            channel   : theChannel,
+            channel   : channelName,
             message   : message,
             error     : function (e) {
-                console.log("Failed to publish message: " + message + ", error was: " + e);
+                console.log("Failed to publish to channel:" + channelName + ", message: " + message + ", error was: " + e);
             }
         });
     }
 
+    function publishToDeviceChannel(deviceId, message) {
+        publishMessage(deviceId, message);
+    }
+
+    function publishToServerChannel(message) {
+        publishMessage(theChannel, message);
+    }
+
+    function subscribe(channelName, callback) {
+        pubNub.subscribe({
+            channel  : channelName,
+            connect: function () {
+                console.log("Pubnub subscribed to " + theChannel + " channel.");
+            },
+            callback: callback
+        });
+    }
+
+    function subscribeToDeviceChannel(deviceId, callback) {
+        subscribe(deviceId);
+    }
+
+    function subscribeToServerChannel(callback) {
+        subscribe(theChannel, callback);
+    }
+
     function init() {
         return {
-            publish: publishMessage,
-            subscribe: function (callback) {
-                pubNub.subscribe({
-                    channel  : theChannel,
-                    connect: function () {
-                        console.log("Pubnub subscribed to " + theChannel + " channel.");
-                    },
-                    callback : callback
-                });
-            }
+            publishToServerChannel: publishToServerChannel,
+            publishToDeviceChannel: publishToDeviceChannel,
+            subscribeToDeviceChannel: subscribeToDeviceChannel,
+            subscribeToServerChannel: subscribeToServerChannel
         };
     }
 
@@ -41,7 +60,6 @@ exports.getInstance = function () {
             if (!instance) {
                 instance = init(messageReceivedCallback);
             }
-            console.log("instance: " + instance + ", instance.publish  = " + instance.publish);
             return instance;
         }
     };

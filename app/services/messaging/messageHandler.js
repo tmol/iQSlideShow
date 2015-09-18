@@ -48,7 +48,7 @@
 
     exports.init = function () {
         messagingEngine = messagingEngineFactory.init(onMessageReceived);
-        messagingEngine.subscribe(onMessageReceived);
+        messagingEngine.subscribeToServerChannel(onMessageReceived);
         console.log('messagingEngine ' + messagingEngine);
     };
 }());

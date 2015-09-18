@@ -50,21 +50,18 @@
                 default: true
             }
         }),
-        publishDeviceSetup = function(device) {
-        }
+        publishDeviceSetup = function (device) {
+        };
 
     DeviceSchema.methods.sendDeviceSetupMessage = function (content) {
-        console.log("sendDeviceSetupMessage");
-        messagingEngine.publish({
+        messagingEngine.publishToDeviceChannel(this.deviceId, {
             action: 'deviceSetup',
-            deviceId: this.deviceId,
             device: this,
             content: content
         });
     };
 
     DeviceSchema.methods.sendDeviceSetupMessageWithSlideShowIdToPlay = function (slideShowIdToPlay) {
-        console.log("sendDeviceSetupMessageWithSlideShowIdToPlay");
         this.sendDeviceSetupMessage(
             { slideShowIdToPlay: slideShowIdToPlay }
         );
