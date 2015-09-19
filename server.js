@@ -12,7 +12,7 @@
     /**
      * Main application entry file.
      * Please note that the order of loading is important.
-     */
+    **/
 
     // Bootstrap db connection
     db = mongoose.connect(config.db, function (err) {
