@@ -34,9 +34,9 @@
                     <label class="control-label" for="locationk">Slide shows to play</label>
                     <div class="controls">
                         <div class="slide-show" ng-repeat = "entry in device.slideAgregation.playList">
-                            <label>{{entry.slideShow.name}}
+                            <div>{{entry.slideShow.name}}
                                 <input type="button" ng-click="removeSlideshow(entry)" value="X"/>
-                            </label>
+                            </div>
                         </div>
                     </div>
                 </div>

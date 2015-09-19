@@ -8,6 +8,7 @@
     var mongoose = require('mongoose'),
         Schema = mongoose.Schema,
         messagingEngineFactory = require('../services/messaging/messagingEngineFactory'),
+        playListFactory = require('../services/playlisting/playListFactory'),
         messagingEngine = messagingEngineFactory.init(),
         PlayListEntry = new Schema({
             slideShow : {
@@ -56,22 +57,28 @@
                 default: true
             },
             slideAgregation : {
-                agregationMode : String,
+                agregationMode : {type : String, enum : [playListFactory.getSupportedAgregations()]},
                 playList : [PlayListEntry]
             }
         });
+
+    var getSlides = function (slideAgregation) {
+        var playList = playListFactory.getPlayList(slideAgregation.agregationMode || 'sequential');
+        return playList.getSlides(slideAgregation.playList);
+    };
 
     DeviceSchema.methods.sendDeviceSetupMessage = function (content) {
         messagingEngine.publishToDeviceChannel(this.deviceId, {
             action: 'deviceSetup',
             device: this,
+            slides: getSlides(this.slideAgregation),
             content: content
         });
     };
 
     DeviceSchema.methods.sendDeviceSetupMessageWithSlideShowIdToPlay = function (slideShowIdToPlay) {
         this.sendDeviceSetupMessage(
-            { slideShowIdToPlay: slideShowIdToPlay }
+            {slides: getSlides(this.slideAgregation)}
         );
     };
 

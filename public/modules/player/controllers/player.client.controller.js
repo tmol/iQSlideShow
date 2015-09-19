@@ -28,15 +28,17 @@
             $scope.lastTimeout = null;
             $scope.slideIsOnHold = false;
 
+            var sendHiToServer = function () {
+                messagingEngine.publishToServerChannel('hi', $scope.deviceId);
+            };
+            var setupSlides = function () {
+                $scope.slides.forEach(function (slide, index) {
+                    slide.content.templateUrl = 'modules/slideshows/slideTemplates/' + (slide.templateName || 'default') + '/slide.html';
+                    slide.content.css = 'modules/slideshows/slideTemplates/' + (slide.templateName || 'default') + '/slide.css';
+                    slide.index = index;
+                });
+            };
             var updateSildes = function (callback) {
-                var setupSlides = function () {
-                    $scope.slides.forEach(function (slide, index) {
-                        slide.content.templateUrl = 'modules/slideshows/slideTemplates/' + (slide.templateName || 'default') + '/slide.html';
-                        slide.content.css = 'modules/slideshows/slideTemplates/' + (slide.templateName || 'default') + '/slide.css';
-                        slide.index = index;
-                    });
-                };
-
                 Slides.get({slideId : $scope.slideName}, function (result) {
                     $scope.slides = result.slides;
                     setupSlides();
@@ -49,18 +51,17 @@
             var activationDialog = (function () {
                 var modalInstance;
 
-                $scope.slideActivationQr = {
-                    slideUrl: $state.href("editDevice", {
-                        deviceId : $scope.deviceId
-                    }, { absolute : true }),
-                    size: 100,
-                    correctionLevel: '',
-                    typeNumber: 0,
-                    inputMode: '',
-                    image: true
-                };
-
                 var show = function () {
+                    $scope.slideActivationQr = {
+                        slideUrl: $state.href("editDevice", {
+                            deviceId : $scope.deviceId
+                        }, { absolute : true }),
+                        size: 100,
+                        correctionLevel: '',
+                        typeNumber: 0,
+                        inputMode: '',
+                        image: true
+                    };
                     modalInstance = $modal.open({
                         animation: false,
                         templateUrl: Path.getViewUrl('waitingForActivation'),
@@ -121,17 +122,20 @@
                     var duration = content.minutesToPlayBeforeGoingBackToDefaultSlideShow;
                     if (duration) {
                         timers.registerTimeout("revertToOriginalSlideShow", function () {
-                            switchSlideShow($scope.slideName);
+                            sendHiToServer();
                         }, duration * 60 * 1000);
                     }
                 },
                 deviceSetup : function (message) {
-                    var content = message.content;
-                    if (!content.slideShowIdToPlay) {
+                    $scope.slides = message.slides;
+                    $scope.active = message.device.active;
+                    setupSlides();
+                    timers.resetTimeouts();
+                    if (!$scope.active) {
+                        activationDialog.show();
                         return;
                     }
-                    $scope.active = message.device.active;
-                    switchSlideShow(content.slideShowIdToPlay);
+                    activationDialog.close();
                 },
                 holdSlideShow : function () {
                     $scope.slideIsOnHold = true;
@@ -172,6 +176,7 @@
                 if ($scope.setPlayerMode) {
                     $scope.setPlayerMode(false);
                 }
+                messagingEngine.unSubscribeFromDevice($scope.deviceId);
             });
 
             var startSlideshow = function () {
@@ -196,7 +201,7 @@
                 activationDialog.show();
 
                 messagingEngine.subscribeToDeviceChannel($scope.deviceId, function () {
-                    messagingEngine.publishToServerChannel('hi', $scope.deviceId);
+                    sendHiToServer();
                 });
             };
             startSlideshow();
