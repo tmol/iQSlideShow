@@ -5,6 +5,7 @@
     angular.module('player').controller('PlayerController', ['$scope', '$stateParams', '$state', '$timeout', 'Slides', '$location', 'MessagingEngineFactory', 'LocalStorage', 'Path', 'Admin', 'Timers', '$modal',
         function ($scope, $stateParams, $state, $timeout, Slides, $location, MessagingEngineFactory, LocalStorage, Path, Admin, Timers, $modal) {
             var messagingEngine = MessagingEngineFactory.getEngine();
+
             $scope.slideName = $stateParams.slideName;
             var displaySlideNumber = $stateParams.slideNumber;
             var timers = new Timers();
@@ -194,8 +195,9 @@
 
                 activationDialog.show();
 
-                messagingEngine.subscribeToDeviceChannel($scope.deviceId);
-                messagingEngine.publishToServerChannel('hi', $scope.deviceId);
+                messagingEngine.subscribeToDeviceChannel($scope.deviceId, function () {
+                    messagingEngine.publishToServerChannel('hi', $scope.deviceId);
+                });
             };
             startSlideshow();
         }]);

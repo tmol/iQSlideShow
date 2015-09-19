@@ -1,11 +1,11 @@
 /*global angular*/
-
 // Init the application configuration module for AngularJS application
 var ApplicationConfiguration = (function () {
     'use strict';
-	// Init module configuration options
-	var applicationModuleName = 'iqslideshow',
-        applicationModuleVendorDependencies = ['ngResource', 'ngCookies',  'ngAnimate',  'ngTouch',  'ngSanitize',  'ui.router', 'ui.bootstrap', 'ui.utils', 'textAngular', 'ja.qr', 'pubnub.angular.service'],
+
+    // Init module configuration options
+    var applicationModuleName = 'iqslideshow',
+        applicationModuleVendorDependencies = ['ngResource', 'ngCookies', 'ngAnimate', 'ngTouch', 'ngSanitize', 'ui.router', 'ui.bootstrap', 'ui.utils', 'textAngular', 'ja.qr'],
         registerModule = function (moduleName, dependencies) {
             // Create angular module
             angular.module(moduleName, dependencies || []);
@@ -14,9 +14,9 @@ var ApplicationConfiguration = (function () {
             angular.module(applicationModuleName).requires.push(moduleName);
         };
 
-	return {
-		applicationModuleName: applicationModuleName,
-		applicationModuleVendorDependencies: applicationModuleVendorDependencies,
-		registerModule: registerModule
-	};
+    return {
+        applicationModuleName: applicationModuleName,
+        applicationModuleVendorDependencies: applicationModuleVendorDependencies,
+        registerModule: registerModule
+    };
 }());

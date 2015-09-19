@@ -1,20 +1,21 @@
+/*jslint nomen: true, vars: true, unparam: true*/
 /*global angular, PUBNUB, console*/
 (function () {
     'use strict';
-    angular.module('core').service('PubNubFacade', ['PubNub',
-        function (PubNub) {
-            var instance,
-                pubNub = PubNub;
-
-            function publishToChannel(channelName, action, deviceId, content) {
+    angular.module('core').service('PubNubFacade', ['$rootScope',
+        function ($rootScope) {
+            var instance;
+            var pubnub;
+            function publishToChannel(channelName, action, deviceId, content, callback) {
                 content = content || {};
-                pubNub.ngPublish({
+                pubnub.publish({
                     channel: channelName,
                     message: {
                         action : action,
                         deviceId  : deviceId,
                         content : content
-                    }
+                    },
+                    callback: callback
                 });
             }
 
@@ -22,43 +23,65 @@
 
                 var theServerChannel = 'iQSlideShow';
 
-                PubNub.init({
+                pubnub = PUBNUB({
                     publish_key : 'pub-c-906ea9e7-a221-48ed-a2d8-5475a6214f45',
                     subscribe_key : 'sub-c-dd5eeffe-481e-11e5-b63d-02ee2ddab7fe',
                     uuid : PUBNUB.unique(),
                     ssl : true
                 });
 
+                var getMessageEvent = function (channel) {
+                    return "pubnub:" + channel;
+                };
+
+                var getBroadCastFunction = function (channelName) {
+                    return function (message, env, channel) {
+                        $rootScope.$broadcast(getMessageEvent(channelName), {
+                            message: message,
+                            ev: env,
+                            channel: channel
+                        });
+                    };
+                };
+
                 return {
 
-                    serverChannelMessageEvent: pubNub.ngMsgEv(theServerChannel),
+                    serverChannelMessageEvent: getMessageEvent(theServerChannel),
 
                     getDeviceChannelMessageEvent: function (deviceId) {
-                        return pubNub.ngMsgEv(deviceId);
+                        return getMessageEvent(deviceId);
                     },
 
-                    subscribeToServerChannel : function () {
-                        pubNub.ngSubscribe({ channel: theServerChannel});
+                    subscribeToServerChannel : function (onConnect) {
+                        pubnub.subscribe({
+                            channel: theServerChannel,
+                            message: getBroadCastFunction(theServerChannel),
+                            connect: onConnect
+                        });
                     },
 
-                    subscribeToDeviceChannel : function (deviceId) {
-                        pubNub.ngSubscribe({ channel: deviceId});
+                    subscribeToDeviceChannel : function (deviceId, onConnect) {
+                        pubnub.subscribe({
+                            channel: deviceId,
+                            message: getBroadCastFunction(deviceId),
+                            connect:  onConnect
+                        });
                     },
 
-                    publishToServerChannel : function (action, deviceId, content) {
-                        publishToChannel(theServerChannel, action, deviceId, content);
+                    publishToServerChannel : function (action, deviceId, content, callback) {
+                        publishToChannel(theServerChannel, action, deviceId, content, callback);
                     },
 
-                    publishToDeviceChannel : function (action, deviceId, content) {
-                        publishToChannel(deviceId, action, deviceId, content);
+                    publishToDeviceChannel : function (action, deviceId, content, callback) {
+                        publishToChannel(deviceId, action, deviceId, content, callback);
                     }
                 };
             }
 
             return {
-                getInstance: function (PubNub, deviceId) {
+                getInstance: function () {
                     if (!instance) {
-                        instance = init(PubNub, deviceId);
+                        instance = init();
                     }
 
                     return instance;

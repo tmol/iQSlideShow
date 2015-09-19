@@ -43,17 +43,12 @@
                 throw err;
             }
 
-            var publishAction = function (action, content) {
-                content = content || null;
-                messagingEngine.publishToDevice(message.deviceId, {
-                    action: action,
-                    content: content
-                });
-            };
-
             if (!device) {
                 storeNewDevice(message.deviceId, function (newDevice) {
-                    publishAction('newDeviceSaidHi', { objectId: newDevice.id });
+                    messagingEngine.publishToServerChannel({
+                        action: 'newDeviceSaidHi',
+                        content: { objectId: newDevice.id }
+                    });
                     newDevice.sendDeviceSetupMessage();
                 });
                 return;
