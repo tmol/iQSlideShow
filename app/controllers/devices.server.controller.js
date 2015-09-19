@@ -84,7 +84,7 @@
         }
 
         device = lodash.extend(device, req.body);
-
+        console.log(device);
         device.save(function (err) {
             if (err) {
                 return res.status(400).send({
@@ -135,7 +135,7 @@
      * Device middleware
      */
     exports.deviceByID = function (req, res, next, id) {
-        Device.findOne({"deviceId": id}).populate('user').exec(function (err, device) {
+        Device.findOne({"deviceId": id}).populate('user').populate('slideAgregation.playList.slideShow', "name").exec(function (err, device) {
             if (err) {
                 return next(err);
             }

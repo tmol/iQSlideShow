@@ -9,6 +9,12 @@
         Schema = mongoose.Schema,
         messagingEngineFactory = require('../services/messaging/messagingEngineFactory'),
         messagingEngine = messagingEngineFactory.init(),
+        PlayListEntry = new Schema({
+            slideShow : {
+                type: Schema.ObjectId,
+                ref: 'Slideshow'
+            }
+        }),
         DeviceSchema = new Schema({
             name: {
                 type: String,
@@ -48,10 +54,12 @@
             isNewDevice: {
                 type: Boolean,
                 default: true
+            },
+            slideAgregation : {
+                agregationMode : String,
+                playList : [PlayListEntry]
             }
-        }),
-        publishDeviceSetup = function (device) {
-        };
+        });
 
     DeviceSchema.methods.sendDeviceSetupMessage = function (content) {
         messagingEngine.publishToDeviceChannel(this.deviceId, {

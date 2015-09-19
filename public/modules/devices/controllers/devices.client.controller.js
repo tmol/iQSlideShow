@@ -120,6 +120,17 @@
                 }
             };
 
+            $scope.addSlideShow = function () {
+                $scope.device.slideAgregation.playList.push({
+                    slideShow : $scope.selectedSlideShow
+                })
+            }
+
+            $scope.removeSlideshow = function (slideShow) {
+                var index = $scope.device.slideAgregation.playList.indexOf(slideShow);
+                $scope.device.slideAgregation.playList.splice(index,1);
+            }
+
             // todo cde duplication, factor out, see player.client.controller
             $scope.$on(messagingEngine.serverChannelMessageEvent, function (event, payload) {
                 var message = payload.message;
