@@ -74,6 +74,18 @@
 
                     publishToDeviceChannel : function (action, deviceId, content, callback) {
                         publishToChannel(deviceId, action, deviceId, content, callback);
+                    },
+
+                    unSubscribeFromDevice : function (deviceId) {
+                        pubnub.unsubscribe({
+                            channel: deviceId
+                        });
+                    },
+
+                    unSubscribeFromServer : function () {
+                        pubnub.unsubscribe({
+                            channel: theServerChannel
+                        });
                     }
                 };
             }
