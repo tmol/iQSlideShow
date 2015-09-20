@@ -134,7 +134,7 @@
                 },
                 resetSlideShow : function () {
                     $scope.slideIsOnHold = false;
-                    $scope.$broadcast("resetSlideShow");
+                    sendHiToServer(); //this should revert the device state;
                 },
                 inactiveRegisteredDeviceSaidHi : function (message) {
                     activationDialog.show();
