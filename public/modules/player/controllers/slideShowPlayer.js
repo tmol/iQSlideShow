@@ -8,6 +8,10 @@
             if ($scope.setPlayerMode) {
                 $scope.setPlayerMode(true);
             }
+            var displaySlideNumber = $stateParams.slideNumber;
+            if (!$stateParams.slideNumber) {
+                displaySlideNumber = -1;
+            }
             var setupSlides = function () {
                 $scope.slides.forEach(function (slide, index) {
                     slide.content.templateUrl = 'modules/slideshows/slideTemplates/' + (slide.templateName || 'default') + '/slide.html';
@@ -18,6 +22,9 @@
             Slides.get({slideId : $stateParams.slideName}, function (result) {
                 $scope.slides = result.slides;
                 setupSlides();
+                if (displaySlideNumber >= 0) {
+                    $scope.$broadcast("goToSlideNumber", displaySlideNumber);
+                }
             });
 
 

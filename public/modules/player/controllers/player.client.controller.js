@@ -2,16 +2,12 @@
 /*global angular, PUBNUB*/
 (function () {
     'use strict';
-    angular.module('player').controller('PlayerController', ['$scope', '$stateParams', '$state', '$timeout', 'Slides', '$location', 'MessagingEngineFactory', 'LocalStorage', 'Path', 'Admin', 'Timers', '$modal',
-        function ($scope, $stateParams, $state, $timeout, Slides, $location, MessagingEngineFactory, LocalStorage, Path, Admin, Timers, $modal) {
+    angular.module('player').controller('PlayerController', ['$scope', '$state', '$timeout', 'Slides', '$location', 'MessagingEngineFactory', 'LocalStorage', 'Path', 'Admin', 'Timers', '$modal',
+        function ($scope, $state, $timeout, Slides, $location, MessagingEngineFactory, LocalStorage, Path, Admin, Timers, $modal) {
             var messagingEngine = MessagingEngineFactory.getEngine();
 
-            $scope.slideName = $stateParams.slideName;
-            var displaySlideNumber = $stateParams.slideNumber;
             var timers = new Timers();
-            if (!$stateParams.slideNumber) {
-                displaySlideNumber = -1;
-            }
+
             $scope.qrConfig = {
                 slideUrl: $location.$$absUrl,
                 size: 100,
@@ -86,15 +82,7 @@
             var switchSlideShow = function (slideShowIdToPlay) {
                 timers.resetTimeouts();
                 $scope.slideName = slideShowIdToPlay;
-
                 activationDialog.close();
-                if (displaySlideNumber >= 0) {
-                    updateSildes(function () {
-                        $scope.$broadcast("goToSlideNumber", displaySlideNumber);
-                    });
-                    return;
-                }
-
                 updateSildes();
             };
 
@@ -114,7 +102,6 @@
                         return;
                     }
 
-                    displaySlideNumber = -1;
                     $scope.$broadcast("resetOnHold");
                     switchSlideShow(content.slideShowIdToPlay);
 
@@ -122,7 +109,7 @@
                     var duration = content.minutesToPlayBeforeGoingBackToDefaultSlideShow;
                     if (duration) {
                         timers.registerTimeout("revertToOriginalSlideShow", function () {
-                            sendHiToServer();
+                            sendHiToServer(); //this should revert the device state
                         }, duration * 60 * 1000);
                     }
                 },
@@ -146,7 +133,6 @@
                     }, 60 * 1000);
                 },
                 resetSlideShow : function () {
-                    displaySlideNumber = -1;
                     $scope.slideIsOnHold = false;
                     $scope.$broadcast("resetSlideShow");
                 },
@@ -180,11 +166,6 @@
             });
 
             var startSlideshow = function () {
-                if ('true' === $stateParams.preview) {
-                    updateSildes();
-                    return;
-                }
-
                 $scope.deviceId = LocalStorage.getDeviceId();
                 if ($scope.deviceId === null) {
                     $scope.deviceId = PUBNUB.unique();
