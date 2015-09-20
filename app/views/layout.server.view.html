@@ -69,6 +69,7 @@
         <!--Embedding The User Object-->
         <script type="text/javascript">
             var user = {{ user | json | safe }};
+            var serverChannelName = "{{messageChannelName}}";
         </script>
         <!--StartUp JavaScript Files-->
         {% for jsFile in jsFiles.appContext %}<script type="text/javascript" src="{{jsFile}}"></script>{% endfor %}

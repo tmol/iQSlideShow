@@ -21,7 +21,7 @@
 
             function init() {
 
-                var theServerChannel = 'iQSlideShow';
+                var theServerChannel = serverChannelName;
 
                 pubnub = PUBNUB({
                     publish_key : 'pub-c-906ea9e7-a221-48ed-a2d8-5475a6214f45',
