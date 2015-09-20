@@ -4,7 +4,8 @@
  * Module dependencies.
  */
 var _ = require('lodash'),
-	glob = require('glob');
+	glob = require('glob'),
+    fs = require('fs');
 
 /**
  * Load app configurations
@@ -92,4 +93,13 @@ module.exports.getCSSAssets = function() {
         assets[prop] = this.getGlobbedFiles(this.assets.modules[prop].css, 'public/');
     }
 	return assets;
+};
+
+module.exports.getMessageChannelName = function () {
+    try {
+        var messageChannel = require("./messageChannel");
+        return messageChannel.channelName;
+    }catch(e) {
+        return "iQSlideShow";
+    }
 };
