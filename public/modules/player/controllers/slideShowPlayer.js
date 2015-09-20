@@ -16,9 +16,9 @@
                 });
             };
             Slides.get({slideId : $stateParams.slideName}, function (result) {
-                    $scope.slides = result.slides;
-                    setupSlides();
-                });
+                $scope.slides = result.slides;
+                setupSlides();
+            });
 
 
             $scope.$on("$destroy", function () {
