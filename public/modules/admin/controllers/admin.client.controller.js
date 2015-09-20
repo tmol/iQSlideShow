@@ -14,7 +14,7 @@
             $scope.update = function () {
                 var admin = $scope.admin;
 
-                admin.$update(function () {
+                admin.$updateConfig(function () {
                     $location.path('/');
                 }, function (errorResponse) {
                     $scope.error = errorResponse.data.message;
@@ -22,7 +22,7 @@
             };
 
             $scope.getConfig = function () {
-                $scope.admin = Admin.get();
+                $scope.admin = Admin.getConfig();
             };
         }
         ]);

@@ -6,8 +6,11 @@
         var users = require('../../app/controllers/users.server.controller'),
             admin = require('../../app/controllers/admin.server.controller');
 
-        app.route('/admin')
+        app.route('/admin/config')
             .get(admin.getConfig)
             .put(users.requiresLogin, admin.updateConfig);
+
+        app.route('/admin/reload')
+            .get(admin.reload);
     };
 }());

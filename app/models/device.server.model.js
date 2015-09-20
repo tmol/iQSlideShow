@@ -52,9 +52,9 @@
                 type: Schema.ObjectId,
                 ref: 'User'
             },
-            isNewDevice: {
-                type: Boolean,
-                default: true
+            reloadRequested: {
+                type: Date,
+                default: null
             },
             slideAgregation : {
                 agregationMode : {type : String, enum : [playListFactory.getSupportedAgregations()]},

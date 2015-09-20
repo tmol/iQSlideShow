@@ -2,18 +2,13 @@
 (function () {
     'use strict';
 
-    /**
-     * Module dependencies.
-     */
     var mongoose = require('mongoose'),
         errorHandler = require('./errors.server.controller'),
         Admin = mongoose.model('Admin'),
+        Device = mongoose.model('Device'),
+        Promise = require('promise'),
         lodash = require('lodash');
 
-
-    /**
-     * Show the current Admin
-     */
     exports.getConfig = function (req, res) {
         Admin.findOne(function (err, admin) {
             if (err) {
@@ -41,9 +36,6 @@
         });
     };
 
-    /**
-     * Update a Admin
-     */
     exports.updateConfig = function (req, res) {
         var admin = new Admin(req.body);
         /*jslint nomen: true*/
@@ -69,9 +61,29 @@
         });
     };
 
-    /**
-     * Admin authorization middleware
-     */
+    exports.reload = function (req, res) {
+        var idx;
+        var promises = [];
+
+        Device.find().sort('-created').exec(function (err, devices) {
+            if (err) {
+                return res.status(400).send({
+                    message: errorHandler.getErrorMessage(err)
+                });
+            } else {
+                console.log(devices.length);
+
+                for (idx = 0; idx < devices.length; idx = idx + 1) {
+                    promises.push( new Promise(function (resolve, error) {
+
+                    });)
+                    console.log(devices[idx]);
+                }
+            }
+            res.jsonp({msg: 'Bla'});
+        });
+    };
+
     exports.hasAuthorization = function (req, res, next) {
         if (req.admin.user.id !== req.user.id) {
             return res.status(403).send('User is not authorized');
