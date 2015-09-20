@@ -11,7 +11,6 @@ exports.index = function (req, res) {
 };
 exports.slideshow = function (req, res) {
     res.render('slideshow', {
-        user: req.user || null,
         request: req
     });
 };

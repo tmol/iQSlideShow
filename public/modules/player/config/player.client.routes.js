@@ -10,7 +10,7 @@ angular.module('player').config(['$stateProvider',
 			controller:'PlayerController'
 		});
         $stateProvider.state('slideShow', {
-			url: '/slideShow/:slideName/:slideNumber',
+			url: '/preview/:slideName/:slideNumber',
             templateUrl: 'modules/player/views/slideShowPlayer.html',
 			controller:'SlideShowPlayerController'
 		});
