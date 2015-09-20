@@ -67,13 +67,19 @@
         return playList.getSlides(slideAgregation.playList);
     };
 
-    DeviceSchema.methods.sendDeviceSetupMessage = function (content) {
+    DeviceSchema.methods.sendDeviceSetupMessage = function (content, callback) {
         messagingEngine.publishToDeviceChannel(this.deviceId, {
             action: 'deviceSetup',
             device: this,
             slides: getSlides(this.slideAgregation),
             content: content
-        });
+        }, callback);
+    };
+
+    DeviceSchema.methods.sendReloadMessage = function (callback) {
+        messagingEngine.publishToDeviceChannel(this.deviceId, {
+            action: 'reload'
+        }, callback);
     };
 
     mongoose.model('Device', DeviceSchema);

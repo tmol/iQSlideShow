@@ -20,7 +20,7 @@
                 Admin.findOne(function (err, admin) {
                     if (err) {
                         error(err);
-                        throw err;
+                        errorHandler(err);
                     }
                     resolve(admin);
                 });
@@ -31,7 +31,7 @@
                     if (err) {
                         error(err);
                         console.log('Admin user cannot be found, error message: ' + errorHandler.getErrorMessage(err));
-                        throw err;
+                        errorHandler(err);
                     }
                     resolve(adminUser);
                 });

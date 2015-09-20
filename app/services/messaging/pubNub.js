@@ -10,22 +10,27 @@ exports.getInstance = function () {
     'use strict';
     var instance;
 
-    function publishMessage(channelName, message) {
+    function publishMessage(channelName, message, callback) {
         pubNub.publish({
             channel   : channelName,
             message   : message,
             error     : function (e) {
                 console.log("Failed to publish to channel:" + channelName + ", message: " + message + ", error was: " + e);
+            },
+            callback: function (e) {
+                if (callback) {
+                    callback();
+                }
             }
         });
     }
 
-    function publishToDeviceChannel(deviceId, message) {
-        publishMessage(deviceId, message);
+    function publishToDeviceChannel(deviceId, message, callback) {
+        publishMessage(deviceId, message, callback);
     }
 
-    function publishToServerChannel(message) {
-        publishMessage(theChannel, message);
+    function publishToServerChannel(message, callback) {
+        publishMessage(theChannel, message, callback);
     }
 
     function subscribe(channelName, callback) {

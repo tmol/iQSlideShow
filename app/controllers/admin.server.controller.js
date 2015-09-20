@@ -62,8 +62,8 @@
     };
 
     exports.reload = function (req, res) {
-        var idx;
-        var promises = [];
+        var idx,
+            promises = [];
 
         Device.find().sort('-created').exec(function (err, devices) {
             if (err) {
@@ -74,13 +74,31 @@
                 console.log(devices.length);
 
                 for (idx = 0; idx < devices.length; idx = idx + 1) {
-                    promises.push( new Promise(function (resolve, error) {
-
-                    });)
+                    promises.push(new Promise(function (resolve, error) {
+                        var device = devices[idx];
+                        device.sendReloadMessage(function () {
+                            device.reloadRequested = new Date();
+                            device.save(function (err) {
+                                if (err) {
+                                    return res.status(400).send({
+                                        message: errorHandler.getErrorMessage(err)
+                                    });
+                                }
+                                resolve(device.deviceId);
+                            }
+                                       );
+                        });
+                    }));
                     console.log(devices[idx]);
                 }
+
+                Promise.all(promises).then(function (reloadedDevices) {
+                    for (idx = 0; idx < reloadedDevices.length; idx = idx + 1) {
+                        console.log("Reloaded and shit " + reloadedDevices[idx]);
+                    }
+                    res.jsonp({reloaded: reloadedDevices});
+                });
             }
-            res.jsonp({msg: 'Bla'});
         });
     };
 
