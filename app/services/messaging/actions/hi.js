@@ -77,7 +77,6 @@
         };
 
         var onFindOne = function (err, device) {
-            console.log("found device: " + device);
             if (err) {
                 throw err;
             }

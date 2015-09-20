@@ -91,9 +91,14 @@
                     message: errorHandler.getErrorMessage(err)
                 });
             } else {
-                if (deviceSetupMessageSlideShowIdToPlay) {
-                    device.sendDeviceSetupMessageWithSlideShowIdToPlay(deviceSetupMessageSlideShowIdToPlay);
-                }
+                Device.findOne({
+                    deviceId: device.deviceId
+                }).populate('slideAgregation.playList.slideShow').exec(function (err, fullDevice) {
+                    if (err) {
+                        throw err;
+                    }
+                    fullDevice.sendDeviceSetupMessage();
+                });
                 res.jsonp(device);
             }
         });
