@@ -5,9 +5,6 @@
     angular.module('player').controller('SlideShowPlayerController', ['$scope', '$stateParams', '$state', 'Slides',
         function ($scope, $stateParams, $state, Slides) {
             $scope.slides = [];
-            if ($scope.setPlayerMode) {
-                $scope.setPlayerMode(true);
-            }
             var displaySlideNumber = $stateParams.slideNumber;
             if (!$stateParams.slideNumber) {
                 displaySlideNumber = -1;
@@ -26,13 +23,5 @@
                     $scope.$broadcast("goToSlideNumber", displaySlideNumber);
                 }
             });
-
-
-            $scope.$on("$destroy", function () {
-                if ($scope.setPlayerMode) {
-                    $scope.setPlayerMode(false);
-                }
-            });
-
         }]);
 }());

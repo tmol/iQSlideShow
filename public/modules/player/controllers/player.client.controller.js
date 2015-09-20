@@ -18,9 +18,7 @@
             };
 
             $scope.slides = [];
-            if ($scope.setPlayerMode) {
-                $scope.setPlayerMode(true);
-            }
+
             $scope.lastTimeout = null;
             $scope.slideIsOnHold = false;
 
@@ -159,9 +157,7 @@
 
             $scope.$on("$destroy", function () {
                 timers.resetTimeouts();
-                if ($scope.setPlayerMode) {
-                    $scope.setPlayerMode(false);
-                }
+
                 messagingEngine.unSubscribeFromDevice($scope.deviceId);
             });
 
