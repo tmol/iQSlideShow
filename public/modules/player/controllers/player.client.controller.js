@@ -117,6 +117,7 @@
                     setupSlides();
                     timers.resetTimeouts();
                     if (!$scope.active) {
+                        activationDialog.close();
                         activationDialog.show();
                         return;
                     }

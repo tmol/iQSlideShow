@@ -76,11 +76,5 @@
         });
     };
 
-    DeviceSchema.methods.sendDeviceSetupMessageWithSlideShowIdToPlay = function (slideShowIdToPlay) {
-        this.sendDeviceSetupMessage(
-            {slides: getSlides(this.slideAgregation)}
-        );
-    };
-
     mongoose.model('Device', DeviceSchema);
 }());
