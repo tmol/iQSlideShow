@@ -57,20 +57,39 @@ module.exports.getGlobbedFiles = function(globPatterns, removeRoot) {
  * Get the modules JavaScript files
  */
 module.exports.getJavaScriptAssets = function(includeTests) {
-	var output = this.getGlobbedFiles(this.assets.lib.js.concat(this.assets.js), 'public/');
+    var assets = {};
+
+	assets.appContext = this.getGlobbedFiles(this.assets.lib.js, 'public/');
+    assets.appStart = this.getGlobbedFiles(this.assets.js, 'public/');
 
 	// To include tests
 	if (includeTests) {
-		output = _.union(output, this.getGlobbedFiles(this.assets.tests));
+		assets.core = _.union(assets.core, this.getGlobbedFiles(this.assets.tests));
 	}
 
-	return output;
+    for (var prop in this.assets.modules) {
+        if (!this.assets.modules[prop].js) {
+            continue;
+        }
+        assets[prop] = this.getGlobbedFiles(this.assets.modules[prop].js, 'public/');
+    }
+
+	return assets;
 };
 
 /**
  * Get the modules CSS files
  */
 module.exports.getCSSAssets = function() {
-	var output = this.getGlobbedFiles(this.assets.lib.css.concat(this.assets.css), 'public/');
-	return output;
+    var assets = {};
+	assets.appContext = this.getGlobbedFiles(this.assets.lib.css, 'public/');
+    assets.appStart = this.getGlobbedFiles(this.assets.css, 'public/');
+
+    for (var prop in this.assets.modules) {
+        if (!this.assets.modules[prop].css) {
+            continue;
+        }
+        assets[prop] = this.getGlobbedFiles(this.assets.modules[prop].css, 'public/');
+    }
+	return assets;
 };

@@ -1,8 +1,7 @@
 /*global module, process*/
 (function () {
     'use strict';
-
-    module.exports = {
+    var exports = {
         app: {
             title: 'iQSlideShow',
             description: 'Full-Stack JavaScript with MongoDB, Express, AngularJS, and Node.js',
@@ -41,20 +40,38 @@
             },
             css: [
                 'public/lib/font-awesome/css/font-awesome.min.css',
-                'public/lib/textAngular/dist/textAngular.css',
-                'public/modules/**/css/*.css'
+                'public/lib/textAngular/dist/textAngular.css'
             ],
             js: [
                 'public/config.js',
-                'public/application.js',
-                'public/modules/*/*.js',
-                'public/modules/core/services/messaging/*.js',
-                'public/modules/*/*[!tests]*/*.js'
+                'public/application.js'
             ],
             tests: [
                 'public/lib/angular-mocks/angular-mocks.js',
                 'public/modules/*/tests/*.js'
-            ]
+            ],
+            modules: {}
         }
     };
+    exports.addModule = function (moduleName) {
+        this.assets.modules[moduleName] = {
+            css: 'public/modules/' + moduleName + '/css/*.css',
+            js: [
+                'public/modules/' + moduleName + '/*.js',
+                'public/modules/' + moduleName + '/*[!tests]*/*.js',
+                'public/modules/' + moduleName + '/*[!tests]*/*[!tests]*/*.js',
+                'public/modules/' + moduleName + '/*[!tests]*/*[!tests]*/*[!tests]*/*.js',
+                'public/modules/' + moduleName + '/*[!tests]*/*[!tests]*/*[!tests]*/*[!tests]*/*.js'
+            ]
+        }
+        return exports;
+    };
+    exports
+        .addModule('core')
+        .addModule('admin')
+        .addModule('devices')
+        .addModule('player')
+        .addModule('slideshows')
+        .addModule('users');
+    module.exports = exports;
 }());

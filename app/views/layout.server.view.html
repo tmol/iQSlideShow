@@ -35,8 +35,19 @@
 	<!-- Fav Icon -->
 	<link href="/modules/core/img/brand/favicon.ico" rel="shortcut icon" type="image/x-icon">
 
+    <!--StartUp CSS Files-->
+    {% for cssFile in cssFiles.appStart %}<link rel="stylesheet" href="{{cssFile}}">{% endfor %}
+
 	<!--Application CSS Files-->
-	{% for cssFile in cssFiles %}<link rel="stylesheet" href="{{cssFile}}">{% endfor %}
+	{% for cssFile in cssFiles.appContext %}<link rel="stylesheet" href="{{cssFile}}">{% endfor %}
+    {% for cssFile in cssFiles.core %}<link rel="stylesheet" href="{{cssFile}}">{% endfor %}
+    {% for cssFile in cssFiles.admin %}<link rel="stylesheet" href="{{cssFile}}">{% endfor %}
+    {% for cssFile in cssFiles.devices %}<link rel="stylesheet" href="{{cssFile}}">{% endfor %}
+    {% for cssFile in cssFiles.player %}<link rel="stylesheet" href="{{cssFile}}">{% endfor %}
+    {% for cssFile in cssFiles.slideshows %}<link rel="stylesheet" href="{{cssFile}}">{% endfor %}
+    {% for cssFile in cssFiles.users %}<link rel="stylesheet" href="{{cssFile}}">{% endfor %}
+
+
 
 	<!-- HTML5 Shim -->
 	<!--[if lt IE 9]>
@@ -60,9 +71,20 @@
         <script type="text/javascript">
             var user = {{ user | json | safe }};
         </script>
+        <!--StartUp JavaScript Files-->
+        {% for jsFile in jsFiles.appContext %}<script type="text/javascript" src="{{jsFile}}"></script>{% endfor %}
+        {% for jsFile in jsFiles.appStart %}<script type="text/javascript" src="{{jsFile}}"></script>{% endfor %}
 
         <!--Application JavaScript Files-->
-        {% for jsFile in jsFiles %}<script type="text/javascript" src="{{jsFile}}"></script>{% endfor %} 
+        {% for jsFile in jsFiles.users %}<script type="text/javascript" src="{{jsFile}}"></script>{% endfor %}
+        {% for jsFile in jsFiles.core %}<script type="text/javascript" src="{{jsFile}}"></script>{% endfor %}
+        {% for jsFile in jsFiles.admin %}<script type="text/javascript" src="{{jsFile}}"></script>{% endfor %}
+        {% for jsFile in jsFiles.devices %}<script type="text/javascript" src="{{jsFile}}"></script>{% endfor %}
+        {% for jsFile in jsFiles.player %}<script type="text/javascript" src="{{jsFile}}"></script>{% endfor %}
+        {% for jsFile in jsFiles.slideshows %}<script type="text/javascript" src="{{jsFile}}"></script>{% endfor %}
+
+
+
 
         {% if process.env.NODE_ENV === 'development' %}
         <!--Livereload script rendered -->
