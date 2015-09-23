@@ -3,8 +3,11 @@
         <h1>Reload application in devices after emtying the local device cache</h1>
     </div>
     <div class="col-md-12">
-        <div class="form-group">
-            <label>{{reloadResult}}</label>
+        <div class="form-group" ng-show="reloadedDevices && reloadedDevices.length > 0">
+            The following devices were reloaded:<BR><BR>
+            <div class="form-group" ng-repeat="device in reloadedDevices">
+                <label>Name {{device.name}}, location: {{device.location}}</label>
+            </div>
         </div>
         <div class="form-group">
             <input type="button" ng-click="reload()" value="Reload" class="btn btn-default"/>

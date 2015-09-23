@@ -40,6 +40,7 @@ module.exports = function(db) {
 	app.locals.jsFiles = config.getJavaScriptAssets();
 	app.locals.cssFiles = config.getCSSAssets();
     app.locals.messageChannelName = config.getMessageChannelName();
+    app.locals.appVersion = config.getAppVersion();
 	// Passing the request url to environment locals
 	app.use(function(req, res, next) {
 		res.locals.url = req.protocol + '://' + req.headers.host + req.url;
@@ -112,6 +113,7 @@ module.exports = function(db) {
 
 	// Setting the app router and static folder
 	app.use(express.static(path.resolve('./public')));
+    app.use(express.static(path.resolve('./config/shared')));
 	
 
 	// Globbing routing files

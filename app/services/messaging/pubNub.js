@@ -10,12 +10,26 @@ exports.getInstance = function () {
     'use strict';
     var instance;
 
+    // Calculating a PubNub Message Payload Size.
+    function calculatePayloadSize( channel, message ) {
+        return encodeURIComponent(
+            channel + JSON.stringify(message)
+        ).length + 100;
+    }
+
     function publishMessage(channelName, message, callback) {
+        console.log('Publising message with payload size: ' + calculatePayloadSize(channelName, message));
+
         pubNub.publish({
             channel   : channelName,
             message   : message,
             error     : function (e) {
-                console.log('Failed to publish to channel:" + channelName + ", message: " + message + ", error was: ' + e.message);
+                console.log('Failed to publish to channel:" + channelName + ", message: " + message + ", error message was: ');
+                for(var prop in e) {
+                    if(e.hasOwnProperty(prop)) {
+                        console.log(prop + ':' + e[prop]);
+                    }
+                }
             },
             callback: function (e) {
                 if (callback) {

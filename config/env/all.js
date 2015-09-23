@@ -46,6 +46,9 @@
                 'public/config.js',
                 'public/application.js'
             ],
+            sharedJs: [
+                'config/shared/appVersion.js'
+            ],
             tests: [
                 'public/lib/angular-mocks/angular-mocks.js',
                 'public/modules/*/tests/*.js'
@@ -63,7 +66,7 @@
                 'public/modules/' + moduleName + '/*[!tests]*/*[!tests]*/*[!tests]*/*.js',
                 'public/modules/' + moduleName + '/*[!tests]*/*[!tests]*/*[!tests]*/*[!tests]*/*.js'
             ]
-        }
+        };
         return exports;
     };
     exports

@@ -9,7 +9,8 @@
         Device = mongoose.model('Device'),
         User = mongoose.model('User'),
         Admin = mongoose.model('Admin'),
-        Slideshow = mongoose.model('Slideshow');
+        Slideshow = mongoose.model('Slideshow'),
+        Config = require('../../../../config/config');
 
     module.exports = function (messagingEngine, message) {
         console.log("Handling hi message, deviceId: " + message.deviceId);
@@ -68,13 +69,17 @@
                             callback(device);
                         }
                     });
-
                 });
-
             });
-
-
         };
+
+        var ifVersionOkSendDeviceSetupOtherwiseReloadMessage = function (device) {
+            if (message.appVersion !== Config.getAppVersion()) {
+                device.sendReloadMessage();
+            } else {
+                device.sendDeviceSetupMessage();
+            }
+        }
 
         var onFindOne = function (err, device) {
             if (err) {
@@ -89,7 +94,7 @@
                             objectId: newDevice.id
                         }
                     });
-                    newDevice.sendDeviceSetupMessage();
+                    ifVersionOkSendDeviceSetupOtherwiseReloadMessage(newDevice);
                 });
                 return;
             }

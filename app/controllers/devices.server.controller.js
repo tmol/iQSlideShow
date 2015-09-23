@@ -156,9 +156,6 @@
      * Device authorization middleware
      */
     exports.hasAuthorization = function (req, res, next) {
-        if (req.device.user.id !== req.user.id) {
-            return res.status(403).send('User is not authorized');
-        }
         next();
     };
 }());

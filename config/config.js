@@ -61,6 +61,7 @@ module.exports.getJavaScriptAssets = function(includeTests) {
     var assets = {};
 
 	assets.appContext = this.getGlobbedFiles(this.assets.lib.js, 'public/');
+    assets.appContext = _.union(assets.appContext, this.getGlobbedFiles(this.assets.sharedJs, 'config/shared/'));
     assets.appStart = this.getGlobbedFiles(this.assets.js, 'public/');
 
 	// To include tests
@@ -97,9 +98,14 @@ module.exports.getCSSAssets = function() {
 
 module.exports.getMessageChannelName = function () {
     try {
-        var messageChannel = require("./messageChannel");
+        var messageChannel = require('./messageChannel');
         return messageChannel.channelName;
     }catch(e) {
         return "iQSlideShow";
     }
+};
+
+module.exports.getAppVersion = function () {
+    var appVersion = require('./shared/appVersion');
+    return appVersion.version;
 };

@@ -2,8 +2,8 @@
 /*global angular, PUBNUB*/
 (function () {
     'use strict';
-    angular.module('player').controller('PlayerController', ['$scope', '$state', '$timeout', 'Slides', '$location', 'MessagingEngineFactory', 'LocalStorage', 'Path', 'Timers', '$modal',
-        function ($scope, $state, $timeout, Slides, $location, MessagingEngineFactory, LocalStorage, Path, Timers, $modal) {
+    angular.module('player').controller('PlayerController', ['$scope', '$state', '$timeout', 'Slides', '$location', 'MessagingEngineFactory', 'LocalStorage', 'Path', 'Timers', '$modal', '$window',
+        function ($scope, $state, $timeout, Slides, $location, MessagingEngineFactory, LocalStorage, Path, Timers, $modal, $window) {
             var messagingEngine = MessagingEngineFactory.getEngine();
 
             var timers = new Timers();
@@ -137,6 +137,9 @@
                 },
                 inactiveRegisteredDeviceSaidHi : function (message) {
                     activationDialog.show();
+                },
+                reload: function () {
+                    $window.location.reload(true);
                 }
             };
 
