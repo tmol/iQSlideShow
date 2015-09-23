@@ -24,13 +24,13 @@
                 callBack(actionsChache[action]);
                 return;
             }
-            console.log("No action found for: " + action);
+            console.log('No action found for: ' + action);
         });
 
     };
 
     var onMessageReceived = function (message) {
-        console.log("Message received with action: " + message.action);
+        console.log('Message received with action: ' + message.action);
 
         getAction(message.action, function (action) {
             console.log('messageHandler.messagingEngine = ' + messagingEngine);

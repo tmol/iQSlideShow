@@ -45,7 +45,7 @@
                 throw err;
             }
             if (!storedAdmin) {
-                throw "No config available";
+                throw 'No config available';
             }
             storedAdmin = lodash.extend(storedAdmin, req.body);
 
@@ -71,8 +71,6 @@
                     message: errorHandler.getErrorMessage(err)
                 });
             } else {
-                console.log(devices.length);
-
                 for (idx = 0; idx < devices.length; idx = idx + 1) {
                     promises.push(new Promise(function (resolve, error) {
                         var device = devices[idx];
@@ -84,19 +82,19 @@
                                         message: errorHandler.getErrorMessage(err)
                                     });
                                 }
-                                resolve(device.deviceId);
+                                resolve({
+                                    name: device.name,
+                                    deviceId: device.deviceId,
+                                    location: device.location
+                                });
                             }
                                        );
                         });
                     }));
-                    console.log(devices[idx]);
                 }
 
                 Promise.all(promises).then(function (reloadedDevices) {
-                    for (idx = 0; idx < reloadedDevices.length; idx = idx + 1) {
-                        console.log("Reloaded and shit " + reloadedDevices[idx]);
-                    }
-                    res.jsonp({reloaded: reloadedDevices});
+                    res.jsonp({reloadedDevices: reloadedDevices});
                 });
             }
         });

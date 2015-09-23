@@ -2,7 +2,7 @@
 (function () {
     'use strict';
     exports.getSupportedAgregations = function () {
-        return ["sequential"];
+        return ['sequential'];
     };
     exports.getPlayList = function (aggregationType) {
         var aggregation = require('./' + aggregationType);
