@@ -4,7 +4,11 @@
 
     angular.module('player').factory('HealthReporter', ['$resource',
         function ($resource) {
-            return $resource('/devices/heathReport', {deviceId: '@deviceId'});
+            return $resource('/devices/healthReport/:deviceId', {deviceId: '@deviceId'}, {
+                report: {
+                    method: 'POST'
+                }
+            });
         }
         ]);
 }());

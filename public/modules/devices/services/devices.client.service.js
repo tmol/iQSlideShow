@@ -9,10 +9,6 @@
                                                    }, {
                 update: {
                     method: 'PUT'
-                },
-                healthReport: {
-                    method: 'POST',
-                    url: 'devices/heathcheck'
                 }
             });
         }

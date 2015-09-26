@@ -57,7 +57,7 @@
                 type: Date,
                 default: null
             },
-            lastHeathReport: {
+            lastHealthReport: {
                 type: Date,
                 default: null
             },

@@ -12,8 +12,8 @@
             .get(devices.list)
             .post(users.requiresLogin, devices.create);
 
-        app.route('/devices/heathReport')
-            .post(devices.heathReport);
+        app.route('/devices/healthReport/:deviceId')
+            .post(devices.healthReport);
 
         app.route('/devices/:deviceId')
             .get(devices.read)

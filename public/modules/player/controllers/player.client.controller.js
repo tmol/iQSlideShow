@@ -2,8 +2,8 @@
 /*global angular, PUBNUB*/
 (function () {
     'use strict';
-    angular.module('player').controller('PlayerController', ['$scope', '$state', '$timeout', 'Slides', '$location', 'MessagingEngineFactory', 'LocalStorage', 'Path', 'Timers', '$modal', '$window', 'Devices',
-        function ($scope, $state, $timeout, Slides, $location, MessagingEngineFactory, LocalStorage, Path, Timers, $modal, $window, Devices) {
+    angular.module('player').controller('PlayerController', ['$scope', '$state', '$timeout', 'Slides', '$location', 'MessagingEngineFactory', 'LocalStorage', 'Path', 'Timers', '$modal', '$window', 'HealthReporter',
+        function ($scope, $state, $timeout, Slides, $location, MessagingEngineFactory, LocalStorage, Path, Timers, $modal, $window, HealthReporter) {
             var messagingEngine = MessagingEngineFactory.getEngine();
             var messageHandler;
 
@@ -132,6 +132,9 @@
                         return;
                     }
                     activationDialog.close();
+                    timers.registerTimeout('healthReport', function () {
+                        HealthReporter.report({deviceId: $scope.deviceId});
+                    }, 60 * 1000);
                 },
                 holdSlideShow : function () {
                     $scope.slideIsOnHold = true;
@@ -192,10 +195,6 @@
                 messagingEngine.subscribeToDeviceChannel($scope.deviceId, function () {
                     sendHiToServer();
                 });
-
-                timers.registerTimeout('resetOnHold', function () {
-                    Devices.healthReport({deviceId: $scope.deviceId});
-                }, 60 * 1000);
             };
             startSlideshow();
         }]);
