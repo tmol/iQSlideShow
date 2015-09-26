@@ -41,7 +41,11 @@ var SlideSchema = new Schema ({
 	content : {
 		type: Object,
 		default: {}
-	}
+	},
+    hidden : {
+        type: Boolean,
+        default: false
+    }
 });
 
 var SlideshowSchema = new Schema({
@@ -52,6 +56,7 @@ var SlideshowSchema = new Schema({
 		trim: true
 	},
     slides: [SlideSchema],
+    draftSlides: [SlideSchema],
 	created: {
 		type: Date,
 		default: Date.now

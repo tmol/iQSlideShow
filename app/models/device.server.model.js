@@ -1,3 +1,4 @@
+/*jslint nomen: true, vars: true, unparam: true*/
 /*global require*/
 (function () {
     'use strict';
@@ -66,24 +67,32 @@
             }
         });
 
-    var getSlides = function (slideAgregation) {
-        var playList = playListFactory.getPlayList(slideAgregation.agregationMode || 'sequential');
-        return playList.getSlides(slideAgregation.playList);
+    DeviceSchema.methods.getSlides = function () {
+        var playList = playListFactory.getPlayList(this.slideAgregation.agregationMode || 'sequential');
+        var slides = playList.getSlides(this.slideAgregation.playList);
+        return slides;
+    };
+
+    DeviceSchema.methods.getDeviceSetupMessage = function (content, callback) {
+        return {
+            action: 'deviceSetup',
+            device: this,
+            content: content
+        };
+    };
+
+    DeviceSchema.methods.getReloadMessage = function (callback) {
+        return {
+            action: 'reload'
+        };
     };
 
     DeviceSchema.methods.sendDeviceSetupMessage = function (content, callback) {
-        messagingEngine.publishToDeviceChannel(this.deviceId, {
-            action: 'deviceSetup',
-            device: this,
-            slides: getSlides(this.slideAgregation),
-            content: content
-        }, callback);
+        messagingEngine.publishToDeviceChannel(this.deviceId, this.getDeviceSetupMessage(), callback);
     };
 
     DeviceSchema.methods.sendReloadMessage = function (callback) {
-        messagingEngine.publishToDeviceChannel(this.deviceId, {
-            action: 'reload'
-        }, callback);
+        messagingEngine.publishToDeviceChannel(this.deviceId, this.getReloadMessage(), callback);
     };
 
     mongoose.model('Device', DeviceSchema);

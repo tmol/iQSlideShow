@@ -3,6 +3,9 @@
 		<h1 data-ng-bind="slideshow.name"></h1>
 	</div>
 	<div class="pull-right" data-ng-show="authentication.user">
+        <a class="btn btn-primary" ng-click="publish()">
+			<i class="glyphicon glyphicon-cloud"></i>
+		</a>
 		<a class="btn btn-primary" href="/#!/slideshows/{{slideshow._id}}/edit">
 			<i class="glyphicon glyphicon-edit"></i>
 		</a>

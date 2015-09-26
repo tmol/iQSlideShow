@@ -32,7 +32,11 @@ exports.create = function(req, res) {
  * Show the current Slideshow
  */
 exports.read = function(req, res) {
-	res.jsonp(req.slideshow);
+    var slideshow = req.slideshow;
+    if (!slideshow.draftSlides || slideshow.draftSlides.length == 0) {
+        slideshow.draftSlides = slideshow.slides;
+    }
+	res.jsonp(slideshow);
 };
 
 exports.readSlide = function(req, res) {

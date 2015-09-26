@@ -1,5 +1,5 @@
+/*jslint nomen: true, vars: true, unparam: true*/
 /*global require, exports, console*/
-/*jslint es5: true */
 (function () {
     'use strict';
 
@@ -152,6 +152,21 @@
         });
     };
 
+    exports.deviceWithSlidesByID = function (req, res, next, id) {
+        Device.findOne({"deviceId": id}).populate('slideAgregation.playList.slideShow').exec(function (err, device) {
+            if (err) {
+                return next(err);
+            }
+            if (!device) {
+                return next(new Error('Failed to load Device ' + id));
+            }
+            req.device = device;
+            next();
+        });
+    };
+    exports.getSlides = function (req, res) {
+        res.jsonp(req.device.getSlides());
+    };
     /**
      * Device authorization middleware
      */

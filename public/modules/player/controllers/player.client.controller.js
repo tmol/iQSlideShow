@@ -5,6 +5,7 @@
     angular.module('player').controller('PlayerController', ['$scope', '$state', '$timeout', 'Slides', '$location', 'MessagingEngineFactory', 'LocalStorage', 'Path', 'Timers', '$modal', '$window', 'Devices',
         function ($scope, $state, $timeout, Slides, $location, MessagingEngineFactory, LocalStorage, Path, Timers, $modal, $window, Devices) {
             var messagingEngine = MessagingEngineFactory.getEngine();
+            var messageHandler;
 
             var timers = new Timers();
 
@@ -23,8 +24,13 @@
             $scope.slideIsOnHold = false;
 
             var sendHiToServer = function () {
-                messagingEngine.publishToServerChannel('hi', $scope.deviceId);
+                messagingEngine
+                    .sendMessageToServer('hi', {deviceId: $scope.deviceId})
+                    .then(function (response) {
+                        messageHandler.deviceSetup(response.data);
+                    });
             };
+
             var setupSlides = function () {
                 $scope.slides.forEach(function (slide, index) {
                     slide.content.templateUrl = 'modules/slideshows/slideTemplates/' + (slide.templateName || 'default') + '/slide.html';
@@ -47,9 +53,7 @@
 
                 var show = function () {
                     $scope.slideActivationQr = {
-                        slideUrl: $state.href("editDevice", {
-                            deviceId : $scope.deviceId
-                        }, { absolute : true }),
+                        slideUrl: "/#!/devices/" + $scope.deviceId + "/edit",
                         size: 100,
                         correctionLevel: '',
                         typeNumber: 0,
@@ -84,7 +88,14 @@
                 updateSildes();
             };
 
-            var messageHandler = {
+            var loadSlidesForDevice = function (deviceId) {
+                Slides.getSlidesForDevice({deviceId : deviceId}, function (result) {
+                    $scope.slides = result;
+                    setupSlides();
+                });
+            };
+
+            messageHandler = {
                 moveSlideRight : function () {
                     $scope.$broadcast("moveSlideRight");
                 },
@@ -103,7 +114,6 @@
                     $scope.$broadcast("resetOnHold");
                     switchSlideShow(content.slideShowIdToPlay);
 
-                    // todo: manage this with the server side message (ask TB)
                     var duration = content.minutesToPlayBeforeGoingBackToDefaultSlideShow;
                     if (duration) {
                         timers.registerTimeout("revertToOriginalSlideShow", function () {
@@ -112,10 +122,10 @@
                     }
                 },
                 deviceSetup : function (message) {
-                    $scope.slides = message.slides;
-                    $scope.active = message.device.active;
-                    setupSlides();
                     timers.resetTimeouts();
+                    loadSlidesForDevice(message.device.deviceId);
+                    $scope.active = message.device.active;
+
                     if (!$scope.active) {
                         activationDialog.close();
                         activationDialog.show();
@@ -132,7 +142,9 @@
                     }, 60 * 1000);
                 },
                 resetSlideShow : function () {
+                    timers.resetTimeouts();
                     $scope.slideIsOnHold = false;
+                    $scope.$broadcast("resetOnHold");
                     sendHiToServer(); //this should revert the device state;
                 },
                 inactiveRegisteredDeviceSaidHi : function (message) {
@@ -151,12 +163,8 @@
                 $scope.$broadcast("moveSlideLeft");
             });
 
-            $scope.$on("slideLoaded", function (slide) {
-                $scope.qrConfig.slideUrl = $state.href("deviceInteraction", {
-                    deviceId : $scope.deviceId,
-                    slideshowId : $scope.slideName,
-                    slideNumber : slide.index
-                }, {absolute : true});
+            $scope.$on("slideLoaded", function (event, slide) {
+                $scope.qrConfig.slideUrl = "/#!/deviceInteraction/" + $scope.deviceId + "/" + slide.slideShowId + "/" + slide.slideNumber;
             });
 
             $scope.$on("$destroy", function () {

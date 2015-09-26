@@ -2,8 +2,8 @@
 /*global angular, PUBNUB, console*/
 (function () {
     'use strict';
-    angular.module('core').service('PubNubFacade', ['$rootScope', 'AppVersionService',
-        function ($rootScope, AppVersionService) {
+    angular.module('core').service('PubNubFacade', ['$rootScope', 'AppVersionService', '$http',
+        function ($rootScope, AppVersionService, $http) {
             var instance;
             var pubnub;
             function publishToChannel(channelName, action, deviceId, content, callback) {
@@ -68,7 +68,12 @@
                             connect:  onConnect
                         });
                     },
+                    sendMessageToServer : function (action, message) {
+                        message.action = action;
+                        message.appVersion = AppVersionService.getVersion();
 
+                        return $http.post("/message", message);
+                    },
                     publishToServerChannel : function (action, deviceId, content, callback) {
                         publishToChannel(theServerChannel, action, deviceId, content, callback);
                     },

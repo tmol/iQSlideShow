@@ -51,7 +51,7 @@ exports.getInstance = function () {
         pubNub.subscribe({
             channel  : channelName,
             connect: function () {
-                console.log('Pubnub subscribed to " + theChannel + " channel.');
+                console.log('Pubnub subscribed to ' + theChannel + ' channel.');
             },
             callback: callback
         });
