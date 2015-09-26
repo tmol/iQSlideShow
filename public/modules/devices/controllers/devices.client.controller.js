@@ -79,14 +79,16 @@
                 $scope.devices = Devices.query();
             };
 
+            $scope.adminConfig = Admin.getConfig();
+
             $scope.getDeviceStatus = function (device) {
-                if (!device.lastHeathReport) {
+                if (!device.lastHealthReport) {
                     return 'unhealthy';
                 }
 
-                var config = Admin.getConfig(),
-                    minutesPassedSinceLastHealthReport = (new Date().getTime() - device.lastHeathReport.getTime()) / (1000 * 60);
-                if (minutesPassedSinceLastHealthReport > config.nrOfMinutesAfterLastHealthReportToConsiderDeviceUnheathy) {
+                var lastHeathReport = new Date(device.lastHealthReport),
+                    minutesPassedSinceLastHealthReport = (new Date().getTime() - lastHeathReport.getTime()) / (1000 * 60);
+                if (minutesPassedSinceLastHealthReport > $scope.adminConfig.nrOfMinutesAfterLastHealthReportToConsiderDeviceUnheathy) {
                     return 'unhealthy';
                 }
 

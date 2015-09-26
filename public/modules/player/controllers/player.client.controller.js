@@ -131,10 +131,14 @@
                         activationDialog.show();
                         return;
                     }
-                    activationDialog.close();
                     timers.registerTimeout('healthReport', function () {
                         HealthReporter.report({deviceId: $scope.deviceId});
                     }, 60 * 1000);
+                    // leave this the last, there is a bug in IE:
+                    // Unable to get property 'focus' of undefined or null reference
+                    // at at $modalStack.close (http://localhost:3000/lib/angular-bootstrap/ui-bootstrap-tpls.js?version=0.1:2262:11)
+                    // TODO fix this
+                    activationDialog.close();
                 },
                 holdSlideShow : function () {
                     $scope.slideIsOnHold = true;
