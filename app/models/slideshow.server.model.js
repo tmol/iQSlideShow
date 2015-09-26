@@ -41,7 +41,11 @@ var SlideSchema = new Schema ({
 	content : {
 		type: Object,
 		default: {}
-	}
+	},
+    hidden : {
+        type: Boolean,
+        default: false
+    }
 });
 
 var SlideshowSchema = new Schema({

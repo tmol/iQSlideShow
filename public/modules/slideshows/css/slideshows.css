@@ -21,7 +21,7 @@
 }
 
 .current-slide{
-    background-color: #CCCCCC;
+    background-color: #CCCCCC !important;
 }
 .slides-continer{
     border-right: 1px solid #CCCCCC;
@@ -42,4 +42,8 @@
 .slides-update{
   border-top: 1px solid #CCCCCC;
   padding-top: 10px;
+}
+.hidden-slide {
+    background-color: #EEEEEE;
+    opacity: 0.5;
 }
