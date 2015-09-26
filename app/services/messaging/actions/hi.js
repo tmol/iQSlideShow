@@ -12,7 +12,7 @@
         Slideshow = mongoose.model('Slideshow'),
         Config = require('../../../../config/config');
 
-    module.exports = function (messagingEngine, message) {
+    module.exports = function (messagingEngine, message, resolveHi, errorHi) {
         console.log("Handling hi message, deviceId: " + message.deviceId);
 
         var storeNewDevice = function (deviceId, callback) {
@@ -70,20 +70,21 @@
                         }
                     });
                 });
-            });
+            }, errorHi);
         };
 
         var ifVersionOkSendDeviceSetupOtherwiseReloadMessage = function (device) {
             if (message.appVersion !== Config.getAppVersion()) {
-                device.sendReloadMessage();
+                resolveHi(device.getReloadMessage());
             } else {
-                device.sendDeviceSetupMessage();
+                resolveHi(device.getDeviceSetupMessage());
             }
-        }
+        };
 
         var onFindOne = function (err, device) {
+
             if (err) {
-                throw err;
+                errorHi(err);
             }
 
             if (!device) {
@@ -99,7 +100,7 @@
                 return;
             }
 
-            device.sendDeviceSetupMessage();
+            resolveHi(device.getDeviceSetupMessage());
         };
 
         console.log("searching for : " + message.deviceId);

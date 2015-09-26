@@ -69,18 +69,26 @@
         return slides;
     };
 
-    DeviceSchema.methods.sendDeviceSetupMessage = function (content, callback) {
-        messagingEngine.publishToDeviceChannel(this.deviceId, {
+    DeviceSchema.methods.getDeviceSetupMessage = function (content, callback) {
+        return {
             action: 'deviceSetup',
             device: this,
             content: content
-        }, callback);
+        };
+    };
+
+    DeviceSchema.methods.getReloadMessage = function (callback) {
+        return {
+            action: 'reload'
+        };
+    };
+
+    DeviceSchema.methods.sendDeviceSetupMessage = function (content, callback) {
+        messagingEngine.publishToDeviceChannel(this.deviceId, this.getDeviceSetupMessage(), callback);
     };
 
     DeviceSchema.methods.sendReloadMessage = function (callback) {
-        messagingEngine.publishToDeviceChannel(this.deviceId, {
-            action: 'reload'
-        }, callback);
+        messagingEngine.publishToDeviceChannel(this.deviceId, this.getReloadMessage(), callback);
     };
 
     mongoose.model('Device', DeviceSchema);

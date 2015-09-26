@@ -5,7 +5,7 @@
     angular.module('player').controller('PlayerController', ['$scope', '$state', '$timeout', 'Slides', '$location', 'MessagingEngineFactory', 'LocalStorage', 'Path', 'Timers', '$modal', '$window',
         function ($scope, $state, $timeout, Slides, $location, MessagingEngineFactory, LocalStorage, Path, Timers, $modal, $window) {
             var messagingEngine = MessagingEngineFactory.getEngine();
-
+            var messageHandler;
             var timers = new Timers();
 
             $scope.qrConfig = {
@@ -23,8 +23,13 @@
             $scope.slideIsOnHold = false;
 
             var sendHiToServer = function () {
-                messagingEngine.publishToServerChannel('hi', $scope.deviceId);
+                messagingEngine
+                    .sendMessageToServer('hi', $scope.deviceId)
+                    .then(function (response) {
+                        messageHandler.deviceSetup(response.data);
+                    });
             };
+
             var setupSlides = function () {
                 $scope.slides.forEach(function (slide, index) {
                     slide.content.templateUrl = 'modules/slideshows/slideTemplates/' + (slide.templateName || 'default') + '/slide.html';
@@ -91,7 +96,7 @@
                 });
             };
 
-            var messageHandler = {
+            messageHandler = {
                 moveSlideRight : function () {
                     $scope.$broadcast("moveSlideRight");
                 },
@@ -110,7 +115,6 @@
                     $scope.$broadcast("resetOnHold");
                     switchSlideShow(content.slideShowIdToPlay);
 
-                    // todo: manage this with the server side message (ask TB)
                     var duration = content.minutesToPlayBeforeGoingBackToDefaultSlideShow;
                     if (duration) {
                         timers.registerTimeout("revertToOriginalSlideShow", function () {
@@ -139,7 +143,9 @@
                     }, 60 * 1000);
                 },
                 resetSlideShow : function () {
+                    timers.resetTimeouts();
                     $scope.slideIsOnHold = false;
+                    $scope.$broadcast("resetOnHold");
                     sendHiToServer(); //this should revert the device state;
                 },
                 inactiveRegisteredDeviceSaidHi : function (message) {
@@ -159,11 +165,7 @@
             });
 
             $scope.$on("slideLoaded", function (slide) {
-                $scope.qrConfig.slideUrl = $state.href("deviceInteraction", {
-                    deviceId : $scope.deviceId,
-                    slideshowId : $scope.slideName,
-                    slideNumber : slide.index
-                }, {absolute : true});
+                $scope.qrConfig.slideUrl = "/#!/deviceInteraction/" + $scope.deviceId + "/" + 0;
             });
 
             $scope.$on("$destroy", function () {

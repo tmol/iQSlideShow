@@ -151,6 +151,7 @@
             next();
         });
     };
+
     exports.deviceWithSlidesByID = function (req, res, next, id) {
         Device.findOne({"deviceId": id}).populate('slideAgregation.playList.slideShow').exec(function (err, device) {
             if (err) {
