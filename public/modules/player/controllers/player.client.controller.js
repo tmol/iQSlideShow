@@ -53,9 +53,7 @@
 
                 var show = function () {
                     $scope.slideActivationQr = {
-                        slideUrl: $state.href("editDevice", {
-                            deviceId : $scope.deviceId
-                        }, { absolute : true }),
+                        slideUrl: "/#!/devices/" + $scope.deviceId + "/edit",
                         size: 100,
                         correctionLevel: '',
                         typeNumber: 0,
