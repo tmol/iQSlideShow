@@ -4,7 +4,8 @@
     'use strict';
 
     var mongoose = require('mongoose'),
-        Slideshow = mongoose.model('Slideshow');
+        Slideshow = mongoose.model('Slideshow'),
+        Device = mongoose.model('Device');
 
     module.exports = function (messagingEngine, message, resolvePublish, errorPublish) {
         console.log("Handling publishSlide message, slideShowId: " + message.slideShowId);
@@ -25,6 +26,21 @@
                     errorPublish(err);
                     return;
                 }
+                var oid = new mongoose.Types.ObjectId(slideShow._id);
+
+                (function notifyDevicesAboutPublish() {
+                    Device.find({"slideAgregation.playList.slideShow" : oid}, function (err, devices) {
+                        if (err) {
+                            errorPublish(err);
+                            return;
+                        }
+                        console.log(devices.length);
+                        devices.forEach(function (device) {
+                            device.sendDeviceSetupMessage();
+                        });
+                    });
+                }());
+
                 resolvePublish();
             });
         });

@@ -99,7 +99,6 @@
                 });
                 return;
             }
-
             resolveHi(device.getDeviceSetupMessage());
         };
 
