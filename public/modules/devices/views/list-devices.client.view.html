@@ -9,6 +9,9 @@
 				<span data-ng-bind="device.created | date:'medium'"></span>
 				by
 				<span data-ng-bind="device.user.displayName"></span>
+				&nbsp;&nbsp;&nbsp;
+				Status:
+				<span data-ng-bind="getDeviceStatus(device)"></span>
 			</small>
 			<h4 class="list-group-item-heading" data-ng-bind="device.name"></h4>
         </a>

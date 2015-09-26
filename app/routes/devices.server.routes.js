@@ -9,6 +9,10 @@ module.exports = function(app) {
 		.get(devices.list)
 		.post(users.requiresLogin, devices.create);
 
+	// Devices Routes
+	app.route('/devices/heathReport')
+		.post(devices.heathReport);
+
 	app.route('/devices/:deviceId')
 		.get(devices.read)
 		.put(users.requiresLogin, devices.hasAuthorization, devices.update)

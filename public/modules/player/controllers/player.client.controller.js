@@ -2,8 +2,8 @@
 /*global angular, PUBNUB*/
 (function () {
     'use strict';
-    angular.module('player').controller('PlayerController', ['$scope', '$state', '$timeout', 'Slides', '$location', 'MessagingEngineFactory', 'LocalStorage', 'Path', 'Timers', '$modal', '$window',
-        function ($scope, $state, $timeout, Slides, $location, MessagingEngineFactory, LocalStorage, Path, Timers, $modal, $window) {
+    angular.module('player').controller('PlayerController', ['$scope', '$state', '$timeout', 'Slides', '$location', 'MessagingEngineFactory', 'LocalStorage', 'Path', 'Timers', '$modal', '$window', 'Devices',
+        function ($scope, $state, $timeout, Slides, $location, MessagingEngineFactory, LocalStorage, Path, Timers, $modal, $window, Devices) {
             var messagingEngine = MessagingEngineFactory.getEngine();
 
             var timers = new Timers();
@@ -184,6 +184,10 @@
                 messagingEngine.subscribeToDeviceChannel($scope.deviceId, function () {
                     sendHiToServer();
                 });
+
+                timers.registerTimeout('resetOnHold', function () {
+                    Devices.healthReport({deviceId: $scope.deviceId});
+                }, 60 * 1000);
             };
             startSlideshow();
         }]);

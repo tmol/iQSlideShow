@@ -56,6 +56,10 @@
                 type: Date,
                 default: null
             },
+            lastHeathReport: {
+                type: Date,
+                default: null
+            },
             slideAgregation : {
                 agregationMode : {type : String, enum : [playListFactory.getSupportedAgregations()]},
                 playList : [PlayListEntry]

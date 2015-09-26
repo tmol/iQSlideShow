@@ -4,8 +4,8 @@
     'use strict';
 
     // Devices controller
-    angular.module('devices').controller('DevicesController', ['$scope', '$stateParams', '$state', 'Authentication', 'Slideshows', 'Devices', 'MessagingEngineFactory', '$modal',
-        function ($scope, $stateParams, $state, Authentication, Slideshows, Devices, MessagingEngineFactory, $modal) {
+    angular.module('devices').controller('DevicesController', ['$scope', '$stateParams', '$state', 'Authentication', 'Slideshows', 'Devices', 'MessagingEngineFactory', '$modal', 'Admin',
+        function ($scope, $stateParams, $state, Authentication, Slideshows, Devices, MessagingEngineFactory, $modal, Admin) {
             var messagingEngine = MessagingEngineFactory.getEngine(),
                 modalInstance,
                 messageHandler;
@@ -75,9 +75,22 @@
                 });
             };
 
-            // Find a list of Devices
             $scope.find = function () {
                 $scope.devices = Devices.query();
+            };
+
+            $scope.getDeviceStatus = function (device) {
+                if (!device.lastHeathReport) {
+                    return 'unhealthy';
+                }
+
+                var config = Admin.getConfig(),
+                    minutesPassedSinceLastHealthReport = (new Date().getTime() - device.lastHeathReport.getTime()) / (1000 * 60);
+                if (minutesPassedSinceLastHealthReport > config.nrOfMinutesAfterLastHealthReportToConsiderDeviceUnheathy) {
+                    return 'unhealthy';
+                }
+
+                return device.active ? 'active' : 'inactive';
             };
 
             // Find existing Device
@@ -123,13 +136,13 @@
             $scope.addSlideShow = function () {
                 $scope.device.slideAgregation.playList.push({
                     slideShow : $scope.selectedSlideShow
-                })
-            }
+                });
+            };
 
             $scope.removeSlideshow = function (slideShow) {
                 var index = $scope.device.slideAgregation.playList.indexOf(slideShow);
-                $scope.device.slideAgregation.playList.splice(index,1);
-            }
+                $scope.device.slideAgregation.playList.splice(index, 1);
+            };
 
             // todo cde duplication, factor out, see player.client.controller
             $scope.$on(messagingEngine.serverChannelMessageEvent, function (event, payload) {

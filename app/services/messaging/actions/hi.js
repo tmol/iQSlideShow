@@ -75,6 +75,7 @@
 
         var ifVersionOkSendDeviceSetupOtherwiseReloadMessage = function (device) {
             if (message.appVersion !== Config.getAppVersion()) {
+                console.log('version mismatch, device version: ' + message.appVersion + ', appVersion' + Config.getAppVersion());
                 device.sendReloadMessage();
             } else {
                 device.sendDeviceSetupMessage();
@@ -99,7 +100,7 @@
                 return;
             }
 
-            device.sendDeviceSetupMessage();
+            ifVersionOkSendDeviceSetupOtherwiseReloadMessage(device);
         };
 
         console.log("searching for : " + message.deviceId);
