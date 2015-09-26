@@ -1,3 +1,4 @@
+/*jslint nomen: true, vars: true, unparam: true*/
 /*global require*/
 (function () {
     'use strict';
@@ -64,7 +65,7 @@
 
     DeviceSchema.methods.getSlides = function () {
         var playList = playListFactory.getPlayList(this.slideAgregation.agregationMode || 'sequential');
-        var slides = playList.getSlides(this.slideAgregation.playList)
+        var slides = playList.getSlides(this.slideAgregation.playList);
         return slides;
     };
 
