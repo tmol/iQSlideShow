@@ -8,7 +8,7 @@
             // Slideshows state routing
             $stateProvider.
                 state('deviceInteraction', {
-                    url: '/deviceInteraction/:deviceId/:slideId',
+                    url: '/deviceInteraction/:deviceId/:slideShowId/:slideNumber',
                     templateUrl: 'modules/slideshows/views/deviceInteraction.client.view.html'
                 }).
                 state('listSlideshows', {

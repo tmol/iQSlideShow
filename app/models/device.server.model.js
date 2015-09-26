@@ -66,6 +66,7 @@
     DeviceSchema.methods.getSlides = function () {
         var playList = playListFactory.getPlayList(this.slideAgregation.agregationMode || 'sequential');
         var slides = playList.getSlides(this.slideAgregation.playList);
+        console.log(slides);
         return slides;
     };
 

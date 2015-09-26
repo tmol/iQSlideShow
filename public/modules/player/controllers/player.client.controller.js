@@ -164,8 +164,8 @@
                 $scope.$broadcast("moveSlideLeft");
             });
 
-            $scope.$on("slideLoaded", function (slide) {
-                $scope.qrConfig.slideUrl = "/#!/deviceInteraction/" + $scope.deviceId + "/" + 0;
+            $scope.$on("slideLoaded", function (event, slide) {
+                $scope.qrConfig.slideUrl = "/#!/deviceInteraction/" + $scope.deviceId + "/" + slide.slideShowId + "/" + slide.slideNumber;
             });
 
             $scope.$on("$destroy", function () {
