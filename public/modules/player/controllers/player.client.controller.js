@@ -84,6 +84,13 @@
                 updateSildes();
             };
 
+            var loadSlidesForDevice = function (deviceId) {
+                Slides.getSlidesForDevice({deviceId : deviceId}, function (result) {
+                    $scope.slides = result;
+                    setupSlides();
+                });
+            };
+
             var messageHandler = {
                 moveSlideRight : function () {
                     $scope.$broadcast("moveSlideRight");
@@ -112,10 +119,10 @@
                     }
                 },
                 deviceSetup : function (message) {
-                    $scope.slides = message.slides;
-                    $scope.active = message.device.active;
-                    setupSlides();
                     timers.resetTimeouts();
+                    loadSlidesForDevice(message.device.deviceId);
+                    $scope.active = message.device.active;
+
                     if (!$scope.active) {
                         activationDialog.close();
                         activationDialog.show();
