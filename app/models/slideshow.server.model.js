@@ -56,6 +56,7 @@ var SlideshowSchema = new Schema({
 		trim: true
 	},
     slides: [SlideSchema],
+    draftSlides: [SlideSchema],
 	created: {
 		type: Date,
 		default: Date.now

@@ -1,11 +1,12 @@
 /*jslint nomen: true, vars: true*/
-/*global angular*/
+/*global angular, alert*/
 (function () {
     'use strict';
 
     // Slideshows controller
-    angular.module('slideshows').controller('SlideshowsController', ['$scope', '$stateParams', '$location', 'Authentication', 'Slideshows', 'Templates', '$timeout',
-        function ($scope, $stateParams, $location, Authentication, Slideshows, Templates, $timeout) {
+    angular.module('slideshows').controller('SlideshowsController', ['$scope', '$stateParams', '$location', 'Authentication', 'Slideshows', 'Templates', '$timeout', 'MessagingEngineFactory',
+        function ($scope, $stateParams, $location, Authentication, Slideshows, Templates, $timeout, MessagingEngineFactory) {
+            var messagingEngine = MessagingEngineFactory.getEngine();
             $scope.authentication = Authentication;
             $scope.currentSlide = null;
             $scope.animationTypes = ["enter-left", "enter-right", "enter-bottom", "enter-top"];
@@ -13,7 +14,7 @@
                 $scope.setPlayerMode(false);
             }
 
-            Templates.getAll(function (response, err) {
+            Templates.getAll(function (response) {
                 $scope.templates = response;
             });
 
@@ -64,6 +65,13 @@
                 });
             };
 
+            $scope.publish = function () {
+                messagingEngine
+                    .sendMessageToServer('publishSlideShow', {slideShowId: $scope.slideshow._id})
+                    .then(function () {
+                        alert("Published");
+                    });
+            };
             // Find a list of Slideshows
             $scope.find = function () {
                 $scope.slideshows = Slideshows.query();
@@ -95,7 +103,7 @@
                     templateName: $scope.selectedTemplate,
                     content : {}
                 };
-                $scope.slideshow.slides.push($scope.currentSlide);
+                $scope.slideshow.draftSlides.push($scope.currentSlide);
                 updateTemplate();
             };
 
@@ -104,27 +112,27 @@
             $scope.moveSlideUp = function (slide) {
                 var slideIndex, tmp;
 
-                slideIndex = $scope.slideshow.slides.indexOf(slide);
+                slideIndex = $scope.slideshow.draftSlides.indexOf(slide);
                 if (slideIndex === 0) {
                     return;
                 }
 
-                tmp = $scope.slideshow.slides[slideIndex - 1];
-                $scope.slideshow.slides[slideIndex - 1] = slide;
-                $scope.slideshow.slides[slideIndex] = tmp;
+                tmp = $scope.slideshow.draftSlides[slideIndex - 1];
+                $scope.slideshow.draftSlides[slideIndex - 1] = slide;
+                $scope.slideshow.draftSlides[slideIndex] = tmp;
             };
 
             $scope.moveSlideDown = function (slide) {
                 var slideIndex, tmp;
 
-                slideIndex = $scope.slideshow.slides.indexOf(slide);
+                slideIndex = $scope.slideshow.draftSlides.indexOf(slide);
                 if (slideIndex === $scope.slideshow.slides.length - 1) {
                     return;
                 }
 
-                tmp = $scope.slideshow.slides[slideIndex + 1];
-                $scope.slideshow.slides[slideIndex + 1] = slide;
-                $scope.slideshow.slides[slideIndex] = tmp;
+                tmp = $scope.slideshow.draftSlides[slideIndex + 1];
+                $scope.slideshow.draftSlides[slideIndex + 1] = slide;
+                $scope.slideshow.draftSlides[slideIndex] = tmp;
             };
 
             $scope.isCurrentSlide = function (slide) {
@@ -138,8 +146,8 @@
                 if (!$scope.currentSlide) {
                     return;
                 }
-                var slideIndex = $scope.slideshow.slides.indexOf($scope.currentSlide);
-                $scope.slideshow.slides.splice(slideIndex, 1);
+                var slideIndex = $scope.slideshow.draftSlides.indexOf($scope.currentSlide);
+                $scope.slideshow.draftSlides.splice(slideIndex, 1);
             };
         }]);
 }());

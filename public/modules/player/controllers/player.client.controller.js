@@ -6,6 +6,7 @@
         function ($scope, $state, $timeout, Slides, $location, MessagingEngineFactory, LocalStorage, Path, Timers, $modal, $window) {
             var messagingEngine = MessagingEngineFactory.getEngine();
             var messageHandler;
+
             var timers = new Timers();
 
             $scope.qrConfig = {
@@ -24,7 +25,7 @@
 
             var sendHiToServer = function () {
                 messagingEngine
-                    .sendMessageToServer('hi', $scope.deviceId)
+                    .sendMessageToServer('hi', {deviceId: $scope.deviceId})
                     .then(function (response) {
                         messageHandler.deviceSetup(response.data);
                     });

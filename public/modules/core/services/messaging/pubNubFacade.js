@@ -68,13 +68,11 @@
                             connect:  onConnect
                         });
                     },
-                    sendMessageToServer : function (action, deviceId, content) {
-                        return $http.post("/message",{
-                            action : action,
-                            deviceId  : deviceId,
-                            appVersion: AppVersionService.getVersion(),
-                            content : content
-                        });
+                    sendMessageToServer : function (action, message) {
+                        message.action = action;
+                        message.appVersion = AppVersionService.getVersion();
+
+                        return $http.post("/message", message);
                     },
                     publishToServerChannel : function (action, deviceId, content, callback) {
                         publishToChannel(theServerChannel, action, deviceId, content, callback);
