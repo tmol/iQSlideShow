@@ -4,6 +4,9 @@
  * Module dependencies.
  */
 var mongoose = require('mongoose'),
+    Promise = require("Promise"),
+    SlideShowTagSchema = require("./slideShowTag.server.model"),
+    SlideShowTag = mongoose.model("SlideShowTag"),
 	Schema = mongoose.Schema;
 
 /**
@@ -57,6 +60,10 @@ var SlideshowSchema = new Schema({
 	},
     slides: [SlideSchema],
     draftSlides: [SlideSchema],
+    tags:{
+        type:[String],
+        index: true
+    },
 	created: {
 		type: Date,
 		default: Date.now
@@ -65,6 +72,22 @@ var SlideshowSchema = new Schema({
 		type: Schema.ObjectId,
 		ref: 'User'
 	}
+});
+
+SlideshowSchema.pre('save', function(next) {
+    var promises = [];
+    this.tags.forEach(function(tag) {
+        var promise = new Promise(function (resolve, reject) {
+            SlideShowTag.addTag(tag, resolve, reject);
+        });
+        promises.push(promise);
+    });
+
+    Promise.all(promises).then(function (results) {
+        next();
+    },function(error) {
+        next(error);
+    });
 });
 
 mongoose.model('Slideshow', SlideshowSchema);

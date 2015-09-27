@@ -4,11 +4,15 @@
     'use strict';
 
     // Slideshows controller
-    angular.module('slideshows').controller('SlideshowsController', ['$scope', '$stateParams', '$location', 'Authentication', 'Slideshows', 'Templates', '$timeout', 'MessagingEngineFactory',
-        function ($scope, $stateParams, $location, Authentication, Slideshows, Templates, $timeout, MessagingEngineFactory) {
+    angular.module('slideshows').controller('SlideshowsController', ['$scope', '$stateParams', '$location', 'Authentication', 'Slideshows', 'Templates', '$timeout', 'MessagingEngineFactory', 'SlideshowTags',
+        function ($scope, $stateParams, $location, Authentication, Slideshows, Templates, $timeout, MessagingEngineFactory, SlideshowTags) {
             var messagingEngine = MessagingEngineFactory.getEngine();
             $scope.authentication = Authentication;
             $scope.currentSlide = null;
+            $scope.slideshow = {
+                tags:[]
+            };
+            $scope.possibleTags = [];
             $scope.animationTypes = ["enter-left", "enter-right", "enter-bottom", "enter-top"];
             if ($scope.setPlayerMode) {
                 $scope.setPlayerMode(false);
@@ -148,6 +152,27 @@
                 }
                 var slideIndex = $scope.slideshow.draftSlides.indexOf($scope.currentSlide);
                 $scope.slideshow.draftSlides.splice(slideIndex, 1);
+            };
+
+            $scope.removeTag = function (index) {
+                $scope.slideshow.tags.splice(index, 1);
+            };
+            $scope.addTag = function () {
+                if ($scope.desiredTag) {
+                    $scope.slideshow.tags = $scope.slideshow.tags || [];
+                    if ($scope.slideshow.tags.indexOf($scope.desiredTag) > -1) {
+                        $scope.desiredTag = "";
+                        return;
+                    }
+                    $scope.slideshow.tags.push($scope.desiredTag);
+                    $scope.desiredTag = "";
+                }
+            };
+            $scope.refreshTags = function (text) {
+                return SlideshowTags.query({tag: text}, function(result)
+                  {
+                    $scope.possibleTags = result.map(function(item){return item.value});
+                  });
             };
         }]);
 }());
