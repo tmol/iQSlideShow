@@ -99,7 +99,7 @@
                 });
                 return;
             }
-            resolveHi(device.getDeviceSetupMessage());
+            ifVersionOkSendDeviceSetupOtherwiseReloadMessage(device);
         };
 
         console.log("searching for : " + message.deviceId);

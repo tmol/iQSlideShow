@@ -2,8 +2,8 @@
 /*global angular, PUBNUB*/
 (function () {
     'use strict';
-    angular.module('player').controller('PlayerController', ['$scope', '$state', '$timeout', 'Slides', '$location', 'MessagingEngineFactory', 'LocalStorage', 'Path', 'Timers', '$modal', '$window',
-        function ($scope, $state, $timeout, Slides, $location, MessagingEngineFactory, LocalStorage, Path, Timers, $modal, $window) {
+    angular.module('player').controller('PlayerController', ['$scope', '$state', '$timeout', 'Slides', '$location', 'MessagingEngineFactory', 'LocalStorage', 'Path', 'Timers', '$modal', '$window', 'HealthReporter',
+        function ($scope, $state, $timeout, Slides, $location, MessagingEngineFactory, LocalStorage, Path, Timers, $modal, $window, HealthReporter) {
             var messagingEngine = MessagingEngineFactory.getEngine();
             var messageHandler;
 
@@ -131,6 +131,13 @@
                         activationDialog.show();
                         return;
                     }
+                    timers.registerTimeout('healthReport', function () {
+                        HealthReporter.report({deviceId: $scope.deviceId});
+                    }, 60 * 1000);
+                    // leave this the last, there is a bug in IE:
+                    // Unable to get property 'focus' of undefined or null reference
+                    // at at $modalStack.close (http://localhost:3000/lib/angular-bootstrap/ui-bootstrap-tpls.js?version=0.1:2262:11)
+                    // TODO fix this
                     activationDialog.close();
                 },
                 holdSlideShow : function () {

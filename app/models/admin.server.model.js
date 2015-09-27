@@ -14,6 +14,11 @@
                 default: 1,
                 required: 'Please fill the user selected slide shows play time in minutes'
             },
+            nrOfMinutesAfterLastHealthReportToConsiderDeviceUnheathy: {
+                type: Number,
+                default: 1,
+                required: 'Please fill the number of minutes after last health report to consider device unheathy'
+            },
             defaultSlideShowId: {
                 type: Schema.ObjectId,
                 default: null

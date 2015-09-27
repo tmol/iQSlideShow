@@ -164,12 +164,26 @@
             next();
         });
     };
+
     exports.getSlides = function (req, res) {
         res.jsonp(req.device.getSlides());
     };
-    /**
-     * Device authorization middleware
-     */
+
+    exports.healthReport = function (req, res) {
+        var device = req.device;
+
+        device.lastHealthReport = new Date();
+        device.save(function (err) {
+            if (err) {
+                return res.status(400).send({
+                    message: errorHandler.getErrorMessage(err)
+                });
+            } else {
+                res.jsonp({ report: 'ok' });
+            }
+        });
+    };
+
     exports.hasAuthorization = function (req, res, next) {
         next();
     };
