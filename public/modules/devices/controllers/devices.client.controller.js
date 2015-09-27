@@ -4,11 +4,13 @@
     'use strict';
 
     // Devices controller
-    angular.module('devices').controller('DevicesController', ['$scope', '$stateParams', '$state', 'Authentication', 'Slideshows', 'Devices', 'MessagingEngineFactory', '$modal', 'Admin',
-        function ($scope, $stateParams, $state, Authentication, Slideshows, Devices, MessagingEngineFactory, $modal, Admin) {
+    angular.module('devices').controller('DevicesController', ['$scope', '$stateParams', '$state', 'Authentication', 'Slideshows', 'Devices', 'MessagingEngineFactory', '$modal', 'Admin', 'Timers',
+        function ($scope, $stateParams, $state, Authentication, Slideshows, Devices, MessagingEngineFactory, $modal, Admin, Timers) {
             var messagingEngine = MessagingEngineFactory.getEngine(),
                 modalInstance,
-                messageHandler;
+                messageHandler,
+                timers = new Timers();
+
             messagingEngine.subscribeToServerChannel();
 
             $scope.authentication = Authentication;
@@ -77,6 +79,13 @@
 
             $scope.find = function () {
                 $scope.devices = Devices.query();
+            };
+
+            $scope.initDeviceList = function () {
+                $scope.find();
+                timers.registerTimeout('reloadDevicesForStatusUptaes', function () {
+                    $scope.initDeviceList();
+                }, 60 * 1000);
             };
 
             $scope.adminConfig = Admin.getConfig();
@@ -152,6 +161,10 @@
                 if (messageHandler[message.action]) {
                     messageHandler[message.action](message);
                 }
+            });
+
+            $scope.$on("$destroy", function () {
+                timers.resetTimeouts();
             });
         }
         ]);

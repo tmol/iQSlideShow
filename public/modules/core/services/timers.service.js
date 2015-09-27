@@ -4,7 +4,7 @@
     'use strict';
 
     // Users service used for communicating with the users REST endpoint
-    angular.module('player').factory('Timers', ['$timeout',
+    angular.module('core').factory('Timers', ['$timeout',
         function ($timeout) {
             return function () {
                 var timeoutCollection = {};
