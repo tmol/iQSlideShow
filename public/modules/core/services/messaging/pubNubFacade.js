@@ -2,8 +2,8 @@
 /*global angular, PUBNUB, console*/
 (function () {
     'use strict';
-    angular.module('core').service('PubNubFacade', ['$rootScope',
-        function ($rootScope) {
+    angular.module('core').service('PubNubFacade', ['$rootScope', 'AppVersionService',
+        function ($rootScope, AppVersionService) {
             var instance;
             var pubnub;
             function publishToChannel(channelName, action, deviceId, content, callback) {
