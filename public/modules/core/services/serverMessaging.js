@@ -11,6 +11,14 @@
                         appVersion: AppVersionService.getVersion()
                     };
                     return $http.post("/message", message);
+                },
+                publishSlideShow : function (slideShowId) {
+                    var message = {
+                        action: "publishSlideShow",
+                        slideShowId: slideShowId,
+                        appVersion: AppVersionService.getVersion()
+                    };
+                    return $http.post("/message", message);
                 }
             }
         }]);

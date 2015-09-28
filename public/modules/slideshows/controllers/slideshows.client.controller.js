@@ -4,9 +4,8 @@
     'use strict';
 
     // Slideshows controller
-    angular.module('slideshows').controller('SlideshowsController', ['$scope', '$stateParams', '$location', 'Authentication', 'Slideshows', 'Templates', '$timeout', 'MessagingEngineFactory', 'SlideshowTags',
-        function ($scope, $stateParams, $location, Authentication, Slideshows, Templates, $timeout, MessagingEngineFactory, SlideshowTags) {
-            var messagingEngine = MessagingEngineFactory.getEngine();
+    angular.module('slideshows').controller('SlideshowsController', ['$scope', '$stateParams', '$location', 'Authentication', 'Slideshows', 'Templates', '$timeout', 'ServerMessaging', 'SlideshowTags',
+        function ($scope, $stateParams, $location, Authentication, Slideshows, Templates, $timeout, ServerMessaging, SlideshowTags) {
             $scope.authentication = Authentication;
             $scope.currentSlide = null;
             $scope.slideshow = {
@@ -70,8 +69,8 @@
             };
 
             $scope.publish = function () {
-                messagingEngine
-                    .sendMessageToServer('publishSlideShow', {slideShowId: $scope.slideshow._id})
+                ServerMessaging
+                    .publishSlideShow($scope.slideshow._id)
                     .then(function () {
                         alert("Published");
                     });
