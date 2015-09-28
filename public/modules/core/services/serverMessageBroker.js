@@ -1,7 +1,7 @@
 /*global angular*/
 (function () {
     'use strict';
-    angular.module('core').service('ServerMessaging', ['$http','AppVersionService',
+    angular.module('core').service('ServerMessageBroker', ['$http','AppVersionService',
         function ($http, AppVersionService) {
             return {
                 sendHiMessage : function (deviceId) {

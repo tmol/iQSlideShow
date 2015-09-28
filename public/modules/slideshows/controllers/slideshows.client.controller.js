@@ -4,8 +4,8 @@
     'use strict';
 
     // Slideshows controller
-    angular.module('slideshows').controller('SlideshowsController', ['$scope', '$stateParams', '$location', 'Authentication', 'Slideshows', 'Templates', '$timeout', 'ServerMessaging', 'SlideshowTags',
-        function ($scope, $stateParams, $location, Authentication, Slideshows, Templates, $timeout, ServerMessaging, SlideshowTags) {
+    angular.module('slideshows').controller('SlideshowsController', ['$scope', '$stateParams', '$location', 'Authentication', 'Slideshows', 'Templates', '$timeout', 'ServerMessageBroker', 'SlideshowTags',
+        function ($scope, $stateParams, $location, Authentication, Slideshows, Templates, $timeout, ServerMessageBroker, SlideshowTags) {
             $scope.authentication = Authentication;
             $scope.currentSlide = null;
             $scope.slideshow = {
@@ -69,7 +69,7 @@
             };
 
             $scope.publish = function () {
-                ServerMessaging
+                ServerMessageBroker
                     .publishSlideShow($scope.slideshow._id)
                     .then(function () {
                         alert("Published");

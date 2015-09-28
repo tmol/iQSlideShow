@@ -2,8 +2,8 @@
 /*global angular, PUBNUB*/
 (function () {
     'use strict';
-    angular.module('player').controller('PlayerController', ['$scope', '$state', '$timeout', 'Slides', '$location', 'MessagingEngineFactory', 'LocalStorage', 'Path', 'Timers', '$modal', '$window', 'HealthReporter', 'ServerMessaging',
-        function ($scope, $state, $timeout, Slides, $location, MessagingEngineFactory, LocalStorage, Path, Timers, $modal, $window, HealthReporter, ServerMessaging) {
+    angular.module('player').controller('PlayerController', ['$scope', '$state', '$timeout', 'Slides', '$location', 'MessagingEngineFactory', 'LocalStorage', 'Path', 'Timers', '$modal', '$window', 'HealthReporter', 'ServerMessageBroker',
+        function ($scope, $state, $timeout, Slides, $location, MessagingEngineFactory, LocalStorage, Path, Timers, $modal, $window, HealthReporter, ServerMessageBroker) {
             var messagingEngine = MessagingEngineFactory.getEngine();
             var messageHandler;
 
@@ -24,7 +24,7 @@
             $scope.slideIsOnHold = false;
 
             var sendHiToServer = function () {
-                ServerMessaging
+                ServerMessageBroker
                     .sendHiMessage($scope.deviceId)
                     .then(function (response) {
                         messageHandler.deviceSetup(response.data);
