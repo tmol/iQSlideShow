@@ -4,14 +4,13 @@
     'use strict';
 
     // Devices controller
-    angular.module('devices').controller('DevicesController', ['$scope', '$stateParams', '$state', 'Authentication', 'Slideshows', 'Devices', 'MessagingEngineFactory', '$modal', 'Admin', 'Timers',
-        function ($scope, $stateParams, $state, Authentication, Slideshows, Devices, MessagingEngineFactory, $modal, Admin, Timers) {
-            var messagingEngine = MessagingEngineFactory.getEngine(),
-                modalInstance,
-                messageHandler,
-                timers = new Timers();
+    angular.module('devices').controller('DevicesController', ['$scope', '$stateParams', '$state', 'Authentication', 'Slideshows', 'Devices', 'ServerMessageBroker', '$modal', 'Admin', 'Timers',
+        function ($scope, $stateParams, $state, Authentication, Slideshows, Devices, ServerMessageBroker, $modal, Admin, Timers) {
+            var modalInstance,
+                timers = new Timers(),
+                messageBroker = new ServerMessageBroker();
 
-            messagingEngine.subscribeToServerChannel();
+            messageBroker.subscribe();
 
             $scope.authentication = Authentication;
             Slideshows.query(function (res) {
@@ -33,7 +32,7 @@
                 });
 
                 // Redirect after save
-                device.$save(function (response) {
+                device.$save(function () {
                     $state.go('listDevices');
 
                     // Clear form fields
@@ -63,9 +62,7 @@
 
             // Update existing Device
             $scope.update = function () {
-                var device = $scope.device,
-                    storedDevice,
-                    deviceSetupMessageContent;
+                var device = $scope.device;
 
                 if (!device.active) {
                     device.active = false;
@@ -119,30 +116,25 @@
                 modalInstance.dismiss('cancel');
             };
 
-            messageHandler = {
-                newDeviceSaidHi: function (message) {
-                    modalInstance = $modal.open({
-                        animation: false,
-                        templateUrl: 'receivedDeviceEventPopup.html',
-                        windowClass: 'waitingForActivationDialog',
-                        backdrop: 'static',
-                        controller: 'EventHandlerModalController',
-                        resolve: {
-                            deviceEvent: function () {
-                                return {
-                                    title: 'New device available',
-                                    description: 'A new device with id ' + message.deviceId + ' is available. You can activate it by clicking on the Edit button from below.',
-                                    deviceId: message.deviceId,
-                                    deviceObjectId: message.content.objectId
-                                };
-                            }
+            messageBroker.onNewDeviceSaidHi(function (message) {
+                modalInstance = $modal.open({
+                    animation: false,
+                    templateUrl: 'receivedDeviceEventPopup.html',
+                    windowClass: 'waitingForActivationDialog',
+                    backdrop: 'static',
+                    controller: 'EventHandlerModalController',
+                    resolve: {
+                        deviceEvent: function () {
+                            return {
+                                title: 'New device available',
+                                description: 'A new device with id ' + message.deviceId + ' is available. You can activate it by clicking on the Edit button from below.',
+                                deviceId: message.deviceId,
+                                deviceObjectId: message.content.objectId
+                            };
                         }
-                    });
-                },
-                inactiveRegisteredDeviceSaidHi: function (message) {
-                    // todo check if we have to do anything here
-                }
-            };
+                    }
+                });
+            });
 
             $scope.addSlideShow = function () {
                 $scope.device.slideAgregation.playList.push({
@@ -155,16 +147,9 @@
                 $scope.device.slideAgregation.playList.splice(index, 1);
             };
 
-            // todo cde duplication, factor out, see player.client.controller
-            $scope.$on(messagingEngine.serverChannelMessageEvent, function (event, payload) {
-                var message = payload.message;
-                if (messageHandler[message.action]) {
-                    messageHandler[message.action](message);
-                }
-            });
-
             $scope.$on("$destroy", function () {
                 timers.resetTimeouts();
+                messageBroker.unSubscribe();
             });
         }
         ]);

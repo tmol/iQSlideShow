@@ -2,12 +2,12 @@
 /*global angular, PUBNUB*/
 (function () {
     'use strict';
-    angular.module('player').controller('PlayerController', ['$scope', '$state', '$timeout', 'Slides', '$location', 'MessagingEngineFactory', 'LocalStorage', 'Path', 'Timers', '$modal', '$window', 'HealthReporter', 'ServerMessageBroker',
-        function ($scope, $state, $timeout, Slides, $location, MessagingEngineFactory, LocalStorage, Path, Timers, $modal, $window, HealthReporter, ServerMessageBroker) {
-            var messagingEngine = MessagingEngineFactory.getEngine();
-            var messageHandler;
-
+    angular.module('player').controller('PlayerController', ['$scope', '$state', '$timeout', 'Slides', '$location', 'DeviceMessageBroker', 'LocalStorage', 'Path', 'Timers', '$modal', '$window', 'HealthReporter', 'ServerMessageBroker',
+        function ($scope, $state, $timeout, Slides, $location, DeviceMessageBroker, LocalStorage, Path, Timers, $modal, $window, HealthReporter, ServerMessageBroker) {
+            var messageBroker = new DeviceMessageBroker();
+            var serverMessageBroker = new ServerMessageBroker();
             var timers = new Timers();
+            var handleDeviceSetup = null;
 
             $scope.qrConfig = {
                 slideUrl: $location.$$absUrl,
@@ -24,10 +24,10 @@
             $scope.slideIsOnHold = false;
 
             var sendHiToServer = function () {
-                ServerMessageBroker
+                serverMessageBroker
                     .sendHiMessage($scope.deviceId)
                     .then(function (response) {
-                        messageHandler.deviceSetup(response.data);
+                        handleDeviceSetup(response.data);
                     });
             };
 
@@ -95,72 +95,74 @@
                 });
             };
 
-            messageHandler = {
-                moveSlideRight : function () {
-                    $scope.$broadcast("moveSlideRight");
-                },
-                moveSlideLeft : function () {
-                    $scope.$broadcast("moveSlideLeft");
-                },
-                switchSlide : function (message) {
-                    if (!$scope.active) {
-                        return;
-                    }
-                    var content = message.content;
-                    if (!content.slideShowIdToPlay) {
-                        return;
-                    }
+            handleDeviceSetup = function (message) {
+                timers.resetTimeouts();
+                loadSlidesForDevice(message.device.deviceId);
+                $scope.active = message.device.active;
 
-                    $scope.$broadcast("resetOnHold");
-                    switchSlideShow(content.slideShowIdToPlay);
-
-                    var duration = content.minutesToPlayBeforeGoingBackToDefaultSlideShow;
-                    if (duration) {
-                        timers.registerTimeout("revertToOriginalSlideShow", function () {
-                            sendHiToServer(); //this should revert the device state
-                        }, duration * 60 * 1000);
-                    }
-                },
-                deviceSetup : function (message) {
-                    timers.resetTimeouts();
-                    loadSlidesForDevice(message.device.deviceId);
-                    $scope.active = message.device.active;
-
-                    if (!$scope.active) {
-                        activationDialog.close();
-                        activationDialog.show();
-                        return;
-                    }
-                    timers.registerTimeout('healthReport', function () {
-                        HealthReporter.report({deviceId: $scope.deviceId});
-                    }, 60 * 1000);
-                    // leave this the last, there is a bug in IE:
-                    // Unable to get property 'focus' of undefined or null reference
-                    // at at $modalStack.close (http://localhost:3000/lib/angular-bootstrap/ui-bootstrap-tpls.js?version=0.1:2262:11)
-                    // TODO fix this
+                if (!$scope.active) {
                     activationDialog.close();
-                },
-                holdSlideShow : function () {
-                    $scope.slideIsOnHold = true;
-                    $scope.$broadcast("putPlayerOnHold");
-                    timers.registerTimeout('resetOnHold', function () {
-                        $scope.slideIsOnHold = false;
-                        $scope.$broadcast("resetOnHold");
-                    }, 60 * 1000);
-                },
-                resetSlideShow : function () {
-                    timers.resetTimeouts();
+                    activationDialog.show();
+                    return;
+                }
+                timers.registerTimeout('healthReport', function () {
+                    HealthReporter.report({deviceId: $scope.deviceId});
+                }, 60 * 1000);
+                // leave this the last, there is a bug in IE:
+                // Unable to get property 'focus' of undefined or null reference
+                // at at $modalStack.close (http://localhost:3000/lib/angular-bootstrap/ui-bootstrap-tpls.js?version=0.1:2262:11)
+                // TODO fix this
+                activationDialog.close();
+            };
+
+            messageBroker.onMoveSlideRight(function () {
+                $scope.$broadcast("moveSlideRight");
+            });
+            messageBroker.onMoveSlideLeft(function () {
+                $scope.$broadcast("moveSlideLeft");
+            });
+            messageBroker.onSwitchSlide(function (message) {
+                if (!$scope.active) {
+                    return;
+                }
+                var content = message.content;
+                if (!content.slideShowIdToPlay) {
+                    return;
+                }
+
+                $scope.$broadcast("resetOnHold");
+                switchSlideShow(content.slideShowIdToPlay);
+
+                var duration = content.minutesToPlayBeforeGoingBackToDefaultSlideShow;
+                if (duration) {
+                    timers.registerTimeout("revertToOriginalSlideShow", function () {
+                        sendHiToServer(); //this should revert the device state
+                    }, duration * 60 * 1000);
+                }
+            });
+
+            messageBroker.onDeviceSetup(handleDeviceSetup);
+
+            messageBroker.onHoldSlideShow(function () {
+                $scope.slideIsOnHold = true;
+                $scope.$broadcast("putPlayerOnHold");
+                timers.registerTimeout('resetOnHold', function () {
                     $scope.slideIsOnHold = false;
                     $scope.$broadcast("resetOnHold");
-                    sendHiToServer(); //this should revert the device state;
-                },
-                inactiveRegisteredDeviceSaidHi : function (message) {
-                    activationDialog.show();
-                },
-                reload: function () {
-                    $window.location.reload(true);
-                }
-            };
+                }, 60 * 1000);
+            });
+            messageBroker.onResetSlideShow(function () {
+                timers.resetTimeouts();
+                $scope.slideIsOnHold = false;
+                $scope.$broadcast("resetOnHold");
+                sendHiToServer(); //this should revert the device state;
+            });
+            messageBroker.onInactiveRegisteredDeviceSaidHi(function () {
+                activationDialog.show();
+            });
+            messageBroker.onReload(function () {
+                $window.location.reload(true);
+            });
 
             $scope.$on("rightArrowPressed", function () {
                 $scope.$broadcast("moveSlideRight");
@@ -176,8 +178,7 @@
 
             $scope.$on("$destroy", function () {
                 timers.resetTimeouts();
-
-                messagingEngine.unSubscribeFromDevice($scope.deviceId);
+                messageBroker.unSubscribe();
             });
 
             var startSlideshow = function () {
@@ -187,18 +188,12 @@
                     LocalStorage.setDeviceId($scope.deviceId);
                 }
 
-                $scope.$on(messagingEngine.getDeviceChannelMessageEvent($scope.deviceId), function (event, payload) {
-                    var message = payload.message;
-                    if (messageHandler[message.action]) {
-                        messageHandler[message.action](message);
-                    }
+                messageBroker.deviceId = $scope.deviceId;
+                messageBroker.subscribe(function () {
+                    sendHiToServer();
                 });
 
                 activationDialog.show();
-
-                messagingEngine.subscribeToDeviceChannel($scope.deviceId, function () {
-                    sendHiToServer();
-                });
             };
             startSlideshow();
         }]);

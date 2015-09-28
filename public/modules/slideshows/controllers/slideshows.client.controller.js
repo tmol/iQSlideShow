@@ -6,10 +6,11 @@
     // Slideshows controller
     angular.module('slideshows').controller('SlideshowsController', ['$scope', '$stateParams', '$location', 'Authentication', 'Slideshows', 'Templates', '$timeout', 'ServerMessageBroker', 'SlideshowTags',
         function ($scope, $stateParams, $location, Authentication, Slideshows, Templates, $timeout, ServerMessageBroker, SlideshowTags) {
+            var serverMessageBroker = new ServerMessageBroker();
             $scope.authentication = Authentication;
             $scope.currentSlide = null;
             $scope.slideshow = {
-                tags:[]
+                tags: []
             };
             $scope.possibleTags = [];
             $scope.animationTypes = ["enter-left", "enter-right", "enter-bottom", "enter-top"];
@@ -69,7 +70,7 @@
             };
 
             $scope.publish = function () {
-                ServerMessageBroker
+                serverMessageBroker
                     .publishSlideShow($scope.slideshow._id)
                     .then(function () {
                         alert("Published");
@@ -168,10 +169,9 @@
                 }
             };
             $scope.refreshTags = function (text) {
-                return SlideshowTags.query({tag: text}, function(result)
-                  {
-                    $scope.possibleTags = result.map(function(item){return item.value});
-                  });
+                return SlideshowTags.query({tag: text}, function (result) {
+                    $scope.possibleTags = result.map(function (item) {return item.value; });
+                });
             };
         }]);
 }());
