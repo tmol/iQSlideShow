@@ -78,14 +78,16 @@
             };
 
             $scope.find = function () {
-                $scope.devices = Devices.query();
+                Devices.query(function(result) {
+                    $scope.devices = result;
+                });
             };
 
             $scope.initDeviceList = function () {
                 $scope.find();
                 timers.registerTimeout('reloadDevicesForStatusUptaes', function () {
                     $scope.initDeviceList();
-                }, 60 * 1000);
+                }, 3 * 1000);
             };
 
             $scope.adminConfig = Admin.getConfig();
