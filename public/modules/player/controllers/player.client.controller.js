@@ -95,6 +95,13 @@
                 });
             };
 
+            var reportHealth = function() {
+                HealthReporter.report({deviceId: $scope.deviceId});
+                timers.registerTimeout('healthReport', function () {
+                    reportHealth();
+                }, 3 * 1000);
+            }
+
             handleDeviceSetup = function (message) {
                 timers.resetTimeouts();
                 loadSlidesForDevice(message.device.deviceId);
@@ -105,9 +112,7 @@
                     activationDialog.show();
                     return;
                 }
-                timers.registerTimeout('healthReport', function () {
-                    HealthReporter.report({deviceId: $scope.deviceId});
-                }, 60 * 1000);
+                reportHealth();
                 // leave this the last, there is a bug in IE:
                 // Unable to get property 'focus' of undefined or null reference
                 // at at $modalStack.close (http://localhost:3000/lib/angular-bootstrap/ui-bootstrap-tpls.js?version=0.1:2262:11)
