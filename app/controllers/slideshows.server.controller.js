@@ -101,7 +101,7 @@ exports.slideshowByID = function(req, res, next, id) {
 	Slideshow.findById(id).populate('user', 'displayName').exec(function(err, slideshow) {
 		if (err) return next(err);
 		if (! slideshow) return next(new Error('Failed to load Slideshow ' + id));
-		req.slideshow = slideshow ;
+        req.slideshow = slideshow ;
 		next();
 	});
 };

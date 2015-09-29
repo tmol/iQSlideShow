@@ -32,10 +32,6 @@
                             return null;
                         }
 
-                        if (slide.hidden) {
-                            return null;
-                        }
-
                         //prepare the stylesheet for the next slide and position the new slide
                         CssInjector.inject(scope, slide.content.css, function () {
                             scope.currentIndex = slideIndex;
