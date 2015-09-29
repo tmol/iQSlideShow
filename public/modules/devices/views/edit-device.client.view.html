@@ -35,7 +35,7 @@
                     <div class="controls">
                         <div class="slide-show" ng-repeat = "entry in device.slideAgregation.playList">
                             <div>{{entry.slideShow.name}}
-                                <input type="button" ng-click="removeSlideshow(entry)" value="X"/>
+                                <input type="button" ng-click="removeSlideshow(entry)" value="X">
                             </div>
                         </div>
                     </div>
@@ -48,7 +48,7 @@
                 </div>
                 <div class="form-group">
                     <label class="control-label" for="lastHealthReport">Last health report:</label>
-                    <span>
+                    <div>
                         <label class="controls">{{device.lastHealthReport | date:'MM/dd/yyyy HH:mm:ss'}}</label>
                     </div>
                 </div>

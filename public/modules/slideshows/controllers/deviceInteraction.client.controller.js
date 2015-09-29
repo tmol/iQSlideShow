@@ -2,11 +2,11 @@
 /*global angular, ApplicationConfiguration*/
 (function () {
     'use strict';
-    angular.module('slideshows').controller('DeviceInteractionController', ['$scope', '$stateParams', 'Slides', 'Slideshows', 'MessagingEngineFactory', 'Admin',
-        function ($scope, $stateParams, Slides, Slideshows, MessagingEngineFactory, Admin) {
+    angular.module('slideshows').controller('DeviceInteractionController', ['$scope', '$stateParams', 'Slides', 'Slideshows', 'DeviceMessageBroker', 'Admin',
+        function ($scope, $stateParams, Slides, Slideshows, DeviceMessageBroker, Admin) {
             $scope.deviceId = $stateParams.deviceId;
             $scope.slideshowId = $stateParams.slideshowId;
-            var messagingEngine = MessagingEngineFactory.getEngine();
+            var messageBroker = new DeviceMessageBroker($scope.deviceId);
             Slideshows.query(function (res) {
                 $scope.slideshows = res;
             });
@@ -17,30 +17,16 @@
 
             $scope.setSlideShow = function () {
                 Admin.getConfig(function (config) {
-                    messagingEngine.publishToDeviceChannel('switchSlide', $scope.deviceId, {
-                        slideShowIdToPlay: $scope.slideShowId,
-                        minutesToPlayBeforeGoingBackToDefaultSlideShow : config.userSelectedSlideShowsPlayTimeInMinutes
-                    });
+                    messageBroker.sendSwitchSlide($scope.slideShowId, config.userSelectedSlideShowsPlayTimeInMinutes);
                 }, function (err) {
                     throw err;
                 });
             };
 
-            $scope.goToPreviousSlide = function () {
-                messagingEngine.publishToDeviceChannel('moveSlideLeft', $scope.deviceId);
-            };
-
-            $scope.goToNextSlide = function () {
-                messagingEngine.publishToDeviceChannel('moveSlideRight', $scope.deviceId);
-            };
-
-            $scope.holdSlideShow = function () {
-                messagingEngine.publishToDeviceChannel('holdSlideShow', $scope.deviceId);
-            };
-
-            $scope.resetSlideShow = function () {
-                messagingEngine.publishToDeviceChannel('resetSlideShow', $scope.deviceId);
-            };
+            $scope.goToPreviousSlide = messageBroker.sendMoveSlideLeft;
+            $scope.goToNextSlide = messageBroker.sendMoveSlideRight;
+            $scope.holdSlideShow = messageBroker.sendHoldSlideShow;
+            $scope.resetSlideShow = messageBroker.sendResetSlideShow;
 
         }]);
 }());
