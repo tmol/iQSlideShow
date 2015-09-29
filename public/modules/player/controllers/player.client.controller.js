@@ -100,7 +100,7 @@
 
             timers.registerInterval('healthReport', function () {
                 reportHealth();
-            }, 3 * 1000);
+            }, 60 * 1000);
 
             handleDeviceSetup = function (message) {
                 timers.resetTimeouts();
