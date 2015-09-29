@@ -49,6 +49,11 @@
                     }
                     intervalCollection = {};
                 };
+
+                this.reset = function () {
+                    this.resetTimeouts();
+                    this.resetIntervals();
+                };
             };
         }]);
 }());
