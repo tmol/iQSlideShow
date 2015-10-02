@@ -94,13 +94,13 @@
                     setupSlides();
                 });
             };
-
-            var reportHealth = function() {
+            var reportHealth = function () {
                 HealthReporter.report({deviceId: $scope.deviceId});
-                timers.registerTimeout('healthReport', function () {
-                    reportHealth();
-                }, 3 * 1000);
-            }
+            };
+
+            timers.registerInterval('healthReport', function () {
+                reportHealth();
+            }, 60 * 1000);
 
             handleDeviceSetup = function (message) {
                 timers.resetTimeouts();
@@ -182,7 +182,7 @@
             });
 
             $scope.$on("$destroy", function () {
-                timers.resetTimeouts();
+                timers.reset();
                 messageBroker.unSubscribe();
             });
 

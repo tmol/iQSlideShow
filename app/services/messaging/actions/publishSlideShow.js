@@ -20,7 +20,14 @@
                 errorPublish("Slideshow not found!");
                 return;
             }
-            slideShow.slides = slideShow.draftSlides;
+
+            slideShow.slides = slideShow.draftSlides.filter(function (slide) {return !slide.hidden; });
+            //reindex slides because of the hidden one;
+            slideShow.slides.forEach(function (slide, index) {
+                slide.slideNumber = index + 1;
+                slide.slideShowId = slideShow._id;
+            });
+
             slideShow.save(function (err) {
                 if (err) {
                     errorPublish(err);

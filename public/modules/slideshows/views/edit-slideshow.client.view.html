@@ -78,7 +78,7 @@
                         <div class="form-group">
                             <label class="control-label" for="hidden">Hidden</label>
                             <div class="controls">
-                                <input type="checkbox" data-ng-model="currentSlide.hidden" id="hidden" class="form-control" placeholder="hidden" required>
+                                <input ng-true-value="true" ng-false-value="false" ng-model-options="{allowInvalid: true}" type="checkbox" data-ng-model="currentSlide.hidden" id="hidden" class="form-control" placeholder="hidden" required>
                             </div>
                         </div>
 

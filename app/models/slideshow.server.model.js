@@ -48,6 +48,12 @@ var SlideSchema = new Schema ({
     hidden : {
         type: Boolean,
         default: false
+    },
+    slideShowId : {
+        type: Schema.ObjectId
+    },
+    slideNumber : {
+        type: Number
     }
 });
 

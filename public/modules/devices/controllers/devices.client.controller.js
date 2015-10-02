@@ -83,9 +83,8 @@
             };
 
             $scope.initDeviceList = function () {
-                $scope.find();
-                timers.registerTimeout('reloadDevicesForStatusUptaes', function () {
-                    $scope.initDeviceList();
+                timers.registerInterval('reloadDevicesForStatusUptaes', function () {
+                    $scope.find();
                 }, 3 * 1000);
             };
 
@@ -168,7 +167,7 @@
             };
 
             $scope.$on("$destroy", function () {
-                timers.resetTimeouts();
+                timers.reset();
                 messageBroker.unSubscribe();
             });
         }

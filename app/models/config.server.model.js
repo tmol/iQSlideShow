@@ -20,6 +20,10 @@
                 type: Schema.ObjectId,
                 default: null
             },
+            sizeOfAutocompleteListForTags: {
+                type: Number,
+                default: 100
+            },
             created: {
                 type: Date,
                 default: Date.now

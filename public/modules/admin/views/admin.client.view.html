@@ -18,6 +18,12 @@
                     </div>
                 </div>
                 <div class="form-group">
+                    <label class="control-label" for="name">Number of tags to be displayed on autocomplete recommendation</label>
+                    <div class="controls">
+                        <input type="text" data-ng-model="admin.sizeOfAutocompleteListForTags" class="form-control" placeholder="Please specify a value..." required>
+                    </div>
+                </div>
+                <div class="form-group">
                     <label class="control-label" for="locationk">Default Player Slide Show</label>
                     <div class="controls">
                         <select ng-model="config.defaultSlideShowId" ng-options="slideshow._id as slideshow.name for slideshow in slideshows"></select>
