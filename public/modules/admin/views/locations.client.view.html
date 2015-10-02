@@ -1,0 +1,11 @@
+<section data-ng-controller="AdminController" data-ng-init="getConfig()" style="margin-top: 58px;">
+    <div class="page-header">
+        <h1>Configuration</h1>
+    </div>
+    <div class="col-md-12">
+        <form class="form-horizontal" data-ng-submit="update()" novalidate>
+            <button type="button" id="addLocation" class="btn btn-success" ng-click="addLocation()">Add</button>
+            <div ui-grid="gridOptionsLocations" ui-grid-cellNav ui-grid-edit ui-grid-selection></div>
+        </form>
+    </div>
+</section>

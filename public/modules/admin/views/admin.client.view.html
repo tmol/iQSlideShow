@@ -8,28 +8,28 @@
                 <div class="form-group">
                     <label class="control-label" for="name">User selected slide shows play time in minutes</label>
                     <div class="controls">
-                        <input type="text" data-ng-model="admin.userSelectedSlideShowsPlayTimeInMinutes" class="form-control" placeholder="User selected slide shows play time in minutes" required>
+                        <input type="text" data-ng-model="config.userSelectedSlideShowsPlayTimeInMinutes" class="form-control" placeholder="User selected slide shows play time in minutes" required>
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="control-label" for="name">Number of minutes after last health report to consider device unheathy</label>
                     <div class="controls">
-                        <input type="text" data-ng-model="admin.nrOfMinutesAfterLastHealthReportToConsiderDeviceUnheathy" class="form-control" placeholder="Number of minutes after last health report to consider device unheathy" required>
+                        <input type="text" data-ng-model="config.nrOfMinutesAfterLastHealthReportToConsiderDeviceUnheathy" class="form-control" placeholder="Number of minutes after last health report to consider device unheathy" required>
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="control-label" for="locationk">Default Player Slide Show</label>
                     <div class="controls">
-                        <select ng-model="admin.defaultSlideShowId" ng-options="slideshow._id as slideshow.name for slideshow in slideshows"></select>
+                        <select ng-model="config.defaultSlideShowId" ng-options="slideshow._id as slideshow.name for slideshow in slideshows"></select>
                     </div>
                 </div>
-                <div class="form-group">
-                    <input type="submit" value="Update" class="btn btn-default">
+                <div data-ng-show="error" class="text-danger">
+                    <strong data-ng-bind="error"></strong>
                 </div>
-				<div data-ng-show="error" class="text-danger">
-					<strong data-ng-bind="error"></strong>
-				</div>
             </fieldset>
+            <div class="form-group">
+                <input type="submit" value="Update" class="btn btn-default">
+            </div>
         </form>
     </div>
 </section>

@@ -8,22 +8,22 @@
         errorHandler = require('../../../controllers/errors.server.controller'),
         Device = mongoose.model('Device'),
         User = mongoose.model('User'),
-        Admin = mongoose.model('Admin'),
+        Config = mongoose.model('Config'),
         Slideshow = mongoose.model('Slideshow'),
-        Config = require('../../../../config/config');
+        AppConfig = require('../../../../config/config');
 
     module.exports = function (messagingEngine, message, resolveHi, errorHi) {
         console.log("Handling hi message, deviceId: " + message.deviceId);
 
         var storeNewDevice = function (deviceId, callback) {
 
-            var findAdmin = new Promise(function (resolve, error) {
-                Admin.findOne(function (err, admin) {
+            var findConfig = new Promise(function (resolve, error) {
+                Config.findOne(function (err, config) {
                     if (err) {
                         error(err);
                         errorHandler(err);
                     }
-                    resolve(admin);
+                    resolve(config);
                 });
             });
 
@@ -38,7 +38,7 @@
                 });
             });
 
-            Promise.all([findAdmin, findUser]).then(function (results) {
+            Promise.all([findConfig, findUser]).then(function (results) {
                 var configuration = results[0];
                 var adminUser = results[1];
 
@@ -74,7 +74,7 @@
         };
 
         var ifVersionOkSendDeviceSetupOtherwiseReloadMessage = function (device) {
-            if (message.appVersion !== Config.getAppVersion()) {
+            if (message.appVersion !== AppConfig.getAppVersion()) {
                 resolveHi(device.getReloadMessage());
             } else {
                 resolveHi(device.getDeviceSetupMessage());

@@ -8,10 +8,9 @@
      */
     var mongoose = require('mongoose'),
         errorHandler = require('./errors.server.controller'),
-        adminController = require('./admin.server.controller'),
         messagingEngineFactory = require('../services/messaging/messagingEngineFactory'),
         Device = mongoose.model('Device'),
-        Admin = mongoose.model('Admin'),
+        Config = mongoose.model('Config'),
         lodash = require('lodash'),
         messageHandler = require('../services/messaging/messageHandler');
 
@@ -75,7 +74,7 @@
             deviceSetupMessageSlideShowIdToPlay = updatedDevice.defaultSlideShowId;
         } else if (deviceAttributesChanges.deviceJustSetInactive()) {
             console.log("devise set inactive");
-            Admin.findOne(function (err, config) {
+            Config.findOne(function (err, config) {
                 if (err) {
                     throw err;
                 }

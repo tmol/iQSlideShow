@@ -6,7 +6,9 @@
     // Devices controller
     angular.module('devices').controller('DevicesController', ['$scope', '$stateParams', '$state', 'Authentication', 'Slideshows', 'Devices', 'ServerMessageBroker', '$modal', 'Admin', 'Timers',
         function ($scope, $stateParams, $state, Authentication, Slideshows, Devices, ServerMessageBroker, $modal, Admin, Timers) {
-            var modalInstance,
+            var newDeviceModalInstance,
+                filterModalInstance,
+                filter,
                 timers = new Timers(),
                 messageBroker = new ServerMessageBroker();
 
@@ -75,7 +77,7 @@
             };
 
             $scope.find = function () {
-                Devices.query(function(result) {
+                Devices.query(function (result) {
                     $scope.devices = result;
                 });
             };
@@ -114,12 +116,8 @@
                 $state.go('listDevices');
             };
 
-            $scope.cancelModal = function () {
-                modalInstance.dismiss('cancel');
-            };
-
             messageBroker.onNewDeviceSaidHi(function (message) {
-                modalInstance = $modal.open({
+                newDeviceModalInstance = $modal.open({
                     animation: false,
                     templateUrl: 'receivedDeviceEventPopup.html',
                     windowClass: 'waitingForActivationDialog',
@@ -137,6 +135,26 @@
                     }
                 });
             });
+
+            $scope.onShowFilter = function() {
+                filterModalInstance = $modal.open({
+                    animation: false,
+                    templateUrl: 'deviceFilterPopup.html',
+                    windowClass: 'waitingForActivationDialog',
+                    backdrop: 'static',
+                    controller: 'DeiceFilterModalController',
+                    resolve: {
+                        filter: function () {
+                            return {
+                                title: 'New device available',
+                                description: 'A new device with id ' + message.deviceId + ' is available. You can activate it by clicking on the Edit button from below.',
+                                deviceId: message.deviceId,
+                                deviceObjectId: message.content.objectId
+                            };
+                        }
+                    }
+                });
+            }
 
             $scope.addSlideShow = function () {
                 $scope.device.slideAgregation.playList.push({

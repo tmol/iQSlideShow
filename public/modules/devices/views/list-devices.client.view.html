@@ -2,7 +2,13 @@
     <div class="page-header">
         <h1>Devices</h1>
     </div>
-    <div class="list-group" >
+    <div>
+       <h5>
+           <a href="" ngClick='onShowFilter()'>Filter</a>
+       </h5>
+       <div>&nbsp;</div>
+    </div>
+    <div class="list-group">
         <a data-ng-repeat="device in devices track by device._id" data-ng-href="#!/devices/{{device.deviceId}}/edit" class="list-group-item">
 			<small class="list-group-item-text">
 				Posted on

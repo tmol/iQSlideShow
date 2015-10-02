@@ -36,13 +36,15 @@
                     'public/lib/angular-qr/angular-qr.min.js',
                     'public/lib/pubnub/pubnub.min.js',
                     'public/lib/pubnub-angular/lib/pubnub-angular.js',
-                    'public/lib/ui-select/dist/select.min.js'
+                    'public/lib/ui-select/dist/select.min.js',
+                    'public/lib/angular-ui-grid/ui-grid.min.js'
                 ]
             },
             css: [
                 'public/lib/font-awesome/css/font-awesome.min.css',
                 'public/lib/textAngular/dist/textAngular.css',
-                'public/lib/ui-select/dist/select.min.css'
+                'public/lib/ui-select/dist/select.min.css',
+                'public/lib/angular-ui-grid/ui-grid.css'
             ],
             js: [
                 'public/config.js',

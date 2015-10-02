@@ -3,12 +3,9 @@
 (function () {
     'use strict';
 
-    /**
-     * Module dependencies.
-     */
     var mongoose = require('mongoose'),
         Schema = mongoose.Schema,
-        AdminSchema = new Schema({
+        ConfigSchema = new Schema({
             userSelectedSlideShowsPlayTimeInMinutes: {
                 type: Number,
                 default: 1,
@@ -31,7 +28,7 @@
                 type: Schema.ObjectId,
                 ref: 'User'
             }
-        }, {collection: 'admin'});
+        }, {collection: 'config'});
 
-    mongoose.model('Admin', AdminSchema);
+    mongoose.model('Config', ConfigSchema);
 }());

@@ -10,20 +10,43 @@
                 $scope.slideshows = res;
             });
 
-            // Update existing Admin
             $scope.update = function () {
-                var admin = $scope.admin;
+                var config = $scope.config;
 
-                admin.$updateConfig(function () {
+                config.$updateConfig(function () {
                     $location.path('/');
                 }, function (errorResponse) {
                     $scope.error = errorResponse.data.message;
                 });
             };
 
+            $scope.gridOptionsLocations = {
+                enableSorting: true,
+                columnDefs: [
+                    { name: 'location', enableCellEdit: true, enableCellEditOnFocus: true  }
+                ]
+            };
+
+            $scope.gridOptionsLocations.onRegisterApi = function (gridApi) {
+                $scope.gridApi = gridApi;
+
+                $scope.gridApi.edit.on.afterCellEdit($scope, function (rowEntity, colDef, newValue, oldValue) {
+                    alert(newValue);
+                });
+            };
+
             $scope.getConfig = function () {
-                $scope.admin = Admin.getConfig();
+                Admin.getConfig(function (config) {
+                    $scope.config = config;
+                    $scope.gridOptionsLocations.data = $scope.config.locations;
+                });
+            };
+
+
+            $scope.addLocation = function () {
+                $scope.config.locations.push({location: 'New location'});
             };
         }
-        ]);
+                                                          ]);
+
 }());
