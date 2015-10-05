@@ -34,7 +34,7 @@
                 });
 
                 // Redirect after save
-                device.$save(function () {
+                device.$create(function () {
                     $state.go('listDevices');
 
                     // Clear form fields
@@ -83,6 +83,7 @@
             };
 
             $scope.initDeviceList = function () {
+                $scope.find();
                 timers.registerInterval('reloadDevicesForStatusUptaes', function () {
                     $scope.find();
                 }, 3 * 1000);
@@ -135,7 +136,7 @@
                 });
             });
 
-            $scope.onShowFilter = function() {
+            $scope.onShowFilter = function () {
                 filterModalInstance = $modal.open({
                     animation: false,
                     templateUrl: 'deviceFilterPopup.html',
@@ -153,7 +154,7 @@
                         }
                     }
                 });
-            }
+            };
 
             $scope.addSlideShow = function () {
                 $scope.device.slideAgregation.playList.push({
