@@ -1,6 +1,6 @@
 /*global angular, alert*/
 /*jslint nomen: true*/
-angular.module('admin').directive('locationItem', ['Admin', '$document', function (Admin, $document) {
+angular.module('admin').directive('locationItem', ['Admin', '$document', '$timeout', 'Devices', function (Admin, $document, $timeout, Devices) {
     'use strict';
     function link(scope, element, attrs) {
         scope.getEditMode = function () {
@@ -15,7 +15,9 @@ angular.module('admin').directive('locationItem', ['Admin', '$document', functio
             if (scope.editMode === false) {
                 scope.editMode = true;
                 scope.$root.$broadcast('locationEdited');
-                scope.$apply();
+                $timeout(function () {
+                    scope.$apply();
+                });
             }
         };
 
@@ -46,10 +48,39 @@ angular.module('admin').directive('locationItem', ['Admin', '$document', functio
             }
         });
 
+        var formatDevicesNamesInString = function (devices) {
+            var res = '',
+                device;
+
+            devices.forEach(function (device) {
+                if (res.length > 0) {
+                    res = res + ', ';
+                }
+                res = res + device.name;
+            });
+
+            return res;
+        };
+
         scope.delete = function () {
-            var adminService = new Admin(scope.location);
-            adminService.$deleteLocation();
-            scope.$root.$broadcast('locationDeleted');
+            if (scope.editMode === true) {
+                scope.leaveEditMode();
+            }
+
+            Devices.getByLocationName({locationName: scope.location.name}, function (devices) {
+                var msg,
+                    adminService;
+
+                if (devices.length > 0) {
+                    msg = 'Delete is not allowed because the devices from below are attached to the location. Please change the location of the devices.\r\n' + formatDevicesNamesInString(devices);
+                    alert(msg);
+                    return;
+                }
+
+                adminService = new Admin(scope.location);
+                adminService.$deleteLocation();
+                scope.$root.$broadcast('locationDeleted');
+            });
         };
 
         scope.editMode = false;

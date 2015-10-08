@@ -46,7 +46,9 @@
             });
 
             $scope.$on('locationDeleted', function (event, args) {
-                $scope.getLocations();
+                $scope.getLocations(function () {
+                    $scope.$apply();
+                });
             });
 
             $scope.editEnabled = function () {
