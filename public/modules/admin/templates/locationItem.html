@@ -1,4 +1,5 @@
 <div>
-    <label ng-show='!editMode'>{{location.name}}</label>
+    <label id="{{location._id}}" ng-show="!editMode" ng-click="onClickReadOnlyArea()">{{location.name}}</label>
     <input type="text" ng-show="editMode" ng-model="location.name">
+    <input type="button" ng-click="delete()" value="X">
 </div>

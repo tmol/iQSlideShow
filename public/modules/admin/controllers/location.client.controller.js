@@ -45,6 +45,10 @@
                 });
             });
 
+            $scope.$on('locationDeleted', function (event, args) {
+                $scope.getLocations();
+            });
+
             $scope.editEnabled = function () {
                 return !$scope.isAnyLocationEdited;
             };

@@ -4,7 +4,7 @@
 
     angular.module('admin').factory('Admin', ['$resource',
         function ($resource) {
-            return $resource('admin', {}, {
+            return $resource('admin', { locationId: '@_id'}, {
                 getConfig: {
                     method: 'GET',
                     url: 'admin/config'
@@ -25,6 +25,14 @@
                 saveLocation: {
                     method: 'POST',
                     url: 'admin/location'
+                },
+                updateLocation: {
+                    method: 'PUT',
+                    url: 'admin/location/:locationId'
+                },
+                deleteLocation: {
+                    method: 'DELETE',
+                    url: 'admin/location/:locationId'
                 }
             });
         }

@@ -20,8 +20,10 @@
             .get(locations.list)
             .post(users.requiresLogin, locations.create);
 
-        app.route('admin/location/:locationId')
+        app.route('/admin/location/:locationId')
             .put(users.requiresLogin, locations.hasAuthorization, locations.update)
-            .delete(users.requiresLogin, locations.hasAuthorization, locations.delete);
+            .delete(users.requiresLogin, locations.hasAuthorization, locations.deleteLocation);
+
+        app.param('locationId', locations.locationByID);
     };
 }());

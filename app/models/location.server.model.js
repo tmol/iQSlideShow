@@ -14,7 +14,7 @@
                 default: '',
                 required: 'Please fill the user selected slide shows play time in minutes'
             }
-        }, {collection: 'location'});
+        });
 
     mongoose.model('Location', LocationSchema);
 }());

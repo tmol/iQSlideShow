@@ -1,15 +1,13 @@
 /*global angular, alert*/
-angular.module('admin').directive('locationItem', function () {
+/*jslint nomen: true*/
+angular.module('admin').directive('locationItem', ['Admin', '$document', function (Admin, $document) {
     'use strict';
     function link(scope, element, attrs) {
-        scope.editMode = true;
-        element[0].focus();
-
         scope.getEditMode = function () {
             return scope.editMode;
         };
 
-        element.on('mousedown', function (event) {
+        scope.onClickReadOnlyArea = function () {
             if (!scope.editEnabled()) {
                 return;
             }
@@ -19,22 +17,47 @@ angular.module('admin').directive('locationItem', function () {
                 scope.$root.$broadcast('locationEdited');
                 scope.$apply();
             }
-        });
+        };
+
+        scope.leaveEditMode = function () {
+            scope.editMode = false;
+            scope.$root.$broadcast('locationNotEdited');
+        };
 
         element.on('focusout', function (event) {
-            var locationIsUnique = scope.isLocationNameUnique({locationName: scope.location.name});
+            var adminService,
+                locationIsUnique = scope.isLocationNameUnique({locationName: scope.location.name});
             if (!scope.isLocationNameUnique({location: scope.location})) {
                 alert('Location name must ne unique!');
                 return;
             }
             if (scope.editMode === true) {
-                scope.editMode = false;
-                scope.$root.$broadcast('locationNotEdited');
-                scope.$apply();
+                adminService = new Admin(scope.location);
+                if (scope.location._id) {
+                    adminService.$updateLocation(function () {
+                        scope.leaveEditMode();
+                    });
+                } else {
+                    adminService.$saveLocation(function (savedLocation) {
+                        scope.location._id = savedLocation._id;
+                        scope.leaveEditMode();
+                    });
+                }
             }
         });
 
-        scope.$root.$broadcast('locationEdited');
+        scope.delete = function () {
+            var adminService = new Admin(scope.location);
+            adminService.$deleteLocation();
+            scope.$root.$broadcast('locationDeleted');
+        };
+
+        scope.editMode = false;
+        if (scope.location._id === undefined) {
+            scope.editMode = true;
+            element[0].focus();
+            scope.$root.$broadcast('locationEdited');
+        }
     }
 
     return {
@@ -48,4 +71,4 @@ angular.module('admin').directive('locationItem', function () {
             editEnabled: '&'
         }
     };
-});
+}]);
