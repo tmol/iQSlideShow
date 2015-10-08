@@ -20,31 +20,11 @@
                 });
             };
 
-            $scope.gridOptionsLocations = {
-                enableSorting: true,
-                columnDefs: [
-                    { name: 'location', enableCellEdit: true, enableCellEditOnFocus: true  }
-                ]
-            };
-
-            $scope.gridOptionsLocations.onRegisterApi = function (gridApi) {
-                $scope.gridApi = gridApi;
-
-                $scope.gridApi.edit.on.afterCellEdit($scope, function (rowEntity, colDef, newValue, oldValue) {
-                    alert(newValue);
-                });
-            };
-
             $scope.getConfig = function () {
                 Admin.getConfig(function (config) {
                     $scope.config = config;
                     $scope.gridOptionsLocations.data = $scope.config.locations;
                 });
-            };
-
-
-            $scope.addLocation = function () {
-                $scope.config.locations.push({location: 'New location'});
             };
         }
                                                           ]);

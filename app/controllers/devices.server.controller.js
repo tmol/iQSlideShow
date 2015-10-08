@@ -183,6 +183,24 @@
         });
     };
 
+    exports.devicesByLocation = function (req, res, next, locationName) {
+        console.log('locationName: ' + locationName);
+        Device.find({"location": locationName}).exec(function (err, devices) {
+            if (err) {
+                return next(err);
+            }
+            if (!devices) {
+                req.devices = [];
+            }
+            req.devices = devices;
+            next();
+        });
+    };
+
+    exports.getDevicesByLocation = function (req, res,  next) {
+        res.jsonp(req.devices);
+    };
+
     exports.hasAuthorization = function (req, res, next) {
         next();
     };

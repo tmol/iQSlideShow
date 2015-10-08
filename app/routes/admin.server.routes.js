@@ -20,7 +20,7 @@
             .get(locations.list)
             .post(users.requiresLogin, locations.create);
 
-        app.route('/location/:locationId')
+        app.route('admin/location/:locationId')
             .put(users.requiresLogin, locations.hasAuthorization, locations.update)
             .delete(users.requiresLogin, locations.hasAuthorization, locations.delete);
     };

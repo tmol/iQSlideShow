@@ -8,14 +8,14 @@
     var should = require('should'),
         mongoose = require('mongoose'),
         User = mongoose.model('User'),
-        Admin = mongoose.model('Admin'),
+        Config = mongoose.model('Config'),
         user,
         admin;
 
     /**
      * Unit tests
      */
-    describe('Admin Model Unit Tests:', function () {
+    describe('Config Model Unit Tests:', function () {
         beforeEach(function (done) {
             user = new User({
                 firstName: 'Full',

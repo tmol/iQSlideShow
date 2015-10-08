@@ -23,8 +23,12 @@
         app.route('/devices/:deviceWithSlidesid/slides')
             .get(devices.getSlides);
 
+        app.route('/devices/byLocation/:locationName')
+            .get(users.requiresLogin, devices.hasAuthorization, devices.getDevicesByLocation);
+
         // Finish by binding the Device middleware
         app.param('deviceId', devices.deviceByID);
         app.param('deviceWithSlidesid', devices.deviceWithSlidesByID);
+        app.param('locationName', devices.devicesByLocation);
     };
 }());
