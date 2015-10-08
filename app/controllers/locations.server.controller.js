@@ -9,6 +9,7 @@
     var mongoose = require('mongoose'),
         errorHandler = require('./errors.server.controller'),
         Location = mongoose.model('Location'),
+        Devices = mongoose.model('Device'),
         _ = require('lodash');
 
     exports.create = function (req, res) {
@@ -26,18 +27,27 @@
     };
 
     exports.update = function (req, res) {
-        var location = req.location;
+        var location = req.location,
+            formerLocationName = location.name;
 
         location = _.extend(location, req.body);
 
-        location.save(function (err) {
+        Devices.update({ location: formerLocationName}, { location: location.name }, { multi: true }, function (err, raw) {
             if (err) {
                 return res.status(400).send({
                     message: errorHandler.getErrorMessage(err)
                 });
-            } else {
-                res.jsonp(location);
             }
+
+            location.save(function (err) {
+                if (err) {
+                    return res.status(400).send({
+                        message: errorHandler.getErrorMessage(err)
+                    });
+                } else {
+                    res.jsonp(location);
+                }
+            });
         });
     };
 

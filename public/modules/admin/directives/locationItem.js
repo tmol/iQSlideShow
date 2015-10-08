@@ -1,10 +1,14 @@
-/*global angular, alert*/
-/*jslint nomen: true*/
+/*global angular, alert, confirm*/
+/*jslint nomen: true, es5: true */
 angular.module('admin').directive('locationItem', ['Admin', '$document', '$timeout', 'Devices', function (Admin, $document, $timeout, Devices) {
     'use strict';
     function link(scope, element, attrs) {
         scope.getEditMode = function () {
             return scope.editMode;
+        };
+
+        var rememberActualLocationName = function () {
+            scope.locationNameOriginalValue = scope.location.name;
         };
 
         scope.onClickReadOnlyArea = function () {
@@ -21,34 +25,14 @@ angular.module('admin').directive('locationItem', ['Admin', '$document', '$timeo
             }
         };
 
-        scope.leaveEditMode = function () {
-            scope.editMode = false;
-            scope.$root.$broadcast('locationNotEdited');
+        scope.ensureReadOnlyMode = function () {
+            if (scope.editMode === true) {
+                scope.editMode = false;
+                scope.$root.$broadcast('locationNotEdited');
+            }
         };
 
-        element.on('focusout', function (event) {
-            var adminService,
-                locationIsUnique = scope.isLocationNameUnique({locationName: scope.location.name});
-            if (!scope.isLocationNameUnique({location: scope.location})) {
-                alert('Location name must ne unique!');
-                return;
-            }
-            if (scope.editMode === true) {
-                adminService = new Admin(scope.location);
-                if (scope.location._id) {
-                    adminService.$updateLocation(function () {
-                        scope.leaveEditMode();
-                    });
-                } else {
-                    adminService.$saveLocation(function (savedLocation) {
-                        scope.location._id = savedLocation._id;
-                        scope.leaveEditMode();
-                    });
-                }
-            }
-        });
-
-        var formatDevicesNamesInString = function (devices) {
+        var formatDevicesNamesToCommaSeparatedString = function (devices) {
             var res = '',
                 device;
 
@@ -62,9 +46,56 @@ angular.module('admin').directive('locationItem', ['Admin', '$document', '$timeo
             return res;
         };
 
+        element.on('focusout', function (event) {
+            var adminService,
+                isThereAtLeastOnDeviceAttachedToLocation,
+                msg,
+                confirmationResult;
+
+            if (!scope.isLocationNameUnique({location: scope.location})) {
+                alert('Location name must ne unique!');
+                return;
+            }
+
+            if (scope.locationNameOriginalValue === scope.location.name) {
+                scope.ensureReadOnlyMode();
+                return;
+            }
+
+            if (scope.editMode !== true) {
+                return;
+            }
+
+            Devices.getByLocationName({locationName: scope.locationNameOriginalValue}, function (devices) {
+                adminService = new Admin(scope.location);
+                isThereAtLeastOnDeviceAttachedToLocation = devices.length > 0;
+
+                if (scope.location._id) {
+                    if (isThereAtLeastOnDeviceAttachedToLocation === true) {
+                        msg = 'There are devices attached to the location. Please confirm that the devices locations will be updated. The attached devices: ' + formatDevicesNamesToCommaSeparatedString(devices);
+                        if (confirm(msg) === false) {
+                            scope.ensureReadOnlyMode();
+                            return;
+                        }
+                    }
+                    adminService.$updateLocation(function () {
+                        rememberActualLocationName();
+                        scope.ensureReadOnlyMode();
+                    });
+                } else {
+                    adminService.$saveLocation(function (savedLocation) {
+                        scope.location._id = savedLocation._id;
+                        rememberActualLocationName();
+                        scope.ensureReadOnlyMode();
+                    });
+                }
+            }
+                                     );
+        });
+
         scope.delete = function () {
             if (scope.editMode === true) {
-                scope.leaveEditMode();
+                scope.ensureReadOnlyMode();
             }
 
             Devices.getByLocationName({locationName: scope.location.name}, function (devices) {
@@ -72,7 +103,7 @@ angular.module('admin').directive('locationItem', ['Admin', '$document', '$timeo
                     adminService;
 
                 if (devices.length > 0) {
-                    msg = 'Delete is not allowed because the devices from below are attached to the location. Please change the location of the devices.\r\n' + formatDevicesNamesInString(devices);
+                    msg = 'Delete is not allowed because the devices from below are attached to the location. Please change the location of the devices.\r\n' + formatDevicesNamesToCommaSeparatedString(devices);
                     alert(msg);
                     return;
                 }
@@ -83,8 +114,10 @@ angular.module('admin').directive('locationItem', ['Admin', '$document', '$timeo
             });
         };
 
+        rememberActualLocationName();
         scope.editMode = false;
         if (scope.location._id === undefined) {
+            // just added
             scope.editMode = true;
             element[0].focus();
             scope.$root.$broadcast('locationEdited');
