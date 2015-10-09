@@ -19,6 +19,10 @@
                 $scope.slideshows = res;
             });
 
+            Admin.getLocations(function (locations) {
+                $scope.locations = locations;
+            });
+
             // Create new Device
             $scope.create = function () {
                 // Create new Device object

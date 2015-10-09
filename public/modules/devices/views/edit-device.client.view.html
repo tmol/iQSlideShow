@@ -20,7 +20,7 @@
                 <div class="form-group">
                     <label class="control-label" for="location">Location</label>
                     <div class="controls">
-                        <input type="text" data-ng-model="device.location" id="location" class="form-control" placeholder="Location" required>
+                        <select ng-model="device.location" ng-options="location.name as location.name for location in locations"></select>
                     </div>
                 </div>
                 <div class="form-group">
