@@ -3,9 +3,9 @@
         <h1>Devices</h1>
     </div>
     <div>
-       <h5>
-           <a href="" ngClick='onShowFilter()'>Filter</a>
-       </h5>
+        <button class="btn btn-primary" type="button" ng-click="onShowFilter()">Filter</button>
+        <span device-locations-filter-summary ng-repeat='location in filterParameters.locations'  location='location' remove-Location-From-Filter='removeLocationFromFilter(location)'>
+        </span>
        <div>&nbsp;</div>
     </div>
     <div class="list-group">
@@ -27,3 +27,4 @@
     </div>
 </section>
 <section received-Device-Event-Popup></section>
+<section device-Filter-Popup></section>

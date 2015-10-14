@@ -1,5 +1,5 @@
-/*global angular*/
 /*jslint nomen: true*/
+/*global angular, _*/
 (function () {
     'use strict';
 
@@ -8,7 +8,6 @@
         function ($scope, $stateParams, $state, Authentication, Slideshows, Devices, ServerMessageBroker, $modal, Admin, Timers) {
             var newDeviceModalInstance,
                 filterModalInstance,
-                filter,
                 timers = new Timers(),
                 messageBroker = new ServerMessageBroker();
 
@@ -140,21 +139,28 @@
                 });
             });
 
+            $scope.filterParameters = { };
+
+            $scope.removeLocationFromFilter = function (location) {
+                if ($scope.filterParameters.locations) {
+                    _.pull($scope.filterParameters.locations, location);
+                    $scope.filterDevices();
+                }
+            };
+
             $scope.onShowFilter = function () {
-                filterModalInstance = $modal.open({
+                newDeviceModalInstance = $modal.open({
                     animation: false,
                     templateUrl: 'deviceFilterPopup.html',
                     windowClass: 'waitingForActivationDialog',
                     backdrop: 'static',
-                    controller: 'DeiceFilterModalController',
+                    controller: 'DeviceFilterModalController',
                     resolve: {
-                        filter: function () {
-                            return {
-                                title: 'New device available',
-                                description: 'A new device with id ' + message.deviceId + ' is available. You can activate it by clicking on the Edit button from below.',
-                                deviceId: message.deviceId,
-                                deviceObjectId: message.content.objectId
-                            };
+                        filterParameters: function () {
+                            return $scope.filterParameters;
+                        },
+                        locations: function () {
+                            return $scope.locations;
                         }
                     }
                 });
@@ -170,6 +176,18 @@
                 var index = $scope.device.slideAgregation.playList.indexOf(slideShow);
                 $scope.device.slideAgregation.playList.splice(index, 1);
             };
+
+            $scope.filterDevices = function () {
+                Devices.query({
+                    filterParameters: $scope.filterParameters
+                }, function (result) {
+                    $scope.devices = result;
+                });
+            };
+
+            $scope.$on("filterDevices", function () {
+                $scope.filterDevices();
+            });
 
             $scope.$on("$destroy", function () {
                 timers.reset();
