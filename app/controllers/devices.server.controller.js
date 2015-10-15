@@ -124,7 +124,15 @@
      * List of Devices
      */
     exports.list = function (req, res) {
-        Device.find().sort('-created').populate('user', 'displayName').exec(function (err, devices) {
+        var select = {},
+            locationsFilter = req.query.locations;
+        if (locationsFilter) {
+            if (!(locationsFilter instanceof Array)) {
+                locationsFilter = [locationsFilter];
+            }
+            select = { location : { $in : locationsFilter } };
+        }
+        Device.find(select).sort('-created').populate('user', 'displayName').exec(function (err, devices) {
             if (err) {
                 return res.status(400).send({
                     message: errorHandler.getErrorMessage(err)

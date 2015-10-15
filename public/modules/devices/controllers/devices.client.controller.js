@@ -88,7 +88,7 @@
             $scope.initDeviceList = function () {
                 $scope.find();
                 timers.registerInterval('reloadDevicesForStatusUptaes', function () {
-                    $scope.find();
+                    $scope.filterDevices();
                 }, 3 * 1000);
             };
 
@@ -179,7 +179,7 @@
 
             $scope.filterDevices = function () {
                 Devices.query({
-                    filterParameters: $scope.filterParameters
+                    locations: $scope.filterParameters.locations
                 }, function (result) {
                     $scope.devices = result;
                 });
