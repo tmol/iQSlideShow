@@ -4,8 +4,8 @@
     'use strict';
 
     // Devices controller
-    angular.module('devices').controller('DevicesController', ['$scope', '$stateParams', '$state', 'Authentication', 'Slideshows', 'Devices', 'ServerMessageBroker', '$modal', 'Admin', 'Timers',
-        function ($scope, $stateParams, $state, Authentication, Slideshows, Devices, ServerMessageBroker, $modal, Admin, Timers) {
+    angular.module('devices').controller('DevicesController', ['$scope', '$stateParams', '$state', 'Authentication', 'Slideshows', 'Devices', 'ServerMessageBroker', '$modal', 'Admin', 'Timers', '$cacheFactory',
+        function ($scope, $stateParams, $state, Authentication, Slideshows, Devices, ServerMessageBroker, $modal, Admin, Timers, $cacheFactory) {
             var newDeviceModalInstance,
                 filterModalInstance,
                 timers = new Timers(),
@@ -139,7 +139,14 @@
                 });
             });
 
-            $scope.filterParameters = { };
+            $scope.cache = $cacheFactory.get('devices.client.controller');
+            if (angular.isUndefined($scope.cache)) {
+                $scope.cache = $cacheFactory('devices.client.controller');
+            }
+            $scope.filterParameters = $scope.cache.get('devices.client.controller.filterParameters');
+            if (angular.isUndefined($scope.filterParameters)) {
+                $scope.filterParameters = {};
+            }
 
             $scope.removeLocationFromFilter = function (location) {
                 if ($scope.filterParameters.locations) {
@@ -192,6 +199,7 @@
             $scope.$on("$destroy", function () {
                 timers.reset();
                 messageBroker.unSubscribe();
+                $scope.cache.put('devices.client.controller.filterParameters', $scope.filterParameters);
             });
         }
         ]);
