@@ -61,12 +61,7 @@ angular.module('admin').directive('locationItem', ['Admin', '$document', '$timeo
             var res = '',
                 device;
 
-            devices.forEach(function (device) {
-                if (res.length > 0) {
-                    res = res + ', ';
-                }
-                res = res + device.name;
-            });
+            res = devices.map(function (device) {return device.name; }).join(", ");
 
             return res;
         };
