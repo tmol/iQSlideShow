@@ -89,7 +89,7 @@
                 $scope.find();
                 timers.registerInterval('reloadDevicesForStatusUptaes', function () {
                     $scope.filterDevices();
-                }, 3 * 1000);
+                }, 60 * 1000);
             };
 
             $scope.adminConfig = Admin.getConfig();
