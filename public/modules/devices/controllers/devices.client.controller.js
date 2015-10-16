@@ -143,6 +143,7 @@
             if (angular.isUndefined($scope.cache)) {
                 $scope.cache = $cacheFactory('devices.client.controller');
             }
+
             $scope.filterParameters = $scope.cache.get('devices.client.controller.filterParameters');
             if (angular.isUndefined($scope.filterParameters)) {
                 $scope.filterParameters = {};
@@ -153,6 +154,17 @@
                     _.pull($scope.filterParameters.locations, location);
                     $scope.filterDevices();
                 }
+            };
+
+            $scope.filtersAvailable = function () {
+                return (!angular.isUndefined($scope.filterParameters.locations)
+                        && $scope.filterParameters.locations.length > 0);
+
+            };
+
+            $scope.clearFilters = function () {
+                $scope.filterParameters.locations = [];
+                $scope.filterDevices();
             };
 
             $scope.onShowFilter = function () {

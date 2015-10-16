@@ -6,6 +6,7 @@
         <button class="btn btn-primary" type="button" ng-click="onShowFilter()">Filter</button>
         <span device-locations-filter-summary ng-repeat='location in filterParameters.locations'  location='location' remove-Location-From-Filter='removeLocationFromFilter(location)'>
         </span>
+        <span><a href="" ng-click='clearFilters()' ng-show='filtersAvailable()'>Clear filter</a></span>
        <div>&nbsp;</div>
     </div>
     <div class="list-group">
