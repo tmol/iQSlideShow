@@ -6,6 +6,10 @@
     angular.module('devices').factory('Devices', ['$resource',
         function ($resource) {
             return $resource('/devices/:deviceId', { deviceId: '@deviceId', locationName: '@locationName'}, {
+                filter: {
+                    method: 'GET',
+                    isArray: true
+                },
                 update: {
                     method: 'PUT'
                 },

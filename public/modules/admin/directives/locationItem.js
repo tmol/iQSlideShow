@@ -3,11 +3,15 @@
 angular.module('admin').directive('locationItem', ['Admin', '$document', '$timeout', 'Devices', function (Admin, $document, $timeout, Devices) {
     'use strict';
     function link(scope, element, attrs) {
+        var rememberActualLocationName,
+            formatDevicesNamesToCommaSeparatedString,
+            focusOutHanlder;
+
         scope.getEditMode = function () {
             return scope.editMode;
         };
 
-        var rememberActualLocationName = function () {
+        rememberActualLocationName = function () {
             scope.locationNameOriginalValue = scope.location.name;
         };
 
@@ -32,21 +36,37 @@ angular.module('admin').directive('locationItem', ['Admin', '$document', '$timeo
             }
         };
 
-        var formatDevicesNamesToCommaSeparatedString = function (devices) {
+        scope.delete = function () {
+            if (scope.editMode === true) {
+                scope.ensureReadOnlyMode();
+            }
+
+            Devices.getByLocationName({locationName: scope.location.name}, function (devices) {
+                var msg,
+                    adminService;
+
+                if (devices.length > 0) {
+                    msg = 'Delete is not allowed because the devices from below are attached to the location. Please change the location of the devices.\r\n' + formatDevicesNamesToCommaSeparatedString(devices);
+                    alert(msg);
+                    return;
+                }
+
+                adminService = new Admin(scope.location);
+                adminService.$deleteLocation();
+                scope.$root.$broadcast('locationDeleted');
+            });
+        };
+
+        formatDevicesNamesToCommaSeparatedString = function (devices) {
             var res = '',
                 device;
 
-            devices.forEach(function (device) {
-                if (res.length > 0) {
-                    res = res + ', ';
-                }
-                res = res + device.name;
-            });
+            res = devices.map(function (device) {return device.name; }).join(", ");
 
             return res;
         };
 
-        element.on('focusout', function (event) {
+        focusOutHanlder = function (event) {
             var adminService,
                 isThereAtLeastOnDeviceAttachedToLocation,
                 msg,
@@ -91,28 +111,14 @@ angular.module('admin').directive('locationItem', ['Admin', '$document', '$timeo
                 }
             }
                                      );
-        });
-
-        scope.delete = function () {
-            if (scope.editMode === true) {
-                scope.ensureReadOnlyMode();
-            }
-
-            Devices.getByLocationName({locationName: scope.location.name}, function (devices) {
-                var msg,
-                    adminService;
-
-                if (devices.length > 0) {
-                    msg = 'Delete is not allowed because the devices from below are attached to the location. Please change the location of the devices.\r\n' + formatDevicesNamesToCommaSeparatedString(devices);
-                    alert(msg);
-                    return;
-                }
-
-                adminService = new Admin(scope.location);
-                adminService.$deleteLocation();
-                scope.$root.$broadcast('locationDeleted');
-            });
         };
+
+        element.on('focusout', focusOutHanlder);
+
+
+        scope.$on("$destroy", function () {
+            element.off('focusout', focusOutHanlder);
+        });
 
         rememberActualLocationName();
         scope.editMode = false;

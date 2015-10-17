@@ -37,7 +37,8 @@
                     'public/lib/pubnub/pubnub.min.js',
                     'public/lib/pubnub-angular/lib/pubnub-angular.js',
                     'public/lib/ui-select/dist/select.min.js',
-                    'public/lib/angular-ui-grid/ui-grid.min.js'
+                    'public/lib/angular-ui-grid/ui-grid.min.js',
+                    'public/lib/lodash/lodash.min.js'
                 ]
             },
             css: [
