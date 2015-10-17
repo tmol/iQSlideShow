@@ -91,6 +91,13 @@
                                 <div text-angular ng-if="value.type=='html'" type="text" ng-model="currentSlide.content[templateElement]" ></div>
                             </div>
                         </div> 
+
+                         <div class="form-group">
+                            <label class="control-label">Save to Repository</label>
+                            <div class="controls" >
+                                <input type="button" ng-click="saveSlideToRepository()" value="save">
+                            </div>
+                        </div>
                          
                         
                     </div>  
@@ -101,6 +108,7 @@
                         </div>  
                     </div>
                     
+
                 </div>
                  
 				<div data-ng-show="error" class="text-danger">

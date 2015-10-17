@@ -4,8 +4,8 @@
     'use strict';
 
     // Slideshows controller
-    angular.module('slideshows').controller('SlideshowsController', ['$scope', '$stateParams', '$location', 'Authentication', 'Slideshows', 'Templates', '$timeout', 'ServerMessageBroker', 'Tags', '$modal',
-        function ($scope, $stateParams, $location, Authentication, Slideshows, Templates, $timeout, ServerMessageBroker, Tags, $modal) {
+    angular.module('slideshows').controller('SlideshowsController', ['$scope', '$stateParams', '$location', 'Authentication', 'Slideshows', 'Templates', '$timeout', 'ServerMessageBroker', 'Tags', '$modal', 'Path',
+        function ($scope, $stateParams, $location, Authentication, Slideshows, Templates, $timeout, ServerMessageBroker, Tags, $modal, Path) {
             var serverMessageBroker = new ServerMessageBroker();
             $scope.authentication = Authentication;
             $scope.currentSlide = null;
@@ -171,6 +171,20 @@
             $scope.refreshTags = function (text) {
                 return Tags.query({tag: text}, function (result) {
                     $scope.possibleTags = result.map(function (item) {return item.value; });
+                });
+            };
+
+            $scope.saveSlideToRepository = function () {
+                var scope = $scope.$new(true);
+                scope.Slide = $scope.currentSlide;
+
+                $modal.open({
+                    animation: false,
+                    templateUrl: Path.getViewUrl('saveToRepository'),
+                    windowClass: 'waitingForActivationDialog',
+                    backdrop: 'static',
+                    controller: 'SlidesRepositoryController',
+                    scope: scope
                 });
             };
         }]);

@@ -8,20 +8,18 @@
     var mongoose = require('mongoose'),
         Schema = mongoose.Schema,
         Tag = require("./tag.server.model"),
+        Slide = require("./slide.server.model"),
         SlidesRepositorySchema = new Schema({
-            value: {
+            name: {
                 type: String,
-                default: 1,
+                default: "",
                 index: 1
             },
             tags: {
                 type: [String],
                 index: true
             },
-            slide : {
-                type: Schema.ObjectId,
-                ref: 'Slide'
-            }
+            slide : [Slide.schema]
         }, {
             collection: 'slidesRepository'
         });
