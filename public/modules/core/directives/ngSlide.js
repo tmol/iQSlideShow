@@ -10,7 +10,9 @@ angular.module('core').directive('ngSlide', [
                     label:attrs.label||attrs.member
                 };
                 var content = scope.$parent.slide || scope.$parent.currentSlide.content;
-
+                if (scope.$parent.slide) {
+                    content = scope.$parent.slide.content || content;
+                }
                 scope.$parent.$watch(function(){
                     if (!content){
                         return;

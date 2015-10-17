@@ -11,6 +11,9 @@
         app.route('/repository/slides/:slideId')
             .get(slidesRepository.renderSlide);
 
+        app.route('/repository/slides/byFilter')
+            .post(slidesRepository.getSlideByFilter);
+
         app.param("slideId", slidesRepository.getSlideById);
     };
 }());

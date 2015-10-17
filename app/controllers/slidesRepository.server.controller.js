@@ -13,10 +13,13 @@
         res.jsonp(req.slide);
     };
 
+    exports.renderSlides = function (req, res) {
+        res.jsonp(req.slides);
+    };
+
     exports.getSlideById = function (req, res, next, slideId) {
         SlidesRepositoryItem.findOne({"slide._id": slideId}).sort({$natural: -1}).exec(function (err, slide) {
             if (err) {
-                console.log(err);
                 return res.status(400).send({
                     message: errorHandler.getErrorMessage(err)
                 });
@@ -26,6 +29,37 @@
             }
             req.slide = slide;
             next();
+        });
+    };
+
+    exports.getSlideByFilter = function (req, res) {
+        var filter = req.body.filters.map(function (item) {
+            if (!item) {
+                item = "^";
+            }
+            return new RegExp(item);
+        });
+        console.log(filter);
+        SlidesRepositoryItem.find({"name": {$in: filter}}).populate('user', 'displayName').exec(function (err, slides) {
+            if (err) {
+                console.log(err);
+                return res.status(400).send({
+                    message: errorHandler.getErrorMessage(err)
+                });
+            }
+            res.jsonp(slides);
+        });
+    };
+
+    exports.getSlides = function (req, res) {
+        SlidesRepositoryItem.find({}).exec(function (err, slides) {
+            if (err) {
+                console.log(err);
+                return res.status(400).send({
+                    message: errorHandler.getErrorMessage(err)
+                });
+            }
+            res.jsonp(slides);
         });
     };
 

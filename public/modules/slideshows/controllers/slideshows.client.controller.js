@@ -143,7 +143,7 @@
                 if (!$scope.currentSlide) {
                     return false;
                 }
-                return $scope.currentSlide._id === slide._id;
+                return $scope.currentSlide === slide;
             };
 
             $scope.removeCurrentSlide = function () {
@@ -185,6 +185,28 @@
                     backdrop: 'static',
                     controller: 'SlidesRepositoryController',
                     scope: scope
+                });
+            };
+
+            $scope.addFromRepo = function () {
+                var scope = $scope.$new(true);
+
+                $modal.open({
+                    animation: false,
+                    templateUrl: Path.getViewUrl('selectSlideFromRepository'),
+                    windowClass: 'waitingForActivationDialog',
+                    backdrop: 'static',
+                    controller: 'SelectSlideFromRepositoryController',
+                    scope: scope
+                }).result.then(function (slide) {
+                    if (!slide) {
+                        return;
+                    }
+                    delete slide._id;
+                    delete slide._v;
+                    $scope.currentSlide = angular.merge({}, slide);
+                    $scope.slideshow.draftSlides.push($scope.currentSlide);
+                    updateTemplate();
                 });
             };
         }]);

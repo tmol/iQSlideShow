@@ -32,8 +32,12 @@
                                 <button type="button" ng-click="addNewSlide()">+</button>
                                 <button type="button" ng-click="removeCurrentSlide()">-</button>
                             </div>
-                        </div>                       
-                        <div ng-class="{'hidden-slide':slide.hidden, 'current-slide':isCurrentSlide(slide)}" data-ng-repeat="slide in slideshow.draftSlides" class="form-group slide">
+                        </div>
+                        <div class="form-group slides-controllers">
+                            <input type="button" value="add from repo" ng-click="addFromRepo()">
+                        </div>
+                        <div ng-class="{'hidden-slide':slide.hidden, 'current-slide':isCurrentSlide(slide)}"
+                             data-ng-repeat="slide in slideshow.draftSlides" class="form-group slide">
                             <span  ng-click="setCurrentSlide(slide)" class="control-label slide-label">{{$index +1}} {{slide.templateName}}
                                 <div class="move-slide">
                                     <div class="move-slide-button" ng-click="moveSlideUp(slide)">▲</div>
