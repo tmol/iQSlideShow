@@ -5,7 +5,7 @@
         var slidesRepository = require('../../app/controllers/slidesRepository.server.controller');
 
         app.route('/repository/slides')
-            .post(slidesRepository.save);
+            .post(slidesRepository.storeByName);
 
         app.route('/repository/slides/:slideId')
             .get(slidesRepository.renderSlide);

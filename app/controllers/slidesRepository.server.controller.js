@@ -29,7 +29,7 @@
         });
     };
 
-    exports.save = function (req, res) {
+    exports.storeByName = function (req, res) {
         var slide = req.slide;
         slide = lodash.extend(slide, req.body);
         SlidesRepositoryItem.findOne({"name": req.body.name}).exec(function (err, slide) {
