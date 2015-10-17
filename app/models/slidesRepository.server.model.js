@@ -19,7 +19,11 @@
                 type: [String],
                 index: true
             },
-            slide : [Slide.schema]
+            slide: [Slide.schema],
+            user: {
+                type: Schema.ObjectId,
+                ref: 'User'
+            }
         }, {
             collection: 'slidesRepository'
         });

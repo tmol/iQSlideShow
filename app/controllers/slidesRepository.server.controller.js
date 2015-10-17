@@ -44,6 +44,7 @@
             }
 
             slide = lodash.extend(slide, req.body);
+            slide.user = req.user;
             slide.save(function (err) {
                 if (err) {
                     return res.status(400).send({
