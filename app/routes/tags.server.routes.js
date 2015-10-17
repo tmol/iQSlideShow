@@ -1,13 +1,13 @@
 'use strict';
 
 module.exports = function (app) {
-	var slideshowTags = require('../../app/controllers/tags.server.controller');
+	var tags = require('../../app/controllers/tags.server.controller');
 
 	// Slideshows Routes
-	app.route('/slideshowtags')
-		.get(slideshowTags.list);
+	app.route('/tags')
+		.get(tags.list);
 
-    app.route('/slideshowtags/:tag')
-		.get(slideshowTags.tags);
-    app.param("tag", slideshowTags.getTags);
+    app.route('/tags/:tag')
+		.get(tags.tags);
+    app.param("tag", tags.getTags);
 };

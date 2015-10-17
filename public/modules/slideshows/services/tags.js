@@ -3,9 +3,9 @@
     'use strict';
 
     //Slideshows service used to communicate Slideshows REST endpoints
-    angular.module('slideshows').factory('SlideshowTags', ['$resource',
+    angular.module('slideshows').factory('Tags', ['$resource',
         function ($resource) {
-            return $resource('slideshowtags/:tag',
+            return $resource('tags/:tag',
                              { tag: '@_tag' });
         }]);
 }());

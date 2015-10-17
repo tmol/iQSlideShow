@@ -4,8 +4,8 @@
     'use strict';
 
     // Slideshows controller
-    angular.module('slideshows').controller('SlideshowsController', ['$scope', '$stateParams', '$location', 'Authentication', 'Slideshows', 'Templates', '$timeout', 'ServerMessageBroker', 'SlideshowTags',
-        function ($scope, $stateParams, $location, Authentication, Slideshows, Templates, $timeout, ServerMessageBroker, SlideshowTags) {
+    angular.module('slideshows').controller('SlideshowsController', ['$scope', '$stateParams', '$location', 'Authentication', 'Slideshows', 'Templates', '$timeout', 'ServerMessageBroker', 'Tags', '$modal',
+        function ($scope, $stateParams, $location, Authentication, Slideshows, Templates, $timeout, ServerMessageBroker, Tags, $modal) {
             var serverMessageBroker = new ServerMessageBroker();
             $scope.authentication = Authentication;
             $scope.currentSlide = null;
@@ -169,7 +169,7 @@
                 }
             };
             $scope.refreshTags = function (text) {
-                return SlideshowTags.query({tag: text}, function (result) {
+                return Tags.query({tag: text}, function (result) {
                     $scope.possibleTags = result.map(function (item) {return item.value; });
                 });
             };
