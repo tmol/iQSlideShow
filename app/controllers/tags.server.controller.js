@@ -4,11 +4,11 @@
     /**
      * Module dependencies.
      */
-    var mongoose = require('mongoose'),
-        SlideShowTag = mongoose.model("SlideShowTag"),
-        Config = mongoose.model("Config");
+    var mongoose = require('mongoose');
+    var Tag = mongoose.model("Tag");
+    var Config = mongoose.model("Config");
 
-    exports.tags = function (req, res, tag) {
+    exports.tags = function (req, res) {
         res.jsonp(req.tags);
     };
 
@@ -22,7 +22,7 @@
                 limit = admin.sizeOfAutocompleteListForTags;
             }
             console.log("Limit1 : " + limit);
-            SlideShowTag.find({}).sort({value: 1}).limit(limit).exec(function (err, tags) {
+            Tag.find({}).sort({value: 1}).limit(limit).exec(function (err, tags) {
                 if (err) {
                     return res.status(400).send(err);
                 }
@@ -44,7 +44,7 @@
                 limit = admin.sizeOfAutocompleteListForTags;
             }
             console.log("Limit2 : " + limit);
-            SlideShowTag.find({value: {$regex: new RegExp("^" + tag)}}).sort({value: 1}).limit(limit).exec(function (err, tags) {
+            Tag.find({value: {$regex: new RegExp("^" + tag)}}).sort({value: 1}).limit(limit).exec(function (err, tags) {
                 if (err) {
                     return next(err);
                 }

@@ -4,7 +4,9 @@
     "predef": {},
     "browser": true,
     "node": true,
-    "vars": true
+    "vars": true,
+    "nomen": true,
+    "unparam": true
   },
   "runOnSave": true
 }

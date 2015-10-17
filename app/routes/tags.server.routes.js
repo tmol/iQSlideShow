@@ -1,7 +1,7 @@
 'use strict';
 
 module.exports = function (app) {
-	var slideshowTags = require('../../app/controllers/slideshowTags.server.controller');
+	var slideshowTags = require('../../app/controllers/tags.server.controller');
 
 	// Slideshows Routes
 	app.route('/slideshowtags')

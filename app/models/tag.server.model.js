@@ -1,3 +1,4 @@
+/*jslint nomen: true, vars: true, unparam: true*/
 /*global require, exports*/
 (function () {
     'use strict';
@@ -7,39 +8,40 @@
      */
     var mongoose = require('mongoose'),
         Schema = mongoose.Schema,
-        SlideShowTagSchema = new Schema({
+        TagSchema = new Schema({
             value: {
                 type: String,
                 default: 1,
                 index: 1
             }
-        }, {collection: 'slideShowTags'});
+        }, {collection: 'tags'});
 
-    SlideShowTagSchema.statics.addTag = function (tag, resolve, reject) {
-        var SlideShowTag = mongoose.model("SlideShowTag");
+    TagSchema.statics.addTag = function (value, resolve, reject) {
+        var Tag = mongoose.model("Tag");
 
         //if no tag is found, than insert the new one
-        SlideShowTag.findOne({value: tag}, function (err, existingTag) {
+        Tag.findOne({value: value}, function (err, existingTag) {
 
             if (err) {
                 reject(err);
                 return;
             }
             if (existingTag) {
-                resolve(tag);
+                resolve(value);
                 return;
             }
 
-            var slideShowTag = new SlideShowTag({value: tag});
-            slideShowTag.save(function (err) {
+            var tag = new Tag({value: value});
+            tag.save(function (err) {
                 if (err) {
                     reject(err);
                     return;
                 }
-                resolve(tag);
+                resolve(value);
             });
         });
     };
 
-    mongoose.model('SlideShowTag', SlideShowTagSchema);
+    mongoose.model('Tag', TagSchema);
+    module.exports = mongoose.model('Tag');
 }());
