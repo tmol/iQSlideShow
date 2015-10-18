@@ -15,4 +15,5 @@ packages/
 *.suo
 .vs/*
 *.dll
+public/modules/**/*.css
 
