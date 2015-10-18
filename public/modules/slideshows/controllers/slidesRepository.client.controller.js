@@ -1,5 +1,5 @@
 /*jslint nomen: true, vars: true*/
-/*global angular, ApplicationConfiguration*/
+/*global _, angular, ApplicationConfiguration*/
 (function () {
     'use strict';
     angular.module('slideshows').controller('SlidesRepositoryController', ['$scope', 'Tags', 'SlidesRepository',
@@ -8,7 +8,7 @@
             $scope.possibleTags = [];
             $scope.refreshTags = function (text) {
                 return Tags.query({tag: text}, function (result) {
-                    $scope.possibleTags = result.map(function (item) {return item.value; });
+                    $scope.possibleTags = _.pluck(result, 'value');
                 });
             };
             $scope.save = function () {
