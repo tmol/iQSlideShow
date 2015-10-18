@@ -27,21 +27,29 @@ var fs = require('fs'),
 module.exports = function(db) {
 	// Initialize express app
 	var app = express();
+    // Globbing model files
+    config.getGlobbedFiles('./app/models/**/*.js').forEach(function(modelPath) {
+            require(path.resolve(modelPath));
+        });
 
-	// Globbing model files
-	config.getGlobbedFiles('./app/models/**/*.js').forEach(function(modelPath) {
-		require(path.resolve(modelPath));
-	});
+    app.use(
+     sassMiddleware({
+         src: __dirname + '/public',
+         dest: __dirname + '/public',
+         debug: true
+     })
+    );
 
-	// Setting application local variables
-	app.locals.title = config.app.title;
-	app.locals.description = config.app.description;
-	app.locals.keywords = config.app.keywords;
-	app.locals.facebookAppId = config.facebook.clientID;
-	app.locals.jsFiles = config.getJavaScriptAssets();
-	app.locals.cssFiles = config.getCSSAssets();
+    // Setting application local variables
+    app.locals.title = config.app.title;
+    app.locals.description = config.app.description;
+    app.locals.keywords = config.app.keywords;
+    app.locals.facebookAppId = config.facebook.clientID;
+    app.locals.jsFiles = config.getJavaScriptAssets();
+    app.locals.cssFiles = config.getCSSAssets();
     app.locals.messageChannelName = config.getMessageChannelName();
     app.locals.appVersion = config.getAppVersion();
+
 	// Passing the request url to environment locals
 	app.use(function(req, res, next) {
 		res.locals.url = req.protocol + '://' + req.headers.host + req.url;
@@ -112,14 +120,7 @@ module.exports = function(db) {
 	app.use(helmet.ienoopen());
 	app.disable('x-powered-by');
 
-    app.use(
-     sassMiddleware({
-         src: './public',
-         dest: './public',
-         debug: false
-     })
-    );
-	// Setting the app router and static folder
+    // Setting the app router and static folder
 	app.use(express.static(path.resolve('./public')));
     app.use(express.static(path.resolve('./config/shared')));
 	

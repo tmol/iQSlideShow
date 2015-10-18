@@ -42,7 +42,7 @@ module.exports.getGlobbedFiles = function(globPatterns, removeRoot) {
 			}, function(err, files) {
 				if (removeRoot) {
 					files = files.map(function(file) {
-						return file.replace(removeRoot, '');
+						return file.replace(removeRoot, '').replace('.scss','.css');
 					});
 				}
 

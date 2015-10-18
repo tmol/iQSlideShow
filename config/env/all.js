@@ -63,7 +63,10 @@
     };
     exports.addModule = function (moduleName) {
         this.assets.modules[moduleName] = {
-            css: 'public/modules/' + moduleName + '/css/*.css',
+            css: [
+                'public/modules/' + moduleName + '/css/*.scss',
+                'public/modules/' + moduleName + '/css/*.pcss'
+            ],
             js: [
                 'public/modules/' + moduleName + '/*.js',
                 'public/modules/' + moduleName + '/*[!tests]*/*.js',
