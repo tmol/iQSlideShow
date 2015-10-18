@@ -21,6 +21,7 @@ var fs = require('fs'),
 	flash = require('connect-flash'),
 	config = require('./config'),
 	consolidate = require('consolidate'),
+    sassMiddleware = require('node-sass-middleware'),
 	path = require('path');
 
 module.exports = function(db) {
@@ -111,6 +112,13 @@ module.exports = function(db) {
 	app.use(helmet.ienoopen());
 	app.disable('x-powered-by');
 
+    app.use(
+     sassMiddleware({
+         src: './public',
+         dest: './public',
+         debug: false
+     })
+    );
 	// Setting the app router and static folder
 	app.use(express.static(path.resolve('./public')));
     app.use(express.static(path.resolve('./config/shared')));
