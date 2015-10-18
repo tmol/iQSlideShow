@@ -9,10 +9,11 @@ angular.module('core').directive('ngSlide', [
                     type:attrs.type||'text',
                     label:attrs.label||attrs.member
                 };
-                var content = scope.$parent.slide || scope.$parent.currentSlide.content;
-                if (scope.$parent.slide) {
-                    content = scope.$parent.slide.content || content;
-                }
+
+                var slide = scope.$parent.slide || scope.$parent.currentSlide;
+
+                var content = slide.content;
+
                 scope.$parent.$watch(function(){
                     if (!content){
                         return;
