@@ -27,7 +27,7 @@
                 return;
             }
             if (existingTag) {
-                resolve(value);
+                resolve();
                 return;
             }
 
@@ -37,7 +37,7 @@
                     reject(err);
                     return;
                 }
-                resolve(value);
+                resolve();
             });
         });
     };
