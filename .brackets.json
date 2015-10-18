@@ -56,7 +56,6 @@
         "vars": true,
         "nomen": true,
         "unparam": true,
-        "node": true,
-
+        "node": true
     }
 }
