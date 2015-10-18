@@ -125,13 +125,26 @@
      */
     exports.list = function (req, res) {
         var select = {},
+            locationsFilter,
+            nameFilter;
+
+        if (req.query.locations) {
             locationsFilter = req.query.locations;
-        if (locationsFilter) {
-            if (!(locationsFilter instanceof Array)) {
-                locationsFilter = [locationsFilter];
+            if (locationsFilter && locationsFilter.length > 0) {
+                if (!(locationsFilter instanceof Array)) {
+                    locationsFilter = [locationsFilter];
+                }
+                select.location = { $in : locationsFilter };
             }
-            select = { location : { $in : locationsFilter } };
         }
+
+        if (req.query.name) {
+            nameFilter = req.query.name;
+            if (nameFilter && nameFilter.length > 0) {
+                select.name = { $regex: '^' + nameFilter, $options: 'i' };
+            }
+        }
+
         Device.find(select).sort('-created').populate('user', 'displayName').exec(function (err, devices) {
             if (err) {
                 return res.status(400).send({

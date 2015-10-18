@@ -6,10 +6,10 @@
     // Devices controller
     angular.module('devices').controller('DevicesController', ['$scope', '$stateParams', '$state', 'Authentication', 'Slideshows', 'Devices', 'ServerMessageBroker', '$modal', 'Admin', 'Timers', '$cacheFactory',
         function ($scope, $stateParams, $state, Authentication, Slideshows, Devices, ServerMessageBroker, $modal, Admin, Timers, $cacheFactory) {
-            var newDeviceModalInstance,
-                filterModalInstance,
+            var modalInstance,
                 timers = new Timers(),
-                messageBroker = new ServerMessageBroker();
+                messageBroker = new ServerMessageBroker(),
+                getFilterQueryObject;
 
             messageBroker.subscribe();
 
@@ -80,9 +80,7 @@
             };
 
             $scope.find = function () {
-                Devices.query(function (result) {
-                    $scope.devices = result;
-                });
+                $scope.filterDevices();
             };
 
             $scope.initDeviceList = function () {
@@ -120,7 +118,7 @@
             };
 
             messageBroker.onNewDeviceSaidHi(function (message) {
-                newDeviceModalInstance = $modal.open({
+                modalInstance = $modal.open({
                     animation: false,
                     templateUrl: 'receivedDeviceEventPopup.html',
                     windowClass: 'waitingForActivationDialog',
@@ -139,6 +137,17 @@
                 });
             });
 
+            $scope.addSlideShow = function () {
+                $scope.device.slideAgregation.playList.push({
+                    slideShow : $scope.selectedSlideShow
+                });
+            };
+
+            $scope.removeSlideshow = function (slideShow) {
+                var index = $scope.device.slideAgregation.playList.indexOf(slideShow);
+                $scope.device.slideAgregation.playList.splice(index, 1);
+            };
+
             $scope.cache = $cacheFactory.get('devices.client.controller');
             if (angular.isUndefined($scope.cache)) {
                 $scope.cache = $cacheFactory('devices.client.controller');
@@ -156,19 +165,19 @@
                 }
             };
 
-            $scope.filtersAvailable = function () {
+            $scope.atLeastOneLocationSelectedInFilter = function () {
                 return (!angular.isUndefined($scope.filterParameters.locations)
                         && $scope.filterParameters.locations.length > 0);
 
             };
 
-            $scope.clearFilters = function () {
+            $scope.clearLocationsFilters = function () {
                 $scope.filterParameters.locations = [];
                 $scope.filterDevices();
             };
 
-            $scope.onShowFilter = function () {
-                newDeviceModalInstance = $modal.open({
+            $scope.onShowLocationsFilter = function () {
+                modalInstance = $modal.open({
                     animation: false,
                     templateUrl: 'deviceFilterPopup.html',
                     windowClass: 'waitingForActivationDialog',
@@ -185,20 +194,48 @@
                 });
             };
 
-            $scope.addSlideShow = function () {
-                $scope.device.slideAgregation.playList.push({
-                    slideShow : $scope.selectedSlideShow
+            $scope.possibleSearchedDeviceNames = [ ];
+
+            getFilterQueryObject = function () {
+                return {
+                    locations: $scope.filterParameters.locations,
+                    name: $scope.filterParameters.name
+                };
+            };
+
+            $scope.refreshPossibleSearchedDeviceNamesAndDevices = function (search) {
+                $scope.filterParameters.name = search;
+                if (search.length === 0) {
+                    $scope.nameSearchPlaceholder = 'Select search string...';
+                    $scope.possibleSearchedDeviceNames = [];
+                    $scope.filterDevices();
+                    return;
+                }
+
+                $scope.nameSearchPlaceholder = search;
+
+                Devices.query({
+                    locations: $scope.filterParameters.locations,
+                    name: search
+                }, function (devices) {
+                    var uniqueDevicesName = _.uniq(_.pluck(devices, 'name'));
+                    $scope.possibleSearchedDeviceNames = _.sortBy(uniqueDevicesName, function (name) {
+                        return name.toLowerCase();
+                    });
+                    $scope.devices = devices;
                 });
             };
 
-            $scope.removeSlideshow = function (slideShow) {
-                var index = $scope.device.slideAgregation.playList.indexOf(slideShow);
-                $scope.device.slideAgregation.playList.splice(index, 1);
+            $scope.nameSearchPlaceholder = 'Select search string...';
+
+            $scope.getSelectPlaceholder = function () {
+                return $scope.nameSearchPlaceholder;
             };
 
             $scope.filterDevices = function () {
                 Devices.query({
-                    locations: $scope.filterParameters.locations
+                    locations: $scope.filterParameters.locations,
+                    name: $scope.filterParameters.name
                 }, function (result) {
                     $scope.devices = result;
                 });

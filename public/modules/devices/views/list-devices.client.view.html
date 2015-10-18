@@ -3,12 +3,25 @@
         <h1>Devices</h1>
     </div>
     <div>
-        <button class="btn btn-primary" type="button" ng-click="onShowFilter()">Filter</button>
+        <button class="btn btn-primary" type="button" ng-click="onShowLocationsFilter()">Filter</button>
         <span device-locations-filter-summary ng-repeat='location in filterParameters.locations'  location='location' remove-Location-From-Filter='removeLocationFromFilter(location)'>
         </span>
-        <span><a href="" ng-click='clearFilters()' ng-show='filtersAvailable()'>Clear filter</a></span>
-       <div>&nbsp;</div>
+        <span><a href="" ng-click='clearLocationsFilters()' ng-show='atLeastOneLocationSelectedInFilter()'>Clear filter</a></span>
+        <div class="controls" style="float:right">
+            <span style="float:left; padding-right:10px">Search</span>
+            <span style="float:right;" >
+                <ui-select ng-model="filterParameters.name" theme="bootstrap" sortable="true" style="width: 300px;" title="Select search string" on-select='filterDevices()' reset-search-input='false'>
+                    <ui-select-match placeholder="{{getSelectPlaceholder()}}">{{$select.selected}}</ui-select-match>
+                    <ui-select-choices repeat="deviceName in possibleSearchedDeviceNames"
+                        refresh="refreshPossibleSearchedDeviceNamesAndDevices($select.search)"
+                        refresh-delay="0">
+                        {{deviceName}}
+                    </ui-select-choices>
+                </ui-select>
+            </span>
+        </span>
     </div>
+    <div>&nbsp;</div>
     <div class="list-group">
         <a data-ng-repeat="device in devices track by device._id" data-ng-href="#!/devices/{{device.deviceId}}/edit" class="list-group-item">
 			<small class="list-group-item-text">
