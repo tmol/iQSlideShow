@@ -34,8 +34,8 @@ module.exports = function(db) {
 
     app.use(
      sassMiddleware({
-         src: __dirname + '/public',
-         dest: __dirname + '/public',
+         src: __dirname + '/../public',
+         dest: __dirname + '/../public',
          debug: true
      })
     );
