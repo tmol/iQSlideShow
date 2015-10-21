@@ -8,8 +8,7 @@
         function ($scope, $stateParams, $state, Authentication, Slideshows, Devices, ServerMessageBroker, $modal, Admin, Timers, $cacheFactory) {
             var modalInstance,
                 timers = new Timers(),
-                messageBroker = new ServerMessageBroker(),
-                getFilterQueryObject;
+                messageBroker = new ServerMessageBroker();
 
             messageBroker.subscribe();
 
@@ -196,13 +195,6 @@
 
             $scope.possibleSearchedDeviceNames = [ ];
 
-            getFilterQueryObject = function () {
-                return {
-                    locations: $scope.filterParameters.locations,
-                    name: $scope.filterParameters.name
-                };
-            };
-
             $scope.refreshPossibleSearchedDeviceNamesAndDevices = function (search) {
                 $scope.filterParameters.name = search;
                 if (search.length === 0) {
@@ -230,6 +222,10 @@
 
             $scope.getSelectPlaceholder = function () {
                 return $scope.nameSearchPlaceholder;
+            };
+
+            $scope.initNameSearchFilter = function (select) {
+                select.search = $scope.filterParameters.name;
             };
 
             $scope.filterDevices = function () {

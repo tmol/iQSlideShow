@@ -11,7 +11,7 @@
             <span style="float:left; padding-right:10px">Search</span>
             <span style="float:right;" >
                 <ui-select ng-model="filterParameters.name" theme="bootstrap" sortable="true" style="width: 300px;" title="Select search string" on-select='filterDevices()' reset-search-input='false'>
-                    <ui-select-match placeholder="{{getSelectPlaceholder()}}">{{$select.selected}}</ui-select-match>
+                    <ui-select-match placeholder="{{getSelectPlaceholder()}}" data-ng-init='initNameSearchFilter($select)'>{{$select.selected}}</ui-select-match>
                     <ui-select-choices repeat="deviceName in possibleSearchedDeviceNames"
                         refresh="refreshPossibleSearchedDeviceNamesAndDevices($select.search)"
                         refresh-delay="0">
