@@ -1,7 +1,7 @@
 /*global angular, ApplicationConfiguration*/
 (function () {
     'use strict';
-    angular.module('slideshows').controller('SelectSlideFromBlueprintsController', ['$scope', 'Tags', 'SlideBlueprints',
+    angular.module('blueprints').controller('SelectSlideFromBlueprintsController', ['$scope', 'Tags', 'SlideBlueprints',
         function ($scope, Tags, SlideBlueprints) {
             $scope.filter = "";
             $scope.search = function () {

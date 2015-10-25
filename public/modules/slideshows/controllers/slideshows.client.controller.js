@@ -180,7 +180,7 @@
 
                 $modal.open({
                     animation: false,
-                    templateUrl: Path.getViewUrl('saveToBlueprints'),
+                    templateUrl: Path.getViewUrl('saveToBlueprints', 'blueprints'),
                     windowClass: 'waitingForActivationDialog',
                     backdrop: 'static',
                     controller: 'SlideBlueprintsController',
@@ -193,7 +193,7 @@
 
                 $modal.open({
                     animation: false,
-                    templateUrl: Path.getViewUrl('selectSlideFromBlueprints'),
+                    templateUrl: Path.getViewUrl('selectSlideFromBlueprints', 'blueprints'),
                     windowClass: 'waitingForActivationDialog',
                     backdrop: 'static',
                     controller: 'SelectSlideFromBlueprintsController',
