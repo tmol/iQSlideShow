@@ -17,6 +17,19 @@
         res.jsonp(req.slides);
     };
 
+    exports.delete = function (req, res) {
+        var slide = req.slide;
+
+        slide.remove(function (err) {
+            if (err) {
+                return res.status(400).send({
+                    message: errorHandler.getErrorMessage(err)
+                });
+            }
+            res.jsonp(slide);
+        });
+    };
+
     exports.getSlideById = function (req, res, next, slideId) {
         SlideBlueprint.findOne({"slide._id": slideId}).sort({$natural: -1}).exec(function (err, slide) {
             if (err) {

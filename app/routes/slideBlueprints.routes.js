@@ -9,7 +9,8 @@
             .post(users.requiresLogin, slideBlueprints.storeByName);
 
         app.route('/slideBlueprints/slides/:slideId')
-            .get(slideBlueprints.renderSlide);
+            .get(slideBlueprints.renderSlide)
+            .delete(users.requiresLogin, slideBlueprints.delete);
 
         app.route('/slideBlueprints/slides/byFilter')
             .post(slideBlueprints.getSlideByFilter);

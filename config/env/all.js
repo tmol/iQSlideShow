@@ -84,6 +84,7 @@
         .addModule('devices')
         .addModule('player')
         .addModule('slideshows')
-        .addModule('users');
+        .addModule('users')
+        .addModule('blueprints');
     module.exports = exports;
 }());

@@ -2,7 +2,7 @@
 (function () {
     'use strict';
 
-    angular.module('slideshows').factory('SlideBlueprints', ['$resource',
+    angular.module('blueprints').factory('SlideBlueprints', ['$resource',
         function ($resource) {
             return $resource('slideBlueprints/slides/:slideId', {slideId: '@slideId'}, {
                 update: {
