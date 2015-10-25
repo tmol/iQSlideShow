@@ -174,29 +174,29 @@
                 });
             };
 
-            $scope.saveSlideToRepository = function () {
+            $scope.saveSlideToBlueprints = function () {
                 var scope = $scope.$new(true);
                 scope.Slide = $scope.currentSlide;
 
                 $modal.open({
                     animation: false,
-                    templateUrl: Path.getViewUrl('saveToRepository'),
+                    templateUrl: Path.getViewUrl('saveToBlueprints'),
                     windowClass: 'waitingForActivationDialog',
                     backdrop: 'static',
-                    controller: 'SlidesRepositoryController',
+                    controller: 'SlideBlueprintsController',
                     scope: scope
                 });
             };
 
-            $scope.addFromRepo = function () {
+            $scope.addFromBlueprints = function () {
                 var scope = $scope.$new(true);
 
                 $modal.open({
                     animation: false,
-                    templateUrl: Path.getViewUrl('selectSlideFromRepository'),
+                    templateUrl: Path.getViewUrl('selectSlideFromBlueprints'),
                     windowClass: 'waitingForActivationDialog',
                     backdrop: 'static',
-                    controller: 'SelectSlideFromRepositoryController',
+                    controller: 'SelectSlideFromBlueprintsController',
                     scope: scope
                 }).result.then(function (slide) {
                     if (!slide) {

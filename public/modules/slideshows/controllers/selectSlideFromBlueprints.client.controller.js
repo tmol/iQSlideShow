@@ -1,14 +1,14 @@
 /*global angular, ApplicationConfiguration*/
 (function () {
     'use strict';
-    angular.module('slideshows').controller('SelectSlideFromRepositoryController', ['$scope', 'Tags', 'SlidesRepository',
-        function ($scope, Tags, SlidesRepository) {
+    angular.module('slideshows').controller('SelectSlideFromBlueprintsController', ['$scope', 'Tags', 'SlideBlueprints',
+        function ($scope, Tags, SlideBlueprints) {
             $scope.filter = "";
             $scope.search = function () {
-                SlidesRepository.getByFilter({filters: [$scope.filter]}, function (result) {
+                SlideBlueprints.getByFilter({filters: [$scope.filter]}, function (result) {
                     $scope.slides = result.map(function (item) {
                         var slide = item.slide[0];
-                        slide.repoTitle = item.name;
+                        slide.bluePrintTitle = item.name;
                         if (item.user) {
                             slide.publisher = item.user.displayName;
                         }
@@ -19,8 +19,8 @@
             };
             $scope.search();
             $scope.save = function () {
-                $scope.repoInstance.slide = [$scope.Slide];
-                $scope.repoInstance.$save().then(function () {
+                $scope.bluePrintInstance.slide = [$scope.Slide];
+                $scope.bluePrintInstance.$save().then(function () {
                     $scope.$close(null);
                 });
             };

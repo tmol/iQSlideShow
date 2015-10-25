@@ -1,20 +1,19 @@
 /*global angular*/
-(function() {
+(function () {
     'use strict';
 
-    angular.module('slideshows').factory('SlidesRepository', ['$resource',
-        function($resource) {
-            return $resource('repository/slides/:slideId', {slideId: '@slideId'}, {
+    angular.module('slideshows').factory('SlideBlueprints', ['$resource',
+        function ($resource) {
+            return $resource('slideBlueprints/slides/:slideId', {slideId: '@slideId'}, {
                 update: {
                     method: 'PUT'
                 },
                 getByFilter: {
                     method: 'POST',
-                    url: 'repository/slides/byFilter',
+                    url: 'slideBlueprints/slides/byFilter',
                     data: {filters: "@filters"},
                     isArray: true
                 }
             });
-        }
-    ]);
+        }]);
 }());
