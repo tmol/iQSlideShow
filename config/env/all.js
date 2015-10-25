@@ -45,7 +45,8 @@
                 'public/lib/font-awesome/css/font-awesome.min.css',
                 'public/lib/textAngular/dist/textAngular.css',
                 'public/lib/ui-select/dist/select.min.css',
-                'public/lib/angular-ui-grid/ui-grid.css'
+                'public/lib/angular-ui-grid/ui-grid.css',
+                'public/css/*.css'
             ],
             js: [
                 'public/config.js',

@@ -16,4 +16,5 @@ packages/
 .vs/*
 *.dll
 *.css
+!public/css/*
 
