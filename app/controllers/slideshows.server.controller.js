@@ -7,6 +7,7 @@
         mongoose = require('mongoose'),
         errorHandler = require('./errors.server.controller'),
         Slideshow = mongoose.model('Slideshow'),
+        Promise = require("Promise"),
         _ = require('lodash');
 
     /**
@@ -78,18 +79,54 @@
         });
     };
 
+    var prepareFilterPromise = function (filterContext, select) {
+        var promise;
+
+        if ('true' === filterContext.req.query.showOnlyMine) {
+            select.user = filterContext.req.user._id;
+        }
+
+        console.log('prepareFilterPromise select: ' + select);
+
+        promise = new Promise(function (resolve, reject) {
+            Slideshow.find(select).sort('-created').populate('user', 'displayName').exec(function (err, slideshowsFound) {
+                if (err) {
+                    reject(err);
+                    return;
+                }
+
+                filterContext.slideshows = _.uniq(filterContext.slideshows.concat(slideshowsFound));
+                resolve();
+            });
+        });
+        filterContext.promises.push(promise);
+    };
+
     /**
      * List of Slideshows
      */
     exports.list = function (req, res) {
-        Slideshow.find().sort('-created').populate('user', 'displayName').exec(function (err, slideshows) {
-            if (err) {
-                return res.status(400).send({
-                    message: errorHandler.getErrorMessage(err)
-                });
-            } else {
-                res.jsonp(slideshows);
-            }
+        var searchString = req.query.searchString,
+            select,
+            filterContext = { promises: [], req: req, slideshows: []};
+
+        if (searchString && searchString.length > 0) {
+            select = {name : { $regex: '^' + searchString, $options: 'i' }};
+            prepareFilterPromise(filterContext, select);
+            select = {tags : { $elemMatch: {$regex: '.*' + searchString + '.*', $options: 'i' }}};
+            prepareFilterPromise(filterContext, select);
+            select = {$or: [{'slides.content.content' : {$regex: '.*' + searchString + '.*', $options: 'i' }}, {'draftSlides.content.content' : {$regex: '.*' + searchString + '.*', $options: 'i' }}]};
+            prepareFilterPromise(filterContext, select);
+        } else {
+            prepareFilterPromise(filterContext, {});
+        }
+
+        Promise.all(filterContext.promises).then(function () {
+            res.jsonp(filterContext.slideshows);
+        }, function (error) {
+            return res.status(400).send({
+                message: errorHandler.getErrorMessage(err)
+            });
         });
     };
 

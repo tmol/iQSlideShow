@@ -1,12 +1,13 @@
 /*jslint nomen: true, vars: true*/
-/*global angular, alert*/
+/*global angular, alert, _*/
 (function () {
     'use strict';
 
     // Slideshows controller
-    angular.module('slideshows').controller('SlideshowsController', ['$scope', '$stateParams', '$location', 'Authentication', 'Slideshows', 'Templates', '$timeout', 'ServerMessageBroker', 'Tags', '$modal', 'Path',
-        function ($scope, $stateParams, $location, Authentication, Slideshows, Templates, $timeout, ServerMessageBroker, Tags, $modal, Path) {
+    angular.module('slideshows').controller('SlideshowsController', ['$scope', '$stateParams', '$location', 'Authentication', 'Slideshows', 'Templates', '$timeout', 'ServerMessageBroker', 'Tags', '$modal', 'Path', '$cacheFactory',
+        function ($scope, $stateParams, $location, Authentication, Slideshows, Templates, $timeout, ServerMessageBroker, Tags, $modal, Path, $cacheFactory) {
             var serverMessageBroker = new ServerMessageBroker();
+
             $scope.authentication = Authentication;
             $scope.currentSlide = null;
             $scope.slideshow = {
@@ -76,9 +77,10 @@
                         alert("Published");
                     });
             };
+
             // Find a list of Slideshows
             $scope.find = function () {
-                $scope.slideshows = Slideshows.query();
+                $scope.filterSlideShows();
             };
 
             // Find existing Slideshow
@@ -110,8 +112,6 @@
                 $scope.slideshow.draftSlides.push($scope.currentSlide);
                 updateTemplate();
             };
-
-
 
             $scope.moveSlideUp = function (slide) {
                 var slideIndex, tmp;
@@ -209,5 +209,68 @@
                     updateTemplate();
                 });
             };
+
+            $scope.cache = $cacheFactory.get('slideshows.client.controller');
+            if (angular.isUndefined($scope.cache)) {
+                $scope.cache = $cacheFactory('slideshows.client.controller');
+            }
+
+            $scope.filterParameters = $scope.cache.get('slideshows.client.controller.filterParameters');
+            if (angular.isUndefined($scope.filterParameters)) {
+                $scope.filterParameters = { searchString: '', showOnlyMine: false };
+            }
+
+            $scope.possibleFilterValues = [ ];
+
+            $scope.refreshPossibleFilterValuesAndSlideShows = function (search) {
+                $scope.filterParameters.searchString = search;
+                var searchString = $scope.filterParameters.searchString;
+                if (!searchString || searchString.length === 0) {
+                    $scope.filterValuePlaceholder = 'Select search string...';
+                    $scope.possibleFilterValues = [];
+                    $scope.filterSlideShows();
+                    return;
+                }
+
+                $scope.filterValuePlaceholder = $scope.filterParameters.searchString;
+
+                Slideshows.query({
+                    showOnlyMine: $scope.filterParameters.showOnlyMine,
+                    searchString: searchString
+                }, function (slideshows) {
+                    var uniqueSlideShowNames = _.uniq(_.pluck(slideshows, 'name'));
+                    $scope.possibleFilterValues = _.sortBy(uniqueSlideShowNames, function (name) {
+                        return name.toLowerCase();
+                    });
+                    $scope.slideshows = slideshows;
+                });
+            };
+
+            $scope.getfilterValuePlaceholder = function () {
+                return $scope.filterValuePlaceholder;
+            };
+
+            $scope.$watch('filterParameters.showOnlyMine', function (oldValue, newValue) {
+                if (oldValue !== newValue) {
+                    $scope.filterSlideShows();
+                }
+            });
+
+            $scope.initSearchFilter = function (select) {
+                select.search = $scope.filterParameters.searchString;
+            };
+
+            $scope.filterSlideShows = function () {
+                Slideshows.query({
+                    showOnlyMine: $scope.filterParameters.showOnlyMine,
+                    searchString: $scope.filterParameters.searchString
+                }, function (result) {
+                    $scope.slideshows = result;
+                });
+            };
+
+            $scope.$on("$destroy", function () {
+                $scope.cache.put('slideshows.client.controller.filterParameters', $scope.filterParameters);
+            });
         }]);
 }());

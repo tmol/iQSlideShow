@@ -6,7 +6,7 @@ module.exports = function (app) {
 
 	// Slideshows Routes
 	app.route('/slideshows')
-		.get(slideshows.list)
+		.get(users.requiresLogin, slideshows.list)
 		.post(users.requiresLogin, slideshows.create);
 
 	app.route('/slideshows/:slideshowId')

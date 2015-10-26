@@ -2,6 +2,26 @@
     <div class="page-header">
         <h1>Slideshows</h1>
     </div>
+    <div>
+        <input type="checkbox" ng-model="filterParameters.showOnlyMine" ng-change='filterSlideshows()'>
+        <span>Show only mine</span>
+
+        <div class="controls" style="float:right">
+            <span style="float:left; padding-right:10px">Search</span>
+            <span style="float:right;" >
+                <ui-select ng-model="filterParameters.searchString" theme="bootstrap" sortable="true" style="width: 300px;" title="Select search string" on-select='filterSlideshows()' reset-search-input='false'>
+                    <ui-select-match placeholder="{{getfilterValuePlaceholder()}}" data-ng-init='initSearchFilter($select)'>{{$select.selected}}</ui-select-match>
+                    <ui-select-choices repeat="filterValue in possibleFilterValues"
+                        refresh="refreshPossibleFilterValuesAndSlideShows($select.search)"
+                        refresh-delay="0">
+                        {{filterValue}}
+                    </ui-select-choices>
+                </ui-select>
+            </span>
+        </span>
+    </div>
+    <div>&nbsp;</div>
+    <div>&nbsp;</div>
     <div class="list-group col-md-12" data-ng-repeat="slideshow in slideshows" > 
        <div class="col-md-6">
         <span >
