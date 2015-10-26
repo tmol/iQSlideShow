@@ -9,7 +9,7 @@
         Schema = mongoose.Schema,
         Tag = require("./tag.server.model"),
         Slide = require("./slide.server.model"),
-        SlidesRepositorySchema = new Schema({
+        SlideBlueprintSchema = new Schema({
             name: {
                 type: String,
                 default: "",
@@ -25,10 +25,10 @@
                 ref: 'User'
             }
         }, {
-            collection: 'slidesRepository'
+            collection: 'slideBlueprints'
         });
 
-    SlidesRepositorySchema.pre('save', function (next) {
+    SlideBlueprintSchema.pre('save', function (next) {
         var promises = [];
         this.tags.forEach(function (tag) {
             var promise = new Promise(function (resolve, reject) {
@@ -43,5 +43,5 @@
             next(error);
         });
     });
-    mongoose.model('SlidesRepository', SlidesRepositorySchema);
+    mongoose.model('SlideBlueprint', SlideBlueprintSchema);
 }());
