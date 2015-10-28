@@ -95,5 +95,9 @@
         messagingEngine.publishToDeviceChannel(this.deviceId, this.getReloadMessage(), callback);
     };
 
+    DeviceSchema.statics.byId = function (id) {
+        return this.findOne({"deviceId": id}).populate('user').populate('slideAgregation.playList.slideShow', 'name');
+    };
+
     mongoose.model('Device', DeviceSchema);
 }());

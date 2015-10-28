@@ -11,9 +11,10 @@
                 var messagingEngine = MessagingEngineFactory.getEngine();
                 var messageEventUnBind = null;
 
-                this.sendSwitchSlide = function (slideShowId, minutesToPlayBeforeGoingBackToDefaultSlideShow) {
+                this.sendSwitchSlide = function (slideShowId, slideShowName,  minutesToPlayBeforeGoingBackToDefaultSlideShow) {
                     messagingEngine.publishToDeviceChannel('switchSlide', self.deviceId, {
                         slideShowIdToPlay: slideShowId,
+                        slideShowName: slideShowName,
                         minutesToPlayBeforeGoingBackToDefaultSlideShow : minutesToPlayBeforeGoingBackToDefaultSlideShow
                     });
                 };

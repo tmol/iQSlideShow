@@ -1,5 +1,5 @@
 /*jslint nomen: true, vars: true*/
-/*global angular, ApplicationConfiguration*/
+/*global angular, ApplicationConfiguration, _*/
 (function () {
     'use strict';
     angular.module('slideshows').controller('DeviceInteractionController', ['$scope', '$stateParams', 'Slides', 'Slideshows', 'DeviceMessageBroker', 'Admin',
@@ -17,7 +17,8 @@
 
             $scope.setSlideShow = function () {
                 Admin.getConfig(function (config) {
-                    messageBroker.sendSwitchSlide($scope.slideShowId, config.userSelectedSlideShowsPlayTimeInMinutes);
+                    var slideShowName = _.filter($scope.slideshows, {_id: $scope.slideShowId})[0].name;
+                    messageBroker.sendSwitchSlide($scope.slideShowId, slideShowName, config.userSelectedSlideShowsPlayTimeInMinutes);
                 }, function (err) {
                     throw err;
                 });

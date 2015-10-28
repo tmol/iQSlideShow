@@ -120,9 +120,6 @@
         });
     };
 
-    /**
-     * List of Devices
-     */
     exports.list = function (req, res) {
         var select = {},
             locationsFilter,
@@ -160,7 +157,7 @@
      * Device middleware
      */
     exports.deviceByID = function (req, res, next, id) {
-        Device.findOne({"deviceId": id}).populate('user').populate('slideAgregation.playList.slideShow', "name").exec(function (err, device) {
+        Device.byId(id).exec(function (err, device) {
             if (err) {
                 return next(err);
             }

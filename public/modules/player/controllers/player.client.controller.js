@@ -2,8 +2,8 @@
 /*global angular, PUBNUB*/
 (function () {
     'use strict';
-    angular.module('player').controller('PlayerController', ['$scope', '$state', '$timeout', 'Slides', '$location', 'DeviceMessageBroker', 'LocalStorage', 'Path', 'Timers', '$modal', '$window', 'HealthReporter', 'ServerMessageBroker',
-        function ($scope, $state, $timeout, Slides, $location, DeviceMessageBroker, LocalStorage, Path, Timers, $modal, $window, HealthReporter, ServerMessageBroker) {
+    angular.module('player').controller('PlayerController', ['$scope', '$state', '$timeout', 'Slides', '$location', 'DeviceMessageBroker', 'LocalStorage', 'Path', 'Timers', '$modal', '$window', 'HealthReporter', 'ServerMessageBroker', 'Audit',
+        function ($scope, $state, $timeout, Slides, $location, DeviceMessageBroker, LocalStorage, Path, Timers, $modal, $window, HealthReporter, ServerMessageBroker, Audit) {
             var messageBroker = new DeviceMessageBroker();
             var serverMessageBroker = new ServerMessageBroker();
             var timers = new Timers();
@@ -31,6 +31,21 @@
                     });
             };
 
+            var audit = function (action, context) {
+                var audit = new Audit({
+                    action: action,
+                    slideShowId: $scope.slideShowId,
+                    deviceId: $scope.deviceId,
+                    context: context
+                });
+
+                // Redirect after save
+                audit.$save(function (response) {
+                }, function (errorResponse) {
+                    console.error('Error during auditing action: ' + action  + ': ' + errorResponse.data.message);
+                });
+            };
+
             var setupSlides = function () {
                 $scope.slides.forEach(function (slide, index) {
                     slide.content.templateUrl = 'modules/slideshows/slideTemplates/' + (slide.templateName || 'default') + '/slide.html';
@@ -39,7 +54,7 @@
                 });
             };
             var updateSildes = function (callback) {
-                Slides.get({slideId : $scope.slideName}, function (result) {
+                Slides.get({slideId : $scope.slideShowId}, function (result) {
                     $scope.slides = result.slides;
                     setupSlides();
                     if (callback) {
@@ -83,7 +98,7 @@
 
             var switchSlideShow = function (slideShowIdToPlay) {
                 timers.resetTimeouts();
-                $scope.slideName = slideShowIdToPlay;
+                $scope.slideShowId = slideShowIdToPlay;
                 activationDialog.close();
                 updateSildes();
             };
@@ -122,9 +137,11 @@
 
             messageBroker.onMoveSlideRight(function () {
                 $scope.$broadcast("moveSlideRight");
+                audit('moveToRight');
             });
             messageBroker.onMoveSlideLeft(function () {
                 $scope.$broadcast("moveSlideLeft");
+                audit('moveToLeft');
             });
             messageBroker.onSwitchSlide(function (message) {
                 if (!$scope.active) {
@@ -137,6 +154,7 @@
 
                 $scope.$broadcast("resetOnHold");
                 switchSlideShow(content.slideShowIdToPlay);
+                audit('switchSlideShow', {newSlideShowId: content.slideShowIdToPlay, newSlideShowName: content.slideShowName});
 
                 var duration = content.minutesToPlayBeforeGoingBackToDefaultSlideShow;
                 if (duration) {
@@ -155,18 +173,21 @@
                     $scope.slideIsOnHold = false;
                     $scope.$broadcast("resetOnHold");
                 }, 60 * 1000);
+                audit('holdSlideShow');
             });
             messageBroker.onResetSlideShow(function () {
                 timers.resetTimeouts();
                 $scope.slideIsOnHold = false;
                 $scope.$broadcast("resetOnHold");
                 sendHiToServer(); //this should revert the device state;
+                audit('resetSlideShow');
             });
             messageBroker.onInactiveRegisteredDeviceSaidHi(function () {
                 activationDialog.show();
             });
             messageBroker.onReload(function () {
                 $window.location.reload(true);
+                audit('reload');
             });
 
             $scope.$on("rightArrowPressed", function () {
