@@ -5,9 +5,16 @@
     //Devices service used to communicate Devices REST endpoints
     angular.module('devices').factory('Devices', ['$resource',
         function ($resource) {
-            return $resource('/devices/:deviceId', { deviceId: '@deviceId', locationName: '@locationName'}, {
-                filter: {
+            return $resource('/devices/:deviceId', { deviceId: '@deviceId',
+                                                    locationName: '@locationName',
+                                                    nameFilter: '@nameFilter'}, {
+                list: {
                     method: 'GET',
+                    isArray: true
+                },
+                getFilteredNames: {
+                    method: 'GET',
+                    url: '/devices/names/:nameFilter',
                     isArray: true
                 },
                 update: {

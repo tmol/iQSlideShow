@@ -9,8 +9,11 @@
 
         // Devices Routes
         app.route('/devices')
-            .get(devices.list)
+            .get(users.requiresLogin, devices.list)
             .post(users.requiresLogin, devices.create);
+
+        app.route('/devices/names/:nameFilter')
+            .get(users.requiresLogin, devices.getFilteredNames)
 
         app.route('/devices/healthReport/:deviceId')
             .post(devices.healthReport);
@@ -30,5 +33,6 @@
         app.param('deviceId', devices.deviceByID);
         app.param('deviceWithSlidesid', devices.deviceWithSlidesByID);
         app.param('locationName', devices.devicesByLocation);
+        app.param('nameFilter', devices.filteredNames);
     };
 }());

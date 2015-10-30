@@ -10,6 +10,7 @@
             Menus.addSubMenuItem('topbar', 'admin', 'Config', 'admin');
             Menus.addSubMenuItem('topbar', 'admin', 'Reload', 'reload');
             Menus.addSubMenuItem('topbar', 'admin', 'Locations', 'locations');
+            Menus.addSubMenuItem('topbar', 'admin', 'Audit', 'audit');
         }
         ]);
 }());

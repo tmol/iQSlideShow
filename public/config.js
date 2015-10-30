@@ -5,7 +5,7 @@ var ApplicationConfiguration = (function () {
 
     // Init module configuration options
     var applicationModuleName = 'iqslideshow',
-        applicationModuleVendorDependencies = ['ngResource', 'ngCookies', 'ngAnimate', 'ngTouch', 'ngSanitize', 'ui.router', 'ui.bootstrap', 'ui.utils', 'textAngular', 'ja.qr', 'ui.select', 'ui.grid', 'ui.grid.edit', 'ui.grid.cellNav',  'ui.grid.selection'],
+        applicationModuleVendorDependencies = ['ngResource', 'ngCookies', 'ngAnimate', 'ngTouch', 'ngSanitize', 'ui.router', 'ui.bootstrap', 'ui.utils', 'textAngular', 'ja.qr', 'ui.select', 'ui.bootstrap.datepicker'],
         registerModule = function (moduleName, dependencies) {
             // Create angular module
             angular.module(moduleName, dependencies || []);

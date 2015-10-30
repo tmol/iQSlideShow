@@ -120,6 +120,10 @@
         });
     };
 
+    var getNameFilterExpression = function (nameFilter) {
+        return { $regex: '^' + nameFilter, $options: 'i' };
+    }
+
     exports.list = function (req, res) {
         var select = {},
             locationsFilter,
@@ -138,7 +142,7 @@
         if (req.query.name) {
             nameFilter = req.query.name;
             if (nameFilter && nameFilter.length > 0) {
-                select.name = { $regex: '^' + nameFilter, $options: 'i' };
+                select.name =  getNameFilterExpression(nameFilter);
             }
         }
 
@@ -202,7 +206,6 @@
     };
 
     exports.devicesByLocation = function (req, res, next, locationName) {
-        console.log('locationName: ' + locationName);
         Device.find({"location": locationName}).exec(function (err, devices) {
             if (err) {
                 return next(err);
@@ -217,6 +220,27 @@
 
     exports.getDevicesByLocation = function (req, res,  next) {
         res.jsonp(req.devices);
+    };
+
+    var mapDeviceToFilteredName = function (device) {
+        return {_id: device._id, name: device.name};
+    }
+
+    exports.filteredNames = function (req, res, next, nameFilter) {
+        Device.find({name: getNameFilterExpression(nameFilter)}).exec(function (err, devices) {
+            if (err) {
+                return next(err);
+            }
+            if (!devices) {
+                req.filteredNames = [];
+            }
+            req.filteredNames = lodash.map(devices, mapDeviceToFilteredName);
+            next();
+        });
+    };
+
+    exports.getFilteredNames = function (req, res,  next) {
+        res.jsonp(req.filteredNames);
     };
 
     exports.hasAuthorization = function (req, res, next) {

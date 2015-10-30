@@ -14,6 +14,9 @@
             }).state('locations', {
                 url: '/locations',
                 templateUrl: 'modules/admin/views/locations.client.view.html'
+            }).state('audit', {
+                url: '/audit',
+                templateUrl: 'modules/admin/views/audit.client.view.html'
             });
         }
         ]);

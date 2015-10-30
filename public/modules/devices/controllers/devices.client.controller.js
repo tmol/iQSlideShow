@@ -206,15 +206,13 @@
 
                 $scope.nameSearchPlaceholder = search;
 
-                Devices.query({
-                    locations: $scope.filterParameters.locations,
-                    name: search
-                }, function (devices) {
-                    var uniqueDevicesName = _.uniq(_.pluck(devices, 'name'));
+                Devices.getFilteredNames({
+                    nameFilter: search
+                }, function (filteredNames) {
+                    var uniqueDevicesName = _.uniq(_.pluck(filteredNames, 'name'));
                     $scope.possibleSearchedDeviceNames = _.sortBy(uniqueDevicesName, function (name) {
                         return name.toLowerCase();
                     });
-                    $scope.devices = devices;
                 });
             };
 
@@ -225,10 +223,15 @@
             };
 
             $scope.initNameSearchFilter = function (select) {
-                select.search = $scope.filterParameters.name;
+                var searchFilter = $scope.filterParameters.name;
+                select.search = angular.isUndefined(searchFilter)
+                    ? '' : searchFilter;
             };
 
-            $scope.filterDevices = function () {
+            $scope.filterDevices = function (select) {
+                if (!angular.isUndefined(select) && select.clickTriggeredSelect === false) {
+                    $scope.filterParameters.name = select.placeholder;
+                }
                 Devices.query({
                     locations: $scope.filterParameters.locations,
                     name: $scope.filterParameters.name
