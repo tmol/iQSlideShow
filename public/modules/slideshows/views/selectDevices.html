@@ -1,0 +1,17 @@
+<div class="modal-header">
+    <input type="text" placeholder="search" ng-model="filter">
+    <input type="button" value="Search" ng-click="search()" />
+</div>
+<div class="modal-body">
+    <div class="row">
+        <div class="col-sm-6" ng-repeat="device in devices">
+            <label>
+                <input type="checkbox" ng-model="device.checked" /> {{device.name}}
+            </label>
+
+        </div>
+    </div>
+<input type="button" value="Save" ng-click="save()" /> <input type="button" value="Cancel" ng-click="$close()" />
+</div>
+
+
