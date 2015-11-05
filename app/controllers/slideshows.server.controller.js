@@ -240,6 +240,7 @@
                     if (err) {
                         callback(err);
                     } else {
+                        device.sendReloadMessage();
                         callback();
                     }
                 });
