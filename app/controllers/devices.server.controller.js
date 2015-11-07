@@ -129,31 +129,12 @@
             locationsFilter,
             nameFilter;
 
-        if (req.query.locations) {
-            locationsFilter = req.query.locations;
-            if (locationsFilter && locationsFilter.length > 0) {
-                if (!(locationsFilter instanceof Array)) {
-                    locationsFilter = [locationsFilter];
-                }
-                select.location = { $in : locationsFilter };
-            }
-        }
-
-        if (req.query.name) {
-            nameFilter = req.query.name;
-            if (nameFilter && nameFilter.length > 0) {
-                select.name =  getNameFilterExpression(nameFilter);
-            }
-        }
-
-        Device.find(select).sort('-created').populate('user', 'displayName').exec(function (err, devices) {
-            if (err) {
-                return res.status(400).send({
-                    message: errorHandler.getErrorMessage(err)
-                });
-            } else {
-                res.jsonp(devices);
-            }
+        Device.findByFilter(req.query, function (devices) {
+            res.jsonp(devices);
+        }, function (err) {
+            res.status(400).send({
+                message: errorHandler.getErrorMessage(err)
+            });
         });
     };
 

@@ -8,5 +8,7 @@
         app.route('/audits')
             .get(audits.list)
             .post(users.requiresLogin, audits.create);
+        app.route('/audits/csv')
+            .get(audits.csv);
     };
 }());

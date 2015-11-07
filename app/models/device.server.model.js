@@ -99,5 +99,39 @@
         return this.findOne({"deviceId": id}).populate('user').populate('slideAgregation.playList.slideShow', 'name');
     };
 
+    DeviceSchema.statics.findByFilter = function (filter, onSuccess, onError) {
+        var select = {},
+            locationsFilter,
+            nameFilter;
+
+        if (filter.locations) {
+            locationsFilter = filter.locations;
+            if (locationsFilter && locationsFilter.length > 0) {
+                if (!(locationsFilter instanceof Array)) {
+                    locationsFilter = [locationsFilter];
+                }
+                select.location = { $in : locationsFilter };
+            }
+        }
+
+        if (filter.name) {
+            nameFilter = filter.name;
+            if (nameFilter && nameFilter.length > 0) {
+                var getNameFilterExpression = function (nameFilter) {
+                    return { $regex: '^' + nameFilter, $options: 'i' };
+                };
+                select.name =  getNameFilterExpression(nameFilter);
+            }
+        }
+
+        this.find(select).sort('-created').populate('user', 'displayName').exec(function (err, devices) {
+            if (err) {
+                onError(err);
+            } else {
+                onSuccess(devices);
+            }
+        });
+    };
+
     mongoose.model('Device', DeviceSchema);
 }());

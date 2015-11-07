@@ -261,6 +261,19 @@
                 return $scope.filterValuePlaceholder;
             };
 
+            $scope.onPlayOnClicked = function () {
+                var scope = $scope.$new(true);
+
+                $modal.open({
+                    animation: false,
+                    templateUrl: Path.getViewUrl('selectDevices'),
+                    windowClass: 'waitingForActivationDialog',
+                    backdrop: 'static',
+                    controller: 'SelectDevicesController',
+                    scope: scope
+                });
+            };
+
             $scope.$watch('filterParameters.showOnlyMine', function (oldValue, newValue) {
                 if (oldValue !== newValue) {
                     $scope.filterSlideShows();

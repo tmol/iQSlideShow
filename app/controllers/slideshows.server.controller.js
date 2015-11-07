@@ -7,8 +7,10 @@
         mongoose = require('mongoose'),
         errorHandler = require('./errors.server.controller'),
         Slideshow = mongoose.model('Slideshow'),
+        Device = mongoose.model('Device'),
         Promise = require("Promise"),
-        lodash = require('lodash');
+        lodash = require('lodash'),
+        Async = require("async");
 
     /**
      * Create a Slideshow
@@ -22,9 +24,8 @@
                 return res.status(400).send({
                     message: errorHandler.getErrorMessage(err)
                 });
-            } else {
-                res.jsonp(slideshow);
             }
+            res.jsonp(slideshow);
         });
     };
 
@@ -56,9 +57,8 @@
                 return res.status(400).send({
                     message: errorHandler.getErrorMessage(err)
                 });
-            } else {
-                res.jsonp(slideshow);
             }
+            res.jsonp(slideshow);
         });
     };
 
@@ -73,9 +73,8 @@
                 return res.status(400).send({
                     message: errorHandler.getErrorMessage(err)
                 });
-            } else {
-                res.jsonp(slideshow);
             }
+            res.jsonp(slideshow);
         });
     };
 
@@ -245,9 +244,94 @@
         fs.readdir('public/modules/slideshows/slideTemplates', function (err, files) {
             if (err) {
                 return res.status(400).send('Canot read templates');
-            } else {
-                res.jsonp(files);
             }
+            res.jsonp(files);
+        });
+    };
+
+    exports.getDevices = function (req, res) {
+        Device.findByFilter(req.query, function (devices) {
+
+            var playOnDevices = devices.map(function (device) {
+                var isSlideShowInPlayList = device.slideAgregation && device.slideAgregation.playList.some(function (entry) {
+                    return entry.slideShow && entry.slideShow.toString() === req.slideshow._id;
+                });
+
+                return {
+                    _id: device._id,
+                    name: device.name,
+                    checked: isSlideShowInPlayList
+                };
+            });
+
+            res.jsonp(playOnDevices);
+        }, function (err) {
+            res.status(400).send({
+                message: errorHandler.getErrorMessage(err)
+            });
+        });
+    };
+
+    exports.setDevices = function (req, res) {
+        var selectedDevices = req.body;
+
+        Device.find({}, function (err, devices) {
+            if (err) {
+                return res.status(400).send({
+                    message: errorHandler.getErrorMessage(err)
+                });
+            }
+
+            var devicesToSave = [];
+            devices.forEach(function (device) {
+
+                var deviceWasSelected = selectedDevices.some(function (selectedDevice) {
+                    return selectedDevice._id === device._id;
+                });
+
+                if (!device.slideAgregation) {
+                    device.slideAgregation = {
+                        agregationMode: "sequential",
+                        playList: []
+                    };
+                }
+                var slideShowIsInPlayList = device.slideAgregation.playList.some(function (entry) {
+                    return entry.slideShow && entry.slideShow.toString() === req.slideshow._id;
+                });
+
+                if (deviceWasSelected && !slideShowIsInPlayList) {
+                    device.slideAgregation.playList.push({
+                        slideShow: req.slideshow
+                    });
+                    devicesToSave.push(device);
+                    return;
+                }
+
+                if (slideShowIsInPlayList && !deviceWasSelected) {
+                    device.slideAgregation.playList = device.slideAgregation.playList.filter(function (entry) {
+                        return entry.slideShow && entry.slideShow.toString() !== req.slideshow._id;
+                    });
+                    devicesToSave.push(device);
+                }
+            });
+
+            Async.each(devicesToSave, function (device, callback) {
+                device.save(function (err) {
+                    if (err) {
+                        callback(err);
+                    } else {
+                        device.sendReloadMessage();
+                        callback();
+                    }
+                });
+            }, function (err) {
+                if (err) {
+                    return res.status(400).send({
+                        message: errorHandler.getErrorMessage(err)
+                    });
+                }
+                res.status(200).send("");
+            });
         });
     };
 }());

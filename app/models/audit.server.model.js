@@ -1,5 +1,4 @@
 /*global require, exports*/
-/*jslint es5: true */
 (function () {
     'use strict';
 
@@ -7,6 +6,7 @@
      * Module dependencies.
      */
     var mongoose = require('mongoose'),
+        mongooseCsv = require('mongoose-csv'),
         Schema = mongoose.Schema,
         AuditSchema = new Schema({
             deviceId: {
@@ -38,6 +38,6 @@
                 required: 'Please provide the creation date'
             }
         });
-
+    AuditSchema.plugin(mongooseCsv);
     mongoose.model('Audit', AuditSchema);
 }());

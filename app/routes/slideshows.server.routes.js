@@ -20,6 +20,10 @@ module.exports = function (app) {
     app.route('/slideshows/:slideshowId/:slideNumber')
 		.get(slideshows.readSlide);
 
+    app.route('/slideshowDevices/:slideshowId')
+		.get(slideshows.getDevices)
+        .put(users.requiresLogin, slideshows.hasAuthorization, slideshows.setDevices)
+
 	app.route('/templates')
 		.get(slideshows.getTemplates);
 		
