@@ -9,8 +9,7 @@
     var mongoose = require('mongoose'),
         errorHandler = require('./errors.server.controller'),
         Audit = mongoose.model('Audit'),
-        Device = mongoose.model('Device'),
-        _ = require('lodash');
+        Device = mongoose.model('Device');
 
 
     exports.create = function (req, res) {
@@ -36,19 +35,16 @@
                     return res.status(400).send({
                         message: errorHandler.getErrorMessage(err)
                     });
-                } else {
-                    res.jsonp(audit);
                 }
+                res.jsonp(audit);
             });
         });
     };
-
-    exports.list = function (req, res) {
+    var getAuditQuery = function (query) {
         var select = {},
             createdQueryExpression = {},
-            auditsFilter,
-            startDate = req.query.startDate,
-            endDate = req.query.endDate;
+            startDate = query.startDate,
+            endDate = query.endDate;
 
         if (startDate) {
             createdQueryExpression.$gte = startDate;
@@ -60,17 +56,26 @@
             select.created = createdQueryExpression;
         }
 
-        Audit.find(select).sort('-created').exec(function (err, audits) {
+        return Audit.find(select).sort('-created');
+    };
+
+    exports.list = function (req, res) {
+        getAuditQuery(req.query).exec(function (err, audits) {
             if (err) {
                 return res.status(400).send({
                     message: errorHandler.getErrorMessage(err)
                 });
-            } else {
-                res.jsonp(audits);
             }
+            res.jsonp(audits);
         });
     };
-
+    exports.csv = function (req, res) {
+        res.writeHead(200, {
+            'Content-Type': 'text/csv',
+            'Content-Disposition': 'attachment; filename=audit.csv'
+        });
+        getAuditQuery(req.query).csv(res);
+    };
     exports.hasAuthorization = function (req, res, next) {
         next();
     };
