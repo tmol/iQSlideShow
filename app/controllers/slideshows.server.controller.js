@@ -8,7 +8,7 @@
         errorHandler = require('./errors.server.controller'),
         Slideshow = mongoose.model('Slideshow'),
         Promise = require("Promise"),
-        _ = require('lodash');
+        lodash = require('lodash');
 
     /**
      * Create a Slideshow
@@ -49,7 +49,7 @@
     exports.update = function (req, res) {
         var slideshow = req.slideshow;
 
-        slideshow = _.extend(slideshow, req.body);
+        slideshow = lodash.extend(slideshow, req.body);
 
         slideshow.save(function (err) {
             if (err) {
@@ -79,53 +79,133 @@
         });
     };
 
-    var prepareFilterPromise = function (filterContext, select) {
-        var promise;
+    var mapSlideshowToFilteredName = function (slideShow) {
+        return {_id: slideShow._id, name: slideShow.name};
+    };
 
-        if ('true' === filterContext.req.query.showOnlyMine) {
-            select.user = filterContext.req.user._id;
+    var mapSlideShowToTags = function (slideShow) {
+        return slideShow.tags;
+    };
+
+    var preparePromiseForFilter = function (select, req, actionOnFind) {
+        var showOnlyMine = req.query.showOnlyMine;
+
+        if (showOnlyMine !== null && showOnlyMine === 'true') {
+            select.user = req.user._id;
         }
-
-        console.log('prepareFilterPromise select: ' + select);
-
-        promise = new Promise(function (resolve, reject) {
+        var promise = new Promise(function (resolve, reject) {
             Slideshow.find(select).sort('-created').populate('user', 'displayName').exec(function (err, slideshowsFound) {
                 if (err) {
                     reject(err);
                     return;
                 }
 
-                filterContext.slideshows = _.uniq(filterContext.slideshows.concat(slideshowsFound));
+                actionOnFind(slideshowsFound);
                 resolve();
             });
         });
-        filterContext.promises.push(promise);
+
+        return promise;
     };
 
-    /**
-     * List of Slideshows
-     */
-    exports.list = function (req, res) {
-        var searchString = req.query.searchString,
-            select,
-            filterContext = { promises: [], req: req, slideshows: []};
 
-        if (searchString && searchString.length > 0) {
-            select = {name : { $regex: '^' + searchString, $options: 'i' }};
-            prepareFilterPromise(filterContext, select);
-            select = {tags : { $elemMatch: {$regex: '.*' + searchString + '.*', $options: 'i' }}};
-            prepareFilterPromise(filterContext, select);
-            select = {$or: [{'slides.content.content' : {$regex: '.*' + searchString + '.*', $options: 'i' }}, {'draftSlides.content.content' : {$regex: '.*' + searchString + '.*', $options: 'i' }}]};
-            prepareFilterPromise(filterContext, select);
-        } else {
-            prepareFilterPromise(filterContext, {});
+    exports.getFilteredNamesAndTags = function (req, res) {
+        var select = {},
+            promises = [],
+            promise,
+            filterResult = { names: [], tags: [] },
+            namesAndTagsFilter = req.query.namesAndTagsFilter,
+            tagsRegExp = '.*' + namesAndTagsFilter + '.*';
+
+        if (namesAndTagsFilter !== null && namesAndTagsFilter.length > 0) {
+            select = {name : { $regex: '^' + namesAndTagsFilter, $options: 'i' }};
+            promise = preparePromiseForFilter(select, req, function (slideshowsFound) {
+                filterResult.names =  lodash.map(lodash.uniq(slideshowsFound), mapSlideshowToFilteredName);
+            });
+            promises.push(promise);
+
+            select = {tags : { $elemMatch: {$regex: tagsRegExp, $options: 'i' }}};
+            promise = preparePromiseForFilter(select, req, function (slideshowsFound) {
+                filterResult.tags = lodash.map(slideshowsFound, mapSlideShowToTags);
+                filterResult.tags = lodash.flatten(filterResult.tags);
+                filterResult.tags = lodash.uniq(filterResult.tags);
+                filterResult.tags = lodash.filter(filterResult.tags, function (tag) {
+                    return tag.match(new RegExp(tagsRegExp, 'i'));
+                });
+            });
+            promises.push(promise);
         }
 
-        Promise.all(filterContext.promises).then(function () {
-            res.jsonp(filterContext.slideshows);
+        Promise.all(promises).then(function () {
+            res.jsonp(filterResult);
         }, function (error) {
             return res.status(400).send({
-                message: errorHandler.getErrorMessage(err)
+                message: errorHandler.getErrorMessage(error)
+            });
+        });
+    };
+
+    var concatUnique = function (slideshows, foundSlideShows) {
+        return lodash.uniq(slideshows.concat(foundSlideShows));
+    };
+
+    var ensureArray = function (object) {
+        if (!lodash.isArray(object)) {
+            return [object];
+        }
+        return object;
+    };
+
+    exports.list = function (req, res) {
+        var nameFilters = req.query.nameFilters,
+            tagFilters = req.query.tagFilters,
+            tagAndNameFilter = req.query.tagAndNameFilter,
+            select = {},
+            promise,
+            slideshows = [],
+            promises = [];
+
+        if (tagAndNameFilter && tagAndNameFilter.length > 0) {
+            select = {
+                name : { $regex: '^' + tagAndNameFilter, $options: 'i' },
+                tags : { $elemMatch: {$regex: '.*' + tagAndNameFilter + '.*', $options: 'i' }}
+            };
+            promise = preparePromiseForFilter(select, req, function (foundSlideShows) {
+                slideshows = concatUnique(slideshows, foundSlideShows);
+            });
+            promises.push(promise);
+        }
+
+        if (nameFilters && nameFilters.length > 0) {
+            nameFilters = ensureArray(nameFilters);
+            select = {name : {$in: nameFilters }};
+            promise = preparePromiseForFilter(select, req, function (foundSlideShows) {
+                slideshows = concatUnique(slideshows, foundSlideShows);
+            });
+            promises.push(promise);
+        }
+
+        if (tagFilters && tagFilters.length > 0) {
+            tagFilters = ensureArray(tagFilters);
+            select = {tags : {$in: tagFilters }};
+            promise = preparePromiseForFilter(select, req, function (foundSlideShows) {
+                slideshows = concatUnique(slideshows, foundSlideShows);
+            });
+            promises.push(promise);
+        }
+
+        if (lodash.keys(select).length === 0) {
+            promise = preparePromiseForFilter({}, req, function (foundSlideShows) {
+                slideshows = concatUnique(slideshows, foundSlideShows);
+            });
+            promises.push(promise);
+        }
+
+        Promise.all(promises).then(function () {
+            res.jsonp(slideshows);
+        }, function (error) {
+            return res.status(400).send({
+                message: errorHandler.getErrorMessage(error)
             });
         });
     };

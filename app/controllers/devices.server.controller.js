@@ -122,7 +122,7 @@
 
     var getNameFilterExpression = function (nameFilter) {
         return { $regex: '^' + nameFilter, $options: 'i' };
-    }
+    };
 
     exports.list = function (req, res) {
         var select = {},
@@ -224,7 +224,7 @@
 
     var mapDeviceToFilteredName = function (device) {
         return {_id: device._id, name: device.name};
-    }
+    };
 
     exports.filteredNames = function (req, res, next, nameFilter) {
         Device.find({name: getNameFilterExpression(nameFilter)}).exec(function (err, devices) {
@@ -241,6 +241,7 @@
 
     exports.getFilteredNames = function (req, res,  next) {
         res.jsonp(req.filteredNames);
+        next();
     };
 
     exports.hasAuthorization = function (req, res, next) {

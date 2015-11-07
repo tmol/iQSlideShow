@@ -4,9 +4,8 @@
     </div>
     <div>
         <button class="btn btn-primary" type="button" ng-click="onShowLocationsFilter()">Filter</button>
-        <span device-locations-filter-summary ng-repeat='location in filterParameters.locations'  location='location' remove-Location-From-Filter='removeLocationFromFilter(location)'>
+        <span items-filter-summary filter-Parameters="filterParameters">
         </span>
-        <span><a href="" ng-click='clearLocationsFilters()' ng-show='atLeastOneLocationSelectedInFilter()'>Clear filter</a></span>
         <div class="controls" style="float:right">
             <span style="float:left; padding-right:10px">Search</span>
             <span style="float:right;" >

@@ -154,26 +154,29 @@
 
             $scope.filterParameters = $scope.cache.get('devices.client.controller.filterParameters');
             if (angular.isUndefined($scope.filterParameters)) {
-                $scope.filterParameters = {};
+                $scope.filterParameters = {
+                    filterEventName: 'filterDevices',
+                    removeItemFromFilter: function (location) {
+                        if (this.locations) {
+                            _.pull(this.locations, location);
+                            $scope.filterDevices();
+                        }
+                    },
+                    getItems: function () {
+                        return this.locations;
+                    },
+                    isNotEmpty: function () {
+                        return !angular.isUndefined(this.locations)
+                            && this.locations.length > 0;
+                    },
+                    clear: function () {
+                        if (!angular.isUndefined(this.locations)) {
+                            this.locations = [];
+                            $scope.filterDevices();
+                        }
+                    }
+                };
             }
-
-            $scope.removeLocationFromFilter = function (location) {
-                if ($scope.filterParameters.locations) {
-                    _.pull($scope.filterParameters.locations, location);
-                    $scope.filterDevices();
-                }
-            };
-
-            $scope.atLeastOneLocationSelectedInFilter = function () {
-                return (!angular.isUndefined($scope.filterParameters.locations)
-                        && $scope.filterParameters.locations.length > 0);
-
-            };
-
-            $scope.clearLocationsFilters = function () {
-                $scope.filterParameters.locations = [];
-                $scope.filterDevices();
-            };
 
             $scope.onShowLocationsFilter = function () {
                 modalInstance = $modal.open({

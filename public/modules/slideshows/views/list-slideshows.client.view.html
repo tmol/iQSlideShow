@@ -9,12 +9,12 @@
         <div class="controls" style="float:right">
             <span style="float:left; padding-right:10px">Search</span>
             <span style="float:right;" >
-                <ui-select ng-model="filterParameters.searchString" theme="bootstrap" sortable="true" style="width: 300px;" title="Select search string" on-select='filterSlideshows()' reset-search-input='false'>
-                    <ui-select-match placeholder="{{getfilterValuePlaceholder()}}" data-ng-init='initSearchFilter($select)'>{{$select.selected}}</ui-select-match>
+                <ui-select ng-model="filterParameters.searchItem" theme="bootstrap" sortable="true" style="width: 300px;" title="Select search string" on-select='filterSlideShows()' reset-search-input='false'>
+                    <ui-select-match placeholder="{{getfilterValuePlaceholder()}}" data-ng-init='initNamesAndTagsFilter($select)'>{{$select.selected.name}}</ui-select-match>
                     <ui-select-choices repeat="filterValue in possibleFilterValues"
                         refresh="refreshPossibleFilterValuesAndSlideShows($select.search)"
                         refresh-delay="0">
-                        {{filterValue}}
+                        {{filterValue.name}}
                     </ui-select-choices>
                 </ui-select>
             </span>

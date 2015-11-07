@@ -217,32 +217,43 @@
 
             $scope.filterParameters = $scope.cache.get('slideshows.client.controller.filterParameters');
             if (angular.isUndefined($scope.filterParameters)) {
-                $scope.filterParameters = { searchString: '', showOnlyMine: false };
+                $scope.filterParameters = { nameFilters: [],
+                                           tagFilters: [],
+                                           showOnlyMine: false };
             }
+
+            var toLowerCase = function (item) {
+                return item.name.toLowerCase();
+            };
 
             $scope.possibleFilterValues = [ ];
 
-            $scope.refreshPossibleFilterValuesAndSlideShows = function (search) {
-                $scope.filterParameters.searchString = search;
-                var searchString = $scope.filterParameters.searchString;
-                if (!searchString || searchString.length === 0) {
+            $scope.refreshPossibleFilterValuesAndSlideShows = function (namesAndTagsFilterValue) {
+                $scope.filterParameters.namesAndTagsFilter = namesAndTagsFilterValue;
+                var namesAndTagsFilter = $scope.filterParameters.namesAndTagsFilter;
+                if (!namesAndTagsFilter || namesAndTagsFilter.length === 0) {
                     $scope.filterValuePlaceholder = 'Select search string...';
+                    $scope.filterParameters.tagFilters = [];
+                    $scope.filterParameters.nameFilters = [];
                     $scope.possibleFilterValues = [];
                     $scope.filterSlideShows();
                     return;
                 }
 
-                $scope.filterValuePlaceholder = $scope.filterParameters.searchString;
+                $scope.filterValuePlaceholder = $scope.filterParameters.namesAndTagsFilter;
 
-                Slideshows.query({
+                Slideshows.getFilteredNamesAndTags({
                     showOnlyMine: $scope.filterParameters.showOnlyMine,
-                    searchString: searchString
-                }, function (slideshows) {
-                    var uniqueSlideShowNames = _.uniq(_.pluck(slideshows, 'name'));
-                    $scope.possibleFilterValues = _.sortBy(uniqueSlideShowNames, function (name) {
-                        return name.toLowerCase();
-                    });
-                    $scope.slideshows = slideshows;
+                    namesAndTagsFilter: namesAndTagsFilter
+                }, function (filterResult) {
+                    var slideShowNames,
+                        tags;
+
+                    $scope.possibleFilterValues = _.sortBy(filterResult.names, toLowerCase);
+
+                    tags = _.map(filterResult.tags, function (tag) { return {_id: 'tag', name: '#' + tag }; });
+                    tags = _.sortBy(tags, toLowerCase);
+                    $scope.possibleFilterValues = $scope.possibleFilterValues.concat(tags);
                 });
             };
 
@@ -256,14 +267,31 @@
                 }
             });
 
-            $scope.initSearchFilter = function (select) {
-                select.search = $scope.filterParameters.searchString;
+            $scope.initNamesAndTagsFilter = function (select) {
+                select.search = $scope.filterParameters.namesAndTagsFilter;
             };
 
             $scope.filterSlideShows = function () {
-                Slideshows.query({
+                var searchItem = $scope.filterParameters.searchItem,
+                    tagName;
+
+                if (!angular.isUndefined(searchItem)) {
+                    if (searchItem._id === 'tag') {
+                        tagName = searchItem.name.slice(1);
+                        if (!_.includes($scope.filterParameters.tagFilters, tagName)) {
+                            $scope.filterParameters.tagFilters.push(tagName);
+                        }
+                    } else {
+                        if (!_.includes($scope.nameFilters, searchItem.name)) {
+                            $scope.filterParameters.nameFilters.push(searchItem.name);
+                        }
+                    }
+                }
+
+                Slideshows.filter({
                     showOnlyMine: $scope.filterParameters.showOnlyMine,
-                    searchString: $scope.filterParameters.searchString
+                    nameFilters: $scope.filterParameters.nameFilters,
+                    tagFilters: $scope.filterParameters.tagFilters
                 }, function (result) {
                     $scope.slideshows = result;
                 });
