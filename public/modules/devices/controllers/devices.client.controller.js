@@ -156,24 +156,17 @@
             if (angular.isUndefined($scope.filterParameters)) {
                 $scope.filterParameters = {
                     filterEventName: 'filterDevices',
-                    removeItemFromFilter: function (location) {
-                        if (this.locations) {
-                            _.pull(this.locations, location);
-                            $scope.filterDevices();
-                        }
+                    removeItemFromFilter: function (filterItem) {
+                        _.pull(this.filterItems, filterItem);
+                        $scope.filterDevices();
                     },
-                    getItems: function () {
-                        return this.locations;
-                    },
+                    filterItems: [],
                     isNotEmpty: function () {
-                        return !angular.isUndefined(this.locations)
-                            && this.locations.length > 0;
+                        return this.filterItems.length > 0;
                     },
                     clear: function () {
-                        if (!angular.isUndefined(this.locations)) {
-                            this.locations = [];
-                            $scope.filterDevices();
-                        }
+                        this.filterItems = [];
+                        $scope.filterDevices();
                     }
                 };
             }
@@ -236,7 +229,7 @@
                     $scope.filterParameters.name = select.placeholder;
                 }
                 Devices.query({
-                    locations: $scope.filterParameters.locations,
+                    locations: $scope.filterParameters.filterItems,
                     name: $scope.filterParameters.name
                 }, function (result) {
                     $scope.devices = result;

@@ -10,7 +10,7 @@
         $scope.items = [];
 
         locations.forEach(function (location) {
-            selectedForFilter = filterParameters.locations && _.includes(filterParameters.locations, location.name);
+            selectedForFilter = filterParameters.filterItems && _.includes(filterParameters.filterItems, location.name);
             $scope.items.push({ name: location.name, selectedForFilter: selectedForFilter });
         });
 
@@ -19,10 +19,10 @@
         };
 
         $scope.filter = function () {
-            $scope.filterParameters.locations = [];
+            $scope.filterParameters.filterItems = [];
             $scope.items.forEach(function (item) {
                 if (item.selectedForFilter === true) {
-                    $scope.filterParameters.locations.push(item.name);
+                    $scope.filterParameters.filterItems.push(item.name);
                 }
             });
             $scope.$root.$broadcast('filterDevices');

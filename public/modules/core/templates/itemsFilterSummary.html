@@ -1,4 +1,4 @@
-<span ng-repeat='item in filterParameters.getItems()'>
-    {{item}} <input type="button" ng-click="remove(item)" value="X"> |
+<span ng-repeat='filterItem in filterParameters.filterItems'>
+    {{filterItem.name ? filterItem.name : filterItem}} <input type="button" ng-click="remove(filterItem)" value="X"> |
 </span>
 <span><a href="" ng-click='filterParameters.clear()' ng-show='filterParameters.isNotEmpty()'>Clear filter</a></span>

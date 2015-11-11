@@ -1,0 +1,14 @@
+<div class="controls" style="float:right">
+    <span items-filter-summary filter-Parameters="filterParameters"></span>
+    <span style="float:left; padding-right:10px">{{label}}</span>
+    <span style="float:right;" >
+        <ui-select ng-model="filterParameters.namesAndTagsFilter" theme="bootstrap" sortable="true" style="width: 300px;" title="Select search string" on-select='filterUpdated($select)' reset-search-input='false'>
+            <ui-select-match placeholder="{{filterValuePlaceholder}}" data-ng-init='initNamesAndTagsFilter($select)'>{{$select.selected}}</ui-select-match>
+            <ui-select-choices repeat="filterValue in possibleFilterValues"
+                refresh="refreshPossibleFilterValues($select)"
+                refresh-delay="0">
+                {{filterValue.name}}
+            </ui-select-choices>
+        </ui-select>
+    </span>
+</div>

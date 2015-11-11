@@ -13,7 +13,6 @@
             $scope.slideshow = {
                 tags: []
             };
-            $scope.possibleTags = [];
             $scope.animationTypes = ["enter-left", "enter-right", "enter-bottom", "enter-top"];
             if ($scope.setPlayerMode) {
                 $scope.setPlayerMode(false);
@@ -215,51 +214,32 @@
                 $scope.cache = $cacheFactory('slideshows.client.controller');
             }
 
+            $scope.searchProvider = {
+                filterEventName: 'filterSlideShows',
+                cacheId: 'slideShowsFilter',
+                possibleFilterValues: $scope.possibleFilterValues,
+                refreshPossibleFilterValues: $scope.refreshPossibleFilterValues,
+                filter: function (filterParameters) {
+                    $scope.filterParameters.filterItems = filterParameters.filterItems;
+                    $scope.filterParameters.namesAndTagsFilter = filterParameters.namesAndTagsFilter;
+                    $scope.filterSlideShows();
+                },
+                getPossibleFilterValues: function (search, callback) {
+                    Slideshows.getFilteredNamesAndTags({
+                        showOnlyMine: $scope.filterParameters.showOnlyMine,
+                        namesAndTagsFilter: search
+                    }, function (filterResult) {
+                        callback(filterResult);
+                    });
+                }
+            };
+
             $scope.filterParameters = $scope.cache.get('slideshows.client.controller.filterParameters');
             if (angular.isUndefined($scope.filterParameters)) {
-                $scope.filterParameters = { nameFilters: [],
-                                           tagFilters: [],
-                                           showOnlyMine: false };
+                $scope.filterParameters = {
+                    showOnlyMine: false
+                };
             }
-
-            var toLowerCase = function (item) {
-                return item.name.toLowerCase();
-            };
-
-            $scope.possibleFilterValues = [ ];
-
-            $scope.refreshPossibleFilterValuesAndSlideShows = function (namesAndTagsFilterValue) {
-                $scope.filterParameters.namesAndTagsFilter = namesAndTagsFilterValue;
-                var namesAndTagsFilter = $scope.filterParameters.namesAndTagsFilter;
-                if (!namesAndTagsFilter || namesAndTagsFilter.length === 0) {
-                    $scope.filterValuePlaceholder = 'Select search string...';
-                    $scope.filterParameters.tagFilters = [];
-                    $scope.filterParameters.nameFilters = [];
-                    $scope.possibleFilterValues = [];
-                    $scope.filterSlideShows();
-                    return;
-                }
-
-                $scope.filterValuePlaceholder = $scope.filterParameters.namesAndTagsFilter;
-
-                Slideshows.getFilteredNamesAndTags({
-                    showOnlyMine: $scope.filterParameters.showOnlyMine,
-                    namesAndTagsFilter: namesAndTagsFilter
-                }, function (filterResult) {
-                    var slideShowNames,
-                        tags;
-
-                    $scope.possibleFilterValues = _.sortBy(filterResult.names, toLowerCase);
-
-                    tags = _.map(filterResult.tags, function (tag) { return {_id: 'tag', name: '#' + tag }; });
-                    tags = _.sortBy(tags, toLowerCase);
-                    $scope.possibleFilterValues = $scope.possibleFilterValues.concat(tags);
-                });
-            };
-
-            $scope.getfilterValuePlaceholder = function () {
-                return $scope.filterValuePlaceholder;
-            };
 
             $scope.onPlayOnClicked = function () {
                 var scope = $scope.$new(true);
@@ -285,26 +265,28 @@
             };
 
             $scope.filterSlideShows = function () {
-                var searchItem = $scope.filterParameters.searchItem,
-                    tagName;
+                var nameFilters = [],
+                    tagFilters = [];
 
-                if (!angular.isUndefined(searchItem)) {
-                    if (searchItem._id === 'tag') {
-                        tagName = searchItem.name.slice(1);
-                        if (!_.includes($scope.filterParameters.tagFilters, tagName)) {
-                            $scope.filterParameters.tagFilters.push(tagName);
-                        }
-                    } else {
-                        if (!_.includes($scope.nameFilters, searchItem.name)) {
-                            $scope.filterParameters.nameFilters.push(searchItem.name);
-                        }
-                    }
-                }
+                nameFilters = _.filter($scope.filterParameters.filterItems, function (filterItem) {
+                    return filterItem._id !== 'tag';
+                });
+                nameFilters = _.map(nameFilters, function (nameFilterItem) {
+                    return nameFilterItem.name;
+                });
+
+                tagFilters = _.filter($scope.filterParameters.filterItems, function (filterItem) {
+                    return filterItem._id === 'tag';
+                });
+                tagFilters = _.map(tagFilters, function (tagFilterItem) {
+                    return tagFilterItem.name.slice(1);
+                });
 
                 Slideshows.filter({
                     showOnlyMine: $scope.filterParameters.showOnlyMine,
-                    nameFilters: $scope.filterParameters.nameFilters,
-                    tagFilters: $scope.filterParameters.tagFilters
+                    nameFilters: nameFilters,
+                    tagFilters: tagFilters,
+                    namesAndTagsFilter:  $scope.filterParameters.namesAndTagsFilter
                 }, function (result) {
                     $scope.slideshows = result;
                 });
