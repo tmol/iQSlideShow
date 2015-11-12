@@ -15,6 +15,19 @@ angular.module('core').directive('tagAndNameFilter', ['$cacheFactory', function 
         }
 
         var filter = function () {
+            scope.filterParameters.nameFilters = _.filter(scope.filterParameters.filterItems, function (filterItem) {
+                return filterItem._id !== 'tag';
+            });
+            scope.filterParameters.nameFilters = _.map(scope.filterParameters.nameFilters, function (nameFilterItem) {
+                return nameFilterItem.name;
+            });
+
+            scope.filterParameters.tagFilters = _.filter(scope.filterParameters.filterItems, function (filterItem) {
+                return filterItem._id === 'tag';
+            });
+            scope.filterParameters.tagFilters = _.map(scope.filterParameters.tagFilters, function (tagFilterItem) {
+                return tagFilterItem.name.slice(1);
+            });
             scope.searchProvider.filter(scope.filterParameters);
         };
 
@@ -56,6 +69,7 @@ angular.module('core').directive('tagAndNameFilter', ['$cacheFactory', function 
             if (clickTriggeredTheSelect &&
                     !_.includes(scope.filterParameters.filterItems, scope.filterParameters.namesAndTagsFilter)) {
                 scope.filterParameters.filterItems.push(scope.filterParameters.namesAndTagsFilter);
+                scope.filterParameters.namesAndTagsFilter = '';
             } else {
                 scope.filterParameters.namesAndTagsFilter = select.placeholder;
             }

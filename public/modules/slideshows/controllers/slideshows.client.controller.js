@@ -217,11 +217,8 @@
             $scope.searchProvider = {
                 filterEventName: 'filterSlideShows',
                 cacheId: 'slideShowsFilter',
-                possibleFilterValues: $scope.possibleFilterValues,
-                refreshPossibleFilterValues: $scope.refreshPossibleFilterValues,
                 filter: function (filterParameters) {
-                    $scope.filterParameters.filterItems = filterParameters.filterItems;
-                    $scope.filterParameters.namesAndTagsFilter = filterParameters.namesAndTagsFilter;
+                    $scope.filterParameters.namesAndTagsFilterParameters = filterParameters;
                     $scope.filterSlideShows();
                 },
                 getPossibleFilterValues: function (search, callback) {
@@ -237,7 +234,8 @@
             $scope.filterParameters = $scope.cache.get('slideshows.client.controller.filterParameters');
             if (angular.isUndefined($scope.filterParameters)) {
                 $scope.filterParameters = {
-                    showOnlyMine: false
+                    showOnlyMine: false,
+                    namesAndTagsFilterParameters: {}
                 };
             }
 
@@ -265,31 +263,16 @@
             };
 
             $scope.filterSlideShows = function () {
-                var nameFilters = [],
-                    tagFilters = [];
-
-                nameFilters = _.filter($scope.filterParameters.filterItems, function (filterItem) {
-                    return filterItem._id !== 'tag';
-                });
-                nameFilters = _.map(nameFilters, function (nameFilterItem) {
-                    return nameFilterItem.name;
-                });
-
-                tagFilters = _.filter($scope.filterParameters.filterItems, function (filterItem) {
-                    return filterItem._id === 'tag';
-                });
-                tagFilters = _.map(tagFilters, function (tagFilterItem) {
-                    return tagFilterItem.name.slice(1);
-                });
-
                 Slideshows.filter({
                     showOnlyMine: $scope.filterParameters.showOnlyMine,
-                    nameFilters: nameFilters,
-                    tagFilters: tagFilters,
-                    namesAndTagsFilter:  $scope.filterParameters.namesAndTagsFilter
+                    nameFilters: $scope.filterParameters.namesAndTagsFilterParameters.nameFilters,
+                    tagFilters: $scope.filterParameters.namesAndTagsFilterParameters.tagFilters,
+                    namesAndTagsFilter:  $scope.filterParameters.namesAndTagsFilterParameters.namesAndTagsFilter
                 }, function (result) {
                     $scope.slideshows = result;
-                    $scope.$apply();
+                    if (!$scope.$$phase) {
+                        $scope.$apply();
+                    }
                 });
             };
 
