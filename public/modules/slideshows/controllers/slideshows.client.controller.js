@@ -289,6 +289,7 @@
                     namesAndTagsFilter:  $scope.filterParameters.namesAndTagsFilter
                 }, function (result) {
                     $scope.slideshows = result;
+                    $scope.$apply();
                 });
             };
 
