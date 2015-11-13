@@ -1,13 +1,13 @@
 /*global require, exports, console*/
 (function () {
     'use strict';
-    /**
-     * Module dependencies.
-     */
-    var mongoose = require('mongoose');
-    var errorHandler = require('./errors.server.controller');
-    var SlideBlueprint = mongoose.model("SlideBlueprint");
-    var lodash = require('lodash');
+
+    var mongoose = require('mongoose'),
+        errorHandler = require('./errors.server.controller'),
+        SlideBlueprint = mongoose.model("SlideBlueprint"),
+        lodash = require('lodash'),
+        Promise = require('Promise'),
+        NamesAndTagsFilter = require('../services/namesAndTagsFilter');
 
     exports.renderSlide = function (req, res) {
         res.jsonp(req.slide);
@@ -42,25 +42,6 @@
             }
             req.slide = slide;
             next();
-        });
-    };
-
-    exports.getSlideByFilter = function (req, res) {
-        var filter = req.body.filters.map(function (item) {
-            if (!item) {
-                item = "^";
-            }
-            return new RegExp(item);
-        });
-        console.log(filter);
-        SlideBlueprint.find({"name": {$in: filter}}).populate('user', 'displayName').exec(function (err, slides) {
-            if (err) {
-                console.log(err);
-                return res.status(400).send({
-                    message: errorHandler.getErrorMessage(err)
-                });
-            }
-            res.jsonp(slides);
         });
     };
 
@@ -99,6 +80,43 @@
                     });
                 }
                 res.jsonp(slide);
+            });
+        });
+    };
+
+    var preparePromiseForFilter = function (select, req, actionOnFind) {
+        var promise = new Promise(function (resolve, reject) {
+            SlideBlueprint.find(select).sort('-created').populate('user', 'displayName').exec(function (err, slideshowsFound) {
+                if (err) {
+                    reject(err);
+                    return;
+                }
+
+                actionOnFind(slideshowsFound);
+                resolve();
+            });
+        });
+
+        return promise;
+    };
+
+    exports.getFilteredNamesAndTags = function (req, res) {
+        NamesAndTagsFilter.getFilteredNamesAndTags(req, preparePromiseForFilter, function (filterResult) {
+            res.jsonp(filterResult);
+        }, function (error) {
+            return res.status(400).send({
+                message: errorHandler.getErrorMessage(error)
+            });
+        });
+    };
+
+    exports.getSlideByFilter = function (req, res) {
+        NamesAndTagsFilter.filter(req, preparePromiseForFilter, function (filterResult) {
+            res.jsonp(filterResult);
+        }, function (error) {
+            console.log(error);
+            return res.status(400).send({
+                message: errorHandler.getErrorMessage(error)
             });
         });
     };

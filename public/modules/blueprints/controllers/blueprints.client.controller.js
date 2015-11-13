@@ -4,10 +4,12 @@
     'use strict';
     angular.module('blueprints').controller('BlueprintsController', ['$scope', 'Tags', 'SlideBlueprints',
         function ($scope, Tags, SlideBlueprints) {
-            $scope.filter = "";
+            $scope.filterParameters = {namesAndTagsFilter: ''};
             $scope.search = function () {
                 SlideBlueprints.getByFilter({
-                    filters: [$scope.filter]
+                    nameFilters: $scope.filterParameters.nameFilters,
+                    tagFilters: $scope.filterParameters.tagFilters,
+                    namesAndTagsFilter:  $scope.filterParameters.namesAndTagsFilter
                 }, function (result) {
                     $scope.slides = result.map(function (item) {
                         var slide = item.slide[0];
@@ -19,6 +21,22 @@
                         return item.slide[0];
                     });
                 });
+            };
+
+            $scope.searchProvider = {
+                filterEventName: 'filterBluePrints',
+                cacheId: 'bluePrintsFilter',
+                filter: function (filterParameters) {
+                    $scope.filterParameters = filterParameters;
+                    $scope.search();
+                },
+                getPossibleFilterValues: function (search, callback) {
+                    SlideBlueprints.getFilteredNamesAndTags({
+                        namesAndTagsFilter: search
+                    }, function (filterResult) {
+                        callback(filterResult);
+                    });
+                }
             };
             $scope.search();
 

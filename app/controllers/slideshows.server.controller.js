@@ -8,9 +8,10 @@
         errorHandler = require('./errors.server.controller'),
         Slideshow = mongoose.model('Slideshow'),
         Device = mongoose.model('Device'),
-        Promise = require("Promise"),
+        Promise = require('Promise'),
         lodash = require('lodash'),
-        Async = require("async");
+        Async = require('async'),
+        NamesAndTagsFilter = require('../services/namesAndTagsFilter');
 
     /**
      * Create a Slideshow
@@ -78,14 +79,6 @@
         });
     };
 
-    var mapSlideshowToFilteredName = function (slideShow) {
-        return {_id: slideShow._id, name: slideShow.name};
-    };
-
-    var mapSlideShowToTags = function (slideShow) {
-        return slideShow.tags;
-    };
-
     var preparePromiseForFilter = function (select, req, actionOnFind) {
         var showOnlyMine = req.query.showOnlyMine;
 
@@ -109,33 +102,7 @@
 
 
     exports.getFilteredNamesAndTags = function (req, res) {
-        var select = {},
-            promises = [],
-            promise,
-            filterResult = { names: [], tags: [] },
-            namesAndTagsFilter = req.query.namesAndTagsFilter,
-            tagsRegExp = '.*' + namesAndTagsFilter + '.*';
-
-        if (namesAndTagsFilter !== null && namesAndTagsFilter.length > 0) {
-            select = {name : { $regex: '^' + namesAndTagsFilter, $options: 'i' }};
-            promise = preparePromiseForFilter(select, req, function (slideshowsFound) {
-                filterResult.names =  lodash.map(lodash.uniq(slideshowsFound), mapSlideshowToFilteredName);
-            });
-            promises.push(promise);
-
-            select = {tags : { $elemMatch: {$regex: tagsRegExp, $options: 'i' }}};
-            promise = preparePromiseForFilter(select, req, function (slideshowsFound) {
-                filterResult.tags = lodash.map(slideshowsFound, mapSlideShowToTags);
-                filterResult.tags = lodash.flatten(filterResult.tags);
-                filterResult.tags = lodash.uniq(filterResult.tags);
-                filterResult.tags = lodash.filter(filterResult.tags, function (tag) {
-                    return tag.match(new RegExp(tagsRegExp, 'i'));
-                });
-            });
-            promises.push(promise);
-        }
-
-        Promise.all(promises).then(function () {
+        NamesAndTagsFilter.getFilteredNamesAndTags(req, preparePromiseForFilter, function (filterResult) {
             res.jsonp(filterResult);
         }, function (error) {
             return res.status(400).send({
@@ -144,64 +111,9 @@
         });
     };
 
-    var concatUnique = function (slideshows, foundSlideShows) {
-        return lodash.uniq(slideshows.concat(foundSlideShows));
-    };
-
-    var ensureArray = function (object) {
-        if (!lodash.isArray(object)) {
-            return [object];
-        }
-        return object;
-    };
-
     exports.list = function (req, res) {
-        var nameFilters = req.query.nameFilters,
-            tagFilters = req.query.tagFilters,
-            tagAndNameFilter = req.query.tagAndNameFilter,
-            select = {},
-            promise,
-            slideshows = [],
-            promises = [];
-
-        if (tagAndNameFilter && tagAndNameFilter.length > 0) {
-            select = {
-                name : { $regex: '^' + tagAndNameFilter, $options: 'i' },
-                tags : { $elemMatch: {$regex: '.*' + tagAndNameFilter + '.*', $options: 'i' }}
-            };
-            promise = preparePromiseForFilter(select, req, function (foundSlideShows) {
-                slideshows = concatUnique(slideshows, foundSlideShows);
-            });
-            promises.push(promise);
-        }
-
-        if (nameFilters && nameFilters.length > 0) {
-            nameFilters = ensureArray(nameFilters);
-            select = {name : {$in: nameFilters }};
-            promise = preparePromiseForFilter(select, req, function (foundSlideShows) {
-                slideshows = concatUnique(slideshows, foundSlideShows);
-            });
-            promises.push(promise);
-        }
-
-        if (tagFilters && tagFilters.length > 0) {
-            tagFilters = ensureArray(tagFilters);
-            select = {tags : {$in: tagFilters }};
-            promise = preparePromiseForFilter(select, req, function (foundSlideShows) {
-                slideshows = concatUnique(slideshows, foundSlideShows);
-            });
-            promises.push(promise);
-        }
-
-        if (lodash.keys(select).length === 0) {
-            promise = preparePromiseForFilter({}, req, function (foundSlideShows) {
-                slideshows = concatUnique(slideshows, foundSlideShows);
-            });
-            promises.push(promise);
-        }
-
-        Promise.all(promises).then(function () {
-            res.jsonp(slideshows);
+        NamesAndTagsFilter.filter(req, preparePromiseForFilter, function (filterResult) {
+            res.jsonp(filterResult);
         }, function (error) {
             return res.status(400).send({
                 message: errorHandler.getErrorMessage(error)

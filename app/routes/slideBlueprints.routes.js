@@ -12,8 +12,11 @@
             .get(slideBlueprints.renderSlide)
             .delete(users.requiresLogin, slideBlueprints.delete);
 
-        app.route('/slideBlueprints/slides/byFilter')
-            .post(slideBlueprints.getSlideByFilter);
+        app.route('/slideBlueprints/slidesByFilter')
+            .get(users.requiresLogin, slideBlueprints.getSlideByFilter);
+
+        app.route('/slideBlueprints/filteredNamesAndTags')
+            .get(users.requiresLogin, slideBlueprints.getFilteredNamesAndTags);
 
         app.param("slideId", slideBlueprints.getSlideById);
     };

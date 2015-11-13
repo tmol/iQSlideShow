@@ -9,10 +9,13 @@
                     method: 'PUT'
                 },
                 getByFilter: {
-                    method: 'POST',
-                    url: 'slideBlueprints/slides/byFilter',
-                    data: {filters: "@filters"},
+                    method: 'GET',
+                    url: 'slideBlueprints/slidesByFilter',
                     isArray: true
+                },
+                getFilteredNamesAndTags:  {
+                    method: 'GET',
+                    url: '/slideBlueprints/filteredNamesAndTags'
                 }
             });
         }]);
