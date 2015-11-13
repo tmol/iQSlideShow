@@ -112,7 +112,7 @@
     };
 
     exports.list = function (req, res) {
-        NamesAndTagsFilter.filter(req, preparePromiseForFilter, function (filterResult) {
+        NamesAndTagsFilter.filter(req, Slideshow, function (filterResult) {
             res.jsonp(filterResult);
         }, function (error) {
             return res.status(400).send({

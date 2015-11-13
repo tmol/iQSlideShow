@@ -2,25 +2,12 @@
 /*global _, angular, ApplicationConfiguration*/
 (function () {
     'use strict';
-    angular.module('blueprints').controller('BlueprintsController', ['$scope', 'Tags', 'SlideBlueprints',
-        function ($scope, Tags, SlideBlueprints) {
+    angular.module('blueprints').controller('BlueprintsController', ['$scope', 'Tags', 'SlideBlueprints', 'SlideBlueprintsSearch',
+        function ($scope, Tags, SlideBlueprints, SlideBlueprintsSearch) {
             $scope.filterParameters = {namesAndTagsFilter: ''};
+
             $scope.search = function () {
-                SlideBlueprints.getByFilter({
-                    nameFilters: $scope.filterParameters.nameFilters,
-                    tagFilters: $scope.filterParameters.tagFilters,
-                    namesAndTagsFilter:  $scope.filterParameters.namesAndTagsFilter
-                }, function (result) {
-                    $scope.slides = result.map(function (item) {
-                        var slide = item.slide[0];
-                        slide.bluePrintTitle = item.name;
-                        if (item.user) {
-                            slide.publisher = item.user.displayName;
-                        }
-                        slide.templateUrl = 'modules/slideshows/slideTemplates/' + (slide.templateName || 'default') + '/slide.html';
-                        return item.slide[0];
-                    });
-                });
+                SlideBlueprintsSearch.search($scope);
             };
 
             $scope.searchProvider = {

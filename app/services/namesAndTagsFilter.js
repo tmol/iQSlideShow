@@ -48,8 +48,14 @@
         });
     };
 
-    var concatUnique = function (slideshows, foundSlideShows) {
-        return lodash.uniq(slideshows.concat(foundSlideShows));
+    var concatUnique = function (items, foundItems) {
+        var ids = lodash.map(items, function (item) { return item._id.id; });
+        lodash.forEach(foundItems, function (item) {
+            if (!lodash.include(ids, item._id.id)) {
+                items.push(item);
+            }
+        });
+        return items;
     };
 
     var ensureArray = function (object) {
@@ -59,55 +65,40 @@
         return object;
     };
 
-    exports.filter = function (req, preparePromiseForFilter, success, error) {
+    exports.filter = function (req, collection, success, error) {
         var nameFilters = req.query.nameFilters,
             tagFilters = req.query.tagFilters,
-            tagAndNameFilter = req.query.namesAndTagsFilter,
+            namesAndTagsFilter = req.query.namesAndTagsFilter,
             select = {},
             promise,
             items = [],
             promises = [];
 
-        if (tagAndNameFilter && tagAndNameFilter.length > 0) {
-            select = {
-                name : { $regex: '^' + tagAndNameFilter, $options: 'i' },
-                tags : { $elemMatch: {$regex: '.*' + tagAndNameFilter + '.*', $options: 'i' }}
-            };
-            promise = preparePromiseForFilter(select, req, function (foundItems) {
-                items = concatUnique(items, foundItems);
-            });
-            promises.push(promise);
+        if (namesAndTagsFilter && namesAndTagsFilter.length > 0) {
+            select = { $or: [
+                {name : { $regex: '^' + namesAndTagsFilter, $options: 'i' }},
+                {tags : { $elemMatch: {$regex: '.*' + namesAndTagsFilter + '.*', $options: 'i' }}}
+            ]
+                };
         }
 
         if (nameFilters && nameFilters.length > 0) {
             nameFilters = ensureArray(nameFilters);
-            select = {name : {$in: nameFilters }};
-            promise = preparePromiseForFilter(select, req, function (foundItems) {
-                items = concatUnique(items, foundItems);
-            });
-            promises.push(promise);
+            select.name = nameFilters;
         }
 
         if (tagFilters && tagFilters.length > 0) {
             tagFilters = ensureArray(tagFilters);
-            select = {tags : {$in: tagFilters }};
-            promise = preparePromiseForFilter(select, req, function (foundItems) {
-                items = concatUnique(items, foundItems);
-            });
-            promises.push(promise);
+            select.tags = { $all: tagFilters };
         }
 
-        if (lodash.keys(select).length === 0) {
-            promise = preparePromiseForFilter({}, req, function (foundItems) {
-                items = concatUnique(items, foundItems);
-            });
-            promises.push(promise);
-        }
+        collection.find(select).sort('-created').populate('user', 'displayName').exec(function (err, itemsFound) {
+            if (err) {
+                error(err);
+                return;
+            }
 
-        Promise.all(promises).then(function () {
-            success(items);
-        }, function (error) {
-            error(error);
+            success(itemsFound);
         });
     };
 

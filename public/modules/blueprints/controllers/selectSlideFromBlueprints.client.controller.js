@@ -1,22 +1,30 @@
 /*global angular, ApplicationConfiguration*/
 (function () {
     'use strict';
-    angular.module('blueprints').controller('SelectSlideFromBlueprintsController', ['$scope', 'Tags', 'SlideBlueprints',
-        function ($scope, Tags, SlideBlueprints) {
-            $scope.filter = "";
+    angular.module('blueprints').controller('SelectSlideFromBlueprintsController', ['$scope', 'Tags', 'SlideBlueprints', 'SlideBlueprintsSearch',
+        function ($scope, Tags, SlideBlueprints, SlideBlueprintsSearch) {
+            $scope.filterParameters = {namesAndTagsFilter: ''};
+
             $scope.search = function () {
-                SlideBlueprints.getByFilter({filters: [$scope.filter]}, function (result) {
-                    $scope.slides = result.map(function (item) {
-                        var slide = item.slide[0];
-                        slide.bluePrintTitle = item.name;
-                        if (item.user) {
-                            slide.publisher = item.user.displayName;
-                        }
-                        slide.templateUrl = 'modules/slideshows/slideTemplates/' + (slide.templateName || 'default') + '/slide.html';
-                        return item.slide[0];
-                    });
-                });
+                SlideBlueprintsSearch.search($scope);
             };
+
+            $scope.searchProvider = {
+                filterEventName: 'filterBluePrintsToBeAddedToSlideShows',
+                cacheId: 'bluePrintsToBeAddedToSlideShowsFilter',
+                filter: function (filterParameters) {
+                    $scope.filterParameters = filterParameters;
+                    $scope.search();
+                },
+                getPossibleFilterValues: function (search, callback) {
+                    SlideBlueprints.getFilteredNamesAndTags({
+                        namesAndTagsFilter: search
+                    }, function (filterResult) {
+                        callback(filterResult);
+                    });
+                }
+            };
+
             $scope.search();
             $scope.save = function () {
                 $scope.bluePrintInstance.slide = [$scope.Slide];
