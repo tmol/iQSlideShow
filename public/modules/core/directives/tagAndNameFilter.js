@@ -66,9 +66,10 @@ angular.module('core').directive('tagAndNameFilter', ['$cacheFactory', function 
         scope.filterUpdated = function (select) {
             var clickTriggeredTheSelect = select.clickTriggeredSelect === true;
 
-            if (clickTriggeredTheSelect &&
-                    !_.includes(scope.filterParameters.filterItems, scope.filterParameters.namesAndTagsFilter)) {
-                scope.filterParameters.filterItems.push(scope.filterParameters.namesAndTagsFilter);
+            if (clickTriggeredTheSelect) {
+                if (!_.includes(scope.filterParameters.filterItems, scope.filterParameters.namesAndTagsFilter)) {
+                    scope.filterParameters.filterItems.push(scope.filterParameters.namesAndTagsFilter);
+                }
                 scope.filterParameters.namesAndTagsFilter = '';
             } else {
                 scope.filterParameters.namesAndTagsFilter = select.placeholder;
