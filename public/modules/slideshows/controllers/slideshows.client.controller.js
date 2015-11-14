@@ -269,10 +269,10 @@
                     tagFilters: $scope.filterParameters.namesAndTagsFilterParameters.tagFilters,
                     namesAndTagsFilter:  $scope.filterParameters.namesAndTagsFilterParameters.namesAndTagsFilter
                 }, function (result) {
-                    $scope.slideshows = result;
-                    if (!$scope.$$phase) {
+                    $timeout(function () {
+                        $scope.slideshows = result;
                         $scope.$apply();
-                    }
+                    });
                 });
             };
 
