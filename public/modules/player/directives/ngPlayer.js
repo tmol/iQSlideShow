@@ -2,8 +2,8 @@
 /*global angular*/
 (function () {
     'use strict';
-    angular.module('player').directive('ngPlayer', ['Timers', 'CssInjector',
-        function (Timers, CssInjector) {
+    angular.module('player').directive('ngPlayer', ['Timers', 'CssInjector', 'JsInjector',
+        function (Timers, CssInjector, JsInjector) {
 
             return {
                 scope: {
@@ -11,7 +11,7 @@
                 },
                 transclude: true,
                 template: '<section ng-repeat="slide in slides() track by $index">'
-                    + '<section ng-if="$index==currentIndex" class="{{slide.animationType}} slideShow" style="position:absolute" ng-player-slide animation-type="" player-slide="slide.content">'
+                    + '<section ng-if="$index==currentIndex" class="{{slide.animationType}} slideShow" style="position:absolute" ng-player-slide animation-type="" slide-business="func" player-slide="slide.content">'
                     + '</section>'
                     + '</section>',
                 link: function (scope, element, attrs) {
@@ -32,12 +32,15 @@
                             return null;
                         }
 
-                        //prepare the stylesheet for the next slide and position the new slide
-                        CssInjector.inject(scope, slide.content.css, function () {
-                            scope.currentIndex = slideIndex;
-                            scope.$emit("slideLoaded", slide);
+                        JsInjector.inject(slide.content.js, function(slideBusiness){
+                            //prepare the stylesheet for the next slide and position the new slide
+                            CssInjector.inject(scope, slide.content.css, function () {
+                                scope.currentIndex = slideIndex;
+                                scope.func = slideBusiness;
+                                slide.content
+                                scope.$emit("slideLoaded", slide);
+                            });
                         });
-
                         return slide;
                     };
 

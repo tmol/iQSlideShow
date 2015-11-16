@@ -50,6 +50,7 @@
                 $scope.slides.forEach(function (slide, index) {
                     slide.content.templateUrl = 'modules/slideshows/slideTemplates/' + (slide.templateName || 'default') + '/slide.html';
                     slide.content.css = 'modules/slideshows/slideTemplates/' + (slide.templateName || 'default') + '/slide.css';
+                    slide.content.js = 'modules/slideshows/slideTemplates/' + (slide.templateName || 'default') + '/slide.js';
                     slide.index = index;
                 });
             };
