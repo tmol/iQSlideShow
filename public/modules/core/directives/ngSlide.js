@@ -12,20 +12,18 @@ angular.module('core').directive('ngSlide', [
 
                 var slide = scope.$parent.slide || scope.$parent.currentSlide;
 
-                var content = slide.content;
-
                 scope.$parent.$watch(function(){
-                    if (!content){
+                    if (!slide){
                         return;
                     }
 
                     if (element[0].tagName=="IMG")
                     {
-                        element[0].src=content[attrs.member] || 'modules/slideshows/css/img/default.jpg';
+                        element[0].src=slide[attrs.member] || 'modules/slideshows/css/img/default.jpg';
                         return;
                     }
 
-                    element[0].innerHTML=content[attrs.member];
+                    element[0].innerHTML=slide[attrs.member];
                 });
 			}
 		};
