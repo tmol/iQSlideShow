@@ -5,9 +5,12 @@ module.exports = function (app) {
 	var slideshows = require('../../app/controllers/slideshows.server.controller');
 
 	// Slideshows Routes
-	app.route('/slideshows/filter')
+	app.route('/slideshows')
 		.get(users.requiresLogin, slideshows.list)
-		.post(users.requiresLogin, slideshows.create);
+        .post(users.requiresLogin, slideshows.create);
+
+	app.route('/slideshows/filter')
+		.get(users.requiresLogin, slideshows.list);
 
 	app.route('/slideshows/filteredNamesAndTags')
 		.get(users.requiresLogin, slideshows.getFilteredNamesAndTags);
