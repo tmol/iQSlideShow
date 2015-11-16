@@ -22,8 +22,9 @@ angular.module('core').directive('ngSlide', [
                         element[0].src=slide[attrs.member] || 'modules/slideshows/css/img/default.jpg';
                         return;
                     }
-
-                    element[0].innerHTML=slide[attrs.member];
+                    if (slide[attrs.member]) {
+                        element[0].innerHTML=slide[attrs.member];
+                    }
                 });
 			}
 		};
