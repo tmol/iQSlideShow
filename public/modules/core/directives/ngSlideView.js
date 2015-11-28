@@ -3,7 +3,7 @@
     'use strict';
     angular.module('core').directive('ngSlideView', ["$timeout", "resolutions",
         function ($timeout, resolutions) {
-            var template = '<div style="width:{{referenceSlide.resolution.width}}px;height:{{referenceSlide.resolution.height}}px;transform:{{transform}}">';
+            var template = '<div style="width:{{resolution.width}}px;height:{{resolution.height}}px;transform:{{transform}}">';
             template += "<div style='top: 50%; position: absolute; left: 50%;  transform: translate(-50%,-50%);zoom:{{referenceSlide.zoomPercent}}%'>";
             template += "<div ng-include='referenceSlide.templateUrl' class='ng-slide-view'></div>";
             template += "</div>";
@@ -21,10 +21,14 @@
                             if (!scope.referenceSlide) {
                                 return;
                             }
-                            var sx = element.parent().width() / scope.referenceSlide.resolution.width;
-                            var sy = element.parent().height() / scope.referenceSlide.resolution.height;
-                            var pad_x = ((scope.referenceSlide.resolution.width * sx) - scope.referenceSlide.resolution.width) / 2;
-                            var pad_y = ((scope.referenceSlide.resolution.height * sy) - scope.referenceSlide.resolution.height) / 2;
+                            scope.resolution = scope.referenceSlide.resolution;
+                            if (!scope.resolution) {
+                                scope.resolution = resolutions[0];
+                            }
+                            var sx = element.parent().width() / scope.resolution.width;
+                            var sy = element.parent().height() / scope.resolution.height;
+                            var pad_x = ((scope.resolution.width * sx) - scope.resolution.width) / 2;
+                            var pad_y = ((scope.resolution.height * sy) - scope.resolution.height) / 2;
                             var scale = Math.min(sx, sy);
                             scope.transform = "translate(" + pad_x + "px," + pad_y + "px) scale(" + scale + ")";
 
