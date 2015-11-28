@@ -4,10 +4,12 @@
     'use strict';
 
     // Slideshows controller
-    angular.module('slideshows').controller('SlideshowsController', ['$scope', '$stateParams', '$location', 'Authentication', 'Slideshows', 'Templates', '$timeout', 'ServerMessageBroker', 'Tags', '$modal', 'Path', '$cacheFactory',
-        function ($scope, $stateParams, $location, Authentication, Slideshows, Templates, $timeout, ServerMessageBroker, Tags, $modal, Path, $cacheFactory) {
+    angular.module('slideshows').controller('SlideshowsController', ['$scope', '$stateParams', '$location', 'Authentication', 'Slideshows', 'Templates', '$timeout', 'ServerMessageBroker', 'Tags', '$modal', 'Path', '$cacheFactory', 'resolutions',
+        function ($scope, $stateParams, $location, Authentication, Slideshows, Templates, $timeout, ServerMessageBroker, Tags, $modal, Path, $cacheFactory, resolutions) {
             var serverMessageBroker = new ServerMessageBroker();
 
+            //todo: to be extracted
+            $scope.resolutions = resolutions;
             $scope.authentication = Authentication;
             $scope.currentSlide = null;
             $scope.slideshow = {
@@ -100,13 +102,29 @@
             $scope.setCurrentSlide = function (slide) {
                 $scope.templateElements = {};
                 $scope.currentSlide = slide;
+
+                $scope.selectedResolution = -1;
+                if (!slide.resolution) {
+                    slide.resolution = $scope.resolutions[0];
+                }
+
+                $scope.resolutions.forEach(function (item, index) {
+                    if (item.width == slide.resolution.width && item.height == item.height) {
+                        $scope.selectedResolution = index;
+                    }
+                });
+
+                if ($scope.selectedResolution == -1) {
+                    $scope.selectedResolution = 0;
+                    slide.resolution = $scope.resolutions[0];
+                }
                 updateTemplate();
             };
 
             $scope.addNewSlide = function () {
-                $scope.currentSlide =  {
+                $scope.currentSlide = {
                     templateName: $scope.selectedTemplate,
-                    content : {}
+                    content: {}
                 };
                 $scope.slideshow.draftSlides.push($scope.currentSlide);
                 updateTemplate();
@@ -168,8 +186,12 @@
                 }
             };
             $scope.refreshTags = function (text) {
-                return Tags.query({tag: text}, function (result) {
-                    $scope.possibleTags = result.map(function (item) {return item.value; });
+                return Tags.query({
+                    tag: text
+                }, function (result) {
+                    $scope.possibleTags = result.map(function (item) {
+                        return item.value;
+                    });
                 });
             };
 
@@ -267,7 +289,7 @@
                     showOnlyMine: $scope.filterParameters.showOnlyMine,
                     nameFilters: $scope.filterParameters.namesAndTagsFilterParameters.nameFilters,
                     tagFilters: $scope.filterParameters.namesAndTagsFilterParameters.tagFilters,
-                    namesAndTagsFilter:  $scope.filterParameters.namesAndTagsFilterParameters.namesAndTagsFilter
+                    namesAndTagsFilter: $scope.filterParameters.namesAndTagsFilterParameters.namesAndTagsFilter
                 }, function (result) {
                     $timeout(function () {
                         $scope.slideshows = result;
@@ -275,6 +297,13 @@
                     });
                 });
             };
+
+            $scope.$watch("selectedResolution", function (newValue, oldValue) {
+                if (!$scope.currentSlide) {
+                    return;
+                }
+                $scope.currentSlide.resolution = $scope.resolutions[newValue];
+            });
 
             $scope.$on("$destroy", function () {
                 $scope.cache.put('slideshows.client.controller.filterParameters', $scope.filterParameters);
