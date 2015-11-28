@@ -1,20 +1,18 @@
 'use strict';
-angular.module('player').factory("CssInjector", function($http){
-    var oldCss;
+angular.module('player').factory("CssInjector", function($timeout, $http){
     var head = jQuery(document.getElementsByTagName('head')[0]);
-    var destroyOldCss = function(){
-        if (oldCss){
-            oldCss.remove();
-            oldCss=null;
-        }
-    }
+
+    var cssCollection = {};
     var injectCss = function(css, callback){
-		destroyOldCss();
-		
+        if (cssCollection[css]) {
+            if (callback) {
+                callback();
+            }
+            return;
+        }
 		$http({url:css,cache:true}).success(function(result){
-            destroyOldCss();
-			oldCss= jQuery("<style id='slideStyle'>" + result + "</style>");
-			head.append(oldCss);
+        	cssCollection[css] = jQuery("<style>" + result + "</style>");
+			head.append(cssCollection[css]);
             if (callback) {
                 callback();
             }
@@ -25,7 +23,9 @@ angular.module('player').factory("CssInjector", function($http){
         inject:function(scope,cssPath, callback){
             injectCss(cssPath, callback);
             scope.$on("$destroy",function(){
-                destroyOldCss();
+                for(var name in cssCollection) {
+                    cssCollection[name].remove();
+                }
             })
         }
     }

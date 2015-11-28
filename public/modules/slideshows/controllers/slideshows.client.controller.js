@@ -303,10 +303,15 @@
                     return;
                 }
                 $scope.currentSlide.resolution = $scope.resolutions[newValue];
+
             });
 
             $scope.$on("$destroy", function () {
                 $scope.cache.put('slideshows.client.controller.filterParameters', $scope.filterParameters);
+            });
+            $scope.$on("setTemplateElement", function (event, name, value) {
+                $scope.templateElements = $scope.templateElements || {};
+                $scope.templateElements[name] = value;
             });
         }]);
 }());

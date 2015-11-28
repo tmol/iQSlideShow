@@ -10,10 +10,8 @@
                     slides: "&"
                 },
                 transclude: true,
-                template: '<section ng-repeat="slide in slides() track by $index">'
-                    + '<section ng-if="$index==currentIndex" class="{{slide.animationType}} slideShow" style="position:absolute" ng-player-slide animation-type="" slide-business="func" player-slide="slide.content">'
-                    + '</section>'
-                    + '</section>',
+                template: '<div ng-repeat="slide in slides() track by $index" ng-if="$index==currentIndex" class="{{slide.animationType}} slideShow" style="width:100%;height:100%;position:absolute;display:block" ng-player-slide animation-type="" slide-business="func" player-slide="slide.content">'
+                    + '</div>',
                 link: function (scope, element, attrs) {
                     var slideNumber = -1;
                     var timers = new Timers();

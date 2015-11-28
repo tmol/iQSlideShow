@@ -4,15 +4,18 @@ angular.module('core').directive('ngSlide', [
 
         return {
             link: function postLink(scope, element, attrs) {
-                scope.$parent.templateElements=scope.$parent.templateElements||{};
-                scope.$parent.templateElements[attrs.member]={
+
+                scope.$emit("setTemplateElement", attrs.member, {
                     type:attrs.type||'text',
                     label:attrs.label||attrs.member
-                };
+                });
 
-                var slide = scope.$parent.slide || scope.$parent.currentSlide;
+                var slide;
+                scope.$emit("getSlide", function (value) {
+                    slide = value;
+                });
 
-                scope.$parent.$watch(function(){
+                scope.$watch(function(){
                     if (!slide){
                         return;
                     }

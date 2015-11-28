@@ -1,42 +1,54 @@
-/*global angular*/
-(function() {
+/*global angular, $*/
+(function () {
     'use strict';
-    angular.module('core').directive('ngSlideView', ["$timeout",
-        function($timeout) {
-
+    angular.module('core').directive('ngSlideView', ["$timeout", "resolutions",
+        function ($timeout, resolutions) {
+            var template = '<div style="width:{{referenceSlide.resolution.width}}px;height:{{referenceSlide.resolution.height}}px;transform:{{transform}}">';
+            template += "<div style='top: 50%; position: absolute; left: 50%;  transform: translate(-50%,-50%);zoom:{{referenceSlide.zoomPercent}}%'>";
+            template += "<div ng-include='referenceSlide.templateUrl' class='ng-slide-view'></div>";
+            template += "</div>";
+            template += '</div>';
             return {
                 scope: {
                     slideWidth: "=",
-                    slideHeight: "="
+                    slideHeight: "=",
+                    referenceSlide: "="
                 },
-                link: function postLink(scope, element, attrs) {
-                    var zoom = 100;
-                    if (!scope.slideWidth) {
-                        scope.slideWidth = 960;
-                        scope.slideHeight = 540;
-                    }
-                    $(element[0]).width(scope.slideWidth);
-                    $(element[0]).height(scope.slideHeight);
-                    var timeout = null;
-                    var resize = function() {
-                        $timeout.cancel(timeout);
-                        timeout = $timeout(function() {
+                template: template,
+                link: function (scope, element, attrs) {
+                    var update = function () {
 
-                            var sx = $(element).parent().width() * 100 / scope.slideWidth;
-                            var sy = $(element).parent().height() * 100 / scope.slideHeight;
-                            zoom = Math.min(sx, sy);
+                            if (!scope.referenceSlide) {
+                                return;
+                            }
+                            var sx = element.parent().width() / scope.referenceSlide.resolution.width;
+                            var sy = element.parent().height() / scope.referenceSlide.resolution.height;
+                            var pad_x = ((scope.referenceSlide.resolution.width * sx) - scope.referenceSlide.resolution.width) / 2;
+                            var pad_y = ((scope.referenceSlide.resolution.height * sy) - scope.referenceSlide.resolution.height) / 2;
+                            var scale = Math.min(sx, sy);
+                            scope.transform = "translate(" + pad_x + "px," + pad_y + "px) scale(" + scale + ")";
 
-                            element.css("zoom", zoom + "%");
-                        }, 100);
-                    }
-
-                    resize();
-                    $(window).on("resize", resize);
-                    scope.$on("$destroy", function() {
-                        $(window).off("resize", resize);
+                    };
+                    scope.$watch("referenceSlide", function () {
+                        update();
                     });
+                    scope.$watch("referenceSlide.resolution", function () {
+                        update();
+                    });
+
+                    scope.$on("getSlide", function (event, callback) {
+                        callback(scope.referenceSlide);
+                    });
+
+                    scope.getSlide = function () {
+                        return scope.referenceSlide;
+                    };
+                    $(window).on("resize", update);
+                    scope.$on("$destroy", function () {
+                        $(window).off("resize", update);
+                    });
+                    update();
                 }
             };
-        }
-    ]);
+        }]);
 }());
