@@ -1,7 +1,7 @@
 /*global angular*/
 (function () {
     'use strict';
-    angular.module('core').directive('ngSlide', [
+    angular.module('core').directive('slidePart', [
         function () {
             return {
                 link: function postLink(scope, element, attrs) {
