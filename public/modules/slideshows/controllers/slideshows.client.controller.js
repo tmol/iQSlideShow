@@ -8,7 +8,6 @@
         function ($scope, $stateParams, $location, Authentication, Slideshows, Templates, $timeout, ServerMessageBroker, Tags, $modal, Path, $cacheFactory, resolutions) {
             var serverMessageBroker = new ServerMessageBroker();
 
-            //todo: to be extracted
             $scope.resolutions = resolutions;
             $scope.authentication = Authentication;
             $scope.currentSlide = null;
@@ -109,12 +108,12 @@
                 }
 
                 $scope.resolutions.forEach(function (item, index) {
-                    if (item.width == slide.resolution.width && item.height == item.height) {
+                    if (item.width === slide.resolution.width && item.height === slide.resolution.height) {
                         $scope.selectedResolution = index;
                     }
                 });
 
-                if ($scope.selectedResolution == -1) {
+                if ($scope.selectedResolution === -1) {
                     $scope.selectedResolution = 0;
                     slide.resolution = $scope.resolutions[0];
                 }
@@ -308,6 +307,7 @@
 
             $scope.$on("$destroy", function () {
                 $scope.cache.put('slideshows.client.controller.filterParameters', $scope.filterParameters);
+                $scope.$emit("slideContextUnloaded");
             });
             $scope.$on("setTemplateElement", function (event, name, value) {
                 $scope.templateElements = $scope.templateElements || {};
