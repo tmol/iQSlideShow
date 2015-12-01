@@ -56,7 +56,7 @@
                     };
 
                     scope.$watch("referenceSlide", function (newValue, oldValue) {
-                        if (newValue && newValue !== oldValue) {
+                        if (newValue) {
                             setup();
                         }
                     });

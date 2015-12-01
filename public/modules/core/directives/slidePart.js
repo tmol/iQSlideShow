@@ -26,9 +26,12 @@
                             return;
                         }
                         if (content[attrs.member]) {
-                            element[0].innerHTML = content[attrs.member];
-                        } else {
-                            element[0].innerHTML = "";
+                            var text = content[attrs.member];
+                            if (element.attr("encoded")=="true")
+                            {
+                                eval("text='" + content[attrs.member] + "'");
+                            }
+                            element.html(text);
                         }
                     });
                 }

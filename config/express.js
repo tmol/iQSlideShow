@@ -88,6 +88,7 @@
             app.locals.cache = 'memory';
         }
 
+        app.use(bodyParser({limit: '50mb'}));
         // Request body parsing middleware should be above methodOverride
         app.use(bodyParser.urlencoded({
             extended: true
