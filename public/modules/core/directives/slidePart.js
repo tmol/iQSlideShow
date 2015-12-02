@@ -19,7 +19,7 @@
                             return;
                         }
 
-                        if (element.attr("type") === "script" && element.attr("url") && scope.isEdit) {
+                        if (element.attr("type") === "script" && element.attr("url") && !scope.isEdit) {
                             ScriptInjector.inject(templatePath + element.attr("url"));
                         }
                         if (!slide.content) {
