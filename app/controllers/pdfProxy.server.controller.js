@@ -19,7 +19,12 @@
     exports.getPdf = function (req, res) {
         var pdfUrl = req.params.pdfUrl;
 
+        var isHttps = pdfUrl.slice(0, 'https'.length) === 'https';
+        var protocoll = isHttps ? https : http;
+        var host = pdfUrl.match(/:\/\/(.*?)\//)[1];
+        console.log('host:' + host);
         var getOptions = {
+            host: host,
             path:  pdfUrl,
             method: 'GET',
             headers: {
@@ -27,26 +32,15 @@
 				'Accept': '*/*'
             }
         };
-        https.get(getOptions, function (result) {
+        protocoll.get(getOptions, function (result) {
             var data = [];
-
-            //result.setEncoding('binary');
 
             result.on('data', function (chunk) {
                 data.push(new Buffer(chunk));
             });
 
             result.on('end', function (chunk) {
-                var fs = require('fs');
-                fs.writeFile("./public/proxyResuklt.pdf", Buffer.concat(data), function (err) {
-                    if (err) {
-                        return console.log(err);
-                    }
-
-                    console.log("The file was saved!");
-                });
-
-                var jsfile = new Buffer.concat(data);//.toString('base64');
+                var jsfile = new Buffer.concat(data);
                 res.header("Access-Control-Allow-Origin", "*");
                 res.header("Access-Control-Allow-Headers", "X-Requested-With");
                 res.header('content-type', 'application/pdf');
