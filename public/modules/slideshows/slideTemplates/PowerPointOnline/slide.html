@@ -1,3 +1,17 @@
+<script src="/public/modules/slideshows/slideTemplates/PowerPointOnline/pdf.js"></script>
 <div>
-    <div ng-slide member="url" label="Url" >PPTXX</div>
+    <div ng-slide member='url' ng-hide='true'></div>
+<h1>'Previous/Next' example</h1>
+
+<div>
+  <button id="prev">Previous</button>
+  <button id="next">Next</button>
+  &nbsp; &nbsp;
+  <span>Page: <span id="page_num"></span> / <span id="page_count"></span></span>
+</div>
+
+<div>
+  <canvas id="the-canvas" style="border:1px solid black"></canvas>
+</div>
+
 </div>
