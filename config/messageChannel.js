@@ -1,5 +1,5 @@
 /*global module*/
 (function () {
     'use strict';
-    module.exports.channelName = "iQSlideShow";
+    module.exports.channelName = "gepi";
 }());

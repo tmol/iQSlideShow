@@ -53,6 +53,10 @@
         },
         slideNumber: {
             type: Number
+        },
+        resolution: {
+            width: {type: Number, default: 960},
+            height: {type: Number, default: 540}
         }
     });
 

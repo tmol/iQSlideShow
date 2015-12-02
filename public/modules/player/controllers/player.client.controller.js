@@ -31,7 +31,7 @@
                     });
             };
 
-            var audit = function (action, context) {
+            var auditAction = function (action, context) {
                 var audit = new Audit({
                     action: action,
                     slideShowId: $scope.slideShowId,
@@ -41,6 +41,7 @@
 
                 // Redirect after save
                 audit.$save(function (response) {
+                    return;
                 }, function (errorResponse) {
                     console.error('Error during auditing action: ' + action  + ': ' + errorResponse.data.message);
                 });
@@ -48,9 +49,6 @@
 
             var setupSlides = function () {
                 $scope.slides.forEach(function (slide, index) {
-                    slide.content.templateUrl = 'modules/slideshows/slideTemplates/' + (slide.templateName || 'default') + '/slide.html';
-                    slide.content.css = 'modules/slideshows/slideTemplates/' + (slide.templateName || 'default') + '/slide.css';
-                    slide.content.js = 'modules/slideshows/slideTemplates/' + (slide.templateName || 'default') + '/slide.js';
                     slide.index = index;
                 });
             };
@@ -138,11 +136,11 @@
 
             messageBroker.onMoveSlideRight(function () {
                 $scope.$broadcast("moveSlideRight");
-                audit('moveToRight');
+                auditAction('moveToRight');
             });
             messageBroker.onMoveSlideLeft(function () {
                 $scope.$broadcast("moveSlideLeft");
-                audit('moveToLeft');
+                auditAction('moveToLeft');
             });
             messageBroker.onSwitchSlide(function (message) {
                 if (!$scope.active) {
@@ -155,7 +153,7 @@
 
                 $scope.$broadcast("resetOnHold");
                 switchSlideShow(content.slideShowIdToPlay);
-                audit('switchSlideShow', {newSlideShowId: content.slideShowIdToPlay, newSlideShowName: content.slideShowName});
+                auditAction('switchSlideShow', {newSlideShowId: content.slideShowIdToPlay, newSlideShowName: content.slideShowName});
 
                 var duration = content.minutesToPlayBeforeGoingBackToDefaultSlideShow;
                 if (duration) {
@@ -174,21 +172,21 @@
                     $scope.slideIsOnHold = false;
                     $scope.$broadcast("resetOnHold");
                 }, 60 * 1000);
-                audit('holdSlideShow');
+                auditAction('holdSlideShow');
             });
             messageBroker.onResetSlideShow(function () {
                 timers.resetTimeouts();
                 $scope.slideIsOnHold = false;
                 $scope.$broadcast("resetOnHold");
                 sendHiToServer(); //this should revert the device state;
-                audit('resetSlideShow');
+                auditAction('resetSlideShow');
             });
             messageBroker.onInactiveRegisteredDeviceSaidHi(function () {
                 activationDialog.show();
             });
             messageBroker.onReload(function () {
                 $window.location.reload(true);
-                audit('reload');
+                auditAction('reload');
             });
 
             $scope.$on("rightArrowPressed", function () {

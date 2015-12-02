@@ -7,7 +7,9 @@
             <div class="col-sm-6" ng-repeat="slide in slides" style="border:1px solid #000;min-height:150px;cursor:pointer" ng-click="selectSlide(slide)">
                 <div style="font-weight:bold">{{slide.bluePrintTitle}}</div>
                 <div style="font-weight:bold">{{slide.publisher}}</div>
-                <div ng-slide-view ng-include='slide.templateUrl' style="height:100%;width:100%;">
+                <div style="height:140px;width:100%">
+                    <div ng-slide-view reference-slide='slide'>
+                    </div>
                 </div>
             </div>
         </div>

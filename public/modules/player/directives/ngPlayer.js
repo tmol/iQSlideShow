@@ -10,10 +10,8 @@
                     slides: "&"
                 },
                 transclude: true,
-                template: '<section ng-repeat="slide in slides() track by $index">'
-                    + '<section ng-if="$index==currentIndex" class="{{slide.animationType}} slideShow" style="position:absolute" ng-player-slide animation-type="" slide-business="func" player-slide="slide.content">'
-                    + '</section>'
-                    + '</section>',
+                template: '<div ng-repeat="slide in slides() track by $index" ng-if="$index==currentIndex" class="{{slide.animationType}} slideShow" style="width:100%;height:100%;position:absolute;display:block" ng-slide-view reference-slide="slide">'
+                    + '</div>',
                 link: function (scope, element, attrs) {
                     var slideNumber = -1;
                     var timers = new Timers();
@@ -32,19 +30,13 @@
                             return null;
                         }
 
-                        JsInjector.inject(slide.content.js, function(slideBusiness){
-                            //prepare the stylesheet for the next slide and position the new slide
-                            CssInjector.inject(scope, slide.content.css, function () {
-                                scope.currentIndex = slideIndex;
-                                scope.func = slideBusiness;
-                                slide.content
-                                scope.$emit("slideLoaded", slide);
-                            });
-                        });
                         return slide;
                     };
-
-                    var loadNextSlide = function () {
+                    var loadNextSlide;
+                    var advanceSlide = function (delay) {
+                        timers.registerTimeout('loadNextSlide', loadNextSlide, delay);
+                    };
+                    loadNextSlide = function () {
                         if (!scope.slides) {
                             return;
                         }
@@ -58,22 +50,25 @@
                         if (slideNumber < 0 || slideNumber >= slides.length) {
                             slideNumber = 0;
                         }
-
-                        var advanceSlide = function (delay) {
-                            timers.registerTimeout('loadNextSlide', loadNextSlide, delay);
-                        };
-
                         var slide = loadSlide(slideNumber);
                         if (!slide) { //if there were no slide displayed, than advance to the next one
                             advanceSlide(1000);
                             return;
                         }
-
-                        slide.durationInSeconds = slide.durationInSeconds || 1;
-                        advanceSlide(slide.durationInSeconds * 1000);
+                        scope.currentIndex = slideNumber;
                     };
 
-                    loadNextSlide();
+                    scope.$on("slideLoaded", function (event, slide) {
+                        slide.durationInSeconds = slide.durationInSeconds || 1;
+                        advanceSlide(slide.durationInSeconds * 1000);
+                    });
+
+                    scope.$watch("slides", function () {
+                        scope.slideIsOnHold = false;
+                        timers.resetTimeouts();
+                        slideNumber = -1;
+                        loadNextSlide();
+                    });
 
                     scope.$on("moveSlideRight", function () {
                         timers.unRegisterTimeout('loadNextSlide');
@@ -114,6 +109,7 @@
 
                     scope.$on("$destroy", function () {
                         timers.resetTimeouts();
+                        scope.$emit("slideContextUnloaded");
                     });
                 }
             };
