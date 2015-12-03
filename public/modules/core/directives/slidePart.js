@@ -14,6 +14,7 @@
 
                     var slide;
                     var templatePath;
+
                     var update = function (content) {
                         if (element.attr("type") === "script" && element.attr("url") && !scope.isEdit) {
                             scope.$emit("getTemplatePath", function (templatePath) {
@@ -34,12 +35,16 @@
                         }
                     };
 
-                    scope.$emit("getSlideContentPart", attrs.member, function (content) {
-                        update(content);
-                    });
+                    var loadSlideContent = function () {
+                        scope.$emit("getSlideContentPart", attrs.member, function (content) {
+                            update(content);
+                        });
+                    };
+
+                    loadSlideContent();
 
                     scope.$watch(function () {
-                        update();
+                        loadSlideContent();
                     });
                 }
             };

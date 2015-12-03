@@ -1,8 +1,8 @@
 /*global angular, $*/
 (function () {
     'use strict';
-    angular.module('core').directive('ngSlideView', ["$timeout", "resolutions", "$injector", "JsInjector", "CssInjector", "$rootScope",
-        function ($timeout, resolutions, $injector, JsInjector, CssInjector, $rootScope) {
+    angular.module('core').directive('ngSlideView', ['$timeout', 'resolutions', '$rootScope', 'SlideSetup',
+        function ($timeout, resolutions, $rootScope, SlideSetup) {
             var template = '<div style="width:{{resolution.width}}px;height:{{resolution.height}}px;transform:{{transform}}">';
             template += "<div style='top: 50%; position: absolute; left: 50%;  transform: translate(-50%,-50%);zoom:{{zoomPercent}}%'>";
             template += "<div ng-include='templateUrl' class='ng-slide-view'></div>";
@@ -36,33 +36,11 @@
                             $rootScope.$apply();
                         }
                     };
-                    var setup = function () {
-                        scope.templateUrl = 'modules/slideshows/slideTemplates/' + (scope.referenceSlide.templateName || 'default') + '/slide.html';
-                        scope.cssUrl = 'modules/slideshows/slideTemplates/' + (scope.referenceSlide.templateName || 'default') + '/slide.css';
-                        scope.jsUrl = 'modules/slideshows/slideTemplates/' + (scope.referenceSlide.templateName || 'default') + '/slide.js';
-                        scope.referencePath = 'modules/slideshows/slideTemplates/' + (scope.referenceSlide.templateName || 'default') + '/';
-
-                        //load the script for the referenceSlide
-                        JsInjector.inject(scope.jsUrl, function (slideScript) {
-                            //prepare the stylesheet for the slide and informe the subscribers that the slide was loaded
-                            CssInjector.inject(scope.$parent, scope.cssUrl, function () {
-                                if (slideScript) {
-                                    var newScope = scope.$new(true);
-                                    newScope.slide = scope.referenceSlide;
-                                    newScope.referencePath = scope.referencePath;
-                                    $injector.invoke(slideScript, newScope, {
-                                        "$scope": newScope
-                                    });
-                                }
-                                scope.$emit("slideLoaded", scope.referenceSlide);
-                                update();
-                            });
-                        });
-                    };
 
                     scope.$watch("referenceSlide", function (newValue, oldValue) {
                         if (newValue) {
-                            setup();
+                            SlideSetup.setup(scope);
+                            update();
                         }
                     });
                     scope.$watch("referenceSlide.resolution", function (newValue, oldValue) {
