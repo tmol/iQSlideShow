@@ -72,14 +72,16 @@
                         update();
                     });
 
-                    scope.$on("getSlide", function (event, callback) {
-                        callback(scope.referenceSlide, scope.referencePath);
+                    scope.$on("getSlideContentPart", function (event, contentPartName, callback) {
+                        var content = scope.referenceSlide.content || {};
+                        callback(content[contentPartName]);
+                    });
+                    scope.$on("getTemplatePath", function (event, callback) {
+                        callback(scope.referencePath);
                     });
 
-                    scope.getSlide = function () {
-                        return scope.referenceSlide;
-                    };
                     $(window).on("resize", update);
+
                     scope.$on("$destroy", function () {
                         $(window).off("resize", update);
                     });

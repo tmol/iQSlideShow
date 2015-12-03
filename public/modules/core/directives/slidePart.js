@@ -14,41 +14,32 @@
 
                     var slide;
                     var templatePath;
-                    var update = function () {
-                        if (!slide) {
-                            return;
+                    var update = function (content) {
+                        if (element.attr("type") === "script" && element.attr("url") && !scope.isEdit) {
+                            scope.$emit("getTemplatePath", function (templatePath) {
+                                ScriptInjector.inject(templatePath + element.attr("url"));
+                            });
                         }
 
-                        if (element.attr("type") === "script" && element.attr("url") && scope.isEdit) {
-                            ScriptInjector.inject(templatePath + element.attr("url"));
-                        }
-                        if (!slide.content) {
-                            return;
-                        }
-                        var content = slide.content;
                         if (element[0].tagName === "IMG") {
-                            element[0].src = content[attrs.member] || 'modules/slideshows/css/img/default.jpg';
+                            element[0].src = content || 'modules/slideshows/css/img/default.jpg';
                             return;
                         }
-                        if (content[attrs.member]) {
-                            var text = content[attrs.member];
+                        if (content) {
+                            var text = content;
                             if (element.attr("encoded") === "true") {
-                                eval("text='" + content[attrs.member] + "'");
+                                eval("text='" + content + "'");
                             }
                             element.html(text);
                         }
                     };
-                    scope.$emit("getSlide", function (referenceSlide, referencePath) {
-                        slide = referenceSlide;
-                        templatePath = referencePath;
-                        update();
+
+                    scope.$emit("getSlideContentPart", attrs.member, function (content) {
+                        update(content);
                     });
 
                     scope.$watch(function () {
                         update();
-                    });
-                    scope.$on("$destroy", function () {
-                        slide = null;
                     });
                 }
             };
