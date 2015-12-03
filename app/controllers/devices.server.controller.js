@@ -70,7 +70,6 @@
             deviceSetupMessageSlideShowIdToPlay;
 
         if (deviceAttributesChanges.deviceJustSetActive() || deviceAttributesChanges.defaultSlideShowChangedInActiveMode()) {
-            console.log("devise set active or default slide show changed");
             deviceSetupMessageSlideShowIdToPlay = updatedDevice.defaultSlideShowId;
         } else if (deviceAttributesChanges.deviceJustSetInactive()) {
             console.log("devise set inactive");

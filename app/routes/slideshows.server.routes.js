@@ -3,6 +3,7 @@
 module.exports = function (app) {
 	var users = require('../../app/controllers/users.server.controller');
 	var slideshows = require('../../app/controllers/slideshows.server.controller');
+    var pptOnline = require('../../app/controllers/pdfProxy.server.controller');
 
 	// Slideshows Routes
 	app.route('/slideshows')
@@ -29,6 +30,9 @@ module.exports = function (app) {
 
 	app.route('/templates')
 		.get(slideshows.getTemplates);
+
+	app.route('/pdfProxy/:pdfUrl')
+		.get(pptOnline.getPdf);
 		
 	// Finish by binding the Slideshow middleware
 	app.param('slideshowId', slideshows.slideshowByID);
