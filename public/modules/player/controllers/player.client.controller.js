@@ -2,8 +2,8 @@
 /*global angular, PUBNUB*/
 (function () {
     'use strict';
-    angular.module('player').controller('PlayerController', ['$scope', '$state', '$timeout', 'Slides', '$location', 'DeviceMessageBroker', 'LocalStorage', 'Path', 'Timers', '$modal', '$window', 'HealthReporter', 'ServerMessageBroker', 'Audit',
-        function ($scope, $state, $timeout, Slides, $location, DeviceMessageBroker, LocalStorage, Path, Timers, $modal, $window, HealthReporter, ServerMessageBroker, Audit) {
+    angular.module('player').controller('PlayerController', ['$scope', '$state', '$timeout', 'Slides', '$location', 'DeviceMessageBroker', 'LocalStorage', 'Path', 'Timers', '$modal', '$window', 'HealthReporter', 'ServerMessageBroker', 'Audit', '$q',
+        function ($scope, $state, $timeout, Slides, $location, DeviceMessageBroker, LocalStorage, Path, Timers, $modal, $window, HealthReporter, ServerMessageBroker, Audit, $q) {
             var messageBroker = new DeviceMessageBroker();
             var serverMessageBroker = new ServerMessageBroker();
             var timers = new Timers();
@@ -47,14 +47,40 @@
                 });
             };
 
-            var setupSlides = function () {
+            var setupSlides = function (slides) {
+
+                $scope.slides = slides;
                 $scope.slides.forEach(function (slide, index) {
                     slide.index = index;
                 });
+
+                var promisses = [];
+
+                slides.forEach(function (slide, index) {
+                    slide.setupFinishedPromise = $q.defer();
+                    promisses.push(slide.setupFinishedPromise.promise);
+                });
+
+                $q.all(promisses).then(function () {
+                    var slides = [];
+                    var slideIndex = 0;
+                    $scope.slides.forEach(function (slide) {
+                        if (!slide.expandedSlides) {
+                            slides.push(slide);
+                        } else {
+                            slide.expandedSlides.forEach(function (expandedSlide) {
+                                expandedSlide.index = slideIndex;
+                                slideIndex = slideIndex + 1;
+                                slides.push(expandedSlide);
+                            });
+                        }
+                    });
+                    $scope.slides = slides;
+                });
             };
+
             var updateSildes = function (callback) {
                 Slides.get({slideId : $scope.slideShowId}, function (result) {
-                    $scope.slides = result.slides;
                     setupSlides();
                     if (callback) {
                         callback(result);
@@ -104,8 +130,7 @@
 
             var loadSlidesForDevice = function (deviceId) {
                 Slides.getSlidesForDevice({deviceId : deviceId}, function (result) {
-                    $scope.slides = result;
-                    setupSlides();
+                    setupSlides(result);
                 });
             };
             var reportHealth = function () {

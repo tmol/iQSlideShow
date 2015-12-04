@@ -13,7 +13,7 @@
                     slideWidth: "=",
                     slideHeight: "=",
                     referenceSlide: "=",
-                    isEdit: "="
+                    isPlaying: "="
                 },
                 template: template,
                 link: function (scope, element, attrs) {
@@ -39,7 +39,9 @@
 
                     scope.$watch("referenceSlide", function (newValue, oldValue) {
                         if (newValue) {
-                            SlideSetup.setup(scope);
+                            SlideSetup.setup(scope).then(function() {
+                                scope.referenceSlide.setupFinishedPromise.resolve();
+                            });
                             update();
                         }
                     });

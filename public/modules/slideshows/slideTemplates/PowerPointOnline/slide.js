@@ -1,16 +1,21 @@
 /*global PDFJS*/
-function PowerPointScript($scope, $timeout, $http, JsInjector) {
+function PowerPointScript($scope) {
     'use strict';
 
     /*temporary testing*/
-    var url = '/pdfProxy/' + encodeURIComponent('https://powerpoint.officeapps.live.com/p/printhandler.ashx?PV=0&Pid=Fi%3DSDDB7094EA6758EB62%213692%26C%3D5_810_BAY-SKY-WAC-WSHI%26ak%3Dt%253D0%2526s%253D0%2526v%253D%2521ALY2elfLlvdf8E0%2526aid%253Da99b5dc8%252Da487%252D4826%252D927b%252D34de4afb71e1%2526m%253Den%252Dus%26z%3D139&waccluster=DB3B'),
+    var content = $scope.slide.content,
+        url = '/pdfProxy/' + encodeURIComponent(content.url),
         pageRendering = false,
         pdfDoc = null,
-        pageNum = 1,
-        pageNumPending = null,
+        pageNr = 1,
+        pageNrPending = null,
         scale = 0.8,
         canvas,
         ctx;
+
+    if (content.pageNr) {
+        pageNr = content.pageNr;
+    }
 
     /**
     * Get page info from document, resize canvas accordingly, and render page.
@@ -34,16 +39,16 @@ function PowerPointScript($scope, $timeout, $http, JsInjector) {
             // Wait for rendering to finish
             renderTask.promise.then(function () {
                 pageRendering = false;
-                if (pageNumPending !== null) {
+                if (pageNrPending !== null) {
                     // New page rendering is pending
-                    renderPage(pageNumPending);
-                    pageNumPending = null;
+                    renderPage(pageNrPending);
+                    pageNrPending = null;
                 }
             });
         });
 
         // Update page counters
-        document.getElementById('page_num').textContent = pageNum;
+        document.getElementById('page_num').textContent = pageNr;
     }
 
     /**
@@ -52,7 +57,7 @@ function PowerPointScript($scope, $timeout, $http, JsInjector) {
     */
     function queueRenderPage(num) {
         if (pageRendering) {
-            pageNumPending = num;
+            pageNrPending = num;
         } else {
             renderPage(num);
         }
@@ -62,22 +67,22 @@ function PowerPointScript($scope, $timeout, $http, JsInjector) {
     * Displays previous page.
     */
     function onPrevPage() {
-        if (pageNum <= 1) {
+        if (pageNr <= 1) {
             return;
         }
-        pageNum = pageNum - 1;
-        queueRenderPage(pageNum);
+        pageNr = pageNr - 1;
+        queueRenderPage(pageNr);
     }
 
     /**
     * Displays next page.
     */
     function onNextPage() {
-        if (pageNum >= pdfDoc.numPages) {
+        if (pageNr >= pdfDoc.numPages) {
             return;
         }
-        pageNum = pageNum + 1;
-        queueRenderPage(pageNum);
+        pageNr = pageNr + 1;
+        queueRenderPage(pageNr);
     }
 
 
@@ -92,8 +97,11 @@ function PowerPointScript($scope, $timeout, $http, JsInjector) {
             pdfDoc = pdfDoc_;
             document.getElementById('page_count').textContent = pdfDoc.numPages;
 
-            // Initial/first page rendering
-            renderPage(pageNum);
+            renderPage(pageNr);
+            $scope.nrOfPages = pdfDoc.numPages;
+            if (!$scope.$$phase) {
+                $scope.$apply();
+            }
         });
     };
 
@@ -102,4 +110,19 @@ function PowerPointScript($scope, $timeout, $http, JsInjector) {
             loadPdf();
         }
     });
+
+    return {
+        expand: function (callback) {
+            $scope.$watch('nrOfPages', function (newVal, oldVal) {
+                if (!newVal) {
+                    return;
+                }
+                var expandedSlidesSpecificContents = [];
+                for (var idx = 0; idx < $scope.nrOfPages; idx = idx + 1) {
+                    expandedSlidesSpecificContents.push({pageNr: idx});
+                }
+                callback(expandedSlidesSpecificContents);
+            });
+        }
+    };
 }
