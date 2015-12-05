@@ -35,14 +35,17 @@
                         if (!$rootScope.$$phase) {
                             $rootScope.$apply();
                         }
+                        scope.$emit("slideLoaded", scope.referenceSlide);
                     };
 
                     scope.$watch("referenceSlide", function (newValue, oldValue) {
                         if (newValue) {
-                            SlideSetup.setup(scope).then(function() {
-                                scope.referenceSlide.setupFinishedPromise.resolve();
+                            SlideSetup.setup(scope).then(function () {
+                                if (scope.referenceSlide.setupFinishedPromise) {
+                                    scope.referenceSlide.setupFinishedPromise.resolve();
+                                }
+                                update();
                             });
-                            update();
                         }
                     });
                     scope.$watch("referenceSlide.resolution", function (newValue, oldValue) {
