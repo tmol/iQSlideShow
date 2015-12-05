@@ -11,8 +11,7 @@
 
                 expandFunction(function (expandedSlidesContents) {
 
-                    var expandedSlides = [],
-                        i;
+                    var expandedSlides = [];
 
                     expandedSlidesContents.forEach(function (expandedContent) {
                         var newslide = {
@@ -65,8 +64,6 @@
                                 }) || {};
 
                                 if (scope.isPlaying) {
-                                    var expandPromise;
-
                                     if (scope.slideConfiguration.expand) {
                                         expand(newScope.slide, scope.slideConfiguration.expand).then(function (successResult) {
                                             resolveSetupPromise(scope, deferred);
