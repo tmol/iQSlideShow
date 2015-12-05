@@ -3,9 +3,15 @@ function GoogleSlideShowScript($scope, $http) {
     'use strict';
 
     var loadSlides = function (slideShowId, onSuccess, onError) {
-        //TODO: replace this with generic proxy
         $http({
-            url: "/googleSlides/" + slideShowId
+            url: "/proxy",
+            method: "POST",
+            data: {
+                hostname: "docs.google.com",
+                method: "GET",
+                protocol: "https:",
+                path: "/presentation/d/" + slideShowId + "/pub"
+            }
         }).success(function (body) {
             try {
                 var regex = /(\\x3csvg version)(?:[^])*?(\\x3c\\\/svg)/g;
