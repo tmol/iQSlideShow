@@ -22,6 +22,7 @@
                         $rootScope.$broadcast("errorOnLoadScript", scriptUrl);
                     } else {
                         $rootScope.$broadcast("scriptLoaded", scriptUrl);
+                        console.log('scriptLoaded broadcasted for: ' + scriptUrl);
                     }
                 }
             };

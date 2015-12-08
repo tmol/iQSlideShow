@@ -6,7 +6,7 @@
     angular.module('core').factory('SlideSetup', ['$injector', 'JsInjector', 'CssInjector', '$q',
         function ($injector, JsInjector, CssInjector, $q) {
 
-            var expand = function (slide, expandFunction) {
+            var expand = function (slide, element, expandFunction) {
                 var deferred = $q.defer();
 
                 expandFunction(function (expandedSlidesContents) {
@@ -24,7 +24,7 @@
                     });
                     slide.expandedSlides = expandedSlides;
                     deferred.resolve();
-                });
+                }, element);
 
                 return deferred.promise;
             };
@@ -34,7 +34,7 @@
             };
 
             return {
-                setup: function (scope) {
+                setup: function (scope, element) {
                     scope.templateUrl = 'modules/slideshows/slideTemplates/' + (scope.referenceSlide.templateName || 'default') + '/slide.html';
                     scope.cssUrl = 'modules/slideshows/slideTemplates/' + (scope.referenceSlide.templateName || 'default') + '/slide.css';
                     scope.jsUrl = 'modules/slideshows/slideTemplates/' + (scope.referenceSlide.templateName || 'default') + '/slide.js';
@@ -51,11 +51,8 @@
                                 return;
                             }
 
-                            var newScope = scope.$new(true);
-                            newScope.slide = scope.referenceSlide;
-                            newScope.referencePath = scope.referencePath;
-                            scope.slideConfiguration = $injector.invoke(slideScript, newScope, {
-                                "$scope": newScope
+                            scope.slideConfiguration = $injector.invoke(slideScript, scope, {
+                                "$scope": scope
                             }) || {};
 
                             if (!scope.isPlaying || !scope.slideConfiguration.expand) {
@@ -63,7 +60,7 @@
                                 return;
                             }
 
-                            expand(newScope.slide, scope.slideConfiguration.expand).then(function (successResult) {
+                            expand(scope.referenceSlide, element, scope.slideConfiguration.expand).then(function (successResult) {
                                 resolveSetupPromise(scope, deferred);
                             }, function (errResult) {
                                 resolveSetupPromise(scope, deferred);

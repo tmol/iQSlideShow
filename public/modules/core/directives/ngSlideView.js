@@ -40,7 +40,7 @@
 
                     scope.$watch("referenceSlide", function (newValue, oldValue) {
                         if (newValue) {
-                            SlideSetup.setup(scope).then(function () {
+                            SlideSetup.setup(scope, element).then(function () {
                                 if (scope.referenceSlide.setupFinishedPromise) {
                                     scope.referenceSlide.setupFinishedPromise.resolve();
                                 }
@@ -49,10 +49,14 @@
                         }
                     });
                     scope.$watch("referenceSlide.resolution", function (newValue, oldValue) {
-                        update();
+                        if (!scope.isPlaying) {
+                            update();
+                        }
                     });
                     scope.$watch("referenceSlide.zoomPercent", function (newValue, oldValue) {
-                        update();
+                        if (!scope.isPlaying) {
+                            update();
+                        }
                     });
 
                     scope.$on("getSlideContentPart", function (event, contentPartName, callback) {
@@ -63,6 +67,7 @@
                         callback(scope.referencePath);
                     });
 
+                    // TODO update only once per resize
                     $(window).on("resize", update);
 
                     scope.$on("$destroy", function () {

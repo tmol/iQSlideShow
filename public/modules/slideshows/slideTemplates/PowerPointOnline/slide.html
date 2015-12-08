@@ -2,11 +2,11 @@
 
 <div slide-part member='url' ng-hide='true'></div>
 
-<div>
-  <button id="prev">Previous</button>
-  <button id="next">Next</button>
+<div ng-show='!isPlaying'>
+  <button id="prev" ng-click='onPrevPage()'>Previous</button>
+  <button id="next" ng-click='onNextPage()'>Next</button>
   &nbsp; &nbsp;
-  <span>Page: <span id="page_num"></span> / <span id="page_count"></span></span>
+  <span>Page: <span id="page_num">{{referenceSlide.content.pageNr}}</span> / <span id="page_count">{{referenceSlide.content.pdfDoc.numPages}}</span></span>
 </div>
 
 <div>

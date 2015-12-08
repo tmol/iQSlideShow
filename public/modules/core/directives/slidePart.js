@@ -18,6 +18,7 @@
                     var update = function (content) {
                         if (element.attr("type") === "script" && element.attr("url") && !scope.isEdit) {
                             scope.$emit("getTemplatePath", function (templatePath) {
+                                console.log('ScriptInjector.inject: ' + templatePath + element.attr("url"));
                                 ScriptInjector.inject(templatePath + element.attr("url"));
                             });
                         }
