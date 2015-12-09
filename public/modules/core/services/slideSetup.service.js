@@ -55,6 +55,13 @@
                                 "$scope": scope
                             }) || {};
 
+                            if (!scope.isPlaying && scope.slideConfiguration.preview) {
+                                scope.slideConfiguration.preview(function () {
+                                    resolveSetupPromise(scope, deferred);
+                                    return;
+                                }, element);
+                            }
+
                             if (!scope.isPlaying || !scope.slideConfiguration.expand) {
                                 resolveSetupPromise(scope, deferred);
                                 return;

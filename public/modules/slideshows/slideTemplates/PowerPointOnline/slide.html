@@ -3,12 +3,12 @@
 <div slide-part member='url' ng-hide='true'></div>
 
 <div ng-show='!isPlaying'>
-  <button id="prev" ng-click='onPrevPage()'>Previous</button>
-  <button id="next" ng-click='onNextPage()'>Next</button>
+  <input type="button" id="prev" ng-click='onPrevPage()' value="Previous"/>
+  <input type="button" id="next" ng-click='onNextPage()' value="Next"/>
   &nbsp; &nbsp;
   <span>Page: <span id="page_num">{{referenceSlide.content.pageNr}}</span> / <span id="page_count">{{referenceSlide.content.pdfDoc.numPages}}</span></span>
 </div>
 
 <div>
-    <canvas id="the-canvas" style="border:1px solid black"></canvas>
+    <canvas id="the-canvas" height="1280px" width="720px" style="border:1px solid grey"></canvas>
 </div>

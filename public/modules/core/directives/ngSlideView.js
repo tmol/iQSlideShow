@@ -17,7 +17,7 @@
                 },
                 template: template,
                 link: function (scope, element, attrs) {
-
+                    scope.loadedScripts = [];
 
                     var update = function () {
                         if (!scope.referenceSlide) {
@@ -69,6 +69,10 @@
 
                     // TODO update only once per resize
                     $(window).on("resize", update);
+
+                    scope.$on("scriptLoaded", function (event, scriptUrl) {
+                        scope.loadedScripts.push(scriptUrl);
+                    });
 
                     scope.$on("$destroy", function () {
                         $(window).off("resize", update);
