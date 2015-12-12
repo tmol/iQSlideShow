@@ -91,7 +91,13 @@
             };
 
             var updateTemplate = function () {
-                $scope.currentSlide.templateUrl = '';
+                var newTemplateUrl = 'modules/slideshows/slideTemplates/' + ($scope.currentSlide.templateName || 'default') + '/slide.html';
+                if (newTemplateUrl === $scope.currentSlide.templateUrl
+                        || !$scope.currentSlide.templateUrl) {
+                    $scope.currentSlide.templateUrl = '';
+                    $scope.$apply();
+                }
+
                 $timeout(function () {
                     $scope.currentSlide.templateUrl = 'modules/slideshows/slideTemplates/' + ($scope.currentSlide.templateName || 'default') + '/slide.html';
                     $scope.$apply();
