@@ -1,6 +1,8 @@
 'use strict';
 
 module.exports = function(grunt) {
+    require('time-grunt')(grunt);
+
 	// Unified Watch Object
 	var watchFiles = {
 		serverViews: ['app/views/**/*.*'],
@@ -8,6 +10,7 @@ module.exports = function(grunt) {
 		clientViews: ['public/modules/**/views/**/*.html'],
 		clientJS: ['public/js/*.js', 'public/modules/**/*.js', '!public/modules/slideshows/slideTemplates/PowerPointOnline/pdf*.js'],
 		clientCSS: ['public/modules/**/*.css'],
+        clientSCSS: ['public/modules/**/*.scss'],
 		mochaTests: ['app/tests/**/*.js']
 	};
 
@@ -41,6 +44,13 @@ module.exports = function(grunt) {
 					livereload: true
 				}
 			},
+			clientSCSS: {
+				files: watchFiles.clientSCSS,
+				tasks: ['newer:sass'],
+				options: {
+					livereload: true
+				}
+			},
 			clientCSS: {
 				files: watchFiles.clientCSS,
 				tasks: ['csslint'],
@@ -49,6 +59,17 @@ module.exports = function(grunt) {
 				}
 			}
 		},
+        sass: {
+            options: {
+            },
+            dist: {
+                files: [{
+                    expand: true,
+                    src: watchFiles.clientSCSS,
+                    ext: '.css'
+                }]
+            }
+        },
 		jshint: {
 			all: {
 				src: watchFiles.clientJS.concat(watchFiles.serverJS),
@@ -174,4 +195,6 @@ module.exports = function(grunt) {
 
 	// Test task.
 	grunt.registerTask('test', ['env:test', 'mochaTest', 'karma:unit']);
+
+    grunt.loadNpmTasks('grunt-newer');
 };

@@ -24,7 +24,6 @@
         flash = require('connect-flash'),
         config = require('./config'),
         consolidate = require('consolidate'),
-        sassMiddleware = require('node-sass-middleware'),
         path = require('path');
 
     module.exports = function (db) {
@@ -34,14 +33,6 @@
         config.getGlobbedFiles('./app/models/**/*.js').forEach(function (modelPath) {
             require(path.resolve(modelPath));
         });
-
-        app.use(
-            sassMiddleware({
-                src: __dirname + '/../public',
-                dest: __dirname + '/../public',
-                debug: true
-            })
-        );
 
         // Setting application local variables
         app.locals.title = config.app.title;
