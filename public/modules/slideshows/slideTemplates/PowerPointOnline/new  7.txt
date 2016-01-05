@@ -1,0 +1,10 @@
+document.getElementById("thisIsAnElementInTheDocument").
+
+
+
+
+
+
+
+
+addEventListener("click",doSomething,false);

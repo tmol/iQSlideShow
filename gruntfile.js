@@ -46,7 +46,7 @@ module.exports = function(grunt) {
 			},
 			clientSCSS: {
 				files: watchFiles.clientSCSS,
-				tasks: ['newer:sass'],
+				tasks: ['sass'],
 				options: {
 					livereload: true
 				}

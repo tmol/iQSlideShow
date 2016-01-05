@@ -1,4 +1,52 @@
 
+@font-face {
+    font-family: "Pill Gothic";
+    src: url('../fonts/pillgothic600mg-bold_0-webfont.woff2'),
+         url('../fonts/pillgothic600mg-bold_0-webfont.woff');
+    font-weight: bold;
+    font-style: normal;
+}
+@font-face {
+    font-family: "Pill Gothic";
+    src: url('../fonts/pillgothic600mg-light-webfont.woff2'),
+         url('../fonts/pillgothic600mg-light-webfont.woff');
+    font-weight: lighter;
+    font-style: normal;
+}
+@font-face {
+    font-family: "Pill Gothic";
+    src: url('../fonts/pillgothic600mg-oblique-webfont.woff2'),
+         url('../fonts/pillgothic600mg-oblique-webfont.woff');
+    font-weight: normal;
+    font-style: oblique;
+}
+@font-face {
+    font-family: "Pill Gothic";
+    src: url('../fonts/pillgothic600mg-regular_0-webfont.woff2'),
+         url('../fonts/pillgothic600mg-regular_0-webfont.woff');
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face {
+    font-family: "Pill Gothic";
+    src: url('../fonts/pillgothic600mg-semibdobq-webfont.woff2'),
+         url('../fonts/pillgothic600mg-semibdobq-webfont.woff');
+    font-weight: 500;
+    font-style: oblique;
+}
+@font-face {
+    font-family: "Pill Gothic";
+    src: url('../fonts/pillgothic600mg-thin-webfont.woff2'),
+         url('../fonts/pillgothic600mg-thin-webfont.woff');
+    font-weight: 100;
+    font-style: normal;
+}
+
+body{
+    background-color: #ffffff !important;
+    font-family: 'Pill Gothic', Arial, sans-serif;
+}
+
 .undecorated-link:hover {
 	text-decoration: none;
 }
@@ -16,9 +64,7 @@
 }
 .container{
     width:100% !important;
-}
-body{
-    background-color: #ffffff !important;
+    height:100%;
 }
 .ng-slide-view {
     height: 100%;
