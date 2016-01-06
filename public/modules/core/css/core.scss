@@ -1,50 +1,36 @@
-
 @font-face {
-    font-family: "Pill Gothic";
-    src: url('../fonts/pillgothic600mg-bold_0-webfont.woff2'),
-         url('../fonts/pillgothic600mg-bold_0-webfont.woff');
+    font-family: "Karla";
+    src: url('../fonts/karla-regular-webfont.woff2'),
+         url('../fonts/karla-regular-webfont.woff');
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face {
+    font-family: "Karla";
+    src: url('../fonts/karla-bold-webfont.woff2'),
+         url('../fonts/karla-bold-webfont.woff');
     font-weight: bold;
     font-style: normal;
 }
 @font-face {
-    font-family: "Pill Gothic";
-    src: url('../fonts/pillgothic600mg-light-webfont.woff2'),
-         url('../fonts/pillgothic600mg-light-webfont.woff');
-    font-weight: lighter;
-    font-style: normal;
-}
-@font-face {
-    font-family: "Pill Gothic";
-    src: url('../fonts/pillgothic600mg-oblique-webfont.woff2'),
-         url('../fonts/pillgothic600mg-oblique-webfont.woff');
+    font-family: "Karla";
+    src: url('../fonts/karla-italic-webfont.woff2'),
+         url('../fonts/karla-italic-webfont.woff');
     font-weight: normal;
-    font-style: oblique;
+    font-style: italic;
 }
 @font-face {
-    font-family: "Pill Gothic";
-    src: url('../fonts/pillgothic600mg-regular_0-webfont.woff2'),
-         url('../fonts/pillgothic600mg-regular_0-webfont.woff');
+    font-family: "Karla";
+    src: url('../fonts/karla-bolditalic-webfont.woff2'),
+         url('../fonts/karla-bolditalic-webfont.woff');
     font-weight: normal;
-    font-style: normal;
+    font-style: italic;
 }
-@font-face {
-    font-family: "Pill Gothic";
-    src: url('../fonts/pillgothic600mg-semibdobq-webfont.woff2'),
-         url('../fonts/pillgothic600mg-semibdobq-webfont.woff');
-    font-weight: 500;
-    font-style: oblique;
-}
-@font-face {
-    font-family: "Pill Gothic";
-    src: url('../fonts/pillgothic600mg-thin-webfont.woff2'),
-         url('../fonts/pillgothic600mg-thin-webfont.woff');
-    font-weight: 100;
-    font-style: normal;
-}
+
 
 body{
     background-color: #ffffff !important;
-    font-family: 'Pill Gothic', Arial, sans-serif;
+    font-family: 'Karla', Arial, sans-serif;
 }
 
 .undecorated-link:hover {
@@ -61,10 +47,6 @@ body{
 }
 .player {
     overflow: hidden;
-}
-.container{
-    width:100% !important;
-    height:100%;
 }
 .ng-slide-view {
     height: 100%;
