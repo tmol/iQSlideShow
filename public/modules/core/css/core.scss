@@ -1,36 +1,50 @@
-@font-face {
-    font-family: "Karla";
-    src: url('../fonts/karla-regular-webfont.woff2'),
-         url('../fonts/karla-regular-webfont.woff');
-    font-weight: normal;
-    font-style: normal;
+@import 'variables.scss';
+@import 'fonts.scss';
+@import 'mixins.scss';
+
+/*
+    Nav bar styling
+*/
+.iqss-navbar {
+    background-image: url(../img/brand/head-bg.png);
 }
-@font-face {
-    font-family: "Karla";
-    src: url('../fonts/karla-bold-webfont.woff2'),
-         url('../fonts/karla-bold-webfont.woff');
+
+.iqss-navbar-header {
+    min-height: $header-height;
+}
+
+.iqss-navbar-brand {
+    @include verticalAlignTextMiddle;
+    font-size: 1.5em;
+    font-weight: 100;
+}
+
+.iqss-navbar-nav {
+    min-height: $header-height;
+    font-size: 1.4em;
     font-weight: bold;
-    font-style: normal;
-}
-@font-face {
-    font-family: "Karla";
-    src: url('../fonts/karla-italic-webfont.woff2'),
-         url('../fonts/karla-italic-webfont.woff');
-    font-weight: normal;
-    font-style: italic;
-}
-@font-face {
-    font-family: "Karla";
-    src: url('../fonts/karla-bolditalic-webfont.woff2'),
-         url('../fonts/karla-bolditalic-webfont.woff');
-    font-weight: normal;
-    font-style: italic;
 }
 
+.iqss-navbar-nav li a {
+    @include verticalAlignTextMiddle;
+}
 
+@media (min-width: $bootstrap-cs-breakpoint) {
+    .iqss-navbar-header {
+        width: percentage(1/6);
+    }
+}
+
+/*
+    Body styling
+*/
 body{
     background-color: #ffffff !important;
     font-family: 'Karla', Arial, sans-serif;
+}
+
+.iqss-content {
+    padding-top: 80px;
 }
 
 .undecorated-link:hover {

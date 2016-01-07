@@ -1,0 +1,6 @@
+@mixin verticalAlignTextMiddle {
+    line-height: $header-height;
+    min-height: $header-height;
+    padding-bottom: 0px;
+    padding-top: 0px;
+}
