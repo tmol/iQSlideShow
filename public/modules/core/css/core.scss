@@ -1,39 +1,7 @@
 @import 'variables.scss';
 @import 'fonts.scss';
 @import 'mixins.scss';
-
-/*
-    Nav bar styling
-*/
-.iqss-navbar {
-    background-image: url(../img/brand/head-bg.png);
-}
-
-.iqss-navbar-header {
-    min-height: $header-height;
-}
-
-.iqss-navbar-brand {
-    @include verticalAlignTextMiddle;
-    font-size: 1.5em;
-    font-weight: 100;
-}
-
-.iqss-navbar-nav {
-    min-height: $header-height;
-    font-size: 1.4em;
-    font-weight: bold;
-}
-
-.iqss-navbar-nav li a {
-    @include verticalAlignTextMiddle;
-}
-
-@media (min-width: $bootstrap-cs-breakpoint) {
-    .iqss-navbar-header {
-        width: percentage(1/6);
-    }
-}
+@import 'navbar.scss';
 
 /*
     Body styling
@@ -44,7 +12,7 @@ body{
 }
 
 .iqss-content {
-    padding-top: 80px;
+    padding-top: $header-height;
 }
 
 .undecorated-link:hover {

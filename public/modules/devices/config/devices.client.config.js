@@ -4,7 +4,7 @@
 angular.module('devices').run(['Menus',
 	function(Menus) {
 		// Set top bar menu items
-		Menus.addMenuItem('topbar', 'Devices', 'devices', 'dropdown', '/devices(/create)?');
+		Menus.addMenuItem('topbar', 'Devices', 'devices', 'dropdown', '/devices(/create)?', 2);
 		Menus.addSubMenuItem('topbar', 'devices', 'List Devices', 'devices');
 		Menus.addSubMenuItem('topbar', 'devices', 'New Device', 'devices/create');
 	}

@@ -79,7 +79,7 @@ angular.module('core').service('Menus', [
 		};
 
 		// Add menu item object
-		this.addMenuItem = function(menuId, menuItemTitle, menuItemURL, menuItemType, menuItemUIRoute, isPublic, roles, position) {
+		this.addMenuItem = function(menuId, menuItemTitle, menuItemURL, menuItemType, menuItemUIRoute, position, isPublic, roles) {
 			// Validate that the menu exists
 			this.validateMenuExistance(menuId);
 

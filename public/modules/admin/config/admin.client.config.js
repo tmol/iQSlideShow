@@ -6,7 +6,7 @@
     angular.module('admin').run(['Menus',
         function (Menus) {
             // Set top bar menu items
-            Menus.addMenuItem('topbar', 'Admin', 'admin', 'dropdown', '');
+            Menus.addMenuItem('topbar', 'Admin', 'admin', 'dropdown', '', 4);
             Menus.addSubMenuItem('topbar', 'admin', 'Config', 'admin');
             Menus.addSubMenuItem('topbar', 'admin', 'Reload', 'reload');
             Menus.addSubMenuItem('topbar', 'admin', 'Locations', 'locations');

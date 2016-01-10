@@ -1,0 +1,73 @@
+@import 'variables.scss';
+@import 'fonts.scss';
+@import 'mixins.scss';
+
+/*
+    Nav bar styling
+*/
+.iqss-navbar {
+    background-image: url(../img/brand/head-bg.png);
+    color: white;
+}
+
+.navbar-inverse .navbar-brand:hover, .navbar-inverse .navbar-brand:focus {
+}
+
+.navbar-inverse .navbar-nav > li > a, .navbar-inverse .navbar-brand {
+    color: white;
+}
+
+.iqss-navbar-header {
+    min-height: $header-height;
+}
+
+@media (min-width: $bootstrap-xs-breakpoint) {
+    .iqss-navbar-header {
+        width: percentage(1/6);
+    }
+}
+
+.iqss-navbar-brand {
+    @include verticalAlignTextMiddle;
+    font-size: 20px;
+    font-weight: 100;
+}
+
+.iqss-navbar-nav {
+    min-height: $header-height;
+    font-size: 20px;
+}
+
+.iqss-navbar-nav li a {
+    @include verticalAlignTextMiddle;
+}
+
+// we need to use !important here because '.navbar-inverse .navbar-nav > li > a, .navbar-inverse .navbar-brand'
+// is too strong, and somehow overwriting that one doesn't work
+.iqss-navbar-activeNav > a {
+    color: #faa61a !important;
+}
+
+.iqss-navbar-right {
+    padding-right: 10px;
+}
+
+.iqss-navbar-right > li > a{
+    padding: 0px;
+    font-size: 14px;
+}
+
+.iqss-navbar-right > li {
+    padding-right: 30px;
+    padding-top: 25px;
+    background-image: url(../img/settings.png);
+    background-repeat: no-repeat;
+    background-position: center right;
+    height: $header-height;
+}
+
+
+.iqss-navbar-right li > span{
+    font-size: 11px;
+    float: right;
+}

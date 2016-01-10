@@ -10,27 +10,27 @@
 	</div>
 	<nav class="collapse navbar-collapse iqss-navbar-collapse" collapse="!isCollapsed" role="navigation">
 		<ul class="nav navbar-nav iqss-navbar-nav" data-ng-if="menu.shouldRender(authentication.user);">
-			<li data-ng-repeat="item in menu.items | orderBy: 'position'" data-ng-if="item.shouldRender(authentication.user);" ng-switch="item.menuItemType" ui-route="{{item.uiRoute}}" class="{{item.menuItemClass}}" ng-class="{active: ($uiRoute)}" dropdown="item.menuItemType === 'dropdown'">
+			<li data-ng-repeat="item in menu.items | orderBy: 'position'" data-ng-if="item.shouldRender(authentication.user);" ng-switch="item.menuItemType" ui-route="{{item.uiRoute}}" class="{{item.menuItemClass}}" ng-class="{iqss-navbar-activeNav: ($uiRoute)}" dropdown="item.menuItemType === 'dropdown'" url='{{item.link}}' active-nav-highlighter='iqss-navbar-activeNav'>
 				<a href="#" ng-switch-when="dropdown" class="dropdown-toggle" data-toggle="dropdown">
 					<span data-ng-bind="item.title"></span>
 					<b class="caret"></b>
 				</a>
 				<ul ng-switch-when="dropdown" class="dropdown-menu">
-					<li data-ng-repeat="subitem in item.items | orderBy: 'position'" data-ng-if="subitem.shouldRender(authentication.user);" ui-route="{{subitem.uiRoute}}" ng-class="{active: $uiRoute}">
+					<li data-ng-repeat="subitem in item.items | orderBy: 'position'" data-ng-if="subitem.shouldRender(authentication.user);" ui-route="{{subitem.uiRoute}}" ng-class="{active: $uiRoute}" >
 						<a href="/#!/{{subitem.link}}" data-ng-bind="subitem.title"></a>
 					</li>
 				</ul>
 				<a ng-switch-default href="/#!/{{item.link}}" data-ng-bind="item.title"></a>
 			</li>
 
-            <li class="item">
-				<a href="/#!/blueprints">
+            <!--li class="item">
+				<a href="/#!/blueprints"  active-nav-highlighter='iqss-navbar-activeNav'>
 					<span>Blueprints</span>
 				</a>
-			</li>
+			</li-->
 
             <li class="item">
-				<a href="/slideshow#!/player" target="_blank">
+				<a href="/slideshow#!/player" target="_blank" active-nav-highlighter='iqss-navbar-activeNav'>
 					<span>Player</span>
 				</a>
 			</li>
@@ -45,11 +45,12 @@
 				<a href="/#!/signin">Sign In</a>
 			</li>
 		</ul>
-		<ul class="nav navbar-nav navbar-right iqss-navbar-nav" data-ng-show="authentication.user">
-			<li class="dropdown">
-				<a href="#" class="dropdown-toggle" data-toggle="dropdown">
-					<span data-ng-bind="authentication.user.displayName"></span> <b class="caret"></b>
-				</a>
+		<ul class="nav navbar-nav navbar-right iqss-navbar-right" data-ng-show="authentication.user">
+			<li>
+                <span>Welcome</span>
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                    <span data-ng-bind="authentication.user.displayName"></span>
+                </a>
 				<ul class="dropdown-menu">
 					<li>
 						<a href="/#!/settings/profile">Edit Profile</a>
