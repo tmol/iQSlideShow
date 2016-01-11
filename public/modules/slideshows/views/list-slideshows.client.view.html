@@ -1,34 +1,28 @@
-<section data-ng-controller="SlideshowsController" data-ng-init="find()" style="margin-top: 58px;">
-    <div class="page-header">
-        <h1>Slideshows</h1>
-    </div>
-    <div>
-        <input type="checkbox" ng-model="filterParameters.showOnlyMine" ng-change='filterSlideshows()'>
-        <span>Show only mine</span>
-        <span tag-and-name-filter label='"Search for gold"' search-Provider="searchProvider"></span>
-    </div>
-    <div>&nbsp;</div>
-    <div>&nbsp;</div>
-    <div class="list-group col-md-12" data-ng-repeat="slideshow in slideshows" > 
-       <div class="col-md-6">
-        <span >
-                <a data-ng-href="#!/slideshows/{{slideshow._id}}" class="list-group-item">
-                    <small class="list-group-item-text">
-                        Posted on
-                        <span data-ng-bind="slideshow.created | date:'medium'"></span>
-                        by
-                        <span data-ng-bind="slideshow.user.displayName"></span>
-                    </small>
-                    <h4 class="list-group-item-heading" data-ng-bind="slideshow.name"></h4>
-                </a>
-            </span>   
-            <span class="col-md-6">
-                <a href="/slideshow#!/preview/{{slideshow._id}}/" target="_blank">Start</a>
-            </span> 
+<section data-ng-controller="SlideshowsController" data-ng-init="find()">
+    <section class='iqss-slideshowlist-header'>
+        <div class='col-sm-offset-2 col-sm-8'>
+            <input type="checkbox" ng-model="filterParameters.showOnlyMine" ng-change='filterSlideshows()'>
+            <span>Show only mine</span>
+            <span tag-and-name-filter label='"Search for gold"' search-Provider="searchProvider"></span>
         </div>
-        <span class="col-md-6" style="max-height:180px;"><iframe style="width:800px; height:500px; transform: scale(0.3); transform-origin: 0 0;" src="{{'/slideshow#!/preview/' + slideshow._id + '/'}}"></iframe></span>
+    </section>
+    <div class='iqss-slideshowlist-body col-sm-offset-2 col-sm-8'>
+        <section data-ng-repeat="slideshow in slideshows" >
+            <div class="col-sm-3 iqss-slideshowlist-slideshow">
+                <div>
+                    <div class="list-group-item-heading" data-ng-bind="slideshow.name"></div>
+                    <a data-ng-href="#!/slideshows/{{slideshow._id}}" class="list-group-item">
+                        edit
+                    </a>
+                    <span class="col-md-6">
+                        <a href="/slideshow#!/preview/{{slideshow._id}}/" target="_blank">Start</a>
+                    </span>
+                </div>
+            </div>
+            <!--span class="col-md-6" style="max-height:180px;"><iframe style="width:800px; height:500px; transform: scale(0.3); transform-origin: 0 0;" src="{{'/slideshow#!/preview/' + slideshow._id + '/'}}"></iframe></span-->
+        </section>
     </div>
-    <div class="alert alert-warning text-center" data-ng-hide="!slideshows.$resolved || slideshows.length">
+    <section class="alert alert-warning text-center" data-ng-hide="!slideshows.$resolved || slideshows.length">
     	No Slideshows yet, why don't you <a href="/#!/slideshows/create">create one</a>?
-    </div>
+    </section>
 </section>

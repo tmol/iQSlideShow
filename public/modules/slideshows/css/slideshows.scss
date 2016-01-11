@@ -1,17 +1,51 @@
+@import 'variables.scss';
+@import '../../core/css/variables.scss';
+
+.iqss-slideshowlist-header {
+    background-color: white;
+    height: $slideshow-list-header-height;
+    line-height: $slideshow-list-header-height;
+}
+
+.iqss-slideshowlist-header > section {
+    height: $slideshow-list-header-height;
+    line-height: $slideshow-list-header-height;
+}
+
+.iqss-slideshowlist-body {
+    background-color: #f5f5f5;
+    padding-top: 48px;
+}
+
+.iqss-slideshowlist-slideshow {
+    height: $slideshow-list-slidesowh-height;
+    margin-bottom: 20px;
+    padding-left: $menu-left-padding;
+    padding-right: 0;
+}
+
+.iqss-slideshowlist-slideshow > div {
+    background-color: white;
+    height: 100%;
+    border: 1px solid #eeeeee
+}
 
 .move-slide {
     display: inline-block;
   float: right;
   margin-top: 5px;
 }
+
 .move-slide-button {
     font-size: 11px;
     cursor: pointer;
     line-height: 11px;
 }
+
 .slide-label{
      line-height: 12px;
 }
+
 .slide {
     cursor: pointer;
     height: 36px;
@@ -23,26 +57,32 @@
 .current-slide{
     background-color: #CCCCCC !important;
 }
+
 .slides-continer{
     border-right: 1px solid #CCCCCC;
 }
+
 .slides-controllers{
   border-bottom: 1px solid #CCCCCC;
   padding-bottom: 11px;
   line-height: 10px;
 }
+
 .slides-ops{
   display: inline-block;
 }
+
 .slides-ops button{
   width: 17px;
   padding-left: 2px;
   padding-right: 2px;
 }
+
 .slides-update{
   border-top: 1px solid #CCCCCC;
   padding-top: 10px;
 }
+
 .hidden-slide {
     background-color: #EEEEEE;
     opacity: 0.5;
