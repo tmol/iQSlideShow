@@ -1,15 +1,43 @@
 @import '../variables.scss';
 
+/*
+    tags and names filter
+*/
 .iqss-tagAndNameFilter-container {
     float:right;
-    background-image: url(../../../../modules/core/img/search.png);
-    background-repeat: no-repeat;
-    background-position: left center;
 }
 
 .iqss-ui-select {
     float:right;
     margin-left:20px;
+    background-image: url(../../../../modules/core/img/search.png);
+    background-repeat: no-repeat;
+    background-position: left center;
+    padding-left: 15px;
+    height: $subheader-height;
+}
+
+.iqss-ui-select span.ui-select-match-text {
+    padding-left: 20px;
+}
+
+.iqss-ui-select span.btn-default:active:hover {
+    background-color: white;
+}
+
+.iqss-ui-select span.ui-select-placeholder {
+    padding-left: 20px;
+}
+
+.iqss-ui-select input {
+    color: $normal-text-color;
+    padding-left: 20px;
+}
+
+.iqss-ui-select input:focus {
+    outline: none;
+    outline-width: 0;
+    outline-offset: 0;
 }
 
 .iqss-ui-select * {
@@ -23,8 +51,13 @@
     background-position: center;
     box-shadow: none;
     font-size: 14px;
+    color: #009da5;
+    transition-property: none;
 }
 
+.iqss-ui-select div.ui-select-container{
+    width: 200px;
+}
 .iqss-ui-select span.form-control {
     height: $subheader-height;
     position: absolute;
@@ -42,4 +75,24 @@
 
 .btn {
     padding: 0;
+}
+
+.iqss-ui-select a.ui-select-choices-row.active>a {
+    background-color: white;
+}
+
+.iqss-ui-select .ui-select-bootstrap .ui-select-choices-row.active>a {
+    background-color: white;
+}
+
+.iqss-ui-select ul {
+    border: 1px solid $border-color
+}
+
+/*
+    tags and names filter summary
+*/
+.iqss-tag-tagAndNameFilterSummaryElement {
+    color: $normal-text-color;
+    font-size: $small-font-size;
 }

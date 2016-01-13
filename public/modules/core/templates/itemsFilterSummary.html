@@ -1,4 +1,6 @@
 <span ng-repeat='filterItem in filterParameters.filterItems'>
-    {{filterItem.name ? filterItem.name : filterItem}} <input type="button" ng-click="remove(filterItem)" value="X"> |
+    <span class='iqss-tag-tagAndNameFilterSummaryElement'>
+        {{filterItem.name ? filterItem.name : filterItem}} <a href='#'><img src="/modules/core/img/cancel-remove.png" height="8px" alt="Cancel" ng-click='remove(filterItem)'>;</a>
+    </span>
 </span>
-<span><a href="" ng-click='filterParameters.clear()' ng-show='filterParameters.isNotEmpty()'>Clear filter</a></span>
+<!--span><a href="" ng-click='filterParameters.clear()' ng-show='filterParameters.isNotEmpty()'>Clear filter</a></span-->

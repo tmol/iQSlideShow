@@ -54,7 +54,7 @@ angular.module('core').directive('tagAndNameFilter', ['$cacheFactory', function 
         }
 
         setDefaultFilterValuePlaceholder = function () {
-            scope.filterValuePlaceholder = 'Select search string...';
+            scope.filterValuePlaceholder = 'Select';
         };
 
         scope.filterValuePlaceholder = '';
