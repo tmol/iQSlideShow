@@ -1,12 +1,12 @@
-<section data-ng-controller="SlideshowsController" data-ng-init="find()">
+<section data-ng-controller="SlideshowsController" data-ng-init="find()" style="height:100%">
     <section class='iqss-slideshowlist-header'>
         <div class='col-sm-offset-2 col-sm-8'>
             <input type="checkbox" ng-model="filterParameters.showOnlyMine" ng-change='filterSlideshows()'>
             <span>Show only mine</span>
-            <span tag-and-name-filter label='"Search for gold"' search-Provider="searchProvider"></span>
+            <span tag-and-name-filter search-Provider="searchProvider"></span>
         </div>
     </section>
-    <div class='iqss-slideshowlist-body col-sm-offset-2 col-sm-8'>
+    <div class='iqss-slideshowlist-content col-sm-offset-2 col-sm-8'>
         <section data-ng-repeat="slideshow in slideshows" >
             <div class="col-sm-3 iqss-slideshowlist-slideshow">
                 <div>

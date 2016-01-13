@@ -1,0 +1,45 @@
+@import '../variables.scss';
+
+.iqss-tagAndNameFilter-container {
+    float:right;
+    background-image: url(../../../../modules/core/img/search.png);
+    background-repeat: no-repeat;
+    background-position: left center;
+}
+
+.iqss-ui-select {
+    float:right;
+    margin-left:20px;
+}
+
+.iqss-ui-select * {
+    background-color: white;
+    border-radius: 0;
+    border: 0;
+    line-height: $subheader-height;
+    padding: 0;
+    border-color: white;
+    border-image-width: 0;
+    background-position: center;
+    box-shadow: none;
+    font-size: 14px;
+}
+
+.iqss-ui-select span.form-control {
+    height: $subheader-height;
+    position: absolute;
+}
+
+.btn-default:hover, .btn-default:focus {
+    background-color: white;
+    border-color: white;
+}
+
+.btn-default {
+    background-image: none;
+    text-shadow: none;
+}
+
+.btn {
+    padding: 0;
+}

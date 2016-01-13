@@ -1,8 +1,8 @@
-<div class="controls" style="float:right">
+<div class='iqss-tagAndNameFilter-container'>
     <span items-filter-summary filter-Parameters="filterParameters"></span>
-    <span style="float:left; padding-right:10px">{{label}}</span>
-    <span style="float:right;" >
-        <ui-select ng-model="filterParameters.namesAndTagsFilter" theme="bootstrap" sortable="true" style="width: 300px;" title="Select search string" on-select='filterUpdated($select)' reset-search-input='false'>
+    <span style="float:left;">&nbsp;</span>
+    <span class='iqss-ui-select'>
+        <ui-select ng-model="filterParameters.namesAndTagsFilter" sortable="true" style="width: 300px;" title="Select" on-select='filterUpdated($select)' reset-search-input='false'>
             <ui-select-match placeholder="{{filterValuePlaceholder}}" data-ng-init='initNamesAndTagsFilter($select)'>{{$select.selected}}</ui-select-match>
             <ui-select-choices repeat="filterValue in possibleFilterValues"
                 refresh="refreshPossibleFilterValues($select)"

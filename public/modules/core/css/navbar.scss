@@ -43,7 +43,7 @@
 .iqss-navbar-nav li a {
     @include verticalAlignTextMiddle;
     padding-left: 0;
-    margin-right: 10%;
+    padding-right: 40px;
 }
 
 // we need to use !important here because '.navbar-inverse .navbar-nav > li > a, .navbar-inverse .navbar-brand'
