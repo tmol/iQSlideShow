@@ -7,6 +7,11 @@
     height: $slideshow-list-header-height;
     line-height: $slideshow-list-header-height;
     padding-left: $menu-left-padding;
+    position:fixed;
+    left:0px;
+    top:80px;
+    width:100%;
+    z-index: 1000;
 }
 
 .iqss-slideshowlist-header > section {

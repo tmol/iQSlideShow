@@ -7,8 +7,13 @@
     Body styling
 */
 .iqss-container-fluid {
+    padding-top: $header-height + $subheader-height;
     padding-left: 0px;
     padding-right: 0px;
+}
+
+.iqss-content {
+    padding-bottom: 30px;
 }
 
 html {
@@ -19,11 +24,35 @@ html {
 body{
     height: 100%;
     font-family: 'Verdana', 'Times New Roman', serif;
-    background-color: #f5f5f5;
+    background-color: $light-grey-color;
 }
 
-.iqss-content {
-    padding-top: $header-height;
+footer {
+    position:fixed;
+    left:0px;
+    bottom:0px;
+    height:30px;
+    width:100%;
+    z-index: 2000;
+    background: $light-grey-color;
+}
+
+footer hr {
+    width: auto;
+    background: $very-dark-grey-color;
+    height: 1px;
+    margin: 0 10px;
+    box-sizing: border-box;
+}
+
+footer label {
+    float: right;
+    font-weight: normal;
+    color: $blue-color;
+    font-size: 10px;
+    line-height: 30px;
+    margin: 0 10px 0 0;
+    vertical-align: middle;
 }
 
 .undecorated-link:hover {

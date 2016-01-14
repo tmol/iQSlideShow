@@ -6,11 +6,23 @@ $menu-left-padding: 2.4%;
 
 $subheader-height: 44px;
 
-$normal-text-color: #5a5a5a;
-
-$border-color: #eeeeee;
+/*
+    color palette
+*/
 
 $blue-color: #009da5;
+
+$very-dark-grey-color: #5a5a5a;
+
+$dark-grey-color: #eeeeee;
+
+$light-grey-color: #f5f5f5;
+
+/*
+    colors
+*/
+
+$normal-text-color: $very-dark-grey-color;
 
 /*
     Fonts
