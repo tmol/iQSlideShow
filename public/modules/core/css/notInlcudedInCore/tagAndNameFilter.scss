@@ -1,5 +1,8 @@
 @import '../variables.scss';
 
+$search-box-width: 200px;
+$search-box-left-padding: 15px;
+
 /*
     tags and names filter
 */
@@ -9,12 +12,12 @@
 
 .iqss-ui-select {
     float:right;
-    margin-left:20px;
     background-image: url(../../../../modules/core/img/search.png);
     background-repeat: no-repeat;
     background-position: left center;
-    padding-left: 15px;
+    padding-left: $search-box-left-padding;
     height: $subheader-height;
+    margin-left: 10px;
 }
 
 .iqss-ui-select span.ui-select-match-text {
@@ -27,6 +30,7 @@
 
 .iqss-ui-select span.ui-select-placeholder {
     padding-left: 20px;
+    font-size: 17px;
 }
 
 .iqss-ui-select input {
@@ -35,9 +39,11 @@
 }
 
 .iqss-ui-select input:focus {
-    outline: none;
-    outline-width: 0;
-    outline-offset: 0;
+    box-shadow: none;
+}
+
+.iqss-ui-select span:active {
+    box-shadow: none;
 }
 
 .iqss-ui-select * {
@@ -51,12 +57,13 @@
     background-position: center;
     box-shadow: none;
     font-size: 14px;
-    color: #009da5;
+    color: $blue-color;
     transition-property: none;
 }
 
 .iqss-ui-select div.ui-select-container{
-    width: 200px;
+    width: $search-box-width;
+    margin-left: 10px;
 }
 .iqss-ui-select span.form-control {
     height: $subheader-height;
@@ -87,6 +94,15 @@
 
 .iqss-ui-select ul {
     border: 1px solid $border-color
+}
+
+.iqss-ui-select-bottom-line {
+    position: absolute;
+    background: $blue-color;
+    top: 17px;
+    height: 1px;
+    margin-left: -15px;
+    width: $search-box-width + $search-box-left-padding;
 }
 
 /*

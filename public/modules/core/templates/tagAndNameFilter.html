@@ -1,6 +1,5 @@
 <div class='iqss-tagAndNameFilter-container'>
     <span items-filter-summary filter-Parameters="filterParameters"></span>
-    <span style="float:left;">&nbsp;</span>
     <div class='iqss-ui-select'>
         <span>
             <ui-select ng-model="filterParameters.namesAndTagsFilter" sortable="true" title="Select" on-select='filterUpdated($select)' reset-search-input='false'>
@@ -12,5 +11,7 @@
                 </ui-select-choices>
             </ui-select>
         </span>
+        <hr class='iqss-ui-select-bottom-line'>
     </div>
 </div>
+

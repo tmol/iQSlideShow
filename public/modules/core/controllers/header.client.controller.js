@@ -11,7 +11,7 @@ angular.module('core').controller('HeaderController', ['$scope', '$window', 'Aut
 		};
 
         $(document).keydown(function (e) {
-			if (e.keyCode == 80) {
+			if (e.keyCode == 80 && e.ctrlKey) {
                 $window.open('/slideshow#!/player', '_blank');
             }
         });
