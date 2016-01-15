@@ -64,7 +64,7 @@
             };
 
             var setupSlides = function (slides) {
-
+                $scope.$emit("slidesLoaded", slides);
                 $scope.slides = slides;
                 $scope.slides.forEach(function (slide, index) {
                     slide.index = index;
@@ -92,6 +92,7 @@
                         }
                     });
                     $scope.slides = slides;
+                    $scope.$emit("slidesLoaded", slides);
                 });
             };
 
