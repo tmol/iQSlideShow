@@ -16,6 +16,8 @@
                     var slideNumber = -1;
                     var timers = new Timers();
                     var loadSlide = function (slideIndex) {
+
+                        scope.currentIndex = slideNumber;
                         if (!scope.slides) {
                             return;
                         }
@@ -41,7 +43,7 @@
                             return;
                         }
 
-                        if (scope.slideIsOnHold) {
+                        if (scope.onHold) {
                             return;
                         }
 
@@ -55,7 +57,6 @@
                             advanceSlide(1000);
                             return;
                         }
-                        scope.currentIndex = slideNumber;
                     };
 
                     scope.$on("slideLoaded", function (event, slide) {
@@ -64,7 +65,6 @@
                     });
 
                     scope.$watch("slides", function () {
-                        scope.slideIsOnHold = false;
                         timers.resetTimeouts();
                         slideNumber = -1;
                         loadNextSlide();
@@ -87,24 +87,24 @@
                     });
 
                     scope.$on("resetOnHold", function () {
-                        scope.slideIsOnHold = false;
+                        scope.onHold = false;
                         loadNextSlide();
                     });
 
                     scope.$on("putPlayerOnHold", function () {
-                        scope.slideIsOnHold = true;
+                        scope.onHold = true;
                     });
 
                     scope.$on("resetSlideShow", function () {
-                        scope.slideIsOnHold = false;
+                        scope.onHold = false;
                         timers.resetTimeouts();
                         loadNextSlide();
                     });
 
                     scope.$on("goToSlideNumber", function (e, slideIndex) {
                         slideNumber = slideIndex;
+                        scope.onHold = true;
                         loadSlide(slideNumber);
-                        scope.slideIsOnHold = true;
                     });
 
                     scope.$on("$destroy", function () {
