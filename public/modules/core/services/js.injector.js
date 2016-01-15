@@ -13,8 +13,12 @@
                 cache: true
             }).success(function (result) {
                 var func = null;
-                eval("func=" + result);
-                (callback || function () {return; })(func);
+                try {
+                    eval("func=" + result);
+                    (callback || function () {return; })(func);
+                }catch(e) {
+                    console.error(e);
+                }
             }).error(function () {
                 jsNotFound[jsUrl] = true;
                 if (callback) {

@@ -10,8 +10,10 @@
             var serverMessageBroker;
 
             $scope.isPreview = function () {
-                return $state.current.name === "preview";
+                return $scope.usePreview || $scope.$parent.usePreview || $state.current.name === "preview";
             };
+
+            $scope.previewSlideId = $stateParams.slideName;
 
             if (!$scope.isPreview()) {
                 messageBroker = new DeviceMessageBroker();
@@ -263,16 +265,23 @@
                         LocalStorage.setDeviceId($scope.deviceId);
                     }
                 }
-                if (messageBroker) {
+                if (!$scope.isPreview()) {
                     messageBroker.deviceId = $scope.deviceId;
                     messageBroker.subscribe(function () {
                         sendHiToServer();
                     });
                     activationDialog.show();
                 } else {
-                    switchSlideShow($stateParams.slideName);
+                    if ($scope.previewSlideId) {
+                        switchSlideShow($scope.previewSlideId);
+                    }
                 }
             };
             startSlideshow();
+            $scope.initPreview = function (previewSlideId) {
+                $scope.usePreview = true;
+                $scope.previewSlideId = previewSlideId;
+                startSlideshow();
+            };
         }]);
 }());

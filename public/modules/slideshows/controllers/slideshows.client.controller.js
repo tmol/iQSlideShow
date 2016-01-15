@@ -11,6 +11,8 @@
             $scope.resolutions = resolutions;
             $scope.authentication = Authentication;
             $scope.currentSlide = null;
+            $scope.usePreview = true;
+            $scope.playerView = Path.getViewUrl('player.client.view', 'preview');
             $scope.slideshow = {
                 tags: []
             };

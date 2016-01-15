@@ -46,6 +46,7 @@
     {% for cssFile in cssFiles.slideshows %}<link rel="stylesheet" href="{{cssFile}}?version={{appVersion}}">{% endfor %}
     {% for cssFile in cssFiles.users %}<link rel="stylesheet" href="{{cssFile}}?version={{appVersion}}">{% endfor %}
     {% for cssFile in cssFiles.blueprints %}<link rel="stylesheet" href="{{cssFile}}?version={{appVersion}}">{% endfor %}
+    {% for cssFile in cssFiles.player %}<link rel="stylesheet" href="/{{cssFile}}?version={{appVersion}}">{% endfor %}
 
 
 
@@ -87,8 +88,10 @@
         {% for jsFile in jsFiles.core %}<script type="text/javascript" src="{{jsFile}}?version={{appVersion}}"></script>{% endfor %}
         {% for jsFile in jsFiles.admin %}<script type="text/javascript" src="{{jsFile}}?version={{appVersion}}"></script>{% endfor %}
         {% for jsFile in jsFiles.devices %}<script type="text/javascript" src="{{jsFile}}?version={{appVersion}}"></script>{% endfor %}
+        {% for jsFile in jsFiles.player %}<script type="text/javascript" src="/{{jsFile}}?version={{appVersion}}"></script>{% endfor %}
         {% for jsFile in jsFiles.slideshows %}<script type="text/javascript" src="{{jsFile}}?version={{appVersion}}"></script>{% endfor %}
         {% for jsFile in jsFiles.blueprints %}<script type="text/javascript" src="{{jsFile}}?version={{appVersion}}"></script>{% endfor %}
+
 
 
         {% if process.env.NODE_ENV === 'development' %}
