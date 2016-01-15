@@ -9,9 +9,9 @@
             var messageBroker;
             var serverMessageBroker;
 
-            $scope.isPreview = function() {
-                return $state.current.name=="preview"
-            }
+            $scope.isPreview = function () {
+                return $state.current.name === "preview";
+            };
 
             if (!$scope.isPreview()) {
                 messageBroker = new DeviceMessageBroker();
@@ -139,7 +139,7 @@
                 timers.resetTimeouts();
                 $scope.slideShowId = slideShowIdToPlay;
                 activationDialog.close();
-                updateSildes(function() {
+                updateSildes(function () {
                     if ($scope.isPreview()) {
                         $scope.$broadcast("goToSlideNumber", 0);
                     }
@@ -250,14 +250,18 @@
 
             $scope.$on("$destroy", function () {
                 timers.reset();
-                if (messageBroker) messageBroker.unSubscribe();
+                if (messageBroker) {
+                    messageBroker.unSubscribe();
+                }
             });
 
             var startSlideshow = function () {
                 $scope.deviceId = LocalStorage.getDeviceId();
                 if ($scope.deviceId === null) {
                     $scope.deviceId = PUBNUB.unique();
-                    if (!$scope.isPreview()) LocalStorage.setDeviceId($scope.deviceId);
+                    if (!$scope.isPreview()) {
+                        LocalStorage.setDeviceId($scope.deviceId);
+                    }
                 }
                 if (messageBroker) {
                     messageBroker.deviceId = $scope.deviceId;
