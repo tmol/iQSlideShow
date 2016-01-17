@@ -16,6 +16,8 @@
             $scope.slideshow = {
                 tags: []
             };
+            $scope.possibleTags = [];
+
             $scope.animationTypes = ["enter-left", "enter-right", "enter-bottom", "enter-top"];
             if ($scope.setPlayerMode) {
                 $scope.setPlayerMode(false);
