@@ -55,8 +55,6 @@
 
 .slide {
     cursor: pointer;
-    height: 36px;
-    line-height: 36px;
     padding-left: 8px;
     padding-right: 8px;
 }
@@ -67,6 +65,7 @@
 
 .slides-continer{
     border-right: 1px solid #CCCCCC;
+    width:250px;
 }
 
 .slides-controllers{
