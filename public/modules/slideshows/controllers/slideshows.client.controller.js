@@ -99,7 +99,9 @@
                 if (newTemplateUrl === $scope.currentSlide.templateUrl
                         || !$scope.currentSlide.templateUrl) {
                     $scope.currentSlide.templateUrl = '';
-                    $scope.$apply();
+                    if (!$scope.$$phase) {
+                        $scope.$apply();
+                    }
                 }
 
                 $timeout(function () {
@@ -301,7 +303,9 @@
                 }, function (result) {
                     $timeout(function () {
                         $scope.slideshows = result;
-                        $scope.$apply();
+                        if (!$scope.$$phase) {
+                            $scope.$apply();
+                        }
                     });
                 });
             };
