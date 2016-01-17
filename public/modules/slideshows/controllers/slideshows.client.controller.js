@@ -170,11 +170,8 @@
                 return $scope.currentSlide === slide;
             };
 
-            $scope.removeCurrentSlide = function () {
-                if (!$scope.currentSlide) {
-                    return;
-                }
-                var slideIndex = $scope.slideshow.draftSlides.indexOf($scope.currentSlide);
+            $scope.removeSlide = function (slide) {
+                var slideIndex = $scope.slideshow.draftSlides.indexOf(slide);
                 $scope.slideshow.draftSlides.splice(slideIndex, 1);
             };
 

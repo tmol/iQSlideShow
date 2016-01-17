@@ -12,6 +12,11 @@
      * Slide Schema
      */
     var SlideSchema = new Schema({
+        title: {
+            type: String,
+            default: '',
+            trim: true
+        },
         templateName: {
             type: String,
             default: '',

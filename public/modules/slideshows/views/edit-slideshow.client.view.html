@@ -30,15 +30,20 @@
                             <select ng-options="template for template in templates" ng-model="selectedTemplate"></select>
                             <div class="slides-ops">
                                 <button type="button" ng-click="addNewSlide()">+</button>
-                                <button type="button" ng-click="removeCurrentSlide()">-</button>
                             </div>
                         </div>
                         <div class="form-group slides-controllers">
                             <input type="button" value="add from blueprints" ng-click="addFromBlueprints()">
                         </div>
                         <!-- SLIDE LIST PREVIEW start-->
+
                         <div ng-class="{'hidden-slide':slide.hidden, 'current-slide':isCurrentSlide(slide)}"
                              data-ng-repeat="slide in slideshow.draftSlides" class="form-group slide">
+                            <div>
+                                <input style="width:15px;height:15px;display:inline-block" ng-true-value="true" ng-false-value="false" ng-model-options="{allowInvalid: true}" type="checkbox" data-ng-model="slide.hidden" id="hidden" class="form-control">
+                                {{slide.title}}
+                                <button style="width: 15px;height: 15px;display: inline-block;padding: 0px;line-height: 15px;font-size: 10px;" ng-click="removeSlide(slide)">X</button>
+                            </div>
                             <span  ng-click="setCurrentSlide(slide)" class="control-label slide-label">
                                 <div class="move-slide">
                                     <div class="move-slide-button" ng-click="moveSlideUp(slide)">▲</div>
@@ -58,6 +63,12 @@
                     <div ng-show="currentSlide" class="col-md-4 col-md-offset-1">
                         <div class="form-group">
                             <select ng-options="template for template in templates" ng-model="currentSlide.templateName"></select>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label" for="title">Title</label>
+                                <div class="controls">
+                                    <input type="text" ng-model="currentSlide.title" id="title" class="form-control" placeholder="Title">
+                                </div>
                         </div>
                         <div class="form-group">
                             <label class="control-label" for="animationType">Animation Type</label>
@@ -95,7 +106,7 @@
                         <div class="form-group">
                             <label class="control-label" for="hidden">Hidden</label>
                             <div class="controls">
-                                <input ng-true-value="true" ng-false-value="false" ng-model-options="{allowInvalid: true}" type="checkbox" data-ng-model="currentSlide.hidden" id="hidden" class="form-control" placeholder="hidden" required>
+                                <input ng-true-value="true" ng-false-value="false" ng-model-options="{allowInvalid: true}" type="checkbox" data-ng-model="currentSlide.hidden" id="hidden" class="form-control" required>
                             </div>
                         </div>
 
