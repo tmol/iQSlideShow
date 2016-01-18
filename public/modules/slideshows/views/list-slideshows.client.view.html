@@ -11,20 +11,19 @@
     <div class='iqss-slideshowlist-content'>
         <div class='col-sm-12'>
             <section data-ng-repeat="slideshow in slideshows" >
-                <div class="iqss-slideshowlist-slideshow">
+                <div class="col-sm-3 iqss-slideshowlist-slideshow">
                     <div>
-                        <div>
-                            <div class="list-group-item-heading" data-ng-bind="slideshow.name"></div>
-                            <a data-ng-href="#!/slideshows/{{slideshow._id}}" class="list-group-item">
-                                edit
-                            </a>
-                            <span class="col-md-6">
-                                <a href="/slideshow#!/preview/{{slideshow._id}}/" target="_blank">Start</a>
-                            </span>
-                        </div>
+                        <div class="list-group-item-heading" data-ng-bind="slideshow.name"></div>
+                        <div style="width:100%; height:180px;display:inline-block" data-ng-controller="PlayerController" ng-init="initPreview(slideshow._id)" ng-include="playerView"></div>
+                        <a data-ng-href="#!/slideshows/{{slideshow._id}}" class="list-group-item">
+                            edit
+                        </a>
+                        <span class="col-md-6">
+                            <a href="/slideshow#!/preview/{{slideshow._id}}" target="_blank">Start</a>
+                        </span>
                     </div>
+                    <!--span class="col-md-6" style="max-height:180px;"><iframe style="width:800px; height:500px; transform: scale(0.3); transform-origin: 0 0;" src="{{'/slideshow#!/preview/' + slideshow._id + '/'}}"></iframe></span-->
                 </div>
-                <!--span class="col-md-6" style="max-height:180px;"><iframe style="width:800px; height:500px; transform: scale(0.3); transform-origin: 0 0;" src="{{'/slideshow#!/preview/' + slideshow._id + '/'}}"></iframe></span-->
             </section>
             <div class="iqss-slideshowlist-slideshow-empty">
             </div>

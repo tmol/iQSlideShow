@@ -1,4 +1,4 @@
-.slideShow{
+.slideShow {
     background-color: #FFFFFF;
 }
 .player-container{
@@ -11,4 +11,7 @@
 .waitingForActivationDialog .modal-dialog {
     width :90%;
     height: 90%;
+}
+.iqss-slideshowlist-slideshow .slideShow {
+    position: inherit !important
 }

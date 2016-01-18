@@ -5,7 +5,8 @@
         function ($timeout, resolutions, $rootScope, SlideSetup) {
             var template = '<div style="width:{{resolution.width}}px;height:{{resolution.height}}px;transform:{{transform}}">';
             template += "<div style='top: 50%; position: absolute; left: 50%;  transform: translate(-50%,-50%);zoom:{{zoomPercent}}%'>";
-            template += "<div ng-include='templateUrl' class='ng-slide-view'></div>";
+            template += "<div ng-show='slideLoaded' ng-include='templateUrl' class='ng-slide-view'></div>";
+            template += "<div ng-show='!slideLoaded' class='ng-slide-view'>LOADING...</div>";
             template += "</div>";
             template += '</div>';
             return {
@@ -18,7 +19,7 @@
                 template: template,
                 link: function (scope, element, attrs) {
                     scope.loadedScripts = [];
-
+                    scope.slideLoaded = false;
                     var update = function () {
                         if (!scope.referenceSlide) {
                             return;
@@ -32,6 +33,7 @@
                         var pad_y = ((scope.resolution.height * sy) - scope.resolution.height) / 2;
                         var scale = Math.min(sx, sy);
                         scope.transform = "translate(" + pad_x + "px," + pad_y + "px) scale(" + scale + ")";
+                        scope.slideLoaded = true;
                         if (!$rootScope.$$phase) {
                             $rootScope.$apply();
                         }

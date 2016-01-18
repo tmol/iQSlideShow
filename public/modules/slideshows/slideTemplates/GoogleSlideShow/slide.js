@@ -35,11 +35,15 @@ function GoogleSlideShowScript($scope, $http) {
     };
     return {
         expand: function (callback) {
-            if ($scope.slide.content.isExpanded) {
+            var slide = $scope.slide || $scope.referenceSlide;
+            if (!slide || !slide.content) {
+                return;
+            }
+            if (slide.content.isExpanded) {
                 callback(null);
                 return;
             }
-            loadSlides($scope.slide.content.slideShowId, function (googleSlides) {
+            loadSlides(slide.content.slideShowId, function (googleSlides) {
                 callback(googleSlides);
             }, function (error) {
                 callback(null);

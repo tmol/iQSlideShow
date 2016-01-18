@@ -11,9 +11,13 @@
             $scope.resolutions = resolutions;
             $scope.authentication = Authentication;
             $scope.currentSlide = null;
+            $scope.usePreview = true;
+            $scope.playerView = Path.getViewUrl('player.client.view', 'preview');
             $scope.slideshow = {
                 tags: []
             };
+            $scope.possibleTags = [];
+
             $scope.animationTypes = ["enter-left", "enter-right", "enter-bottom", "enter-top"];
             if ($scope.setPlayerMode) {
                 $scope.setPlayerMode(false);
@@ -95,12 +99,16 @@
                 if (newTemplateUrl === $scope.currentSlide.templateUrl
                         || !$scope.currentSlide.templateUrl) {
                     $scope.currentSlide.templateUrl = '';
-                    $scope.$apply();
+                    if (!$scope.$$phase) {
+                        $scope.$apply();
+                    }
                 }
 
                 $timeout(function () {
                     $scope.currentSlide.templateUrl = 'modules/slideshows/slideTemplates/' + ($scope.currentSlide.templateName || 'default') + '/slide.html';
-                    $scope.$apply();
+                    if (!$scope.$$phase) {
+                        $scope.$apply();
+                    }
                 }, 10);
             };
 
@@ -168,11 +176,8 @@
                 return $scope.currentSlide === slide;
             };
 
-            $scope.removeCurrentSlide = function () {
-                if (!$scope.currentSlide) {
-                    return;
-                }
-                var slideIndex = $scope.slideshow.draftSlides.indexOf($scope.currentSlide);
+            $scope.removeSlide = function (slide) {
+                var slideIndex = $scope.slideshow.draftSlides.indexOf(slide);
                 $scope.slideshow.draftSlides.splice(slideIndex, 1);
             };
 
@@ -298,7 +303,9 @@
                 }, function (result) {
                     $timeout(function () {
                         $scope.slideshows = result;
-                        $scope.$apply();
+                        if (!$scope.$$phase) {
+                            $scope.$apply();
+                        }
                     });
                 });
             };
