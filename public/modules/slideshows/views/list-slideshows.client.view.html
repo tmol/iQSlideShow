@@ -13,8 +13,12 @@
             <section data-ng-repeat="slideshow in slideshows" >
                 <div class="col-sm-3 iqss-slideshowlist-slideshow">
                     <div>
-                        <div class="list-group-item-heading" data-ng-bind="slideshow.name"></div>
-                        <div style="width:100%; height:180px;display:inline-block" data-ng-controller="PlayerController" ng-init="initPreview(slideshow._id)" ng-include="playerView"></div>
+                        <div>
+                            <div class="iqss-slideshowlist-slideshow-title-container" ng-class="{'iqss-slideshowlist-slideshow-title-container-published': slideshow.published, 'iqss-slideshowlist-slideshow-title-container-draft': !slideshow.published}">
+                               <div data-ng-bind="slideshow.name"></div>
+                            </div>
+                        </div>
+                        <div class='iqss-slideshowlist-slideshow-preview' data-ng-controller="PlayerController" ng-init="initPreview(slideshow._id)" ng-include="playerView"></div>
                         <a data-ng-href="#!/slideshows/{{slideshow._id}}" class="list-group-item">
                             edit
                         </a>
@@ -22,7 +26,6 @@
                             <a href="/slideshow#!/preview/{{slideshow._id}}" target="_blank">Start</a>
                         </span>
                     </div>
-                    <!--span class="col-md-6" style="max-height:180px;"><iframe style="width:800px; height:500px; transform: scale(0.3); transform-origin: 0 0;" src="{{'/slideshow#!/preview/' + slideshow._id + '/'}}"></iframe></span-->
                 </div>
             </section>
             <div class="iqss-slideshowlist-slideshow-empty">
