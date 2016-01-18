@@ -54,6 +54,7 @@
         slideshow = lodash.extend(slideshow, req.body);
 
         slideshow.published = false;
+        slideshow.modified = new Date();
         slideshow.save(function (err) {
             if (err) {
                 return res.status(400).send({

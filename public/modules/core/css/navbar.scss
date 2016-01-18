@@ -31,7 +31,7 @@
 }
 
 .iqss-navbar-nav {
-    @include positionDivInCenterInResponsiveContainer;
+    @include positionInCenterInResponsiveContainer;
     min-height: $header-height;
     font-size: $header-big-font-size;
     padding-right: 0;

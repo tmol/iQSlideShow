@@ -1,0 +1,8 @@
+@import 'variables.scss';
+
+@mixin slideshowImageLinkCommonStyle {
+    width: 17px;
+    height: 17px;
+    display:inline-block;
+    margin: $slideshow-list-default-horizontal-padding;
+}

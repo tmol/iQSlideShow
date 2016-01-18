@@ -18,13 +18,19 @@
                                <div data-ng-bind="slideshow.name"></div>
                             </div>
                         </div>
-                        <div class='iqss-slideshowlist-slideshow-preview' data-ng-controller="PlayerController" ng-init="initPreview(slideshow._id)" ng-include="playerView"></div>
-                        <a data-ng-href="#!/slideshows/{{slideshow._id}}" class="list-group-item">
-                            edit
-                        </a>
-                        <span class="col-md-6">
-                            <a href="/slideshow#!/preview/{{slideshow._id}}" target="_blank">Start</a>
-                        </span>
+
+                        <a href="/slideshow#!/preview/{{slideshow._id}}" target="_blank"><div class='iqss-slideshowlist-slideshow-preview' data-ng-controller="PlayerController" ng-init="initPreview(slideshow._id)" ng-include="playerView" ng-click=''></div>
+</a>
+
+                        <div class='iqss-slideshowlist-slideshow-linksContainer'>
+                            <a data-ng-href='#!/slideshows/{{slideshow._id}}' class='iqss-slideshowlist-slideshow-editLink'></a>
+                            <a href='#' ng-click="publishById('{{slideshow._id}}')" class='iqss-slideshowlist-slideshow-publishLink'></a>
+                            <a href='#' data-ng-click='remove(slideshow);' class='iqss-slideshowlist-slideshow-deleteLink'></a>                             <div class='iqss-slideshowlist-slideshow-delimiter'>
+                            </div>
+                        </div>
+
+                        <div class='iqss-slideshowlist-slideshow-authorName' data-ng-bind="slideshow.user.displayName"></div>
+                        <div class='iqss-slideshowlist-slideshow-lastModified'>Last modified: <span data-ng-bind="formatLastModifiedDate(slideshow.modified)"></span></div>
                     </div>
                 </div>
             </section>

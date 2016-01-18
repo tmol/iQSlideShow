@@ -5,8 +5,14 @@
     padding-top: 0px;
 }
 
-@mixin positionDivInCenterInResponsiveContainer {
+@mixin positionInCenterInResponsiveContainer {
     position: absolute;
     left: 50%;
     transform: translate(-50%, 0);
+}
+
+@mixin slideShowListSlideShowModificationInfo {
+    font-size: $very-small-font-size;
+    color: $very-dark-grey-color;
+    padding-left: $slideshow-list-default-horizontal-padding;
 }

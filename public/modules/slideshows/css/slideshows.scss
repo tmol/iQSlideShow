@@ -1,4 +1,5 @@
 @import 'variables.scss';
+@import 'mixins.scss';
 @import '../../core/css/variables.scss';
 @import '../../core/css/mixins.scss';
 @import '../../core/css/notInlcudedInCore/tagAndNameFilter.scss';
@@ -9,7 +10,7 @@
     line-height: $slideshow-list-header-height;
     position: fixed;
     left: 0px;
-    top: 80px;
+    top: $header-height;
     width: 100%;
     z-index: 1000;
     box-sizing: content-box;
@@ -38,7 +39,7 @@
 }
 
 .iqss-slideshowlist-header > div {
-    @include positionDivInCenterInResponsiveContainer;
+    @include positionInCenterInResponsiveContainer;
 }
 
 .iqss-slideshowlist-header > section {
@@ -47,15 +48,19 @@
 }
 
 .iqss-slideshowlist-content {
-    padding-top: 48px;
+    padding-top: $slideshow-list-header-content-top-padding;
     height: 100%;
+}
+
+.iqss-slideshowlist-content * {
+    line-height: $font-size;
 }
 
 .iqss-slideshowlist-content > div {
     max-width: 85%;
     margin: auto;
     min-width: $slideshow-list-slideshow-width;
-    @include positionDivInCenterInResponsiveContainer;
+    @include positionInCenterInResponsiveContainer;
     display: flex;
     justify-content: center;
     flex-flow: row wrap;
@@ -63,8 +68,8 @@
 
 .iqss-slideshowlist-slideshow {
     height: $slideshow-list-slideshow-height;
-    margin: 0 17px 20px 17px;
-    padding-right: 0;
+    margin: 0 17px 15px 17px;
+    padding: 0;
     width: $slideshow-list-slideshow-width;
 }
 
@@ -91,25 +96,67 @@
 .iqss-slideshowlist-slideshow-title-container {
     font-size: $font-size;
     color: $very-dark-grey-color;
-    padding: 7px;
+    margin: $slideshow-list-default-horizontal-padding;
+    box-sizing: content-box;
     display: inline-block;
-    width: $slideshow-list-slideshow-width - 30px;
+    padding-right: 22px;
+    width: $slideshow-list-slideshow-width - 40px;
 }
 
 .iqss-slideshowlist-slideshow-title-container-draft {
-    background: url(../../../modules/core/img/draft.png) right center no-repeat;
+    background: url(../../../modules/core/img/draft.svg) right center no-repeat;
 }
 
 .iqss-slideshowlist-slideshow-title-container-published {
-    background: url(../../../modules/core/img/published-ok.png) right center no-repeat;
+    background: url(../../../modules/core/img/published-ok.svg) right center no-repeat;
 }
 
-
 .iqss-slideshowlist-slideshow-title-container > div {
-    width: $slideshow-list-slideshow-width - 60px;
+    width: $slideshow-list-slideshow-width;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+    line-height: 16px;
+    padding-right: 35px;
+}
+
+.iqss-slideshowlist-slideshow-editLink {
+    background: url(../../../modules/core/img/edit.svg) right center no-repeat;
+    @include slideshowImageLinkCommonStyle;
+}
+
+.iqss-slideshowlist-slideshow-publishLink {
+    background: url(../../../modules/core/img/publish.svg) right center no-repeat;
+    @include slideshowImageLinkCommonStyle;
+    width: 20px;
+    position: absolute;
+    left: 47%; // no idea why doesn't position correctly with 50%
+    transform: translate(-50%, 0);
+}
+
+.iqss-slideshowlist-slideshow-deleteLink {
+    background: url(../../../modules/core/img/delete.svg) right center no-repeat;
+    @include slideshowImageLinkCommonStyle;
+    float: right;
+}
+
+.iqss-slideshowlist-slideshow-delimiter {
+    height: 1px;
+    width: $slideshow-list-slideshow-width - 2 * $slideshow-list-default-horizontal-padding;
+    position: relative;
+    left: 50%;
+    transform: translate(-50%, 0);
+    background-color: $dark-grey-color;
+}
+
+.iqss-slideshowlist-slideshow-authorName {
+    @include slideShowListSlideShowModificationInfo;
+    font-weight: bold;
+    margin-top: 3px;
+}
+
+.iqss-slideshowlist-slideshow-lastModified {
+    @include slideShowListSlideShowModificationInfo;
 }
 
 .move-slide {

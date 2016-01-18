@@ -27,6 +27,19 @@
                 $scope.templates = response;
             });
 
+            $scope.formatLastModifiedDate = function (dateString) {
+                var date = new Date(dateString);
+                var day = date.getDate();
+                if (day < 10) {
+                    day = '0' + day;
+                }
+                var month = date.getMonth() + 1;
+                if (month < 10) {
+                    month = '0' + month;
+                }
+                return day + '.' + month + '.' + date.getFullYear();
+            }
+
             // Create new Slideshow
             $scope.create = function () {
                 // Create new Slideshow object
@@ -74,12 +87,17 @@
                 });
             };
 
-            $scope.publish = function () {
+            // todo what happens when error occures?
+            $scope.publishById = function (id) {
                 serverMessageBroker
-                    .publishSlideShow($scope.slideshow._id)
+                    .publishSlideShow(id)
                     .then(function () {
                         alert("Published");
                     });
+            };
+
+            $scope.publish = function () {
+                $scope.publishById($scope.slideshow._id);
             };
 
             // Find a list of Slideshows
