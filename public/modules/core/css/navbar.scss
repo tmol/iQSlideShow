@@ -19,10 +19,6 @@
     min-height: $header-height;
 }
 
-@media (min-width: $bootstrap-xs-breakpoint) {
-
-}
-
 .iqss-navbar-brand {
     @include verticalAlignTextMiddle;
     font-size: $header-brand-font-size;
