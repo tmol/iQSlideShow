@@ -4,3 +4,9 @@
     padding-bottom: 0px;
     padding-top: 0px;
 }
+
+@mixin positionDivInCenterInResponsiveContainer {
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%, 0);
+}

@@ -6,18 +6,16 @@ $search-box-left-padding: 15px;
 /*
     tags and names filter
 */
-.iqss-tagAndNameFilter-container {
-    float:right;
-}
 
 .iqss-ui-select {
-    float:right;
+    float:left;
     background-image: url(../../../../modules/core/img/search.png);
     background-repeat: no-repeat;
     background-position: left center;
     padding-left: $search-box-left-padding;
     height: $subheader-height;
     margin-left: 10px;
+    box-sizing: content-box;
 }
 
 .iqss-ui-select span.ui-select-match-text {

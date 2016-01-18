@@ -1,17 +1,43 @@
 @import 'variables.scss';
 @import '../../core/css/variables.scss';
+@import '../../core/css/mixins.scss';
 @import '../../core/css/notInlcudedInCore/tagAndNameFilter.scss';
 
 .iqss-slideshowlist-header {
     background-color: white;
     height: $slideshow-list-header-height;
     line-height: $slideshow-list-header-height;
-    padding-left: $menu-left-padding;
-    position:fixed;
-    left:0px;
-    top:80px;
-    width:100%;
+    position: fixed;
+    left: 0px;
+    top: 80px;
+    width: 100%;
     z-index: 1000;
+    box-sizing: content-box;
+    box-shadow: 0 2px 4px $dark-grey-color;
+}
+
+.iqss-slideshowlist-header > hr {
+    width: 100%;
+    background: #aa0000;
+    border-bottom-color: none;
+    height: 1px;
+    margin-top: 0;
+    margin: 0 10px 0 10px;
+    position: absolute;
+    top: 42px;
+}
+
+.iqss-slideshowlist-header div div {
+    float: left;
+}
+
+.iqss-slideshowlist-header div div:first-child {
+    padding-right: 10px;
+    font-size: $small-font-size;
+}
+
+.iqss-slideshowlist-header > div {
+    @include positionDivInCenterInResponsiveContainer;
 }
 
 .iqss-slideshowlist-header > section {
@@ -24,17 +50,34 @@
     height: 100%;
 }
 
+.iqss-slideshowlist-content > div {
+    max-width: 85%;
+    margin: auto;
+    min-width: $slideshow-list-slideshow-width;
+    @include positionDivInCenterInResponsiveContainer;
+    display: flex;
+    justify-content: center;
+    flex-flow: row wrap;
+}
+
 .iqss-slideshowlist-slideshow {
-    height: $slideshow-list-slidesowh-height;
-    margin-bottom: 20px;
-    padding-left: $menu-left-padding;
+    height: $slideshow-list-slideshow-height;
+    margin: 0 17px 20px 17px;
+    padding-right: 0;
+    width: $slideshow-list-slideshow-width;
+}
+
+.iqss-slideshowlist-slideshow-empty {
+    height: 0;
+    width: $slideshow-list-slideshow-width;
+    margin: 0 17px 20px 17px;
     padding-right: 0;
 }
 
 .iqss-slideshowlist-slideshow > div {
     background-color: white;
     height: 100%;
-    border: 1px solid #eeeeee
+    border: 1px solid $dark-grey-color;
 }
 
 .move-slide {
