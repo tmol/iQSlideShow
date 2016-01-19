@@ -10,7 +10,7 @@
             var serverMessageBroker;
 
             $scope.isPreview = function () {
-                return $scope.usePreview || $scope.$parent.usePreview || $state.current.name === "preview";
+                return $scope.usePreview || $state.current.name === "preview";
             };
 
             $scope.previewSlideId = $stateParams.slideName;
@@ -64,7 +64,7 @@
             };
 
             var setupSlides = function (slides) {
-
+                $scope.$emit("slidesLoaded", slides);
                 $scope.slides = slides;
                 $scope.slides.forEach(function (slide, index) {
                     slide.index = index;
@@ -92,6 +92,7 @@
                         }
                     });
                     $scope.slides = slides;
+                    $scope.$emit("slidesLoaded", slides);
                 });
             };
 

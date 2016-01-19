@@ -26,6 +26,7 @@
                             return;
                         }
                         var slides = scope.slides();
+
                         var slide = slides[slideIndex];
 
                         if (!slide) {
@@ -35,19 +36,19 @@
                         if (!slide.content) {
                             return null;
                         }
-
+                        scope.$emit("currentSlideChanged", slideNumber);
                         return slide;
                     };
                     var loadNextSlide;
                     var advanceSlide = function (delay) {
                         timers.registerTimeout('loadNextSlide', loadNextSlide, delay);
                     };
-                    loadNextSlide = function () {
+                    loadNextSlide = function (forcedLoad) {
                         if (!scope.slides) {
                             return;
                         }
 
-                        if (scope.onHold || scope.inPreview()) {
+                        if ((scope.onHold  || scope.inPreview()) && !forcedLoad) {
                             return;
                         }
 
@@ -72,11 +73,12 @@
                         timers.resetTimeouts();
                         slideNumber = -1;
                         loadNextSlide();
+
                     });
 
                     scope.$on("moveSlideRight", function () {
                         timers.unRegisterTimeout('loadNextSlide');
-                        loadNextSlide();
+                        loadNextSlide(true);
                     });
 
                     scope.$on("moveSlideLeft", function () {
@@ -87,7 +89,7 @@
                             slideNumber = scope.slides.length - 2;
                         }
 
-                        loadNextSlide();
+                        loadNextSlide(true);
                     });
 
                     scope.$on("resetOnHold", function () {

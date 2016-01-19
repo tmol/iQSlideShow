@@ -13,9 +13,17 @@
 			<i class="glyphicon glyphicon-trash"></i>
 		</a>
         <a class="btn btn-primary" data-ng-click="onPlayOnClicked();">
+
 			<i class="glyphicon glyphicon-film"></i>
 		</a>
 	</div>
+
+    <div class="preview-slideshow" style="overflow:hidden;width:400px; height:380px;display:inline-block" data-ng-controller="PlayerController" ng-init="initPreview(previewSlideshowId)" ng-include="playerView"></div>
+    <div>{{currentPreviewSlideIndex}}/{{numberOfSlides}}</div>
+    <button ng-click="moveSlideLeft()">Left</button>
+    <button ng-click="moveSlideRight()">Right</button>
+
+
 	<small>
 		<em class="text-muted">
 			Posted on
