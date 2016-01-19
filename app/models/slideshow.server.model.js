@@ -17,6 +17,10 @@
             required: 'Please fill Slideshow name',
             trim: true
         },
+        published: {
+            type: Boolean,
+            default: false
+        },
         slides: [Slide.schema],
         draftSlides: [Slide.schema],
         tags: {
@@ -24,6 +28,10 @@
             index: true
         },
         created: {
+            type: Date,
+            default: Date.now
+        },
+        modified: {
             type: Date,
             default: Date.now
         },

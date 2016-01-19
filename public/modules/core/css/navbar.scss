@@ -11,9 +11,6 @@
     color: white;
 }
 
-.navbar-inverse .navbar-brand:hover, .navbar-inverse .navbar-brand:focus {
-}
-
 .navbar-inverse .navbar-nav > li > a, .navbar-inverse .navbar-brand {
     color: white;
 }
@@ -23,27 +20,32 @@
 }
 
 @media (min-width: $bootstrap-xs-breakpoint) {
-    .iqss-navbar-header {
-        width: percentage(1/6);
-    }
+
 }
 
 .iqss-navbar-brand {
     @include verticalAlignTextMiddle;
-    font-size: $header-big-font-size;
-    font-weight: 100;
+    font-size: $header-brand-font-size;
+    float: left;
+    padding: 0;
 }
 
 .iqss-navbar-nav {
+    @include positionInCenterInResponsiveContainer;
     min-height: $header-height;
     font-size: $header-big-font-size;
-    padding-left: $menu-left-padding;
+    padding-right: 0;
+    min-width: 490px;
 }
 
-.iqss-navbar-nav li a {
+.iqss-navbar-nav-menu-container li a {
     @include verticalAlignTextMiddle;
     padding-left: 0;
     padding-right: 40px;
+}
+
+.iqss-navbar-nav-menu-container ul li:last-child a {
+    padding-right: 0;
 }
 
 // we need to use !important here because '.navbar-inverse .navbar-nav > li > a, .navbar-inverse .navbar-brand'
@@ -62,6 +64,7 @@
 }
 
 .iqss-navbar-right > li {
+    float: right;
     padding-right: 30px;
     padding-top: 25px;
     background-image: url(../img/settings.png);

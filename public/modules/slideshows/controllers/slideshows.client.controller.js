@@ -19,6 +19,8 @@
             $scope.slideshow = {
                 tags: []
             };
+            $scope.possibleTags = [];
+
             $scope.animationTypes = ["enter-left", "enter-right", "enter-bottom", "enter-top"];
             if ($scope.setPlayerMode) {
                 $scope.setPlayerMode(false);
@@ -27,6 +29,19 @@
             Templates.getAll(function (response) {
                 $scope.templates = response;
             });
+
+            $scope.formatLastModifiedDate = function (dateString) {
+                var date = new Date(dateString);
+                var day = date.getDate();
+                if (day < 10) {
+                    day = '0' + day;
+                }
+                var month = date.getMonth() + 1;
+                if (month < 10) {
+                    month = '0' + month;
+                }
+                return day + '.' + month + '.' + date.getFullYear();
+            }
 
             // Create new Slideshow
             $scope.create = function () {
@@ -75,12 +90,17 @@
                 });
             };
 
-            $scope.publish = function () {
+            // todo what happens when error occures?
+            $scope.publishById = function (id) {
                 serverMessageBroker
-                    .publishSlideShow($scope.slideshow._id)
+                    .publishSlideShow(id)
                     .then(function () {
                         alert("Published");
                     });
+            };
+
+            $scope.publish = function () {
+                $scope.publishById($scope.slideshow._id);
             };
 
             // Find a list of Slideshows
@@ -100,12 +120,16 @@
                 if (newTemplateUrl === $scope.currentSlide.templateUrl
                         || !$scope.currentSlide.templateUrl) {
                     $scope.currentSlide.templateUrl = '';
-                    $scope.$apply();
+                    if (!$scope.$$phase) {
+                        $scope.$apply();
+                    }
                 }
 
                 $timeout(function () {
                     $scope.currentSlide.templateUrl = 'modules/slideshows/slideTemplates/' + ($scope.currentSlide.templateName || 'default') + '/slide.html';
-                    $scope.$apply();
+                    if (!$scope.$$phase) {
+                        $scope.$apply();
+                    }
                 }, 10);
             };
 
@@ -173,11 +197,8 @@
                 return $scope.currentSlide === slide;
             };
 
-            $scope.removeCurrentSlide = function () {
-                if (!$scope.currentSlide) {
-                    return;
-                }
-                var slideIndex = $scope.slideshow.draftSlides.indexOf($scope.currentSlide);
+            $scope.removeSlide = function (slide) {
+                var slideIndex = $scope.slideshow.draftSlides.indexOf(slide);
                 $scope.slideshow.draftSlides.splice(slideIndex, 1);
             };
 
@@ -303,7 +324,9 @@
                 }, function (result) {
                     $timeout(function () {
                         $scope.slideshows = result;
-                        $scope.$apply();
+                        if (!$scope.$$phase) {
+                            $scope.$apply();
+                        }
                     });
                 });
             };

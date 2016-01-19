@@ -1,10 +1,8 @@
-$header-height: 80px;
+$header-height: 70px;
 
 $bootstrap-xs-breakpoint: 768px;
 
-$menu-left-padding: 2.4%;
-
-$subheader-height: 44px;
+$subheader-height: 35px;
 
 /*
     color palette
@@ -27,12 +25,17 @@ $normal-text-color: $very-dark-grey-color;
 /*
     Fonts
 */
+
+$very-small-font-size: 9px;
+
 $small-font-size: 11px;
 
 $font-size: 12px;
 
 $big-font-size: 14px;
 
-$header-big-font-size: 20px;
+$header-big-font-size: 18px;
+
+$header-brand-font-size: 16px;
 
 $header-small-font-size: 11px;

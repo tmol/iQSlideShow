@@ -32,6 +32,7 @@
 
             });
 
+            slideShow.published = true;
             slideShow.save(function (err) {
                 if (err) {
                     console.log("Error when saving ", err);
