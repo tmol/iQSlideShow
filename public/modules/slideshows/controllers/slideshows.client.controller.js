@@ -11,7 +11,6 @@
             $scope.resolutions = resolutions;
             $scope.authentication = Authentication;
             $scope.currentSlide = null;
-            $scope.usePreview = true;
             $scope.playerView = Path.getViewUrl('player.client.view', 'preview');
             $scope.previewSlideshowId = $stateParams.slideshowId;
             $scope.currentPreviewSlideIndex = 0;
@@ -41,7 +40,7 @@
                     month = '0' + month;
                 }
                 return day + '.' + month + '.' + date.getFullYear();
-            }
+            };
 
             // Create new Slideshow
             $scope.create = function () {
@@ -347,17 +346,17 @@
                 $scope.templateElements = $scope.templateElements || {};
                 $scope.templateElements[name] = value;
             });
-            $scope.moveSlideLeft = function() {
+            $scope.moveSlideLeft = function () {
                 $scope.$broadcast("moveSlideLeft");
             };
-            $scope.moveSlideRight = function() {
+            $scope.moveSlideRight = function () {
                 $scope.$broadcast("moveSlideRight");
             };
             $scope.$on("slidesLoaded", function (event, slides) {
                 $scope.numberOfSlides = slides.length;
             });
             $scope.$on("currentSlideChanged", function (event, slideIndex) {
-                $scope.currentPreviewSlideIndex = slideIndex+1;
+                $scope.currentPreviewSlideIndex = slideIndex + 1;
             });
         }]);
 }());

@@ -10,7 +10,7 @@
             var serverMessageBroker;
 
             $scope.isPreview = function () {
-                return $scope.usePreview || $scope.$parent.usePreview || $state.current.name === "preview";
+                return $scope.usePreview || $state.current.name === "preview";
             };
 
             $scope.previewSlideId = $stateParams.slideName;
