@@ -12,17 +12,25 @@
         <div class='col-sm-12'>
             <section data-ng-repeat="slideshow in slideshows" >
                 <div class="col-sm-3 iqss-slideshowlist-slideshow">
-                    <div>
+                    <div ng-if='slideshow.isPlacheloderForCreateNew' class='iqss-slideshowlist-slideshow-createNew-container'>
+                        <div class='iqss-slideshowlist-slideshow-createNew'>
+                            <a  class='iqss-slideshowlist-slideshow-createNew-link' data-ng-href='#!/slideshows/create'>Create new</a>
+                        </div>
+
+
+                    </div>
+                    <div ng-if='!slideshow.isPlacheloderForCreateNew'>
                         <div>
                             <div class="iqss-slideshowlist-slideshow-title-container" ng-class="{'iqss-slideshowlist-slideshow-title-container-published': slideshow.published, 'iqss-slideshowlist-slideshow-title-container-draft': !slideshow.published}">
                                <div data-ng-bind="slideshow.name"></div>
                             </div>
                         </div>
 
-                        <a href="/slideshow#!/preview/{{slideshow._id}}" target="_blank"><div class='iqss-slideshowlist-slideshow-preview' data-ng-controller="PlayerController" ng-init="initPreview(slideshow._id)" ng-click=''>
-                            <div ng-player style="background-color: #ffffff;height:100%;width:100%;display:inline-block" slides="slides" in-preview='true'></div>
-                        </div>
-</a>
+                        <a href="/slideshow#!/preview/{{slideshow._id}}" target="_blank">
+                           <div class='iqss-slideshowlist-slideshow-preview' data-ng-controller="PlayerController" ng-init="initPreview(slideshow._id)" ng-click=''>
+                                <div ng-player style="background-color: #ffffff;height:100px;max-height:100%;width:100%;display:inline-block" slides="slides" in-preview='true'></div>
+                            </div>
+                        </a>
 
                         <div class='iqss-slideshowlist-slideshow-linksContainer'>
                             <a data-ng-href='#!/slideshows/{{slideshow._id}}' class='iqss-slideshowlist-slideshow-editLink'></a>

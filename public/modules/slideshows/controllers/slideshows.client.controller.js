@@ -336,6 +336,7 @@
                 delete $scope.filterParameters.lastPageLastItemCreated;
                 delete $scope.filterParameters.fullyLoaded;
                 executeFilter(function(results) {
+                    results.splice(0, 0, { isPlacheloderForCreateNew: true});
                     $scope.slideshows = results;
                 });
             };
@@ -349,11 +350,6 @@
                     $scope.slideshows = concatenatedSlideshows;
                 });
             }
-
-            $scope.$watch("slideshows", function (newValue, oldValue) {
-                console.log('changed');
-
-            });
 
             $scope.$watch("selectedResolution", function (newValue, oldValue) {
                 if (!$scope.currentSlide) {

@@ -12,16 +12,9 @@
                     inPreview: '&'
                 },
                 transclude: true,
-                template: '<div ng-repeat="slide in slides() track by $index" ng-if="$index==currentIndex" class="{{slide.animationType}} slideShow" style="width:100%;height:100%;position:absolute;display:block" ng-slide-view is-playing="true" reference-slide="slide">'
+                template: '<div ng-repeat="slide in slides() track by $index" ng-if="$index==currentIndex" class="{{slide.animationType}} slideShow" style="width:100%;height:100%;position:relative;display:block" ng-slide-view is-playing="true" reference-slide="slide">'
                     + '</div>',
                 link: function (scope, element, attrs) {
-                    console.log('INIT ng player; ' + i++);
-                    if (!scope.inPreview()) {
-                        console.log('scope.inPreview false ' + scope.$id);
-                    } else {
-                        console.log('scope.inPreview true ' + scope.$id);
-                    }
-
                     var slideNumber = -1;
                     var timers = new Timers();
                     var loadSlide = function (slideIndex) {
@@ -113,14 +106,9 @@
                     });
 
                     scope.$on("goToSlideNumber", function (e, slideIndex) {
-                        console.log("goToSlideNumber ENTER");
                         slideNumber = slideIndex;
                         scope.onHold = true;
                         loadSlide(slideNumber);
-                    });
-
-                    scope.$watch("onHold", function (newVal, old) {
-                        console.log('onHold new value: ' + newVal);
                     });
 
                     scope.$on("$destroy", function () {
