@@ -15,11 +15,11 @@
 
             $scope.previewSlideId = $stateParams.slideName;
 
-            if (!$scope.isPreview()) {
+            if ($scope.isPreview()) {
+                $scope.active = true;
+            } else {
                 messageBroker = new DeviceMessageBroker();
                 serverMessageBroker = new ServerMessageBroker();
-            } else {
-                $scope.active = true;
             }
 
             var timers = new Timers();
@@ -138,15 +138,17 @@
                 };
             }());
 
+
             var switchSlideShow = function (slideShowIdToPlay) {
                 timers.resetTimeouts();
                 $scope.slideShowId = slideShowIdToPlay;
                 activationDialog.close();
-                updateSildes(function () {
+                var displayFirstSlideForPreview = function () {
                     if ($scope.isPreview()) {
                         $scope.$broadcast("goToSlideNumber", 0);
                     }
-                });
+                };
+                updateSildes(displayFirstSlideForPreview);
             };
 
             var loadSlidesForDevice = function (deviceId) {
@@ -259,30 +261,30 @@
             });
 
             var startSlideshow = function () {
+                if ($scope.isPreview()) {
+                    return;
+                }
+
                 $scope.deviceId = LocalStorage.getDeviceId();
                 if ($scope.deviceId === null) {
                     $scope.deviceId = PUBNUB.unique();
-                    if (!$scope.isPreview()) {
-                        LocalStorage.setDeviceId($scope.deviceId);
-                    }
+                    LocalStorage.setDeviceId($scope.deviceId);
                 }
-                if (!$scope.isPreview()) {
-                    messageBroker.deviceId = $scope.deviceId;
-                    messageBroker.subscribe(function () {
-                        sendHiToServer();
-                    });
-                    activationDialog.show();
-                } else {
-                    if ($scope.previewSlideId) {
-                        switchSlideShow($scope.previewSlideId);
-                    }
-                }
+
+                messageBroker.deviceId = $scope.deviceId;
+                messageBroker.subscribe(function () {
+                    sendHiToServer();
+                });
+                activationDialog.show();
+
             };
+
             startSlideshow();
+
             $scope.initPreview = function (previewSlideId) {
                 $scope.usePreview = true;
                 $scope.previewSlideId = previewSlideId;
-                startSlideshow();
+                switchSlideShow($scope.previewSlideId);
             };
         }]);
 }());
