@@ -35,14 +35,13 @@ function GoogleSlideShowScript($scope, $http) {
     };
     return {
         expand: function (callback) {
-            var slide = $scope.slide || $scope.referenceSlide;
-            if (!slide || !slide.content) {
-                return;
-            }
-            if (slide.content.isExpanded) {
+            var slide = $scope.referenceSlide || {};
+
+            if (!slide.content || slide.content.isExpanded) {
                 callback(null);
                 return;
             }
+
             loadSlides(slide.content.slideShowId, function (googleSlides) {
                 callback(googleSlides);
             }, function (error) {
