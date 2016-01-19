@@ -26,12 +26,14 @@
     padding: 0;
 }
 
-.iqss-navbar-nav {
-    @include positionInCenterInResponsiveContainer;
-    min-height: $header-height;
-    font-size: $header-big-font-size;
-    padding-right: 0;
-    min-width: 490px;
+@media (min-width: $bootstrap-xs-breakpoint + 1) {
+    .iqss-navbar-nav {
+        @include positionInCenterInResponsiveContainer;
+        min-height: $header-height;
+        font-size: $header-big-font-size;
+        padding-right: 0;
+        min-width: 490px;
+    }
 }
 
 .iqss-navbar-nav-menu-container li a {

@@ -143,7 +143,9 @@
                 activationDialog.close();
                 updateSildes(function () {
                     if ($scope.isPreview()) {
-                        $scope.$broadcast("goToSlideNumber", 0);
+                        $timeout(function() {
+                            $scope.$broadcast("goToSlideNumber", 0);
+                        });
                     }
                 });
             };

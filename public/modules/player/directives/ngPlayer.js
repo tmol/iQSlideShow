@@ -4,15 +4,19 @@
     'use strict';
     angular.module('player').directive('ngPlayer', ['Timers', 'CssInjector', 'JsInjector',
         function (Timers, CssInjector, JsInjector) {
+            var i = 0;
 
             return {
                 scope: {
-                    slides: "&"
+                    slides: "&",
+                    inPreview: '&'
                 },
                 transclude: true,
                 template: '<div ng-repeat="slide in slides() track by $index" ng-if="$index==currentIndex" class="{{slide.animationType}} slideShow" style="width:100%;height:100%;position:absolute;display:block" ng-slide-view is-playing="true" reference-slide="slide">'
                     + '</div>',
                 link: function (scope, element, attrs) {
+                    console.log('INIT ng player; ' + i++);
+                    console.log('scope.inPreview' + scope.inPreview());
                     var slideNumber = -1;
                     var timers = new Timers();
                     var loadSlide = function (slideIndex) {
@@ -43,7 +47,7 @@
                             return;
                         }
 
-                        if (scope.onHold) {
+                        if (scope.onHold || scope.inPreview()) {
                             return;
                         }
 
@@ -102,9 +106,14 @@
                     });
 
                     scope.$on("goToSlideNumber", function (e, slideIndex) {
+                        console.log("goToSlideNumber ENTER");
                         slideNumber = slideIndex;
                         scope.onHold = true;
                         loadSlide(slideNumber);
+                    });
+
+                    scope.$watch("onHold", function (newVal, old) {
+                        console.log('onHold new value: ' + newVal);
                     });
 
                     scope.$on("$destroy", function () {

@@ -100,16 +100,8 @@
                 $scope.publishById($scope.slideshow._id);
             };
 
-            // Find a list of Slideshows
             $scope.find = function () {
-                $scope.filterSlideShows();
-            };
-
-            // Find existing Slideshow
-            $scope.findOne = function () {
-                $scope.slideshow = Slideshows.get({
-                    slideshowId: $stateParams.slideshowId
-                });
+                //$scope.filterSlideShows();
             };
 
             var updateTemplate = function () {
@@ -285,6 +277,8 @@
             if (angular.isUndefined($scope.filterParameters)) {
                 $scope.filterParameters = {
                     showOnlyMine: false,
+                    pageSize: 8,
+                    fullyLoaded: false,
                     namesAndTagsFilterParameters: {}
                 };
             }
@@ -312,21 +306,52 @@
                 select.search = $scope.filterParameters.namesAndTagsFilter;
             };
 
-            $scope.filterSlideShows = function () {
+            function executeFilter(callback) {
                 Slideshows.filter({
                     showOnlyMine: $scope.filterParameters.showOnlyMine,
+                    pageSize: $scope.filterParameters.pageSize,
+                    lastPageLastItemCreated: $scope.filterParameters.lastPageLastItemCreated,
                     nameFilters: $scope.filterParameters.namesAndTagsFilterParameters.nameFilters,
                     tagFilters: $scope.filterParameters.namesAndTagsFilterParameters.tagFilters,
                     namesAndTagsFilter: $scope.filterParameters.namesAndTagsFilterParameters.namesAndTagsFilter
                 }, function (result) {
+                    if (result.length > 0) {
+                        $scope.filterParameters.lastPageLastItemCreated = _.last(result).created;
+                    }
+                    if (result.length < $scope.filterParameters.pageSize) {
+                        $scope.filterParameters.fullyLoaded = true;
+                    }
                     $timeout(function () {
-                        $scope.slideshows = result;
+                        callback(result);
                         if (!$scope.$$phase) {
                             $scope.$apply();
                         }
                     });
                 });
+            }
+
+            $scope.filterSlideShows = function (scrolling) {
+                delete $scope.filterParameters.lastPageLastItemCreated;
+                delete $scope.filterParameters.fullyLoaded;
+                executeFilter(function(results) {
+                    $scope.slideshows = results;
+                });
             };
+
+            $scope.getNextChunk = function() {
+                if ($scope.filterParameters.fullyLoaded) {
+                    return;
+                }
+                executeFilter(function(results) {
+                    var concatenatedSlideshows = _($scope.slideshows).concat(results).value();
+                    $scope.slideshows = concatenatedSlideshows;
+                });
+            }
+
+            $scope.$watch("slideshows", function (newValue, oldValue) {
+                console.log('changed');
+
+            });
 
             $scope.$watch("selectedResolution", function (newValue, oldValue) {
                 if (!$scope.currentSlide) {
