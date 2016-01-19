@@ -42,6 +42,15 @@
     @include positionInCenterInResponsiveContainer;
 }
 
+@media (max-width: $bootstrap-xs-breakpoint) {
+    .iqss-slideshowlist-header > div {
+        position: absolute;
+        top: 0;
+        left: 200px;
+        min-width: 365px;
+    }
+}
+
 .iqss-slideshowlist-header > section {
     height: $slideshow-list-header-height;
     line-height: $slideshow-list-header-height;
@@ -91,6 +100,7 @@
     width: 100%;
     display:inline-block;
     border: 1px solid $dark-grey-color;
+    overflow: hidden;
 }
 
 .iqss-slideshowlist-slideshow-title-container {

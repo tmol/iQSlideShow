@@ -145,7 +145,9 @@
                 activationDialog.close();
                 var displayFirstSlideForPreview = function () {
                     if ($scope.isPreview()) {
-                        $scope.$broadcast("goToSlideNumber", 0);
+                        $timeout(function() {
+                            $scope.$broadcast("goToSlideNumber", 0);
+                        });
                     }
                 };
                 updateSildes(displayFirstSlideForPreview);

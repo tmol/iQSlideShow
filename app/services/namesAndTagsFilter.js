@@ -69,6 +69,8 @@
         var nameFilters = req.query.nameFilters,
             tagFilters = req.query.tagFilters,
             namesAndTagsFilter = req.query.namesAndTagsFilter,
+            lastPageLastItemCreated = req.query.lastPageLastItemCreated,
+            limit = req.query.pageSize,
             select = {},
             promise,
             items = [],
@@ -92,7 +94,21 @@
             select.tags = { $all: tagFilters };
         }
 
-        collection.find(select).sort('-created').populate('user', 'displayName').exec(function (err, itemsFound) {
+        if (lastPageLastItemCreated) {
+            select.created = { $lt : new Date(lastPageLastItemCreated)};
+        }
+        console.log('lastPageLastItemCreated: ' + lastPageLastItemCreated);
+
+        console.log('************************select is ');
+        console.log(JSON.stringify(select));
+        console.log('************************');
+        console.log('limit: ' + limit);
+
+        if (!limit) {
+            limit = 0;
+        }
+
+        collection.find(select).sort('-created').limit(limit).populate('user', 'displayName').exec(function (err, itemsFound) {
             if (err) {
                 error(err);
                 return;
