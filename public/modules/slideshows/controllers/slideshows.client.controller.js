@@ -279,7 +279,7 @@
             if (angular.isUndefined($scope.filterParameters)) {
                 $scope.filterParameters = {
                     showOnlyMine: false,
-                    pageSize: 8,
+                    pageSize: 12,
                     fullyLoaded: false,
                     namesAndTagsFilterParameters: {}
                 };
