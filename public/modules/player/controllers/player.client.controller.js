@@ -10,12 +10,10 @@
             var serverMessageBroker;
 
             $scope.isPreview = function () {
-                return $scope.usePreview || $state.current.name === "preview";
+                return $state.usePreview || $state.current.name === "preview";
             };
 
-            $scope.previewSlideId = $stateParams.slideName;
-
-            if ($scope.isPreview()) {
+            if ($state.current.name === "preview") {
                 $scope.active = true;
             } else {
                 messageBroker = new DeviceMessageBroker();
@@ -144,10 +142,8 @@
                 $scope.slideShowId = slideShowIdToPlay;
                 activationDialog.close();
                 var displayFirstSlideForPreview = function () {
-                    if ($scope.isPreview()) {
-                        $timeout(function() {
-                            $scope.$broadcast("goToSlideNumber", 0);
-                        });
+                    if ($scope.usePreview) {
+                        $scope.$broadcast("goToSlideNumber", 0);
                     }
                 };
                 updateSildes(displayFirstSlideForPreview);
@@ -263,10 +259,6 @@
             });
 
             var startSlideshow = function () {
-                if ($scope.isPreview()) {
-                    return;
-                }
-
                 $scope.deviceId = LocalStorage.getDeviceId();
                 if ($scope.deviceId === null) {
                     $scope.deviceId = PUBNUB.unique();
@@ -281,12 +273,16 @@
 
             };
 
-            startSlideshow();
-
             $scope.initPreview = function (previewSlideId) {
                 $scope.usePreview = true;
-                $scope.previewSlideId = previewSlideId;
-                switchSlideShow($scope.previewSlideId);
+                switchSlideShow(previewSlideId);
             };
+
+            if ($state.current.name === "player") {
+                startSlideshow();
+            }
+            if ($state.current.name === "preview") {
+                switchSlideShow($stateParams.slideName);
+            }
         }]);
 }());

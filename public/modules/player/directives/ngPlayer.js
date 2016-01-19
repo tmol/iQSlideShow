@@ -16,7 +16,12 @@
                     + '</div>',
                 link: function (scope, element, attrs) {
                     console.log('INIT ng player; ' + i++);
-                    console.log('scope.inPreview' + scope.inPreview());
+                    if (!scope.inPreview()) {
+                        console.log('scope.inPreview false ' + scope.$id);
+                    } else {
+                        console.log('scope.inPreview true ' + scope.$id);
+                    }
+
                     var slideNumber = -1;
                     var timers = new Timers();
                     var loadSlide = function (slideIndex) {
