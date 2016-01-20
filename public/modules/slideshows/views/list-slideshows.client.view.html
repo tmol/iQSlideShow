@@ -12,9 +12,9 @@
         <div class='col-sm-12'>
             <section data-ng-repeat="slideshow in slideshows" >
                 <div class="col-sm-3 iqss-slideshowlist-slideshow">
-                    <div ng-if='slideshow.isPlacheloderForCreateNew' class='iqss-slideshowlist-slideshow-createNew-container'>
+                    <div ng-if='slideshow.isPlacheloderForCreateNew' class='iqss-slideshowlist-slideshow-createNew-container' ng-click='navigateToCreateNewSlideShow()'>
                         <div class='iqss-slideshowlist-slideshow-createNew'>
-                            <a  class='iqss-slideshowlist-slideshow-createNew-link' data-ng-href='#!/slideshows/create'>Create new</a>
+                            <span  class='iqss-slideshowlist-slideshow-createNew-link'>Create new</span>
                         </div>
 
 

@@ -196,6 +196,7 @@
             $scope.removeTag = function (index) {
                 $scope.slideshow.tags.splice(index, 1);
             };
+
             $scope.addTag = function () {
                 if ($scope.desiredTag) {
                     $scope.slideshow.tags = $scope.slideshow.tags || [];
@@ -207,6 +208,7 @@
                     $scope.desiredTag = "";
                 }
             };
+
             $scope.refreshTags = function (text) {
                 return Tags.query({
                     tag: text
@@ -216,6 +218,10 @@
                     });
                 });
             };
+
+            $scope.navigateToCreateNewSlideShow = function () {
+                $location.path('/slideshows/create');
+            }
 
             $scope.saveSlideToBlueprints = function () {
                 var scope = $scope.$new(true);
