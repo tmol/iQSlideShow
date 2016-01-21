@@ -13,11 +13,8 @@
                 return $state.usePreview || $state.current.name === "preview";
             };
 
-            if ($state.current.name === "preview") {
+            if ($scope.isPreview()) {
                 $scope.active = true;
-            } else {
-                messageBroker = new DeviceMessageBroker();
-                serverMessageBroker = new ServerMessageBroker();
             }
 
             var timers = new Timers();
@@ -258,7 +255,13 @@
                 }
             });
 
+            var setupMessagining = function () {
+                messageBroker = new DeviceMessageBroker();
+                serverMessageBroker = new ServerMessageBroker();
+            };
+
             var startSlideshow = function () {
+                setupMessagining();
                 $scope.deviceId = LocalStorage.getDeviceId();
                 if ($scope.deviceId === null) {
                     $scope.deviceId = PUBNUB.unique();
