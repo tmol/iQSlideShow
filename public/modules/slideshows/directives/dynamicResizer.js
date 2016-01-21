@@ -1,6 +1,6 @@
 /*global angular, removeLocationFromFilter*/
 /*jslint nomen: true, es5: true */
-angular.module('slideshows').directive('slideShowTileDynamicResizer', ['$window', function ($window) {
+angular.module('slideshows').directive('dynamicResizer', ['$window', function ($window) {
     'use strict';
 
     function link(scope, element, attrs) {

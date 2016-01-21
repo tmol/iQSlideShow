@@ -1,35 +1,35 @@
-<section data-ng-controller="SlideshowsController" data-ng-init="findOne()" style="margin-top: 58px;">
-	<div class="page-header">
-		<h1 data-ng-bind="slideshow.name"></h1>
+<section data-ng-controller="SlideshowsController" data-ng-init="findById()" style="margin-top: 58px;">
+    <div class='iqss-slideshows-header iqss-slideshowview-header'>
+        <span ng-bind='slideshow.name'></span>
+        <div class='iqss-slideshowview-header-actions iqss-slideshows-links'>
+            <a class='iqss-slideshowview-slideshow-editLink' data-ng-href='#!/slideshows/{{slideshow._id}}/edit' class='iqss-slideshows-slideshow-editLink'>Edit</a>
+            <a href='#' ng-click="publish()" class='iqss-slideshowview-slideshow-publishLink'>Publish</a>
+            <a href='#' data-ng-click='remove();' class='iqss-slideshowview-slideshow-deleteLink'>Remove</a>
+        </div>
+    </div>
+    <div class="iqss-slideshowview-content">
+        <div class='iqss-slideshowview-content-player-container'>
+            <div class='iqss-slideshowview-content-player' dynamic-resizer height-width-ratio="0.5" data-ng-controller="PlayerController" ng-init="initPreview(previewSlideshowId)" ng-include="playerView"></div>
+            <div>{{currentPreviewSlideIndex}}/{{numberOfSlides}}</div>
+            <button ng-click="moveSlideLeft()">Left</button>
+            <button ng-click="moveSlideRight()">Right</button>
+        </div>
+
+        <div class='iqss-slideshowview-content-player-data'>
+            <label>Created by:</label><span ng-bind='slideshow.user.displayName'></span>
+            <label>Status:</label><span ng-bind='getCurrentSlideShowStatus()'></span>
+            <small>
+                <em class="text-muted">
+                    Posted on
+                    <span data-ng-bind="slideshow.created | date:'mediumDate'"></span>
+                    by
+                    <span data-ng-bind="slideshow.user.displayName"></span>
+                </em>
+            </small>
+            <a class="btn btn-primary" data-ng-click="onPlayOnClicked();">
+
+                <i class="glyphicon glyphicon-film"></i>
+            </a>
+        </div>
 	</div>
-	<div class="pull-right" data-ng-show="authentication.user">
-        <a class="btn btn-primary" ng-click="publish()">
-			<i class="glyphicon glyphicon-cloud"></i>
-		</a>
-		<a class="btn btn-primary" href="/#!/slideshows/{{slideshow._id}}/edit">
-			<i class="glyphicon glyphicon-edit"></i>
-		</a>
-		<a class="btn btn-primary" data-ng-click="remove();">
-			<i class="glyphicon glyphicon-trash"></i>
-		</a>
-        <a class="btn btn-primary" data-ng-click="onPlayOnClicked();">
-
-			<i class="glyphicon glyphicon-film"></i>
-		</a>
-	</div>
-
-    <div class="preview-slideshow" style="overflow:hidden;width:400px; height:380px;display:inline-block" data-ng-controller="PlayerController" ng-init="initPreview(previewSlideshowId)" ng-include="playerView"></div>
-    <div>{{currentPreviewSlideIndex}}/{{numberOfSlides}}</div>
-    <button ng-click="moveSlideLeft()">Left</button>
-    <button ng-click="moveSlideRight()">Right</button>
-
-
-	<small>
-		<em class="text-muted">
-			Posted on
-			<span data-ng-bind="slideshow.created | date:'mediumDate'"></span>
-			by
-			<span data-ng-bind="slideshow.user.displayName"></span>
-		</em>
-	</small>
 </section>

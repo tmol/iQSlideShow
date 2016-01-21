@@ -1,0 +1,50 @@
+@import 'variables.scss';
+@import 'mixins.scss';
+
+.iqss-slideshowview-header {
+    padding: 0 10%;
+    box-sizing: border-box;
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: flex-end;
+}
+
+.iqss-slideshowview-content {
+    max-width: 80%;
+    margin: auto;
+    display: flex;
+}
+
+.iqss-slideshowview-header-actions {
+    height: $slideshow-list-header-height;
+    line-height: $slideshow-list-header-height;
+    align-self: flex-end;
+    margin-left: auto;
+    display: flex;
+    font-size: $font-size;
+}
+
+.iqss-slideshowview-slideshow-editLink {
+    background: url(../../../modules/core/img/edit.svg) left center no-repeat;
+    @include slideshowviewHeaderAction;
+}
+
+.iqss-slideshowview-slideshow-publishLink {
+    background: url(../../../modules/core/img/publish.svg) left center no-repeat;
+    @include slideshowviewHeaderAction;
+}
+
+.iqss-slideshowview-slideshow-deleteLink {
+    background: url(../../../modules/core/img/delete.svg) left center no-repeat;
+    @include slideshowviewHeaderAction;
+}
+
+.iqss-slideshowview-content-player-container {
+    width: 100%;
+}
+
+.iqss-slideshowview-content-player {
+    overflow:hidden;
+    width: 60%;
+    display:inline-block;
+}

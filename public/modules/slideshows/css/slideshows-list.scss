@@ -1,0 +1,197 @@
+@import 'variables.scss';
+@import 'mixins.scss';
+@import '../../core/css/variables.scss';
+@import '../../core/css/mixins.scss';
+@import '../../core/css/notInlcudedInCore/tagAndNameFilter.scss';
+
+.iqss-slideshows-header {
+    background-color: white;
+    height: $slideshow-list-header-height;
+    line-height: $slideshow-list-header-height;
+    position: fixed;
+    left: 0px;
+    top: $header-height;
+    width: 100%;
+    z-index: 1000;
+    box-sizing: content-box;
+    box-shadow: 0 2px 4px $dark-grey-color;
+    color: $very-dark-grey-color;
+}
+
+.iqss-slideshows-header > hr {
+    width: 100%;
+    background: #aa0000;
+    border-bottom-color: none;
+    height: 1px;
+    margin-top: 0;
+    margin: 0 10px 0 10px;
+    position: absolute;
+    top: 42px;
+}
+
+.iqss-slideshowlist-header div div {
+    float: left;
+}
+
+.iqss-slideshowlist-header div div:first-child {
+    padding-right: 10px;
+    font-size: $small-font-size;
+}
+
+.iqss-slideshowlist-header > div {
+    @include positionInCenterInResponsiveContainer;
+}
+
+@media (max-width: $bootstrap-xs-breakpoint) {
+    .iqss-slideshowlist-header > div {
+        position: absolute;
+        top: 0;
+        left: 200px;
+        min-width: 365px;
+    }
+}
+
+.iqss-slideshowlist-header > section {
+    height: $slideshow-list-header-height;
+    line-height: $slideshow-list-header-height;
+}
+
+.iqss-slideshowlist-content {
+    padding-top: $slideshow-list-header-content-top-padding;
+    height: 100%;
+}
+
+.iqss-slideshowlist-content * {
+    line-height: $font-size;
+}
+
+.iqss-slideshowlist-content > div {
+    max-width: 85%;
+    margin: auto;
+    min-width: $slideshow-list-slideshow-width;
+    @include positionInCenterInResponsiveContainer;
+    display: flex;
+    justify-content: center;
+    flex-flow: row wrap;
+}
+
+.iqss-slideshowlist-slideshow {
+    height: $slideshow-list-slideshow-height;
+    margin: 0 17px 15px 17px;
+    padding: 0;
+    width: $slideshow-list-slideshow-width;
+}
+
+.iqss-slideshowlist-slideshow-createNew-container {
+    text-align: center;
+    height: 100px;
+    padding: 50px 45px 0 45px;
+    cursor: pointer;
+}
+
+.iqss-slideshowlist-slideshow-createNew-container .iqss-slideshowlist-slideshow-createNew {
+    background: url(../../../modules/core/img/add-slide%20-%20grey.svg) top center no-repeat;
+}
+
+.iqss-slideshowlist-slideshow-createNew-container:hover .iqss-slideshowlist-slideshow-createNew{
+    background: url(../../../modules/core/img/add-slide.svg) top center no-repeat;
+}
+
+.iqss-slideshowlist-slideshow-createNew {
+    display: inline-block;
+    width: 100%;
+    height: 65%;
+}
+
+.iqss-slideshowlist-slideshow-createNew-link {
+    font-size: $font-size;
+    color: $blue-color;
+    position: relative;
+    top: 95px;
+}
+
+.iqss-slideshowlist-slideshow-empty {
+    height: 0;
+    width: $slideshow-list-slideshow-width;
+    margin: 0 17px 20px 17px;
+    padding-right: 0;
+}
+
+.iqss-slideshowlist-slideshow > div {
+    background-color: white;
+    height: 100%;
+    border: 1px solid $dark-grey-color;
+}
+
+.iqss-slideshowlist-slideshow-preview {
+    height: $slideshow-list-slideshow-preview-height;
+    width: 100%;
+    display:inline-block;
+    border: 1px solid $dark-grey-color;
+    overflow: hidden;
+}
+
+.iqss-slideshowlist-slideshow-title-container {
+    font-size: $font-size;
+    color: $very-dark-grey-color;
+    margin: $slideshow-list-default-horizontal-padding;
+    box-sizing: content-box;
+    display: inline-block;
+    padding-right: 22px;
+    width: $slideshow-list-slideshow-width - 40px;
+}
+
+.iqss-slideshowlist-slideshow-title-container-draft {
+    background: url(../../../modules/core/img/draft.svg) right center no-repeat;
+}
+
+.iqss-slideshowlist-slideshow-title-container-published {
+    background: url(../../../modules/core/img/published-ok.svg) right center no-repeat;
+}
+
+.iqss-slideshowlist-slideshow-title-container > div {
+    width: $slideshow-list-slideshow-width;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    line-height: 16px;
+    padding-right: 35px;
+}
+
+.iqss-slideshowlist-slideshow-editLink {
+    background: url(../../../modules/core/img/edit.svg) right center no-repeat;
+    @include slideshowImageLinkCommonStyle;
+}
+
+.iqss-slideshowlist-slideshow-publishLink {
+    background: url(../../../modules/core/img/publish.svg) right center no-repeat;
+    @include slideshowImageLinkCommonStyle;
+    width: 20px;
+    position: relative;
+    left: 45px;
+}
+
+.iqss-slideshowlist-slideshow-deleteLink {
+    background: url(../../../modules/core/img/delete.svg) right center no-repeat;
+    @include slideshowImageLinkCommonStyle;
+    float: right;
+}
+
+.iqss-slideshowlist-slideshow-delimiter {
+    height: 1px;
+    width: $slideshow-list-slideshow-width - 2 * $slideshow-list-default-horizontal-padding;
+    position: relative;
+    left: 50%;
+    transform: translate(-50%, 0);
+    background-color: $dark-grey-color;
+}
+
+.iqss-slideshowlist-slideshow-authorName {
+    @include slideShowListSlideShowModificationInfo;
+    font-weight: bold;
+    margin-top: 3px;
+}
+
+.iqss-slideshowlist-slideshow-lastModified {
+    @include slideShowListSlideShowModificationInfo;
+}

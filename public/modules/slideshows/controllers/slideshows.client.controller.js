@@ -102,8 +102,18 @@
                 $scope.publishById($scope.slideshow._id);
             };
 
-            $scope.find = function () {
-                //$scope.filterSlideShows();
+            $scope.findById = function () {
+                $scope.slideshow = Slideshows.get({
+                    slideshowId: $stateParams.slideshowId
+                });
+            };
+
+            $scope.getCurrentSlideShowStatus = function () {
+                if ($scope.slideshow.published) {
+                    return 'Published';
+                }
+
+                return 'Draft';
             };
 
             var updateTemplate = function () {
