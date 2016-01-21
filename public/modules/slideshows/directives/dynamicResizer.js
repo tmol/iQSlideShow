@@ -5,6 +5,7 @@ angular.module('slideshows').directive('dynamicResizer', ['$window', function ($
 
     function link(scope, element, attrs) {
         var window = angular.element($window);
+        var heightWidthRatio = attrs.heightWidthRatio;
 
         scope.getWidth = function () {
           return window.width();
@@ -12,7 +13,7 @@ angular.module('slideshows').directive('dynamicResizer', ['$window', function ($
 
         scope.$watch(scope.getWidth, function (newValue, oldValue) {
             var elementWidth = element.width();
-            element.height(elementWidth * scope.heightWidthRatio);
+            element.height(elementWidth * heightWidthRatio);
         }, false);
 
         window.bind('resize', function () {
@@ -25,9 +26,9 @@ angular.module('slideshows').directive('dynamicResizer', ['$window', function ($
     }
 
     return {
-        link: link,
+        link: link/*,
         scope: {
             heightWidthRatio: '=heightWidthRatio'
-        }
+        }*/
     };
 }]);

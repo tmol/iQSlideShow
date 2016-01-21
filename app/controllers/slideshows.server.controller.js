@@ -168,7 +168,7 @@
 
             var playOnDevices = devices.map(function (device) {
                 var isSlideShowInPlayList = device.slideAgregation && device.slideAgregation.playList.some(function (entry) {
-                    return entry.slideShow && entry.slideShow.toString() === req.slideshow._id;
+                    return entry.slideShow && entry.slideShow.toString() === req.slideshow._id.toString();
                 });
 
                 return {
@@ -200,7 +200,7 @@
             devices.forEach(function (device) {
 
                 var deviceWasSelected = selectedDevices.some(function (selectedDevice) {
-                    return selectedDevice._id === device._id;
+                    return selectedDevice._id === device._id.toString();
                 });
 
                 if (!device.slideAgregation) {
@@ -210,7 +210,7 @@
                     };
                 }
                 var slideShowIsInPlayList = device.slideAgregation.playList.some(function (entry) {
-                    return entry.slideShow && entry.slideShow.toString() === req.slideshow._id;
+                    return entry.slideShow && entry.slideShow.toString() === req.slideshow._id.toString();
                 });
 
                 if (deviceWasSelected && !slideShowIsInPlayList) {
@@ -223,7 +223,7 @@
 
                 if (slideShowIsInPlayList && !deviceWasSelected) {
                     device.slideAgregation.playList = device.slideAgregation.playList.filter(function (entry) {
-                        return entry.slideShow && entry.slideShow.toString() !== req.slideshow._id;
+                        return entry.slideShow && entry.slideShow.toString() !== req.slideshow._id.toString();
                     });
                     devicesToSave.push(device);
                 }

@@ -29,7 +29,7 @@
                 $scope.templates = response;
             });
 
-            $scope.formatLastModifiedDate = function (dateString) {
+            $scope.formatDate = function (dateString) {
                 var date = new Date(dateString);
                 var day = date.getDate();
                 if (day < 10) {
