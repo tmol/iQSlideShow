@@ -26,7 +26,7 @@
     padding: 0;
 }
 
-@media (min-width: $bootstrap-xs-breakpoint + 1) {
+@media (min-width: $bootstrap-xs-breakpoint) {
     .iqss-navbar-nav {
         @include positionInCenterInResponsiveContainer;
         min-height: $header-height;

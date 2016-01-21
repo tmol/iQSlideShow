@@ -16,6 +16,7 @@
                 });
                 Slideshows.setDevices({slideshowId: $stateParams.slideshowId}, selectedDevices)
                     .$promise.then(function () {
+                        $scope.onPlayedOnDevicesSaved();
                         $scope.$close();
                     });
             };

@@ -10,23 +10,37 @@
     <div class="iqss-slideshowview-content">
         <div class='iqss-slideshowview-content-player-container'>
             <div class='iqss-slideshowview-content-player' dynamic-resizer height-width-ratio="0.5" data-ng-controller="PlayerController" ng-init="initPreview(previewSlideshowId)">
-
-                <div ng-player slides="slides" style="display:inline-block;width:100%;height:100%" in-preview='true'></div>
+                <div ng-player slides="slides" in-preview='true'></div>
             </div>
-            <div>{{currentPreviewSlideIndex}}/{{numberOfSlides}}</div>
-            <button ng-click="moveSlideLeft()">Left</button>
-            <button ng-click="moveSlideRight()">Right</button>
+            <div>
+                <div>
+                    <span class='iqss-slideshowview-content-player-container-play'></span>
+                </div>
+                <div><button ng-click="moveSlideLeft()">Left</button></div>
+                <div>Slide {{currentPreviewSlideIndex}} of {{numberOfSlides}}</div>
+                <div><button ng-click="moveSlideRight()">Right</button></div>
+            </div>
         </div>
         <div class='iqss-slideshowview-content-player-data'>
-            <label>Created by:</label><span ng-bind='slideshow.user.displayName'></span>
-            <label>Status:</label><span ng-bind='getCurrentSlideShowStatus()'></span>
-            <label>Created on:</label><span ng-bind='formatDate(slideshow.created)'></span>
-            <label>Last modified on:</label><span ng-bind='formatDate(slideshow.modified)'></span>
+            <div>
+                <span>Created by:</span><span ng-bind='slideshow.user.displayName'></span>
+            </div>
+            <div >
+                <span>Status:</span><span ng-bind='getCurrentSlideShowStatus()' ng-class="{'iqss-slideshowview-content-player-data-status-published': slideshow.published, 'iqss-slideshowview-content-player-data-status-draft': !slideshow.published}"></span>
+            </div>
+            <div>
+                <span>Created on:</span><span ng-bind='formatDate(slideshow.created)'></span>
+            </div>
+            <div>
+                <span>Last modified on:</span><span ng-bind='formatDate(slideshow.modified)'></span>
+            </div>
             <hr>
-            <label>Playing on:</label><span ng-bind='formatDate(slideshow.modified)'></span> devices
-            <a class="btn btn-primary" data-ng-click="onPlayOnClicked();">
-                <i class="glyphicon glyphicon-film"></i>
-            </a>
+            <div>
+                <span>Playing on:</span>
+                <span class='iqss-slideshowview-content-player-data-playingOn' ng-click='onPlayOnClicked();'>
+                    <span ng-bind='slideshow.nrOfDevicesTheSlideIsAttachedTo'></span> devices
+                </span>
+            </div>
         </div>
 	</div>
 </section>
