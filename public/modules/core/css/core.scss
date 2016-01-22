@@ -74,3 +74,41 @@ footer label {
     height: 100%;
     width: 100%;
 }
+
+.buble-indicator {
+    border: $buble-indicator-size solid;
+    width: $buble-indicator-size;
+    height: $buble-indicator-size;
+    display: block;
+    position: absolute;
+    outline-color: black;
+}
+.buble-indicator::before {
+    content: "";
+    border: $buble-indicator-size solid;
+    width: $buble-indicator-size;
+    height: $buble-indicator-size;
+    display: block;
+    position: absolute;
+}
+
+.buble-indicator.top {
+    margin-top: $buble-indicator-displace;
+    border-left-color: transparent !important;
+    border-right-color: transparent !important;
+    border-top-color: transparent !important;
+}
+
+.buble-indicator.left {
+    border-left-color: transparent !important;
+    border-bottom-color: transparent !important;
+    border-top-color: transparent !important;
+}
+
+.buble-indicator.top::before {
+    margin-top: -1 * ($buble-indicator-size - 1.5);
+    margin-left: -1* $buble-indicator-size;
+    border-left-color: transparent !important;
+    border-right-color: transparent !important;
+    border-top-color: transparent !important;
+}
