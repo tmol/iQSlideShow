@@ -26,9 +26,6 @@ angular.module('slideshows').directive('dynamicResizer', ['$window', function ($
     }
 
     return {
-        link: link/*,
-        scope: {
-            heightWidthRatio: '=heightWidthRatio'
-        }*/
+        link: link
     };
 }]);

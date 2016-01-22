@@ -4,6 +4,6 @@
     angular.module('slideshows').run(['Menus',
         function (Menus) {
             // Set top bar menu items
-            Menus.addMenuItem('topbar', 'Slideshows', '', '', '/slideshows', 1);
+            Menus.addMenuItem('topbar', 'Slideshows', 'slideshows', '', '/slideshows', 1);
         }]);
 }());
