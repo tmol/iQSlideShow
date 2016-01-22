@@ -1,0 +1,118 @@
+@import '../../core/css/variables.scss';
+@import 'variables.scss';
+@import 'mixins.scss';
+
+.iqss-slideshowview-header {
+    padding: 0 10%;
+    box-sizing: border-box;
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: flex-end;
+}
+
+.iqss-slideshowview-content {
+    max-width: 80%;
+    margin: auto;
+    display: flex;
+    font-size: $font-size;
+    color: $very-dark-grey-color;
+    @media (max-width: $bootstrap-xs-breakpoint) {
+        display: block;
+    }
+}
+
+.iqss-slideshowview-header-actions {
+    height: $slideshow-list-header-height;
+    line-height: $slideshow-list-header-height;
+    align-self: flex-end;
+    margin-left: auto;
+    display: flex;
+    font-size: $font-size;
+}
+
+.iqss-slideshowview-slideshow-editLink {
+    background: url(../../../modules/core/img/edit.svg) left center no-repeat;
+    @include slideshowviewHeaderAction;
+}
+
+.iqss-slideshowview-slideshow-publishLink {
+    background: url(../../../modules/core/img/publish.svg) left center no-repeat;
+    @include slideshowviewHeaderAction;
+}
+
+.iqss-slideshowview-slideshow-deleteLink {
+    background: url(../../../modules/core/img/delete.svg) left center no-repeat;
+    @include slideshowviewHeaderAction;
+}
+
+.iqss-slideshowview-content-player-container {
+    width: 60%;
+    @media (max-width: $bootstrap-xs-breakpoint) {
+        width: 100%;
+    }
+}
+
+.iqss-slideshowview-content-player {
+    overflow: hidden;
+    display: inline-block;
+    width: 100%;
+}
+
+.iqss-slideshowview-content-player > div {
+    display:inline-block;
+    width:100%;
+    height:100%
+}
+
+.iqss-slideshowview-content-player-data {
+    padding: 3% 0 0 3%;
+    width: 35%;
+    margin-left: auto;
+    display:inline-block;
+    background: white;
+    min-width: 220px;
+    @media (max-width: $bootstrap-xs-breakpoint) {
+        width: 100%;
+        margin: 40px 0;
+    }
+}
+
+.iqss-slideshowview-content-player-data div {
+    margin-bottom: 5%;
+    display: flex;
+    flex-wrap: nowrap;
+}
+
+.iqss-slideshowview-content-player-data span:nth-child(odd) {
+    flex: 2 2 120px;
+    display: inline-block;
+}
+
+.iqss-slideshowview-content-player-data span:nth-child(even) {
+    flex: 3 3 200px;
+    display: inline-block;
+    margin-left: 10%;
+}
+
+.iqss-slideshowview-content-player-data-status-draft {
+    background: url(../../../modules/core/img/draft.svg) left center no-repeat;
+    padding-left: 35px;
+}
+
+.iqss-slideshowview-content-player-data-status-published {
+    background: url(../../../modules/core/img/published-ok.svg) left center no-repeat;
+    padding-left: 35px;
+}
+
+.iqss-slideshowview-content-player-data-playingOn {
+    background: url(../../../modules/core/img/settings.svg) left center no-repeat;
+    padding-left: 35px;
+    color: $blue-color;
+    cursor: pointer;
+}
+
+.iqss-slideshowview-content-player-container-play {
+    background: url(../../../modules/core/img/play%20button.svg) left center no-repeat;
+    width: auto;
+    display: inline-block;
+}

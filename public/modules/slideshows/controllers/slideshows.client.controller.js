@@ -29,7 +29,7 @@
                 $scope.templates = response;
             });
 
-            $scope.formatLastModifiedDate = function (dateString) {
+            $scope.formatDate = function (dateString) {
                 var date = new Date(dateString);
                 var day = date.getDate();
                 if (day < 10) {
@@ -102,8 +102,35 @@
                 $scope.publishById($scope.slideshow._id);
             };
 
-            $scope.find = function () {
-                //$scope.filterSlideShows();
+            $scope.findById = function () {
+                Slideshows.get({
+                    slideshowId: $stateParams.slideshowId
+                }, function (slideshow) {
+                    $scope.slideshow  = slideshow;
+                    $scope.getNrOfDevicesTheSlideIsAttachedTo();
+                });
+            };
+
+            $scope.getNrOfDevicesTheSlideIsAttachedTo  = function () {
+                 if (!$scope.slideshow) {
+                    return;
+                }
+
+                Slideshows.getDevices({
+                    slideshowId: $scope.slideshow._id
+                }, function (devices) {
+                    $scope.slideshow.nrOfDevicesTheSlideIsAttachedTo = devices.filter(function(device) {
+                        return device.checked;
+                    }).length;
+                });
+            }
+
+            $scope.getCurrentSlideShowStatus = function () {
+                if ($scope.slideshow.published) {
+                    return 'Published';
+                }
+
+                return 'Draft';
             };
 
             var updateTemplate = function () {
@@ -293,6 +320,10 @@
 
             $scope.onPlayOnClicked = function () {
                 var scope = $scope.$new(true);
+
+                scope.onPlayedOnDevicesSaved = function () {
+                    $scope.getNrOfDevicesTheSlideIsAttachedTo();
+                };
 
                 $modal.open({
                     animation: false,

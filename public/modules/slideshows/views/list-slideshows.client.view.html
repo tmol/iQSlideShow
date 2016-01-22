@@ -1,7 +1,7 @@
-<section data-ng-controller="SlideshowsController" data-ng-init="find()">
-    <div class='iqss-slideshowlist-header'>
+<section data-ng-controller="SlideshowsController">
+    <div class='iqss-slideshows-header iqss-slideshowlist-header'>
         <div>
-            <div>
+            <div >
                 <input type="checkbox" ng-model="filterParameters.showOnlyMine" ng-change='filterSlideshows()'>
                 <span>Show only mine</span>
             </div>
@@ -11,13 +11,11 @@
     <div class='iqss-slideshowlist-content' infinite-scroll handler='getNextChunk()'>
         <div class='col-sm-12'>
             <section data-ng-repeat="slideshow in slideshows" >
-                <div class="col-sm-3 iqss-slideshowlist-slideshow">
-                    <div ng-if='slideshow.isPlacheloderForCreateNew' class='iqss-slideshowlist-slideshow-createNew-container' ng-click='navigateToCreateNewSlideShow()'>
+                <div class="iqss-slideshowlist-slideshow">
+                    <div ng-if='slideshow.isPlacheloderForCreateNew' class='iqss-slideshowlist-slideshow-createNew-container iqss-slideshows-links' ng-click='navigateToCreateNewSlideShow()'>
                         <div class='iqss-slideshowlist-slideshow-createNew'>
                             <span  class='iqss-slideshowlist-slideshow-createNew-link'>Create new</span>
                         </div>
-
-
                     </div>
                     <div ng-if='!slideshow.isPlacheloderForCreateNew'>
                         <div>
@@ -35,12 +33,13 @@
                         <div class='iqss-slideshowlist-slideshow-linksContainer'>
                             <a data-ng-href='#!/slideshows/{{slideshow._id}}' class='iqss-slideshowlist-slideshow-editLink'></a>
                             <a href='#' ng-click="publishById('{{slideshow._id}}')" class='iqss-slideshowlist-slideshow-publishLink'></a>
-                            <a href='#' data-ng-click='remove(slideshow);' class='iqss-slideshowlist-slideshow-deleteLink'></a>                             <div class='iqss-slideshowlist-slideshow-delimiter'>
+                            <a href='#' data-ng-click='remove(slideshow);' class='iqss-slideshowlist-slideshow-deleteLink'></a>
+                            <div class='iqss-slideshowlist-slideshow-delimiter'>
                             </div>
                         </div>
 
                         <div class='iqss-slideshowlist-slideshow-authorName' data-ng-bind="slideshow.user.displayName"></div>
-                        <div class='iqss-slideshowlist-slideshow-lastModified'>Last modified: <span data-ng-bind="formatLastModifiedDate(slideshow.modified)"></span></div>
+                        <div class='iqss-slideshowlist-slideshow-lastModified'>Last modified: <span data-ng-bind="formatDate(slideshow.modified)"></span></div>
                     </div>
                 </div>
             </section>

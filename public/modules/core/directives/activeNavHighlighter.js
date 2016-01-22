@@ -4,12 +4,14 @@ angular.module('core').directive('activeNavHighlighter', ['$location', function 
     'use strict';
 
     function link(scope, element, attrs) {
-        var activeClass = attrs.activeNavHighlighter;
-        var path = '/' + attrs.url;
+        var activeClass = attrs.activeNavHighlighter,
+            path = '/' + attrs.url,
+            defaultUrlSurrogate = '/' + attrs.activeNavHighlighterDefaultUrlSurrogate || 'not defined';
         scope.location = location;
 
-        scope.$watch('location.path()', function(newPath) {
-            if (path === newPath) {
+        scope.$watch('location.path()', function (newPath) {
+            if (newPath.startsWith(path)
+                    || (newPath === '/' && defaultUrlSurrogate.startsWith(path))) {
                 element.addClass(activeClass);
             } else {
                 element.removeClass(activeClass);
