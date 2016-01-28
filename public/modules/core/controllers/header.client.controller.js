@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('core').controller('HeaderController', ['$scope', '$window', 'Authentication', 'Menus',
-	function($scope, $window, Authentication, Menus) {
+angular.module('core').controller('HeaderController', ['$scope', '$window', 'Authentication', 'Menus', '$state',
+	function($scope, $window, Authentication, Menus, $state) {
 		$scope.authentication = Authentication;
 		$scope.isCollapsed = false;
 		$scope.menu = Menus.getMenu('topbar');
@@ -15,6 +15,10 @@ angular.module('core').controller('HeaderController', ['$scope', '$window', 'Aut
                 $window.open('/slideshow#!/player', '_blank');
             }
         });
+
+        $scope.isStateSelected = function (link) {
+            return $state.current.url === "/" + link;
+        };
 
 		// Collapsing the menu after navigation
 		$scope.$on('$stateChangeSuccess', function() {
