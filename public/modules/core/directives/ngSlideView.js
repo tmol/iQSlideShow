@@ -20,7 +20,7 @@
                 link: function (scope, element, attrs) {
                     scope.loadedScripts = [];
                     scope.slideLoaded = false;
-                    var update = function () {
+                    var applyUpdate = function () {
                         if (!scope.referenceSlide) {
                             return;
                         }
@@ -38,6 +38,11 @@
                             $rootScope.$apply();
                         }
                         scope.$emit("slideLoaded", scope.referenceSlide);
+                    }
+                    var lastTimeout;
+                    var update = function () {
+                        $timeout.cancel(lastTimeout);
+                        lastTimeout = $timeout(applyUpdate, 10);
                     };
 
                     scope.$watch("referenceSlide", function (newValue, oldValue) {
