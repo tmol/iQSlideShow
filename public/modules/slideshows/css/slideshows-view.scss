@@ -32,21 +32,22 @@
 
 .iqss-slideshowview-slideshow-editLink {
     background: url(../../../modules/core/img/edit.svg) left center no-repeat;
-    @include slideshowviewHeaderAction;
+    @include slideshowViewHeaderAction;
 }
 
 .iqss-slideshowview-slideshow-publishLink {
     background: url(../../../modules/core/img/publish.svg) left center no-repeat;
-    @include slideshowviewHeaderAction;
+    @include slideshowViewHeaderAction;
 }
 
 .iqss-slideshowview-slideshow-deleteLink {
     background: url(../../../modules/core/img/delete.svg) left center no-repeat;
-    @include slideshowviewHeaderAction;
+    @include slideshowViewHeaderAction;
 }
 
 .iqss-slideshowview-content-player-container {
     width: 60%;
+    background: white;
     @media (max-width: $bootstrap-xs-breakpoint) {
         width: 100%;
     }
@@ -113,6 +114,59 @@
 
 .iqss-slideshowview-content-player-container-play {
     background: url(../../../modules/core/img/play%20button.svg) left center no-repeat;
-    width: auto;
+    @include slideshowViewPlayOrPause;
+}
+
+.iqss-slideshowview-content-player-container-pause {
+    background: url(../../../modules/core/img/pause_button.svg) left center no-repeat;
+    @include slideshowViewPlayOrPause;
+}
+
+.iqss-slideshowview-content-player-actions {
+    display: flex;
+    align-self: center;
+    background: white;
+    height: 30px;
+}
+
+
+.iqss-slideshowview-content-player-actions-center {
+    flex: 0 0 auto;
+    align-self: center;
+}
+
+.iqss-slideshowview-content-player-actions-center * {
     display: inline-block;
 }
+
+.iqss-slideshowview-content-player-actions-maximize {
+    flex: 1 1 15px;
+    background: url(../../../modules/core/img/fullscreen.svg) right center no-repeat;
+    margin-right: 15px;
+    height: 15px;
+    width: 15px;
+    margin-bottom: auto;
+    margin-top: auto;
+}
+
+.iqss-slideshowview-content-player-actions-center-left {
+    background: url(../../../modules/core/img/previous.svg) right center no-repeat;
+    width: 15px;
+    height: 15px;
+    vertical-align: middle;
+    cursor: pointer;
+}
+
+.iqss-slideshowview-content-player-actions-center-right {
+    background: url(../../../modules/core/img/next.svg) right center no-repeat;
+    width: 15px;
+    height: 15px;
+    vertical-align: middle;
+    cursor: pointer;
+}
+
+.iqss-slideshowview-content-player-actions-center-slideInfo {
+    margin-left: 20px;
+    margin-right: 10px;
+}
+

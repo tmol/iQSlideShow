@@ -1,4 +1,4 @@
-<section data-ng-controller="SlideshowsController">
+<section data-ng-controller="SlideshowsListController">
     <div class='iqss-slideshows-header iqss-slideshowlist-header'>
         <div>
             <div >
@@ -14,7 +14,7 @@
                 <div class="iqss-slideshowlist-slideshow">
                     <div ng-if='slideshow.isPlacheloderForCreateNew' class='iqss-slideshowlist-slideshow-createNew-container iqss-slideshows-links' ng-click='navigateToCreateNewSlideShow()'>
                         <div class='iqss-slideshowlist-slideshow-createNew'>
-                            <span  class='iqss-slideshowlist-slideshow-createNew-link'>Create new</span>
+                            <span class='iqss-slideshowlist-slideshow-createNew-link'>Create new</span>
                         </div>
                     </div>
                     <div ng-if='!slideshow.isPlacheloderForCreateNew'>
@@ -26,7 +26,7 @@
 
                         <a href="/slideshow#!/preview/{{slideshow._id}}" target="_blank">
                            <div class='iqss-slideshowlist-slideshow-preview' data-ng-controller="PlayerController" ng-init="initPreview(slideshow._id)" ng-click=''>
-                                <div ng-player style="background-color: #ffffff;height:100px;max-height:100%;width:100%;display:inline-block" slides="slides" in-preview='true'></div>
+                                <div ng-player style="background-color: #ffffff;height:100px;max-height:100%;width:100%;display:inline-block" slides="slides" ng-player-on-hold='true'></div>
                             </div>
                         </a>
 
@@ -39,7 +39,7 @@
                         </div>
 
                         <div class='iqss-slideshowlist-slideshow-authorName' data-ng-bind="slideshow.user.displayName"></div>
-                        <div class='iqss-slideshowlist-slideshow-lastModified'>Last modified: <span data-ng-bind="formatDate(slideshow.modified)"></span></div>
+                        <div class='iqss-slideshowlist-slideshow-lastModified'>Last modified: <span data-ng-bind="dateFormatter.formatDate(slideshow.modified)"></span></div>
                     </div>
                 </div>
             </section>

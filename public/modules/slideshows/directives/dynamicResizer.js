@@ -5,7 +5,7 @@ angular.module('slideshows').directive('dynamicResizer', ['$window', function ($
 
     function link(scope, element, attrs) {
         var window = angular.element($window);
-        var heightWidthRatio = attrs.heightWidthRatio;
+        var heightWidthRatio = attrs.dynamicResizerHeightWidthRatio;
 
         scope.getWidth = function () {
           return window.width();

@@ -9,16 +9,18 @@
     </div>
     <div class="iqss-slideshowview-content">
         <div class='iqss-slideshowview-content-player-container'>
-            <div class='iqss-slideshowview-content-player' dynamic-resizer height-width-ratio="0.5" data-ng-controller="PlayerController" ng-init="initPreview(previewSlideshowId)">
-                <div ng-player slides="slides" in-preview='true'></div>
+            <div class='iqss-slideshowview-content-player' dynamic-resizer dynamic-resizer-height-width-ratio="0.5" data-ng-controller="PlayerController" ng-init="initPreview(previewSlideshowId)">
+                <div ng-player slides="slides" ng-player-on-hold='playSlideShow' ng-player-id='viewPlayerId'></div>
             </div>
-            <div>
-                <div>
-                    <span class='iqss-slideshowview-content-player-container-play'></span>
+            <div class='iqss-slideshowview-content-player-actions'>
+                <div ng-if='!playSlideShow' class='iqss-slideshowview-content-player-container-play' ng-click='togglePlay()'></div>
+                <div ng-if='playSlideShow' class='iqss-slideshowview-content-player-container-pause' ng-click='togglePlay()'></div>
+                <div class='iqss-slideshowview-content-player-actions-center'>
+                    <div ng-click='moveSlideLeft()' class='iqss-slideshowview-content-player-actions-center-left'></div>
+                    <div class='iqss-slideshowview-content-player-actions-center-slideInfo'>Slide {{currentPreviewSlideIndex}} of {{numberOfSlides}}</div>
+                    <div ng-click='moveSlideRight()' class='iqss-slideshowview-content-player-actions-center-right'></div>
                 </div>
-                <div><button ng-click="moveSlideLeft()">Left</button></div>
-                <div>Slide {{currentPreviewSlideIndex}} of {{numberOfSlides}}</div>
-                <div><button ng-click="moveSlideRight()">Right</button></div>
+                <div class='iqss-slideshowview-content-player-actions-maximize'></div>
             </div>
         </div>
         <div class='iqss-slideshowview-content-player-data'>
@@ -29,10 +31,10 @@
                 <span>Status:</span><span ng-bind='getCurrentSlideShowStatus()' ng-class="{'iqss-slideshowview-content-player-data-status-published': slideshow.published, 'iqss-slideshowview-content-player-data-status-draft': !slideshow.published}"></span>
             </div>
             <div>
-                <span>Created on:</span><span ng-bind='formatDate(slideshow.created)'></span>
+                <span>Created on:</span><span ng-bind='dateFormatter.formatDate(slideshow.created)'></span>
             </div>
             <div>
-                <span>Last modified on:</span><span ng-bind='formatDate(slideshow.modified)'></span>
+                <span>Last modified on:</span><span ng-bind='dateFormatter.formatDate(slideshow.modified)'></span>
             </div>
             <hr>
             <div>

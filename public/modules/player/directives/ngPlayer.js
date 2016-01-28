@@ -1,5 +1,5 @@
-/*jslint nomen: true, vars: true, unparam: true, todo: true*/
-/*global angular*/
+/*jslint nomen: true, vars: true, unparam: true*/
+/*global angular, alert*/
 (function () {
     'use strict';
     angular.module('player').directive('ngPlayer', ['Timers', 'CssInjector', 'JsInjector',
@@ -8,8 +8,8 @@
 
             return {
                 scope: {
-                    slides: "&",
-                    inPreview: '&'
+                    slides: '&',
+                    ngPlayerId: '&'
                 },
                 transclude: true,
                 template: '<div ng-repeat="slide in slides() track by $index" ng-if="$index==currentIndex" class="{{slide.animationType}} slideShow" style="width:100%;height:100%;position:relative;display:block" ng-slide-view is-playing="true" reference-slide="slide">'
@@ -17,6 +17,12 @@
                 link: function (scope, element, attrs) {
                     var slideNumber = -1;
                     var timers = new Timers();
+                    if (scope.ngPlayerId) {
+                        scope.playerId = scope.ngPlayerId();
+                    }
+                    if (scope.ngPlayerOnHold) {
+                        scope.onHold = scope.ngPlayerOnHold();
+                    }
                     var loadSlide = function (slideIndex) {
 
                         scope.currentIndex = slideNumber;
@@ -46,7 +52,7 @@
                             return;
                         }
 
-                        if ((scope.onHold  || scope.inPreview()) && !forcedLoad) {
+                        if (scope.onHold && !forcedLoad) {
                             return;
                         }
 
@@ -90,12 +96,22 @@
                         loadNextSlide(true);
                     });
 
-                    scope.$on("resetOnHold", function () {
+                    function isBoadcastedMessageProcessable(playerId) {
+                        return !playerId || playerId === scope.ngPlayerId();
+                    }
+
+                    scope.$on("resetOnHold", function (event, playerId) {
+                        if (!isBoadcastedMessageProcessable(playerId)) {
+                            return;
+                        }
                         scope.onHold = false;
                         loadNextSlide();
                     });
 
-                    scope.$on("putPlayerOnHold", function () {
+                    scope.$on("putPlayerOnHold", function (event, playerId) {
+                        if (!isBoadcastedMessageProcessable(playerId)) {
+                            return;
+                        }
                         scope.onHold = true;
                     });
 

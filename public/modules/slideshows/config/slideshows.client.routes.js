@@ -12,7 +12,7 @@
                     templateUrl: 'modules/slideshows/views/deviceInteraction.client.view.html'
                 }).
                 state('listSlideshows', {
-                    url: '/',
+                    url: '/slideshows',
                     templateUrl: 'modules/slideshows/views/list-slideshows.client.view.html'
                 }).
                 state('createSlideshow', {

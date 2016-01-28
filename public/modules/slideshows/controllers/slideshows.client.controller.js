@@ -4,8 +4,8 @@
     'use strict';
 
     // Slideshows controller
-    angular.module('slideshows').controller('SlideshowsController', ['$scope', '$stateParams', '$location', 'Authentication', 'Slideshows', 'Templates', '$timeout', 'ServerMessageBroker', 'Tags', '$modal', 'Path', '$cacheFactory', 'resolutions',
-        function ($scope, $stateParams, $location, Authentication, Slideshows, Templates, $timeout, ServerMessageBroker, Tags, $modal, Path, $cacheFactory, resolutions) {
+    angular.module('slideshows').controller('SlideshowsController', ['$scope', '$stateParams', '$location', 'Authentication', 'Slideshows', 'Templates', '$timeout', 'ServerMessageBroker', 'Tags', '$modal', 'Path', '$cacheFactory', 'resolutions', 'DateFormatter',
+        function ($scope, $stateParams, $location, Authentication, Slideshows, Templates, $timeout, ServerMessageBroker, Tags, $modal, Path, $cacheFactory, resolutions, DateFormatter) {
             var serverMessageBroker = new ServerMessageBroker();
 
             $scope.resolutions = resolutions;
@@ -19,28 +19,14 @@
                 tags: []
             };
             $scope.possibleTags = [];
-
+            $scope.dateFormatter = DateFormatter;
+            $scope.playSlideShow = false;
+            $scope.viewPlayerId = 'viewPlayer';
             $scope.animationTypes = ["enter-left", "enter-right", "enter-bottom", "enter-top"];
+
             if ($scope.setPlayerMode) {
                 $scope.setPlayerMode(false);
             }
-
-            Templates.getAll(function (response) {
-                $scope.templates = response;
-            });
-
-            $scope.formatDate = function (dateString) {
-                var date = new Date(dateString);
-                var day = date.getDate();
-                if (day < 10) {
-                    day = '0' + day;
-                }
-                var month = date.getMonth() + 1;
-                if (month < 10) {
-                    month = '0' + month;
-                }
-                return day + '.' + month + '.' + date.getFullYear();
-            };
 
             // Create new Slideshow
             $scope.create = function () {
@@ -63,19 +49,9 @@
 
             // Remove existing Slideshow
             $scope.remove = function (slideshow) {
-                if (slideshow) {
-                    slideshow.$remove();
-                    var i;
-                    for (i in $scope.slideshows) {
-                        if ($scope.slideshows[i] === slideshow) {
-                            $scope.slideshows.splice(i, 1);
-                        }
-                    }
-                } else {
-                    $scope.slideshow.$remove(function () {
-                        $location.path('slideshows');
-                    });
-                }
+                $scope.slideshow.$remove(function () {
+                    $location.path('slideshows');
+                });
             };
 
             // Update existing Slideshow
@@ -99,7 +75,11 @@
             };
 
             $scope.publish = function () {
-                $scope.publishById($scope.slideshow._id);
+                serverMessageBroker
+                    .publishSlideShow($scope.slideshow._id)
+                    .then(function () {
+                        alert("Published");
+                    });
             };
 
             $scope.findById = function () {
@@ -246,10 +226,6 @@
                 });
             };
 
-            $scope.navigateToCreateNewSlideShow = function () {
-                $location.path('/slideshows/create');
-            }
-
             $scope.saveSlideToBlueprints = function () {
                 var scope = $scope.$new(true);
                 scope.Slide = $scope.currentSlide;
@@ -286,38 +262,6 @@
                 });
             };
 
-            $scope.cache = $cacheFactory.get('slideshows.client.controller');
-            if (angular.isUndefined($scope.cache)) {
-                $scope.cache = $cacheFactory('slideshows.client.controller');
-            }
-
-            $scope.searchProvider = {
-                filterEventName: 'filterSlideShows',
-                cacheId: 'slideShowsFilter',
-                filter: function (filterParameters) {
-                    $scope.filterParameters.namesAndTagsFilterParameters = filterParameters;
-                    $scope.filterSlideShows();
-                },
-                getPossibleFilterValues: function (search, callback) {
-                    Slideshows.getFilteredNamesAndTags({
-                        showOnlyMine: $scope.filterParameters.showOnlyMine,
-                        namesAndTagsFilter: search
-                    }, function (filterResult) {
-                        callback(filterResult);
-                    });
-                }
-            };
-
-            $scope.filterParameters = $scope.cache.get('slideshows.client.controller.filterParameters');
-            if (angular.isUndefined($scope.filterParameters)) {
-                $scope.filterParameters = {
-                    showOnlyMine: false,
-                    pageSize: 12,
-                    fullyLoaded: false,
-                    namesAndTagsFilterParameters: {}
-                };
-            }
-
             $scope.onPlayOnClicked = function () {
                 var scope = $scope.$new(true);
 
@@ -335,57 +279,11 @@
                 });
             };
 
-            $scope.$watch('filterParameters.showOnlyMine', function (oldValue, newValue) {
-                if (oldValue !== newValue) {
-                    $scope.filterSlideShows();
-                }
-            });
-
-            $scope.initNamesAndTagsFilter = function (select) {
-                select.search = $scope.filterParameters.namesAndTagsFilter;
-            };
-
-            function executeFilter(callback) {
-                Slideshows.filter({
-                    showOnlyMine: $scope.filterParameters.showOnlyMine,
-                    pageSize: $scope.filterParameters.pageSize,
-                    lastPageLastItemCreated: $scope.filterParameters.lastPageLastItemCreated,
-                    nameFilters: $scope.filterParameters.namesAndTagsFilterParameters.nameFilters,
-                    tagFilters: $scope.filterParameters.namesAndTagsFilterParameters.tagFilters,
-                    namesAndTagsFilter: $scope.filterParameters.namesAndTagsFilterParameters.namesAndTagsFilter
-                }, function (result) {
-                    if (result.length > 0) {
-                        $scope.filterParameters.lastPageLastItemCreated = _.last(result).created;
-                    }
-                    if (result.length < $scope.filterParameters.pageSize) {
-                        $scope.filterParameters.fullyLoaded = true;
-                    }
-                    $timeout(function () {
-                        callback(result);
-                        if (!$scope.$$phase) {
-                            $scope.$apply();
-                        }
-                    });
-                });
-            }
-
-            $scope.filterSlideShows = function (scrolling) {
-                delete $scope.filterParameters.lastPageLastItemCreated;
-                delete $scope.filterParameters.fullyLoaded;
-                executeFilter(function(results) {
-                    results.splice(0, 0, { isPlacheloderForCreateNew: true});
-                    $scope.slideshows = results;
-                });
-            };
-
-            $scope.getNextChunk = function() {
-                if ($scope.filterParameters.fullyLoaded) {
-                    return;
-                }
-                executeFilter(function(results) {
-                    var concatenatedSlideshows = _($scope.slideshows).concat(results).value();
-                    $scope.slideshows = concatenatedSlideshows;
-                });
+            $scope.togglePlay = function() {
+                $scope.playSlideShow = !$scope.playSlideShow;
+                var messageToBroadcast = $scope.playSlideShow ?
+                    'resetOnHold' : 'putPlayerOnHold';
+                $scope.$broadcast(messageToBroadcast, $scope.viewPlayerId);
             }
 
             $scope.$watch("selectedResolution", function (newValue, oldValue) {
