@@ -295,7 +295,9 @@
             });
 
             $scope.$on("$destroy", function () {
-                $scope.cache.put('slideshows.client.controller.filterParameters', $scope.filterParameters);
+                if ($scope.cache) {
+                    $scope.cache.put('slideshows.client.controller.filterParameters', $scope.filterParameters);
+                }
                 $scope.$emit("slideContextUnloaded");
             });
             $scope.$on("setTemplateElement", function (event, name, value) {
