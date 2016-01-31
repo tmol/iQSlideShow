@@ -38,11 +38,20 @@
                             $rootScope.$apply();
                         }
                         scope.$emit("slideLoaded", scope.referenceSlide);
+
                     }
                     var lastTimeout;
                     var update = function () {
                         $timeout.cancel(lastTimeout);
+                        if (scope.slideConfiguration && scope.slideConfiguration.onUpdate) {
+                            scope.slideConfiguration.onUpdate(function () {
+                                lastTimeout = $timeout(applyUpdate, 10);
+                            });
+                            return;
+                        }
+
                         lastTimeout = $timeout(applyUpdate, 10);
+
                     };
 
                     scope.$watch("referenceSlide", function (newValue, oldValue) {
