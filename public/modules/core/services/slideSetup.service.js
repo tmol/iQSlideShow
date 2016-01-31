@@ -39,7 +39,8 @@
                     scope.cssUrl = 'modules/slideshows/slideTemplates/' + (scope.referenceSlide.templateName || 'default') + '/slide.css';
                     scope.jsUrl = 'modules/slideshows/slideTemplates/' + (scope.referenceSlide.templateName || 'default') + '/slide.js';
                     scope.referencePath = 'modules/slideshows/slideTemplates/' + (scope.referenceSlide.templateName || 'default') + '/';
-
+                },
+                loadScripts: function (scope, element) {
                     var deferred = $q.defer();
 
                     JsInjector.inject(scope.jsUrl, function (slideScript) {

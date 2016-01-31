@@ -4,9 +4,9 @@
     angular.module('core').directive('ngSlideView', ['$timeout', 'resolutions', '$rootScope', 'SlideSetup',
         function ($timeout, resolutions, $rootScope, SlideSetup) {
             var template = '<div style="width:{{resolution.width}}px;height:{{resolution.height}}px;transform:{{transform}}">';
-            template += "<div style='top: 50%; position: absolute; left: 50%;  transform: translate(-50%,-50%);zoom:{{zoomPercent}}%'>";
-            template += "<div ng-show='slideLoaded' ng-include='templateUrl' class='ng-slide-view'></div>";
-            template += "<div ng-show='!slideLoaded' class='ng-slide-view'>LOADING...</div>";
+            template += "<div style='top: 50%; position: absolute; left: 50%;  transform: translate(-50%,-50%)'>";
+            template += "<div ng-class=\"{'iqss-hidden':!slideLoaded}\" ng-include='templateUrl' onload='templateLoaded()' class='ng-slide-view'></div>";
+            template += "<div ng-show='!slideLoaded' style='top: 50%; position: absolute; left: 50%;  transform: translate(-50%,-50%);z-index:100' >LOADING...</div>";
             template += "</div>";
             template += '</div>';
             return {
@@ -18,6 +18,7 @@
                 },
                 template: template,
                 link: function (scope, element, attrs) {
+                    var templateLoaded = false;
                     scope.loadedScripts = [];
                     scope.slideLoaded = false;
                     var applyUpdate = function () {
@@ -33,13 +34,13 @@
                         var pad_y = ((scope.resolution.height * sy) - scope.resolution.height) / 2;
                         var scale = Math.min(sx, sy);
                         scope.transform = "translate(" + pad_x + "px," + pad_y + "px) scale(" + scale + ")";
-                        scope.slideLoaded = true;
                         if (!$rootScope.$$phase) {
                             $rootScope.$apply();
                         }
-                        scope.$emit("slideLoaded", scope.referenceSlide);
 
-                    }
+                        scope.$emit("slideLoaded", scope.referenceSlide);
+                    };
+
                     var lastTimeout;
                     var update = function () {
                         $timeout.cancel(lastTimeout);
@@ -56,12 +57,7 @@
 
                     scope.$watch("referenceSlide", function (newValue, oldValue) {
                         if (newValue) {
-                            SlideSetup.setup(scope, element).then(function () {
-                                if (scope.referenceSlide.setupFinishedPromise) {
-                                    scope.referenceSlide.setupFinishedPromise.resolve();
-                                }
-                                update();
-                            });
+                            SlideSetup.setup(scope, element);
                         }
                     });
                     scope.$watch("referenceSlide.resolution", function (newValue, oldValue) {
@@ -93,7 +89,20 @@
                     scope.$on("$destroy", function () {
                         $(window).off("resize", update);
                     });
+
+                    scope.templateLoaded = function () {
+                        templateLoaded = true;
+                        scope.slideLoaded = true;
+                        SlideSetup.loadScripts(scope, element).then(function () {
+                            if (scope.referenceSlide.setupFinishedPromise) {
+                                scope.referenceSlide.setupFinishedPromise.resolve();
+                            }
+
+                            update();
+                        });
+                    };
                 }
             };
-        }]);
+        }
+    ]);
 }());

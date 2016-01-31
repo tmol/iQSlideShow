@@ -37,7 +37,12 @@ function iQuestEvent($scope, $http) {
         }
         img.src = url;
     }
-
+    var applyTextFill = function() {
+        $(".iQuestEvents-description-text").textfill({
+            minFontPixels: 20,
+            maxFontPixels: 60
+        });
+    }
     var applyTemplate = function(callback) {
         var slide = $scope.referenceSlide || {};
 
@@ -54,18 +59,20 @@ function iQuestEvent($scope, $http) {
         loadSpeakerImage(slide.content.speakerImageUrl);
         loadEventsPicture(slide.content.pictureUrl);
 
-        var applyTextFill = function() {
-            $(".iQuestEvents-description-text").textfill({
-                minFontPixels: 10,
-                maxFontPixels: 20
-            });
-        }
+
         $scope.$emit("whenScriptLoaded", "jquery.textfill.js", applyTextFill);
         callback();
     };
 
 
     return {
+        onUpdate: function(callback) {
+            $scope.$on("slide.content.description", function() {
+                applyTextFill();
+            });
+            $scope.$emit("whenScriptLoaded", "jquery.textfill.js", applyTextFill);
+            callback();
+        },
         preview: function(callback, rootElement) {
             applyTemplate(callback);
         },
