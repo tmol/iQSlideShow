@@ -28,6 +28,10 @@
                 $scope.setPlayerMode(false);
             }
 
+            Templates.getAll(function (response) {
+                $scope.templates = response;
+            });
+
             // Create new Slideshow
             $scope.create = function () {
                 // Create new Slideshow object
@@ -158,6 +162,7 @@
                     templateName: $scope.selectedTemplate,
                     content: {}
                 };
+                $scope.slideshow.draftSlides = $scope.slideshow.draftSlides || [];
                 $scope.slideshow.draftSlides.push($scope.currentSlide);
                 updateTemplate();
             };
@@ -316,5 +321,6 @@
             $scope.$on("currentSlideChanged", function (event, slideIndex) {
                 $scope.currentPreviewSlideIndex = slideIndex + 1;
             });
+            $scope.findById();
         }]);
 }());
