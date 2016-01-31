@@ -147,9 +147,10 @@
     width: 15px;
     margin-bottom: auto;
     margin-top: auto;
+    cursor: pointer;
 }
 
-.iqss-slideshowview-content-player-actions-center-left {
+.iqss-slideshowview-content-player-actions-center-previous {
     background: url(../../../modules/core/img/previous.svg) right center no-repeat;
     width: 15px;
     height: 15px;
@@ -157,7 +158,7 @@
     cursor: pointer;
 }
 
-.iqss-slideshowview-content-player-actions-center-right {
+.iqss-slideshowview-content-player-actions-center-next {
     background: url(../../../modules/core/img/next.svg) right center no-repeat;
     width: 15px;
     height: 15px;

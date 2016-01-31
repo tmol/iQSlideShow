@@ -49,7 +49,7 @@
 // we need to use !important here because '.navbar-inverse .navbar-nav > li > a, .navbar-inverse .navbar-brand'
 // is too strong, and somehow overwriting that one doesn't work
 .iqss-navbar-activeNav > a {
-    color: #faa61a !important;
+    color: $orange-color !important;
 }
 
 .iqss-navbar-right {

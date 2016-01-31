@@ -9,7 +9,7 @@
             return {
                 scope: {
                     slides: '&',
-                    ngPlayerId: '&'
+                    ngPlayerOnHold: '&'
                 },
                 transclude: true,
                 template: '<div ng-repeat="slide in slides() track by $index" ng-if="$index==currentIndex" class="{{slide.animationType}} slideShow" style="width:100%;height:100%;position:relative;display:block" ng-slide-view is-playing="true" reference-slide="slide">'
@@ -17,9 +17,6 @@
                 link: function (scope, element, attrs) {
                     var slideNumber = -1;
                     var timers = new Timers();
-                    if (scope.ngPlayerId) {
-                        scope.playerId = scope.ngPlayerId();
-                    }
                     if (scope.ngPlayerOnHold) {
                         scope.onHold = scope.ngPlayerOnHold();
                     }
@@ -96,22 +93,12 @@
                         loadNextSlide(true);
                     });
 
-                    function isBoadcastedMessageProcessable(playerId) {
-                        return !playerId || playerId === scope.ngPlayerId();
-                    }
-
                     scope.$on("resetOnHold", function (event, playerId) {
-                        if (!isBoadcastedMessageProcessable(playerId)) {
-                            return;
-                        }
                         scope.onHold = false;
                         loadNextSlide();
                     });
 
                     scope.$on("putPlayerOnHold", function (event, playerId) {
-                        if (!isBoadcastedMessageProcessable(playerId)) {
-                            return;
-                        }
                         scope.onHold = true;
                     });
 

@@ -4,12 +4,14 @@
     'use strict';
     angular.module('slideshows').controller('SelectDevicesController', ['$scope', '$stateParams', 'Slideshows',
         function ($scope, $stateParams, Slideshows) {
+            $scope.displayAll = true;
             $scope.search = function () {
+                var nameFilter = $scope.displayAll ? '' : $scope.filter;
                 $scope.devices = Slideshows.getDevices({
                     slideshowId: $stateParams.slideshowId
-                }, {name: $scope.filter});
+                }, {name: nameFilter});
             };
-            $scope.search();
+
             $scope.save = function () {
                 var selectedDevices = $scope.devices.filter(function (device) {
                     return device.checked;
@@ -20,5 +22,11 @@
                         $scope.$close();
                     });
             };
+
+            $scope.$watch('displayAll', function () {
+                $scope.search();
+            });
+
+            $scope.search();
         }]);
 }());

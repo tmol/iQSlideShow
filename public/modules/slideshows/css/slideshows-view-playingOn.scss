@@ -1,0 +1,22 @@
+@import '../../core/css/variables.scss';
+
+.iqss-slideshowview-playing-on-header {
+    background: $light-grey-color;
+    padding:  10px 20px;
+}
+
+.iqss-slideshowview-playing-on {
+    font-size: $font-size;
+}
+
+.iqss-slideshowview-playing-on-label {
+    color: $orange-color;
+}
+
+.iqss-slideshowview-playing-on-searchControls {
+    display: flex;
+}
+
+.iqss-slideshowview-playing-on-searchControls * {
+    flex: 1 1 auto;
+}

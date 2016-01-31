@@ -1,17 +1,25 @@
-<div class="modal-header">
-    <input type="text" placeholder="search" ng-model="filter">
-    <input type="button" value="Search" ng-click="search()" />
-</div>
-<div class="modal-body">
-    <div class="row">
-        <div class="col-sm-6" ng-repeat="device in devices">
-            <label>
-                <input type="checkbox" ng-model="device.checked" /> {{device.name}}
-            </label>
-
+<div class='iqss-slideshowview-playing-on'>
+    <div class='iqss-slideshowview-playing-on-header'>
+        <div class='iqss-slideshowview-playing-on-label'>Play SlideShow on:</div>
+        <div class="iqss-slideshowview-playing-on-searchControls">
+            <input type="checkbox" ng-model='displayAll'/>All
+            <span>
+                <input type="text" placeholder="search" ng-model="filter">
+                <input type="button" value="Search" ng-click="search()" />
+            </span>
         </div>
     </div>
-<input type="button" value="Save" ng-click="save()" /> <input type="button" value="Cancel" ng-click="$close()" />
+    <div class="modal-body">
+        <div class="row">
+            <div class="col-sm-6" ng-repeat="device in devices">
+                <label>
+                    <input type="checkbox" ng-model="device.checked" /> {{device.name}}
+                </label>
+
+            </div>
+        </div>
+    <input type="button" value="Save" ng-click="save()" /> <input type="button" value="Cancel" ng-click="$close()" />
+    </div>
 </div>
 
 
