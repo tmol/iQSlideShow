@@ -1,7 +1,7 @@
 /*global angular, jQuery*/
 (function () {
     'use strict';
-    angular.module('core').factory("CssInjector", function ($timeout, $http, $rootScope) {
+    angular.module('core').factory("CssInjector", function ($timeout, $http, $rootScope, Path) {
         var head = jQuery(document.getElementsByTagName('head')[0]);
 
         var cssCollection = {};
@@ -16,6 +16,10 @@
                 url: css,
                 cache: true
             }).success(function (result) {
+                var cssPathArray = css.split("/");
+                delete cssPathArray[cssPathArray.length-1];
+                result = result.replace("[RELATIVE-PATH]",cssPathArray.join("/"));
+
                 cssCollection[css] = jQuery("<style>" + result + "</style>");
                 head.append(cssCollection[css]);
                 if (callback) {
