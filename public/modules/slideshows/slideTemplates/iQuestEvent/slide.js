@@ -21,6 +21,7 @@ function iQuestEvent($scope, $http) {
         var ctx = canvas.getContext('2d');
         var img = document.createElement('IMG');
         img.onload = function() {
+
             ctx.save();
             ctx.beginPath();
 
@@ -29,10 +30,16 @@ function iQuestEvent($scope, $http) {
             ctx.lineTo(canvas.clientWidth, canvas.clientHeight);
             ctx.lineTo(canvas.clientWidth, 153);
             ctx.closePath();
+
             ctx.clip();
 
             //TODO: apply zoom to fit here;
             ctx.drawImage(img, 0, 0, canvas.clientWidth, canvas.clientHeight);
+
+            ctx.fillStyle = "rgba(255, 255, 255, 0.5)";
+            ctx.beginPath();
+            ctx.fillRect(0, 0, canvas.clientWidth, canvas.clientHeight);
+            ctx.fill();
             ctx.restore();
         }
         img.src = url;
@@ -49,7 +56,9 @@ function iQuestEvent($scope, $http) {
         if (!slide.content) {
             return;
         }
-        var promisses = [];
+        $scope.$on("slide.content.description", function() {
+            applyTextFill();
+        });
         $scope.$on("slide.content.speakerImageUrl", function() {
             loadSpeakerImage(slide.content.speakerImageUrl);
         });
@@ -66,13 +75,6 @@ function iQuestEvent($scope, $http) {
 
 
     return {
-        onUpdate: function(callback) {
-            $scope.$on("slide.content.description", function() {
-                applyTextFill();
-            });
-            $scope.$emit("whenScriptLoaded", "jquery.textfill.js", applyTextFill);
-            callback();
-        },
         preview: function(callback, rootElement) {
             applyTemplate(callback);
         },

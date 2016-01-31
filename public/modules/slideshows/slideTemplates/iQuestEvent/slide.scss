@@ -3,6 +3,9 @@
     width: 1920px;
     height: 1080px;
     text-align: left;
+    * {
+        line-height: normal;
+    }
     .iQuestEvents-left-side {
         background-image: url('[RELATIVE-PATH]\leftSide.png');
         background-size: 94px 100%;
