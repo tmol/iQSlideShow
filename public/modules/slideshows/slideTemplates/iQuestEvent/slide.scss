@@ -1,0 +1,153 @@
+@import 'variables.scss';
+.template-iQuestEvents {
+    width: 1920px;
+    height: 1080px;
+    .iQuestEvents-left-side {
+        background-image: url('[RELATIVE-PATH]\leftSide.png');
+        background-size: 94px 100%;
+        background-repeat: no-repeat;
+        width: 94px;
+        height: 100%;
+        position: absolute;
+    }
+    .iQuestEvents-logo {
+        position: absolute;
+        left: 1488px;
+        top: 0px;
+        height: 99px;
+        width: 359px;
+        background-color: #B0D6CE;
+        font-size: 86px;
+        line-height: 99px;
+        padding-left: 30px;
+        vertical-align: middle;
+        padding-top: 9px;
+        color: white;
+    }
+    .iQuestEvents-title {
+        position: absolute;
+        left: $left-margin;
+        top: 99px;
+        height: 120px;
+        width: 1690px;
+        background-color: #C3E1C2;
+        font-size: 86px;
+        line-height: 99px;
+        padding-left: 30px;
+        vertical-align: middle;
+        padding-top: 9px;
+        color: white;
+    }
+    .iQuestEvents-speaker {
+        position: absolute;
+        left: $left-margin;
+        top: 219px;
+        height: 181px;
+        width: 1690px;
+        background-color: #DFEEB8;
+        font-size: 86px;
+        line-height: 99px;
+        padding-left: 0px;
+        vertical-align: middle;
+        padding-top: 9px;
+        color: white;
+    }
+    .iQuestEvents-speaker-picture {
+        display: inline-block;
+        position: absolute;
+    }
+    .iQuestEvents-speaker-name {
+        height: 100%;
+        display: inline-block;
+        position: absolute;
+        margin-left: 202px;
+        line-height: 150px;
+        vertical-align: middle;
+    }
+    .iQuestEvents-date {
+        position: absolute;
+        left: $left-margin;
+        top: 432px;
+        height: 179px;
+        width: 462px;
+        background-color: #FAC4B0;
+        font-size: 86px;
+        line-height: 99px;
+        padding-left: 30px;
+        vertical-align: middle;
+        padding-top: 9px;
+        color: white;
+        .iQuestEvents-date-day {
+            position: absolute;
+        }
+        .iQuestEvents-date-month-year {
+            position: absolute;
+            font-size: 42px;
+            bottom: 15px;
+            height: 42px;
+            line-height: 42px;
+        }
+    }
+    .iQuestEvents-hour-location {
+        position: absolute;
+        left: $left-margin;
+        top: 612px;
+        height: 179px;
+        width: 462px;
+        background-color: #FDDFAD;
+        font-size: 86px;
+        line-height: 99px;
+        padding-left: 30px;
+        vertical-align: middle;
+        padding-top: 9px;
+        color: white;
+        .iQuestEvents-hour {
+            position: absolute
+        }
+        .iQuestEvents-location {
+            position: absolute;
+            font-size: 42px;
+            bottom: 15px;
+            height: 42px;
+            line-height: 42px;
+        }
+    }
+    .iQuestEvents-description {
+        position: absolute;
+        left: 705px;
+        top: 432px;
+        height: 358px;
+        width: 777px;
+        background-color: #DFEEB8;
+        font-size: 86px;
+        line-height: 99px;
+        padding-left: 30px;
+        vertical-align: middle;
+        padding-top: 9px;
+        color: white;
+        .iQuestEvents-description-text {
+            position: absolute;
+        }
+    }
+    .iQuestEvents-contact {
+        position: absolute;
+        left: 160px;
+        bottom: 0px;
+        height: 146px;
+        width: 1145px;
+        background-color: #FAC4B0;
+        font-size: 86px;
+        line-height: 99px;
+        padding-left: 30px;
+        vertical-align: middle;
+        padding-top: 9px;
+        color: white;
+        .iQuestEvents-contact-text {
+            position: absolute;
+        }
+    }
+    .iQuestEvents-picture {
+        position: absolute;
+        right: 0px;
+    }
+}
