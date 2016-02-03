@@ -1,0 +1,54 @@
+@import 'variables.scss';
+.template-freeText {
+    width: 1920px;
+    height: 1080px;
+    text-align: left;
+    * {
+        line-height: normal;
+    }
+    .freeText-left-side {
+        background-image: url('[RELATIVE-PATH]/leftSide.png');
+        background-size: 94px 100%;
+        background-repeat: no-repeat;
+        width: 94px;
+        height: 100%;
+        position: absolute;
+    }
+    .freeText-bottom-side {
+        background-image: url('[RELATIVE-PATH]/bottomSide.png');
+        background-size: 100% 100%;
+        background-repeat: no-repeat;
+        width: 70%;
+        height: 386px;
+        position: absolute;
+        bottom: 0px;
+        right: 0px;
+    }
+    .freeText-title {
+        position: absolute;
+        left: $left-margin;
+        top: 99px;
+        height: 120px;
+        width: 1690px;
+        background-color: #C3E1C2;
+        font-size: 86px;
+        line-height: 99px;
+        padding-left: 30px;
+        vertical-align: middle;
+        padding-top: 9px;
+        color: white;
+    }
+    .freeText-text {
+        position: absolute;
+        left: 160px;
+        top: 229px;
+        height: 817px;
+        width: 1690px;
+        background-color: #DFEEB8;
+        padding-left: 30px;
+        vertical-align: middle;
+        padding-top: 9px;
+        color: white;
+        font-size: 32px;
+    }
+}
