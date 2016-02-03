@@ -18,7 +18,7 @@
             }).success(function (result) {
                 var cssPathArray = css.split("/");
                 delete cssPathArray[cssPathArray.length-1];
-                result = result.replace("[RELATIVE-PATH]",cssPathArray.join("/"));
+                result = result.replace(/\[RELATIVE\-PATH\]/g,cssPathArray.join("/"));
 
                 cssCollection[css] = jQuery("<style>" + result + "</style>");
                 head.append(cssCollection[css]);
