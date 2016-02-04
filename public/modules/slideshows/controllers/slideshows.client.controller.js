@@ -277,7 +277,7 @@
                 $modal.open({
                     animation: false,
                     templateUrl: Path.getViewUrl('selectDevices'),
-                    windowClass: 'waitingForActivationDialog',
+                    windowClass: 'iqss-slideshowview-playing-on',
                     backdrop: 'static',
                     controller: 'SelectDevicesController',
                     scope: scope

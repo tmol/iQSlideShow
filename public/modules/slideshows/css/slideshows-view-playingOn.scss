@@ -1,12 +1,18 @@
 @import '../../core/css/variables.scss';
+@import 'mixins.scss';
 
 .iqss-slideshowview-playing-on-header {
     background: $light-grey-color;
     padding:  10px 20px;
+    border-bottom: 1px solid $dark-grey-color;
 }
 
 .iqss-slideshowview-playing-on {
     font-size: $font-size;
+}
+
+.iqss-slideshowview-playing-on .modal-dialog {
+  width: 500px;
 }
 
 .iqss-slideshowview-playing-on-label {
@@ -15,8 +21,70 @@
 
 .iqss-slideshowview-playing-on-searchControls {
     display: flex;
+    margin: 5px 0;
 }
 
-.iqss-slideshowview-playing-on-searchControls * {
-    flex: 1 1 auto;
+.iqss-slideshowview-playing-on-searchControls-allCheckbox {
+    vertical-align: bottom;
+}
+
+.iqss-slideshowview-playing-on-searchControls > * {
+    flex: 1 1 50%;
+}
+
+.iqss-slideshowview-playing-on-searchControls-search {
+    display: flex;
+    flex-flow: column;
+}
+
+.iqss-slideshowview-playing-on-searchControls-search-container {
+    border: 0px;
+    background: $light-grey-color;
+    color: $dark-grey-color;
+    background-image: url(../../../../modules/core/img/search.png);
+    background-repeat: no-repeat;
+    background-position: left center;
+}
+
+.iqss-slideshowview-playing-on-searchControls-search-input {
+    margin-left: 30px;
+    border: 0px;
+    background: $light-grey-color;
+    color: $blue-color;
+    @include input-placeholder($blue-color);
+}
+
+.iqss-slideshowview-playing-on-searchControls-search-input:focus {
+    outline-color: $light-grey-color;
+}
+
+.iqss-slideshowview-playing-on-searchControls-search-bottom-line {
+    background: $blue-color;
+    height: 1px;
+    margin: 0;
+    border: none;
+    width: 200px;
+    margin-top: 5px;
+}
+
+.iqss-slideshowview-playing-on-devices-list {
+    display: flex nowrap;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+.iqss-slideshowview-playing-on-devices-list-item {
+    width: 50%;
+    display: inline-block;
+}
+
+.iqss-slideshowview-playing-on-footer {
+    background: $light-grey-color;
+    border-top: 1px solid $dark-grey-color;
+    display: flex;
+    flex-flow: row-reverse;
+}
+
+.iqss-slideshowview-playing-on-footer-actions {
+    width: 50%;
 }
