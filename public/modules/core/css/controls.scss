@@ -1,0 +1,39 @@
+@import 'variables.scss';
+
+@mixin iQssButton($borderColor, $textColor) {
+	background-color: white;
+    border: 1px solid $borderColor;
+    outline-color: $borderColor;
+	display: inline-block;
+	height: 25px;
+	line-height: 25px;
+	text-align: center;
+    padding: 0 10px;
+    color: $textColor;
+}
+
+.iqss-cancelButton {
+    @include iQssButton($dark-grey-color, $very-dark-grey-color);
+}
+
+.iqss-cancelButton:hover {
+	background-color: $dark-grey-color;
+}
+
+.iqss-cancelButton:active {
+	position:relative;
+	top:1px;
+}
+
+.iqss-button {
+	@include iQssButton($blue-color, $blue-color);
+}
+
+.iqss-button:hover {
+	background-color: $dark-grey-color;
+}
+
+.iqss-button:active {
+	position:relative;
+	top:1px;
+}

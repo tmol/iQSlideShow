@@ -27,6 +27,10 @@
                 $scope.search();
             });
 
+            $scope.$watch('filter', function () {
+                $scope.search();
+            });
+
             $scope.search();
         }]);
 }());

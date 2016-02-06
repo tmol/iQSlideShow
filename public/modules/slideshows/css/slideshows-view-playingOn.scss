@@ -1,6 +1,10 @@
 @import '../../core/css/variables.scss';
 @import 'mixins.scss';
 
+.iqss-slideshowview-playing-on {
+    color: $very-dark-grey-color;
+}
+
 .iqss-slideshowview-playing-on-header {
     background: $light-grey-color;
     padding:  10px 20px;
@@ -54,6 +58,26 @@
     @include input-placeholder($blue-color);
 }
 
+.iqss-slideshowview-playing-on-searchControls-search-input-disabled {
+    color: $very-dark-grey-color;
+    /* do not group these rules */
+    &::-webkit-input-placeholder {
+        color: $very-dark-grey-color;
+    }
+    &:-moz-placeholder {
+        /* FF 4-18 */
+        color: $very-dark-grey-color;
+    }
+    &::-moz-placeholder {
+        /* FF 19+ */
+        color: $very-dark-grey-color;
+    }
+    &:-ms-input-placeholder {
+        /* IE 10+ */
+        color: $very-dark-grey-color;
+    }
+}
+
 .iqss-slideshowview-playing-on-searchControls-search-input:focus {
     outline-color: $light-grey-color;
 }
@@ -71,6 +95,8 @@
     display: flex nowrap;
     padding-left: 20px;
     padding-right: 20px;
+    max-height: 200px;
+    overflow-y: auto;
 }
 
 .iqss-slideshowview-playing-on-devices-list-item {
@@ -83,8 +109,21 @@
     border-top: 1px solid $dark-grey-color;
     display: flex;
     flex-flow: row-reverse;
+    height: 40px;
 }
 
 .iqss-slideshowview-playing-on-footer-actions {
     width: 50%;
+    display: flex;
+    align-items: center;
 }
+
+.iqss-slideshowview-playing-on-footer-actions-cancel {
+    width: 70px;
+}
+
+.iqss-slideshowview-playing-on-footer-actions-play {
+    width: 70px;
+    margin-left: 20px;
+}
+
