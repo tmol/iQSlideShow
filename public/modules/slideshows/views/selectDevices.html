@@ -1,34 +1,40 @@
 <div class='iqss-slideshowview-playing-on'>
     <div class='iqss-slideshowview-playing-on-header'>
-        <div class='iqss-slideshowview-playing-on-label'>Play SlideShow on:</div>
-        <div class="iqss-slideshowview-playing-on-searchControls">
-            <div>
-                <span>
-                    <input id='checkBoxAll' type="checkbox" ng-model='displayAll' class="iqss-slideshowview-playing-on-searchControls-allCheckbox"/>
-                    <label for='checkBoxAll'><span></span>All</label>
-                </span>
-            </div>
-            <div class='iqss-slideshowview-playing-on-searchControls-search'>
-                <div class='iqss-slideshowview-playing-on-searchControls-search-container'>
-                    <input type="text" id='devicesSerchInput' placeholder="Search" ng-model="filter" ng-disabled='displayAll' ng-class="{'iqss-slideshowview-playing-on-searchControls-search-input': true, 'iqss-slideshowview-playing-on-searchControls-search-input-disabled': displayAll}">
-                </div>
+        <div class='iqss-slideshowview-playing-on-header-controls'>
+            <div lass='iqss-slideshowview-playing-on-label'>Play SlideShow on:</div>
+            <div class="iqss-slideshowview-playing-on-searchControls">
                 <div>
-                    <hr class='iqss-slideshowview-playing-on-searchControls-search-bottom-line'>
+                    <span>
+                        <input id='checkBoxAll' type="checkbox" ng-model='displayAll' class="iqss-slideshowview-playing-on-searchControls-allCheckbox"/>
+                        <label for='checkBoxAll'><span></span>All</label>
+                    </span>
+                </div>
+                <div class='iqss-slideshowview-playing-on-searchControls-search'>
+                    <div class='iqss-slideshowview-playing-on-searchControls-search-container'>
+                        <input type="text" id='devicesSerchInput' placeholder="Search" ng-model="filter" ng-disabled='displayAll' ng-class="{'iqss-slideshowview-playing-on-searchControls-search-input': true, 'iqss-slideshowview-playing-on-searchControls-search-input-disabled': displayAll}">
+                    </div>
+                    <div>
+                        <hr class='iqss-slideshowview-playing-on-searchControls-search-bottom-line'>
+                    </div>
                 </div>
             </div>
         </div>
+        <div ng-class="{'iqss-slideshowview-playing-on-header-scrollbar-holder': scrollBarVisibleInDevicesList}"></div>
     </div>
-    <div class='iqss-slideshowview-playing-on-devices-list'>
+    <div class='iqss-slideshowview-playing-on-devices-list' devices-to-play-on-div-scroll-bar-detector>
         <div class="iqss-slideshowview-playing-on-devices-list-item" ng-repeat="device in devices">
             <input type="checkbox" ng-model="device.checked" id='{{device._id}}'/>
             <label for='{{device._id}}'><span></span>{{device.name}}</label>
         </div>
     </div>
     <div class='iqss-slideshowview-playing-on-footer'>
-        <div class='iqss-slideshowview-playing-on-footer-actions'>
-            <input type="button" class='iqss-slideshowview-playing-on-footer-actions-cancel iqss-cancelButton' value="Cancel" ng-click="$close()" />
-            <input type="button" class='iqss-slideshowview-playing-on-footer-actions-play iqss-button' value="Play" ng-click="save()" />
+        <div class='iqss-slideshowview-playing-on-footer-actions-container'>
+            <div class='iqss-slideshowview-playing-on-footer-actions'>
+                <input type="button" class='iqss-slideshowview-playing-on-footer-actions-cancel iqss-cancelButton' value="Cancel" ng-click="$close()" />
+                <input type="button" class='iqss-slideshowview-playing-on-footer-actions-play iqss-button' value="Play" ng-click="save()" />
+            </div>
         </div>
+        <div ng-class="{'iqss-slideshowview-playing-on-header-scrollbar-holder': scrollBarVisibleInDevicesList}"></div>
     </div>
 </div>
 
