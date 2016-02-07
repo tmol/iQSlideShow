@@ -2,8 +2,8 @@
     <div class='iqss-slideshows-header iqss-slideshowlist-header'>
         <div>
             <div >
-                <input type="checkbox" ng-model="filterParameters.showOnlyMine" ng-change='filterSlideshows()'>
-                <span>Show only mine</span>
+                <input id='showOnlyMine' type="checkbox" ng-model="filterParameters.showOnlyMine" ng-change='filterSlideshows()'>
+                <label for='showOnlyMine'><span></span>Show only mine</label>
             </div>
             <div tag-and-name-filter search-Provider="searchProvider"></div>
         </div>
