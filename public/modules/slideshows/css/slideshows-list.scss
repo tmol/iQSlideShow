@@ -4,20 +4,6 @@
 @import '../../core/css/mixins.scss';
 @import '../../core/css/notInlcudedInCore/tagAndNameFilter.scss';
 
-.iqss-slideshows-header {
-    background-color: white;
-    height: $slideshow-list-header-height;
-    line-height: $slideshow-list-header-height;
-    position: fixed;
-    left: 0px;
-    top: $header-height;
-    width: 100%;
-    z-index: 1000;
-    box-sizing: content-box;
-    box-shadow: 0 2px 4px $dark-grey-color;
-    color: $very-dark-grey-color;
-}
-
 .iqss-slideshows-header > hr {
     width: 100%;
     background: #aa0000;
@@ -52,8 +38,8 @@
 }
 
 .iqss-slideshowlist-header > section {
-    height: $slideshow-list-header-height;
-    line-height: $slideshow-list-header-height;
+    height: $sub-header-height;
+    line-height: $sub-header-height;
 }
 
 .iqss-slideshowlist-content {

@@ -14,8 +14,8 @@ $search-box-placeholder-font-size: 15px;
     background-repeat: no-repeat;
     background-position: left center;
     padding-left: $search-box-left-padding;
-    height: $subheader-height;
-    line-height: $subheader-height;
+    height: $sub-header-height;
+    line-height: $sub-header-height;
     margin-left: 10px;
     box-sizing: content-box;
     padding-top: 3px;
@@ -52,7 +52,7 @@ $search-box-placeholder-font-size: 15px;
     background-color: white;
     border-radius: 0;
     border: 0;
-    line-height: $subheader-height;
+    line-height: 35px;
     padding: 0;
     border-color: white;
     border-image-width: 0;
@@ -69,7 +69,6 @@ $search-box-placeholder-font-size: 15px;
 }
 
 .iqss-ui-select span.form-control {
-    height: $subheader-height;
     position: absolute;
 }
 

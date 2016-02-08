@@ -37,3 +37,27 @@
 	position:relative;
 	top:1px;
 }
+
+input[type="checkbox"] {
+    display:none;
+}
+
+input[type="checkbox"] + label {
+    font-weight: normal;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+input[type="checkbox"] + label span{
+    display:inline-block;
+    background: url(../img/uncheck-box.png) left bottom no-repeat;
+    cursor: pointer;
+    display:inline-block;
+    width:19px;
+    height:19px;
+}
+
+input[type="checkbox"]:checked + label span{
+    background:url(../img/check-box.png) left bottom no-repeat;
+}

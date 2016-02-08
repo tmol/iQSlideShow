@@ -1,4 +1,47 @@
+@import 'variables.scss';
 @import 'mixins.scss';
+
+.iqss-slideshows-header {
+    background-color: white;
+    height: $sub-header-height;
+    line-height: $sub-header-height;
+    position: fixed;
+    left: 0px;
+    top: $header-height;
+    width: 100%;
+    z-index: 1000;
+    box-sizing: content-box;
+    box-shadow: 0 2px 4px $dark-grey-color;
+    color: $very-dark-grey-color;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+    flex-flow: row nowrap;
+}
+
+.iqss-slideshows-header-title-container {
+    display: flex;
+    flex-flow: column;
+    margin-right: 20px;
+}
+
+.iqss-slideshows-header-actions {
+    height: $sub-header-height;
+    line-height: $sub-header-height;
+    display: flex;
+    font-size: $font-size;
+}
+
+.iqss-slideshows-slideshow-publishLink {
+    background: url(../../../modules/core/img/publish.svg) left center no-repeat;
+    @include slideshowsHeaderAction;
+}
+
+.iqss-slideshows-slideshow-deleteLink {
+    background: url(../../../modules/core/img/delete.svg) left center no-repeat;
+    @include slideshowsHeaderAction;
+}
+
 
 .iqss-slideshows-links a:visited {
     text-decoration: none;

@@ -2,19 +2,26 @@
 @import 'variables.scss';
 @import 'mixins.scss';
 
-.iqss-slideshowedit-header {
-    padding: 0 10%;
-    box-sizing: border-box;
-    display: flex;
-    flex-flow: row nowrap;
-    align-items: flex-end;
+.iqss-slideshowedit-header-title {
+    color: $blue-color;
 }
 
-.iqss-slideshowedit-header-actions {
-    height: $slideshow-list-header-height;
-    line-height: $slideshow-list-header-height;
-    align-self: flex-end;
-    margin-left: auto;
-    display: flex;
-    font-size: $font-size;
+.iqss-slideshowedit-header-title-bottom-line {
+    background: $blue-color;
+    height: 1px;
+    margin: 0;
+    border: none;
+    width: 200px;
+    margin-top: -5px;
+}
+
+.iqss-slideshowedit-saveLink {
+    background: url(../../../modules/core/img/save.svg) left center no-repeat;
+    @include slideshowsHeaderAction;
+}
+
+
+.iqss-slideshowedit-previewLink {
+    background: url(../../../modules/core/img/play%20button.svg) left center no-repeat;
+    @include slideshowsHeaderAction;
 }
