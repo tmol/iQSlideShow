@@ -229,12 +229,32 @@
                     $scope.filterParameters.name = select.placeholder;
                 }
                 Devices.query({
-                    locations: $scope.filterParameters.filterItems,
-                    name: $scope.filterParameters.name
+                    name: $scope.filterParameters.names
                 }, function (result) {
                     $scope.devices = result;
                 });
             };
+
+            $scope.searchProvider = {
+                filterEventName: 'filterDevices',
+                cacheId: 'devicesFilter',
+                filter: function (filterParameters) {
+                    $scope.filterParameters.names = filterParameters.nameFilters;
+                    $scope.filterDevices();
+                },
+                getPossibleFilterValues: function (search, callback) {
+                    Devices.getFilteredNames({
+                        nameFilter: search
+                    }, function (filteredNames) {
+                        var uniqueDevicesName = _.uniq(filteredNames);
+                        callback({names:uniqueDevicesName});
+                    });
+                }
+            };
+
+            $scope.editDevice = function (device) {
+                $state.go('editDevice',{deviceId:device.deviceId});
+            }
 
             $scope.$on("filterDevices", function () {
                 $scope.filterDevices();

@@ -1,0 +1,116 @@
+@import 'variables.scss';
+@import '../../core/css/variables.scss';
+@import '../../core/css/mixins.scss';
+
+
+.iqss-devicelist-device > div {
+    background-color: white;
+    height: 100%;
+    border: 1px solid $dark-grey-color;
+    padding-left: 10px;
+    padding-right: 10px;
+    box-shadow: 2px 2px 3px $grey-color;
+    cursor:pointer;
+}
+
+.iqss-devicelist-device {
+    height: $device-list-card-height;
+    margin: 0 17px 15px 17px;
+    padding: 0;
+    width: $device-list-card-width;
+}
+
+.iqss-devicelist-content {
+    padding-top: $device-list-header-content-top-padding;
+    height: 100%;
+}
+
+.iqss-devicelist-content * {
+    line-height: $font-size;
+}
+
+.iqss-devicelist-content > div {
+    max-width: 85%;
+    margin: auto;
+
+    min-width: $device-list-card-width;
+    @include positionInCenterInResponsiveContainer;
+    display: flex;
+    justify-content: center;
+    flex-flow: row wrap;
+}
+
+
+.iqss-devicelist-device-title-container {
+    font-size: $font-size;
+    color: $very-dark-grey-color;
+    margin: $device-list-default-horizontal-padding;
+    box-sizing: content-box;
+    display: inline-block;
+    width: $device-list-card-width - 40px;
+}
+
+.iqss-devicelist-device-title-container.unhealthy {
+    background: url(../../../modules/core/img/warning.svg) right center no-repeat;
+}
+
+.iqss-devicelist-device-title-container.active {
+    background: url(../../../modules/core/img/published-ok.svg) right center no-repeat;
+}
+
+.iqss-devicelist-device-title-container.inactive {
+    background: url(../../../modules/core/img/draft.svg) right center no-repeat;
+}
+
+.iqss-devicelist-device-title-container > div {
+    width: $device-list-card-width;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    line-height: 16px;
+    padding-right: 35px;
+}
+
+.iqss-devicelist-device-delimiter {
+    height: 1px;
+    width: $device-list-card-width - 2 * $device-list-default-horizontal-padding;
+    position: relative;
+    left: 50%;
+    transform: translate(-50%, 0);
+    background-color: $dark-grey-color;
+}
+
+.iqss-devicelist-device-content {
+    border-top: 1px solid $grey-color;
+    padding: 5px;
+    padding-top: 10px;
+}
+
+.iqss-devicelist-card-empty {
+    height: 0;
+    width: $device-list-card-width;
+    margin: 0 17px 20px 17px;
+    padding-right: 0;
+}
+
+.iqss-device-location {
+    font-size:12px;
+}
+
+.iqss-device-date {
+    color:#A9A9A9;
+    font-size:12px;
+
+}
+
+.iqss-device-by {
+    color:#A9A9A9;
+    font-size:11px;
+}
+
+.iqss-device-play {
+    color: #A9A9A9;
+    font-size: 11px;
+    bottom: -14px;
+    position: relative;
+}
