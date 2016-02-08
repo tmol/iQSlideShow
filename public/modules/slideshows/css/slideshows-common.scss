@@ -29,7 +29,7 @@
 }
 
 
-.iqss-slideshows-links a:visited {
+.iqss-slideshows-links a:visited, a:focus {
     text-decoration: none;
     color: $blue-color;
     font-size: $font-size;
