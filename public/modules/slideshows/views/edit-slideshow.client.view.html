@@ -1,16 +1,18 @@
 <section data-ng-controller="SlideshowsController" data-ng-init="findOne()" style="margin-top: 58px;">
-    <div class='iqss-slideshows-header iqss-slideshowedit-header'>
-        <div class='iqss-slideshows-header-title-container'>
-            <span class='iqss-slideshowedit-header-title' ng-bind='slideshow.name'></span>
-            <div>
-                <hr class='iqss-slideshowedit-header-title-bottom-line'>
+    <div class='iqss-page-header'>
+        <div class='iqss-slideshows-header-container'>
+            <div class='iqss-slideshows-header-title-container'>
+                <span class='iqss-slideshowedit-header-title' ng-bind='slideshow.name'></span>
+                <div>
+                    <hr class='iqss-slideshowedit-header-title-bottom-line'>
+                </div>
             </div>
-        </div>
-        <div class='iqss-slideshows-header-actions iqss-slideshows-links'>
-            <a href='#' class='iqss-slideshowedit-saveLink' ng-click="update()"  class='iqss-slideshowedit-saveLink'>Save</a>
-            <a href="/slideshow#!/preview/{{slideshow._id}}" target="_blank" class='iqss-slideshowedit-previewLink'>Preview</a>
-            <a href='#' ng-click="publish()" class='iqss-slideshows-slideshow-publishLink'>Publish</a>
-            <a href='#' data-ng-click='remove();' class='iqss-slideshows-slideshow-deleteLink'>Remove</a>
+            <div class='iqss-slideshows-header-actions iqss-slideshows-links'>
+                <a href='#' class='iqss-slideshowedit-saveLink' ng-click="update()"  class='iqss-slideshowedit-saveLink'>Save</a>
+                <a href="/slideshow#!/preview/{{slideshow._id}}" target="_blank" class='iqss-slideshowedit-previewLink'>Preview</a>
+                <a href='#' ng-click="publish()" class='iqss-slideshows-slideshow-publishLink'>Publish</a>
+                <a href='#' data-ng-click='remove();' class='iqss-slideshows-slideshow-deleteLink'>Remove</a>
+            </div>
         </div>
     </div>
     <div class="col-md-12">

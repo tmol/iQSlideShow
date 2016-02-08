@@ -1,22 +1,8 @@
 @import 'variables.scss';
 @import 'mixins.scss';
 
-.iqss-slideshows-header {
-    background-color: white;
-    height: $sub-header-height;
-    line-height: $sub-header-height;
-    position: fixed;
-    left: 0px;
-    top: $header-height;
-    width: 100%;
-    z-index: 1000;
-    box-sizing: content-box;
-    box-shadow: 0 2px 4px $dark-grey-color;
-    color: $very-dark-grey-color;
-    box-sizing: border-box;
+.iqss-slideshows-header-container {
     display: flex;
-    justify-content: center;
-    flex-flow: row nowrap;
 }
 
 .iqss-slideshows-header-title-container {
@@ -26,8 +12,8 @@
 }
 
 .iqss-slideshows-header-actions {
-    height: $sub-header-height;
-    line-height: $sub-header-height;
+    height: $page-header-height;
+    line-height: $page-header-height;
     display: flex;
     font-size: $font-size;
 }

@@ -1,4 +1,6 @@
-$slideshow-list-header-content-top-padding: 30px;
+@import '../../core/css/variables.scss';
+
+$slideshow-list-header-content-top-padding: $header-height + $page-header-height + 48px;
 
 $slideshow-list-slideshow-width: 194px;
 

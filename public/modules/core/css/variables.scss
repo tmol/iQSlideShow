@@ -1,10 +1,20 @@
+/*
+    Genric common styles
+*/
 $header-height: 70px;
 
 $bootstrap-xs-breakpoint: 768px;
 
-$sub-header-height: 44px;
-
 $header-padding-left: 15px;
+
+$buble-indicator-size: 10px;
+
+$buble-indicator-displace: -1 * $buble-indicator-size * 2;
+
+$page-header-height: 44px;
+
+$page-header-content-top-padding: 30px;
+
 
 /*
     color palette
@@ -45,11 +55,3 @@ $header-big-font-size: 18px;
 $header-brand-font-size: 16px;
 
 $header-small-font-size: 11px;
-
-$buble-indicator-size: 10px;
-
-$buble-indicator-displace: -1 * $buble-indicator-size * 2;
-
-$page-header-height: 44px;
-
-$page-header-content-top-padding: 30px;

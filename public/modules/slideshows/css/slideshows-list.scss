@@ -4,46 +4,11 @@
 @import '../../core/css/mixins.scss';
 @import '../../core/css/notInlcudedInCore/tagAndNameFilter.scss';
 
-.iqss-slideshows-header > hr {
-    width: 100%;
-    background: #aa0000;
-    border-bottom-color: none;
-    height: 1px;
-    margin-top: 0;
-    margin: 0 10px 0 10px;
-    position: absolute;
-    top: 42px;
-}
-
-.iqss-slideshowlist-header div div {
-    float: left;
-}
-
-.iqss-slideshowlist-header div div:first-child {
-    padding-right: 10px;
-    font-size: $small-font-size;
-}
-
-.iqss-slideshowlist-header > div {
-    @include positionInCenterInResponsiveContainer;
-}
-
-@media (max-width: $bootstrap-xs-breakpoint) {
-    .iqss-slideshowlist-header > div {
-        position: absolute;
-        top: 0;
-        left: 200px;
-        min-width: 365px;
-    }
-}
-
-.iqss-slideshowlist-header > section {
-    height: $sub-header-height;
-    line-height: $sub-header-height;
+.iqss-slideshowlist-section {
+    margin-top: 200px;
 }
 
 .iqss-slideshowlist-content {
-    padding-top: $slideshow-list-header-content-top-padding;
     height: 100%;
 }
 
@@ -52,6 +17,7 @@
 }
 
 .iqss-slideshowlist-content > div {
+    padding-top: $slideshow-list-header-content-top-padding;
     max-width: 85%;
     margin: auto;
     min-width: $slideshow-list-slideshow-width;
