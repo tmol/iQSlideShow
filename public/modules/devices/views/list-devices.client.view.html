@@ -1,39 +1,42 @@
 <section data-ng-controller="DevicesController" data-ng-init="initDeviceList()" style="margin-top: 58px;">
-    <div class="page-header">
-        <h1>Devices</h1>
+    <div class='iqss-page-header'>
+        <div>
+            <div tag-and-name-filter search-Provider="searchProvider"></div>
+        </div>
     </div>
-    <div>
-        <button class="btn btn-primary" type="button" ng-click="onShowLocationsFilter()">Filter</button>
-        <span items-filter-summary filter-Parameters="filterParameters"></span>
-        <div class="controls" style="float:right">
-            <span style="float:left; padding-right:10px">Search</span>
-            <span style="float:right;" >
-                <ui-select ng-model="filterParameters.name" theme="bootstrap" sortable="true" style="width: 300px;" title="Select search string" on-select='filterDevices($select)' reset-search-input='false'>
-                    <ui-select-match placeholder="{{getSelectPlaceholder()}}" data-ng-init='initNameSearchFilter($select)'>{{$select.selected}}</ui-select-match>
-                    <ui-select-choices repeat="deviceName in possibleSearchedDeviceNames"
-                        refresh="refreshPossibleSearchedDeviceNamesAndDevices($select.search)"
-                        refresh-delay="0">
-                        {{deviceName}}
-                    </ui-select-choices>
-                </ui-select>
-            </span>
-        </span>
+
+    <div class="iqss-devicelist-content">
+        <div class='col-sm-12'>
+        <section data-ng-repeat="device in devices track by device._id">
+            <div class="iqss-devicelist-device" ng-click="editDevice(device)">
+                    <div>
+                        <div>
+                            <div class="iqss-devicelist-device-title-container {{getDeviceStatus(device)}}">
+                               <div data-ng-bind="device.name"></div>
+                            </div>
+                        </div>
+                           <div class='iqss-devicelist-device-content'>
+                               <div class="iqss-device-location" data-ng-bind="device.location"></div>
+                                <div class="iqss-device-by" data-ng-bind="device.user.displayName"></div>
+                                <div class="iqss-device-play">Playing 0 slidehwos</div>
+                            </div>
+
+                    </div>
+                </div>
+        </section>
+            <div class="iqss-devicelist-card-empty">
+            </div>
+            <div class="iqss-devicelist-card-empty">
+            </div>
+            <div class="iqss-devicelist-card-empty">
+            </div>
+            <div class="iqss-devicelist-card-empty">
+            </div>
+            <div class="iqss-devicelist-card-empty">
+            </div>
+        </div>
     </div>
-    <div>&nbsp;</div>
-    <div class="list-group">
-        <a data-ng-repeat="device in devices track by device._id" data-ng-href="#!/devices/{{device.deviceId}}/edit" class="list-group-item">
-			<small class="list-group-item-text">
-				Posted on
-				<span data-ng-bind="device.created | date:'medium'"></span>
-				by
-				<span data-ng-bind="device.user.displayName"></span>
-				&nbsp;&nbsp;&nbsp;
-				Status:
-				<span data-ng-bind="getDeviceStatus(device)"></span>
-			</small>
-			<h4 class="list-group-item-heading" data-ng-bind="device.name"></h4>
-        </a>
-    </div>
+
     <div class="alert alert-warning text-center" data-ng-hide="!devices.$resolved || devices.length">
     	   No Devices yet, why don't you <a href="/#!/devices/create">create one</a>?
     </div>
