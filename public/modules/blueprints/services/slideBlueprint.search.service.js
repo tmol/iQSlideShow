@@ -14,6 +14,7 @@
                         scope.slides = result.map(function (item) {
                             var slide = item.slide[0];
                             slide.bluePrintTitle = item.name;
+                            slide.tags = item.tags;
                             if (item.user) {
                                 slide.publisher = item.user.displayName;
                             }

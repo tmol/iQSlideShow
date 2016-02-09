@@ -1,0 +1,118 @@
+@import 'variables.scss';
+@import 'mixins.scss';
+@import '../../core/css/variables.scss';
+@import '../../core/css/mixins.scss';
+@import '../../core/css/notInlcudedInCore/tagAndNameFilter.scss';
+
+.iqss-blueprintslist-section {
+    margin-top: 200px;
+}
+
+.iqss-blueprintslist-content {
+    height: 100%;
+}
+
+.iqss-blueprintslist-content * {
+    line-height: $font-size;
+}
+
+.iqss-blueprintslist-content > div {
+    padding-top: $blueprints-list-header-content-top-padding;
+    max-width: 85%;
+    margin: auto;
+    min-width: $blueprints-list-slideshow-width;
+    @include positionInCenterInResponsiveContainer;
+    display: flex;
+    justify-content: center;
+    flex-flow: row wrap;
+}
+
+.iqss-blueprintslist-slideshow {
+    height: $blueprints-list-slideshow-height;
+    margin: 0 17px 15px 17px;
+    padding: 0;
+    width: $blueprints-list-slideshow-width;
+    box-shadow: 2px 2px 3px $grey-color;
+}
+
+.iqss-blueprintslist-slideshow-empty {
+    height: 0;
+    width: $blueprints-list-slideshow-width;
+    margin: 0 17px 20px 17px;
+    padding-right: 0;
+}
+
+.iqss-blueprintslist-slideshow > div {
+    background-color: $light-grey-color;
+    height: 100%;
+    border: 1px solid $dark-grey-color;
+}
+
+.iqss-blueprintslist-slideshow-preview {
+    height: $blueprints-list-slideshow-preview-height;
+    width: 100%;
+    display:inline-block;
+    border: 1px solid #DFDFDF;
+    overflow: hidden;
+    background-color: white;
+}
+
+.iqss-blueprintslist-slideshow-title-container {
+    font-size: $font-size;
+    color: $very-dark-grey-color;
+    box-sizing: content-box;
+    display: inline-block;
+    padding-right: 22px;
+    width: $blueprints-list-slideshow-width - 40px;
+    height: 33px;
+    line-height: 33px;
+    padding-left: 10px;
+}
+
+.iqss-blueprintslist-slideshow-title-container-draft {
+    background: url(../../../modules/core/img/draft.svg) right center no-repeat;
+}
+
+.iqss-blueprintslist-slideshow-title-container-published {
+    background: url(../../../modules/core/img/published-ok.svg) right center no-repeat;
+}
+
+.iqss-blueprintslist-slideshow-title-container > div {
+    width: $blueprints-list-slideshow-width;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    line-height: 16px;
+    padding-right: 35px;
+}
+
+.iqss-blueprintslist-slideshow-deleteLink {
+    background: url(../../../modules/core/img/delete.svg) right center no-repeat;
+    width: 17px;
+    height: 17px;
+    display: inline-block;
+    float: right;
+    margin-right: -21px;
+    margin-top: 7px;
+}
+
+.iqss-blueprintslist-slideshow-delimiter {
+    height: 1px;
+    width: $blueprints-list-slideshow-width - 2 * $blueprints-list-default-horizontal-padding;
+    position: relative;
+    left: 50%;
+    transform: translate(-50%, 0);
+    background-color: #DFDFDF;
+}
+.iqss-blueprintslist-slideshow-tag {
+    font-size: 11px;
+    color: #AFAFAF;
+}
+.iqss-blueprintslist-slideshow-linksContainer {
+    padding: 5px;
+    height: 38px;
+    overflow: hidden;
+}
+.iqss-blueprintslist-slideshow-authorName {
+    padding: 6px;
+}

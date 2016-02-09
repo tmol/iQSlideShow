@@ -1,4 +1,4 @@
-
+<!--
 <div class="page-header" style="margin-top:58px;">
     <div class="col-sm-12">
         <div tag-and-name-filter label='"Search for gold"' search-Provider="searchProvider"></div>
@@ -6,10 +6,62 @@
 </div>
 <div>&nbsp;</div>
 <div class="row" class="col-sm-12">
-    <div class="col-sm-3" ng-repeat="slide in slides" style="border:1px solid #000;min-height:150px;cursor:pointer" ng-click="selectSlide(slide)">
+    <div class="col-sm-3" ng-repeat="slide in slides" style="border:1px solid #000;min-height:150px;cursor:pointer" >
         <div style="font-weight:bold">{{slide.bluePrintTitle}} <button ng-click="removeSlide(slide)">Delete</button> </div>
         <div style="font-weight:bold">{{slide.publisher}}</div>
         <div ng-slide-view reference-slide= 'slide' style="height:100%;width:100%;">
         </div>
     </div>
 </div>
+-->
+
+<section class='iqss-blueprintslist-section'>
+    <div class='iqss-page-header'>
+        <div>
+            <div tag-and-name-filter label='"Search for gold"' search-Provider="searchProvider"></div>
+        </div>
+    </div>
+    <div class='iqss-blueprintslist-content'>
+        <div class='col-sm-12'>
+            <section data-ng-repeat="slide in slides" ng-click="selectSlide(slide)">
+                <div class="iqss-blueprintslist-slideshow">
+                    <div>
+                        <div>
+                            <div class="iqss-blueprintslist-slideshow-title-container" >
+                               {{slide.bluePrintTitle}}
+                               <a href='#' data-ng-click='removeSlide(slide);' class='iqss-blueprintslist-slideshow-deleteLink'></a>
+
+                            </div>
+                        </div>
+
+
+                       <div class='iqss-blueprintslist-slideshow-preview'>
+                            <div ng-slide-view reference-slide= 'slide' style="height:100%;width:100%;"></div>
+                        </div>
+
+
+                        <div class='iqss-blueprintslist-slideshow-linksContainer'>
+                            <span data-ng-repeat="tag in slide.tags" class="iqss-blueprintslist-slideshow-tag">
+                                #{{tag}};
+                            </span>
+
+                        </div>
+<div class='iqss-blueprintslist-slideshow-delimiter'>
+                            </div>
+                        <div class='iqss-blueprintslist-slideshow-authorName' data-ng-bind="slide.publisher"></div>
+                    </div>
+                </div>
+            </section>
+            <div class="iqss-blueprintslist-slideshow-empty">
+            </div>
+            <div class="iqss-blueprintslist-slideshow-empty">
+            </div>
+            <div class="iqss-blueprintslist-slideshow-empty">
+            </div>
+            <div class="iqss-blueprintslist-slideshow-empty">
+            </div>
+            <div class="iqss-blueprintslist-slideshow-empty">
+            </div>
+        </div>
+    </div>
+</section>
