@@ -1,0 +1,41 @@
+@import 'variables.scss';
+@import '../../core/css/variables.scss';
+
+@mixin blueprintsImageLinkCommonStyle {
+    width: 17px;
+    height: 17px;
+    display:inline-block;
+    margin: $blueprints-list-default-horizontal-padding;
+}
+
+@mixin blueprintssHeaderAction {
+    flex: 1;
+    background-size: 20px 20px;
+    line-height: 44px;
+    width: 100px;
+    padding-left: 25px;
+}
+
+@mixin blueprintsViewPlayOrPause {
+    flex: 1 1 25px;
+    background-size: 20px 20px;
+    line-height: 44px;
+    cursor: pointer;
+    margin-left: 15px;
+    width:15px;
+}
+
+@mixin input-placeholder($color) {
+  &::-webkit-input-placeholder {
+      color: $color;
+  }
+  &:-moz-placeholder {
+      color: $color;
+  }
+  &::-moz-placeholder {
+      color: $color; //for newer versions of Firefox
+  }
+  &:-ms-input-placeholder {
+      color: $color;
+  }
+}
