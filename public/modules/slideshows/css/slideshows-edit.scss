@@ -25,3 +25,7 @@
     background: url(../../../modules/core/img/play%20button.svg) left center no-repeat;
     @include slideshowsHeaderAction;
 }
+
+.iqss-slideshowedit-body {
+    padding: 0 $header-padding-left;
+}
