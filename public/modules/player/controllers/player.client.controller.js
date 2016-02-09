@@ -3,9 +3,9 @@
 (function () {
     'use strict';
     angular.module('player').controller('PlayerController', ['$scope', '$state', '$timeout', 'Slides', '$location', 'DeviceMessageBroker',
-                                                             'LocalStorage', 'Path', 'Timers', '$modal', '$window', 'HealthReporter', 'ServerMessageBroker', 'Audit', '$q', '$stateParams',
+                                                             'LocalStorage', 'Path', 'Timers', '$uibModal', '$window', 'HealthReporter', 'ServerMessageBroker', 'Audit', '$q', '$stateParams',
         function ($scope, $state, $timeout, Slides, $location, DeviceMessageBroker,
-                   LocalStorage, Path, Timers, $modal, $window, HealthReporter, ServerMessageBroker, Audit, $q, $stateParams) {
+                   LocalStorage, Path, Timers, $uibModal, $window, HealthReporter, ServerMessageBroker, Audit, $q, $stateParams) {
             var messageBroker;
             var serverMessageBroker;
 
@@ -112,7 +112,7 @@
                         inputMode: '',
                         image: true
                     };
-                    modalInstance = $modal.open({
+                    modalInstance = $uibModal.open({
                         animation: false,
                         templateUrl: Path.getViewUrl('waitingForActivation'),
                         windowClass: 'waitingForActivationDialog',

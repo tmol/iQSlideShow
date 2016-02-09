@@ -4,8 +4,8 @@
     'use strict';
 
     // Devices controller
-    angular.module('devices').controller('DevicesController', ['$scope', '$stateParams', '$state', 'Authentication', 'Slideshows', 'Devices', 'ServerMessageBroker', '$modal', 'Admin', 'Timers', '$cacheFactory',
-        function ($scope, $stateParams, $state, Authentication, Slideshows, Devices, ServerMessageBroker, $modal, Admin, Timers, $cacheFactory) {
+    angular.module('devices').controller('DevicesController', ['$scope', '$stateParams', '$state', 'Authentication', 'Slideshows', 'Devices', 'ServerMessageBroker', '$uibModal', 'Admin', 'Timers', '$cacheFactory',
+        function ($scope, $stateParams, $state, Authentication, Slideshows, Devices, ServerMessageBroker, $uibModal, Admin, Timers, $cacheFactory) {
             var modalInstance,
                 timers = new Timers(),
                 messageBroker = new ServerMessageBroker();

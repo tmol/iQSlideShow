@@ -39,7 +39,7 @@
                     'public/lib/pubnub-angular/lib/pubnub-angular.js',
                     'public/lib/ui-select/dist/select.min.js',
                     'public/lib/angular-ui-grid/ui-grid.min.js',
-                    'public/lib/lodash/lodash.min.js',
+                    'public/lib/lodash/lodash.js',
                     'public/lib/angular-ui-slider/src/slider.js',
                     'public/lib/jquery-ui/ui/jquery-ui.js'
                 ]

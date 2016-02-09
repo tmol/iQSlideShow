@@ -4,8 +4,8 @@
     'use strict';
 
     // Slideshows controller
-    angular.module('slideshows').controller('SlideshowsController', ['$scope', '$stateParams', '$location', 'Authentication', 'Slideshows', 'Templates', '$timeout', 'ServerMessageBroker', 'Tags', '$modal', 'Path', '$cacheFactory', 'resolutions', 'DateFormatter',
-        function ($scope, $stateParams, $location, Authentication, Slideshows, Templates, $timeout, ServerMessageBroker, Tags, $modal, Path, $cacheFactory, resolutions, DateFormatter) {
+    angular.module('slideshows').controller('SlideshowsController', ['$scope', '$stateParams', '$location', 'Authentication', 'Slideshows', 'Templates', '$timeout', 'ServerMessageBroker', 'Tags', '$uibModal', 'Path', '$cacheFactory', 'resolutions', 'DateFormatter',
+        function ($scope, $stateParams, $location, Authentication, Slideshows, Templates, $timeout, ServerMessageBroker, Tags, $uibModal, Path, $cacheFactory, resolutions, DateFormatter) {
             var serverMessageBroker = new ServerMessageBroker();
 
             $scope.resolutions = resolutions;
@@ -235,7 +235,7 @@
                 var scope = $scope.$new(true);
                 scope.Slide = $scope.currentSlide;
 
-                $modal.open({
+                $uibModal.open({
                     animation: false,
                     templateUrl: Path.getViewUrl('saveToBlueprints', 'blueprints'),
                     windowClass: 'waitingForActivationDialog',
@@ -248,7 +248,7 @@
             $scope.addFromBlueprints = function () {
                 var scope = $scope.$new(true);
 
-                $modal.open({
+                $uibModal.open({
                     animation: false,
                     templateUrl: Path.getViewUrl('selectSlideFromBlueprints', 'blueprints'),
                     windowClass: 'waitingForActivationDialog',
@@ -274,7 +274,7 @@
                     $scope.getNrOfDevicesTheSlideIsAttachedTo();
                 };
 
-                $modal.open({
+                $uibModal.open({
                     animation: false,
                     templateUrl: Path.getViewUrl('selectDevices'),
                     windowClass: 'iqss-slideshowview-playing-on',

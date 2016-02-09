@@ -2,7 +2,7 @@
 /*global angular, _*/
 (function () {
     'use strict';
-    angular.module('devices').controller('DeviceFilterModalController', ['$scope', '$modalInstance', '$state', 'filterParameters', 'locations', function ($scope, $modalInstance, $state, filterParameters, locations) {
+    angular.module('devices').controller('DeviceFilterModalController', ['$scope', '$uibModalInstance', '$state', 'filterParameters', 'locations', function ($scope, $uibModalInstance, $state, filterParameters, locations) {
         var selectedForFilter;
 
         $scope.filterParameters = filterParameters;
@@ -15,7 +15,7 @@
         });
 
         $scope.cancel = function () {
-            $modalInstance.dismiss('cancel');
+            $uibModalInstance.dismiss('cancel');
         };
 
         $scope.filter = function () {
@@ -26,7 +26,7 @@
                 }
             });
             $scope.$root.$broadcast('filterDevices');
-            $modalInstance.close();
+            $uibModalInstance.close();
         };
     }]);
 }());

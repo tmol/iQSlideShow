@@ -1,16 +1,16 @@
 /*global angular*/
 (function () {
     'use strict';
-    angular.module('devices').controller('EventHandlerModalController', ['$scope', '$modalInstance', '$state', 'deviceEvent', function ($scope, $modalInstance, $state, deviceEvent) {
+    angular.module('devices').controller('EventHandlerModalController', ['$scope', '$uibModalInstance', '$state', 'deviceEvent', function ($scope, $uibModalInstance, $state, deviceEvent) {
         $scope.deviceEvent = deviceEvent;
 
         $scope.editDevice = function () {
             $state.go('editDevice', {deviceId: deviceEvent.deviceId});
-            $modalInstance.close();
+            $uibModalInstance.close();
         };
 
         $scope.cancel = function () {
-            $modalInstance.dismiss('cancel');
+            $uibModalInstance.dismiss('cancel');
         };
     }]);
 }());
