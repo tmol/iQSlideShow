@@ -20,7 +20,6 @@
     @include slideshowsHeaderAction;
 }
 
-
 .iqss-slideshowedit-previewLink {
     background: url(../../../modules/core/img/play%20button.svg) left center no-repeat;
     @include slideshowsHeaderAction;
@@ -28,4 +27,25 @@
 
 .iqss-slideshowedit-body {
     padding: 0 $header-padding-left;
+}
+
+.iqss-slideshowedit-content {
+    display: flex;
+    flex-wrap: nowrap;
+}
+
+.iqss-slideshowedit-slides {
+    display: inline-block;
+    flex: 1 1;
+    border-right: 1px solid #CCCCCC;
+}
+
+.iqss-slideshowedit-data {
+    display: inline-block;
+    flex: 3 1;
+}
+
+.iqss-slideshowedit-preview {
+    display: inline-block;
+    flex: 4 1;
 }
