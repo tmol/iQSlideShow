@@ -27,6 +27,12 @@ body{
     height: 100%;
     font-family: 'Verdana', 'Times New Roman', serif;
     background-color: $dark-grey-color;
+    color: $very-dark-grey-color;
+    font-size: $font-size;
+}
+
+a, a:hover, a:focus {
+    color: $blue-color;
 }
 
 footer {

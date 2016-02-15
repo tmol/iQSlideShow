@@ -1,4 +1,5 @@
 @import '../../core/css/variables.scss';
+@import '../../core/css/mixins.scss';
 @import 'variables.scss';
 @import 'mixins.scss';
 
@@ -25,27 +26,62 @@
     @include slideshowsHeaderAction;
 }
 
-.iqss-slideshowedit-body {
-    padding: 0 $header-padding-left;
-}
-
 .iqss-slideshowedit-content {
+    margin-top: $page-header-content-padding;
     display: flex;
     flex-wrap: nowrap;
+    padding: 0 $header-padding-left;
+    background: white;
+}
+
+.iqss-slideshowedit-emptyColumn {
+    flex: 0.2 0.2;
+    background-color: $dark-grey-color;
 }
 
 .iqss-slideshowedit-slides {
     display: inline-block;
     flex: 1 1;
-    border-right: 1px solid #CCCCCC;
+    @include border;
 }
 
 .iqss-slideshowedit-data {
     display: inline-block;
-    flex: 3 1;
+    flex: 2 1;
+    @include border;
 }
 
 .iqss-slideshowedit-preview {
     display: inline-block;
-    flex: 4 1;
+    flex: 3 1;
+    @include border;
+}
+
+.iqss-slideshowedit-slides-addNew-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: $font-size + 20;
+}
+
+.iqss-slideshowedit-slides-addNew {
+    background: url(../../../modules/core/img/add-slide.svg) left center no-repeat;
+    line-height: $font-size + 2;
+    height: $font-size + 2;
+    color: $blue-color;
+    padding-left: 30px;
+    cursor: pointer;
+}
+
+.iqss-slideshowedit-addNewSlide {
+    width: 50%;
+    @include dynamicallyAlingCenter;
+}
+
+.iqss-slideshowedit-addNewSlide-container {
+    margin: 10px;
+}
+
+.iqss-slideshowedit-addNewSlide-selectTemplate-container {
+    margin: 10px;
 }

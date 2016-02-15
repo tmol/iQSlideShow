@@ -1,0 +1,30 @@
+<div>
+    <uib-tabset>
+        <uib-tab heading="New from templates">
+            <div class='iqss-slideshowedit-addNewSlide-selectTemplate-container'>
+                <select ng-options="template for template in templates" ng-model="newSlideData.templateName" ng-Change='close();'></select>
+            </div>
+        </uib-tab>
+        <uib-tab heading="From repository">
+            <div>
+                <div tag-and-name-filter label='"Search"' search-Provider="blueprintsSearchProvider"></div>
+                <div>&nbsp;</div>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-sm-6" ng-repeat="slide in slides" style="border:1px solid #000;min-height:150px;cursor:pointer" ng-click="selectSlide(slide)">
+                        <div style="font-weight:bold">{{slide.bluePrintTitle}}</div>
+                        <div style="font-weight:bold">{{slide.publisher}}</div>
+                        <div style="height:140px;width:100%">
+                            <div ng-slide-view reference-slide='slide'>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </uib-tab>
+    </uib-tabset>
+    <div class='iqss-slideshowedit-addNewSlide-container'>
+        <input type="button" value="Cancel" ng-click="$close()"/>
+    </div>
+</div>

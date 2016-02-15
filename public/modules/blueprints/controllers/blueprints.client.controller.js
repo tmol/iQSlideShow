@@ -7,7 +7,9 @@
             $scope.filterParameters = {namesAndTagsFilter: ''};
 
             $scope.search = function () {
-                SlideBlueprintsSearch.search($scope);
+                SlideBlueprintsSearch.search($scope.filterParameters, function (slides) {
+                    $scope.slides = slides;
+                });
             };
 
             $scope.searchProvider = {

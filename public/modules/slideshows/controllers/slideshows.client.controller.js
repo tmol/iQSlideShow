@@ -23,6 +23,7 @@
             $scope.playSlideShow = false;
             $scope.viewPlayerId = 'viewPlayer';
             $scope.animationTypes = ["enter-left", "enter-right", "enter-bottom", "enter-top"];
+            $scope.newSlideData = {};
 
             if ($scope.setPlayerMode) {
                 $scope.setPlayerMode(false);
@@ -96,18 +97,18 @@
             };
 
             $scope.getNrOfDevicesTheSlideIsAttachedTo  = function () {
-                 if (!$scope.slideshow) {
+                if (!$scope.slideshow) {
                     return;
                 }
 
                 Slideshows.getDevices({
                     slideshowId: $scope.slideshow._id
                 }, function (devices) {
-                    $scope.slideshow.nrOfDevicesTheSlideIsAttachedTo = devices.filter(function(device) {
+                    $scope.slideshow.nrOfDevicesTheSlideIsAttachedTo = devices.filter(function (device) {
                         return device.checked;
                     }).length;
                 });
-            }
+            };
 
             $scope.getCurrentSlideShowStatus = function () {
                 if ($scope.slideshow.published) {
@@ -154,16 +155,6 @@
                     $scope.selectedResolution = 0;
                     slide.resolution = $scope.resolutions[0];
                 }
-                updateTemplate();
-            };
-
-            $scope.addNewSlide = function () {
-                $scope.currentSlide = {
-                    templateName: $scope.selectedTemplate,
-                    content: {}
-                };
-                $scope.slideshow.draftSlides = $scope.slideshow.draftSlides || [];
-                $scope.slideshow.draftSlides.push($scope.currentSlide);
                 updateTemplate();
             };
 
@@ -245,25 +236,41 @@
                 });
             };
 
-            $scope.addFromBlueprints = function () {
+            $scope.addNewSlideByTemplate = function (templateName) {
+                $scope.currentSlide = {
+                    templateName: templateName,
+                    content: {}
+                };
+                $scope.slideshow.draftSlides = $scope.slideshow.draftSlides || [];
+                $scope.slideshow.draftSlides.push($scope.currentSlide);
+                updateTemplate();
+            };
+
+            $scope.addNewSlide = function () {
                 var scope = $scope.$new(true);
+                scope.templates = $scope.templates;
 
                 $uibModal.open({
                     animation: false,
-                    templateUrl: Path.getViewUrl('selectSlideFromBlueprints', 'blueprints'),
-                    windowClass: 'waitingForActivationDialog',
+                    templateUrl: Path.getViewUrl('addNewSlide'),
+                    windowClass: 'iqss-slideshowedit-addNewSlide',
                     backdrop: 'static',
-                    controller: 'SelectSlideFromBlueprintsController',
+                    controller: 'AddNewSlideController',
                     scope: scope
-                }).result.then(function (slide) {
-                    if (!slide) {
+                }).result.then(function (newSlideData) {
+                    if (!newSlideData) {
                         return;
                     }
-                    delete slide._id;
-                    delete slide._v;
-                    $scope.currentSlide = angular.merge({}, slide);
-                    $scope.slideshow.draftSlides.push($scope.currentSlide);
-                    updateTemplate();
+                    if (newSlideData.templateName) {
+                        $scope.addNewSlideByTemplate(newSlideData.templateName);
+                    }
+                    if (newSlideData.slide) {
+                        delete newSlideData.slide._id;
+                        delete newSlideData.slide._v;
+                        $scope.currentSlide = angular.merge({}, newSlideData.slide);
+                        $scope.slideshow.draftSlides.push($scope.currentSlide);
+                        updateTemplate();
+                    }
                 });
             };
 
@@ -284,12 +291,11 @@
                 });
             };
 
-            $scope.togglePlay = function() {
+            $scope.togglePlay = function () {
                 $scope.playSlideShow = !$scope.playSlideShow;
-                var messageToBroadcast = $scope.playSlideShow ?
-                    'resetOnHold' : 'putPlayerOnHold';
+                var messageToBroadcast = $scope.playSlideShow ? 'resetOnHold' : 'putPlayerOnHold';
                 $scope.$broadcast(messageToBroadcast, $scope.viewPlayerId);
-            }
+            };
 
             $scope.$watch("selectedResolution", function (newValue, oldValue) {
                 if (!$scope.currentSlide) {

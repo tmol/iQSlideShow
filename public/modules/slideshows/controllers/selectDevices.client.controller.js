@@ -24,7 +24,7 @@
             };
 
             $scope.$on('devicesToPlayOnDivScrollBarVisible', function () {
-               $scope.scrollBarVisibleInDevicesList = true;
+                $scope.scrollBarVisibleInDevicesList = true;
             });
 
             $scope.$watch('displayAll', function () {

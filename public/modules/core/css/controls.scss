@@ -1,5 +1,8 @@
 @import 'variables.scss';
 
+/*
+    iqss buttons
+*/
 @mixin iQssButton($borderColor, $textColor) {
 	background-color: white;
     border: 1px solid $borderColor;
@@ -38,6 +41,9 @@
 	top:1px;
 }
 
+/*
+    iqss checkbox
+*/
 input[type="checkbox"] {
     display:none;
 }
@@ -60,4 +66,11 @@ input[type="checkbox"] + label span{
 
 input[type="checkbox"]:checked + label span{
     background:url(../img/check-box.png) left bottom no-repeat;
+}
+
+/*
+    iqss Angual UI Tab
+*/
+.nav-tabs > li.active > a, .nav-tabs > li.active > a:hover, .nav-tabs > li.active > a:focus {
+    color: $orange-color;
 }

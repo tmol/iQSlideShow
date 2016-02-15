@@ -17,3 +17,14 @@
     color: $very-dark-grey-color;
     padding-left: $slideshow-list-default-horizontal-padding;
 }
+
+@mixin border {
+    border: 1px solid $darker-grey-color;
+    box-shadow: 1px 4px 4px $darker-grey-color;
+}
+
+@mixin dynamicallyAlingCenter {
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%, 0);
+}
