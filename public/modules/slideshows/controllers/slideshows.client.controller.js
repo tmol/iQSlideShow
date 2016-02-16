@@ -222,9 +222,9 @@
                 });
             };
 
-            $scope.saveSlideToBlueprints = function () {
+            $scope.saveSlideToBlueprints = function (slide) {
                 var scope = $scope.$new(true);
-                scope.Slide = $scope.currentSlide;
+                scope.Slide = slide;
 
                 $uibModal.open({
                     animation: false,

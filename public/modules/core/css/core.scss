@@ -10,12 +10,20 @@
     padding-top: $header-height + $page-header-height;
     padding-left: 0px;
     padding-right: 0px;
+    height: 100%;
 }
+
 .iqss-hidden {
     visibility: hidden;
 }
+
+.iqss-main-container {
+    height: 100%;
+}
+
 .iqss-content {
     padding-bottom: 30px;
+    height: 100%;
 }
 
 html {
@@ -36,11 +44,11 @@ a, a:hover, a:focus {
 }
 
 footer {
-    position:fixed;
-    left:0px;
-    bottom:0px;
-    height:30px;
-    width:100%;
+    position: fixed;
+    left: 0px;
+    bottom: 0px;
+    height: $footer-height;
+    width: 100%;
     z-index: 2000;
     background: $light-grey-color;
 }

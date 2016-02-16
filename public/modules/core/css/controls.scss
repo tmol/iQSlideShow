@@ -53,6 +53,7 @@ input[type="checkbox"] + label {
     text-overflow: ellipsis;
     white-space: nowrap;
     overflow: hidden;
+    margin: 0;
 }
 
 input[type="checkbox"] + label span{

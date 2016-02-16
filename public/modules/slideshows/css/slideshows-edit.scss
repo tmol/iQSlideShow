@@ -3,6 +3,10 @@
 @import 'variables.scss';
 @import 'mixins.scss';
 
+.iqss-slideshowedit-main {
+    height: 100%;
+}
+
 .iqss-slideshowedit-header-title {
     color: $blue-color;
 }
@@ -19,6 +23,7 @@
 .iqss-slideshowedit-saveLink {
     background: url(../../../modules/core/img/save.svg) left center no-repeat;
     @include slideshowsHeaderAction;
+    cursor: pointer;
 }
 
 .iqss-slideshowedit-previewLink {
@@ -26,12 +31,25 @@
     @include slideshowsHeaderAction;
 }
 
+.iqss-slideshowedit-error {
+    padding-left: $header-padding-left;
+    padding-right: $header-padding-left;
+}
+
 .iqss-slideshowedit-content {
-    margin-top: $page-header-content-padding;
+    padding-top: $page-header-content-padding;
+    padding-left: $header-padding-left;
+    padding-right: $header-padding-left;
+    margin-bottom: $footer-height;
+    padding-bottom: 10px;
+    height: 100%;
     display: flex;
     flex-wrap: nowrap;
-    padding: 0 $header-padding-left;
-    background: white;
+    align-items: stretch;
+}
+
+.iqss-slideshowedit-form {
+    height: 100%;
 }
 
 .iqss-slideshowedit-emptyColumn {
@@ -43,18 +61,24 @@
     display: inline-block;
     flex: 1 1;
     @include border;
+    background: white;
+    width: 20%;
 }
 
 .iqss-slideshowedit-data {
     display: inline-block;
     flex: 2 1;
     @include border;
+    background: white;
+    width: 40%;
 }
 
 .iqss-slideshowedit-preview {
     display: inline-block;
     flex: 3 1;
     @include border;
+    width: 33%;
+    max-height: 100%;
 }
 
 .iqss-slideshowedit-slides-addNew-container {
@@ -62,6 +86,7 @@
     justify-content: center;
     align-items: center;
     height: $font-size + 20;
+    padding: $slideshow-edit-slide-leftRightPadding $slideshow-edit-slide-leftRightPadding;
 }
 
 .iqss-slideshowedit-slides-addNew {
@@ -84,4 +109,86 @@
 
 .iqss-slideshowedit-addNewSlide-selectTemplate-container {
     margin: 10px;
+}
+
+.iqss-slideshowedit-addNewSlide-selectFromBluerprints-search hr {
+    top: 56px;
+}
+
+.iqss-slideshowedit-addNewSlide-selectFromBluerprints-list {
+    display: flex;
+}
+
+.iqss-slideshowedit-addNewSlide-selectFromBluerprints-blueprint-container {
+    cursor: pointer;
+    width: 33%;
+}
+
+.iqss-slideshowedit-addNewSlide-selectFromBluerprints-blueprint {
+    height:140px;
+    width:100%;
+}
+
+.iqss-slideshowedit-slide-hidden {
+    background-color: #EEEEEE;
+    opacity: 0.5;
+    width: 100%;
+}
+
+.iqss-slideshowedit-slide-current {
+    border: 1px solid $very-dark-grey-color;
+    width: 100%;
+}
+
+.iqss-slideshowedit-slide-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.iqss-slideshowedit-slide-actions {
+    display: flex;
+    height: 25px;
+    line-height: 25px;
+    padding: 0 $slideshow-edit-slide-leftRightPadding;
+    border-top: 1px solid $darker-grey-color;
+}
+
+.iqss-slideshowedit-slide-actions-index {
+    width: $slideshow-edit-slide-indexWidth;
+}
+
+.iqss-slideshowedit-slide-actions-index-selected {
+    color: $orange-color;
+}
+
+.iqss-slideshowedit-slide-actions-title {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    padding: 0 5px;
+    flex: 1;
+}
+
+@mixin slideAction($backgroundImgPath) {
+    background: url($backgroundImgPath) left center no-repeat;
+    width: 20px;
+    height: 20px;
+    align-self: center;
+    cursor: pointer;
+}
+
+.iqss-slideshowedit-slide-actions-saveToBlueprints {
+    @include slideAction('../../../modules/core/img/save_in_repo.svg')
+}
+
+.iqss-slideshowedit-slide-actions-delete {
+    @include slideAction('../../../modules/core/img/delete.svg')
+}
+
+.iqss-slideshowedit-slide-preview {
+    padding: 0 $slideshow-edit-slide-indexWidth + $slideshow-edit-slide-leftRightPadding;
+    width: 213px;
+    height: 130px;
+    display: inline-block;
+    overflow: hidden;
 }

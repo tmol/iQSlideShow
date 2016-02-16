@@ -1,4 +1,4 @@
-<section data-ng-controller="SlideshowsController" data-ng-init="findOne()">
+<section data-ng-controller="SlideshowsController" data-ng-init="findOne()" class='iqss-slideshowedit-main'>
     <div class='iqss-page-header'>
         <div class='iqss-slideshows-header-container'>
             <div class='iqss-slideshows-header-title-container'>
@@ -8,124 +8,121 @@
                 </div>
             </div>
             <div class='iqss-slideshows-header-actions iqss-slideshows-links'>
-                <a href='#' class='iqss-slideshowedit-saveLink' ng-click="update()"  class='iqss-slideshowedit-saveLink'>Save</a>
+                <div class='iqss-slideshowedit-saveLink' ng-click="update()">Save</div>
                 <a href="/slideshow#!/preview/{{slideshow._id}}" target="_blank" class='iqss-slideshowedit-previewLink'>Preview</a>
                 <a href='#' ng-click="publish()" class='iqss-slideshows-slideshow-publishLink'>Publish</a>
                 <a href='#' data-ng-click='remove();' class='iqss-slideshows-slideshow-deleteLink'>Remove</a>
             </div>
         </div>
     </div>
-    <form data-ng-submit="update()" novalidate>
+    <form data-ng-submit="update()" novalidate class='iqss-slideshowedit-form'>
+        <div class="iqss-slideshowedit-error text-danger">
+            <strong data-ng-show="error" data-ng-bind="error"></strong>
+        </div>
         <div class="iqss-slideshowedit-content">
+            <div class="iqss-slideshowedit-slides">
+                <div class='iqss-slideshowedit-slides-addNew-container'>
+                    <div class="iqss-slideshowedit-slides-addNew" ng-click='addNewSlide()'>Add slide</div>
+                </div>
 
-                <div class="iqss-slideshowedit-slides">
-                    <div class='iqss-slideshowedit-slides-addNew-container'>
-                        <div class="iqss-slideshowedit-slides-addNew" ng-click='addNewSlide()'>Add slide
+                <!-- SLIDE LIST PREVIEW start-->
+
+                <div ng-class="{'iqss-slideshowedit-slide-hidden':slide.hidden, 'iqss-slideshowedit-slide-current':isCurrentSlide(slide)}" data-ng-repeat="slide in slideshow.draftSlides" ng-click="setCurrentSlide(slide)">
+                    <div class='iqss-slideshowedit-slide-container'>
+                        <div class='iqss-slideshowedit-slide-actions'>
+                            <span ng-class="{'iqss-slideshowedit-slide-actions-index': true, 'iqss-slideshowedit-slide-actions-index-selected': isCurrentSlide(slide)}">{{$index + 1}}</span>
+                            <span class='iqss-slideshowedit-slide-actions-showHide'>
+                                <input id='showHideCheckBox' ng-true-value="true" ng-false-value="false" ng-model-options="{allowInvalid: true}" type="checkbox" data-ng-model="slide.hidden">
+                                <label for='showHideCheckBox'>
+                                    <span ng-if='!slide.hidden' style='background: url(../../../modules/core/img/hide-slide.svg) left bottom no-repeat;vertical-align: middle;'></span>
+                                    <span ng-if='slide.hidden' style='background: url(../../../modules/core/img/view-slide.svg) left bottom no-repeat;vertical-align: middle;'></span>
+                                </label>
+                            </span>
+                            <span class='iqss-slideshowedit-slide-actions-title'>{{slide.title}}</span>
+                            <span class='iqss-slideshowedit-slide-actions-saveToBlueprints' ng-click="saveSlideToBlueprints(slide)"></span>
+                            <span class='iqss-slideshowedit-slide-actions-delete' ng-click='removeSlide(slide)'></span>
                         </div>
                     </div>
+                    <div class='iqss-slideshowedit-slide-preview'>
+                        <div ng-slide-view reference-slide="slide">
+                        </div>
+                    </div>
+                </div>
+                <!-- SLIDE LIST PREVIEW end-->
+            </div>
 
-                    <!-- SLIDE LIST PREVIEW start-->
+            <div class="iqss-slideshowedit-emptyColumn">&nbsp;</div>
 
-                    <div ng-class="{'hidden-slide':slide.hidden, 'current-slide':isCurrentSlide(slide)}"
-                         data-ng-repeat="slide in slideshow.draftSlides" class="form-group slide">
+            <div class="iqss-slideshowedit-data">
+                <uib-tabset>
+
+                   <!--SLIDE INFO START-->
+                    <uib-tab heading="Slide info">
                         <div>
-                            <input style="width:15px;height:15px;display:inline-block" ng-true-value="true" ng-false-value="false" ng-model-options="{allowInvalid: true}" type="checkbox" data-ng-model="slide.hidden" id="hidden" class="form-control">
-                            {{slide.title}}
-                            <button style="width: 15px;height: 15px;display: inline-block;padding: 0px;line-height: 15px;font-size: 10px;" ng-click="removeSlide(slide)">X</button>
-                        </div>
-                        <span  ng-click="setCurrentSlide(slide)" class="control-label slide-label">
-                            <div class="move-slide">
-                                <div class="move-slide-button" ng-click="moveSlideUp(slide)">▲</div>
-                                <div class="move-slide-button" ng-click="moveSlideDown(slide)">▼</div>
-                            </div>
-                            <div style="width:213px;height:130px;border:1px solid black;display:inline-block;overflow:hidden">
-                                <div ng-slide-view reference-slide="slide" slide-width="213" slide-height="130">
-                                </div>
-                            </div>
-                        </span>
-                    </div>
-                    <!-- SLIDE LIST PREVIEW end-->
-                </div>
-
-                <div class="iqss-slideshowedit-emptyColumn">&nbsp;</div>
-
-                <div class="iqss-slideshowedit-data">
-                    <uib-tabset>
-
-                       <!--SLIDE INFO START-->
-                        <uib-tab heading="Slide info">
-                            <div>
-                                <label class="control-label" for="name">Name</label>
-                                <div class="controls">
-                                    <input type="text" data-ng-model="slideshow.name" id="name" class="form-control" placeholder="Name" required/>
-                                </div>
-                            </div>
-                            <div>
-                                <label class="control-label" for="name">Tags</label>
-                                <div class="controls">
-                                    <ui-select multiple tagging tagging-label="(custom 'new' tag)" ng-model="slideshow.tags" theme="bootstrap" sortable="true" style="width: 300px;" title="Choose a tag">
-                                        <ui-select-match placeholder="Select tags or enter a new one...">{{$item}}</ui-select-match>
-                                            <ui-select-choices repeat="tag in possibleTags"
-                                                refresh="refreshTags($select.search)"
-                                                refresh-delay="0">
-                                                {{tag}}
-                                            </ui-select-choices>
-                                      </ui-select>
-                                </div>
-                            </div>
-                            <select ng-options="template for template in templates" ng-model="currentSlide.templateName"></select>
-                            <label class="control-label" for="zoomPercent">Zoom percent ({{currentSlide.zoomPercent}}%)</label>
-                            <div ui-slider min=0 max=1000 ng-model="currentSlide.zoomPercent" id="selectedResolution"></div>
-                            <label class="control-label" for="selectedResolution">Resolution ({{currentSlide.resolution.width}} / {{currentSlide.resolution.height}})</label>
-                            <div ui-slider min=0 max={{resolutions.length-1}} ng-model="selectedResolution" id="selectedResolution"></div>
-                            <label class="control-label" for="detailsUrl">Details URL</label>
-                            <input type="text" data-ng-model="currentSlide.detailsUrl" id="detailsUrl" class="form-control" placeholder="detailsUrl" required>
-                            <label class="control-label" for="hidden">Hidden</label>
-                            <input ng-true-value="true" ng-false-value="false" ng-model-options="{allowInvalid: true}" type="checkbox" data-ng-model="currentSlide.hidden" id="hidden" class="form-control" required>
-                            <label class="control-label">Save to Blueprints</label>
-                            <input type="button" ng-click="saveSlideToBlueprints()" value="save">
-                        </uib-tab>
-                        <!--SLIDE INFO END-->
-
-                        <!--SLIDE CONTENT START-->
-                        <uib-tab heading="Slide content">
-                            <label class="control-label" for="title">Title</label>
-                            <input type="text" ng-model="currentSlide.title" id="title" class="form-control" placeholder="Title">
-                            <div class="form-group" ng-repeat="(templateElement, value) in templateElements">
-                                <label class="control-label">{{value.label}}</label>
-                                <div class="controls" >
-                                    <input ng-if="value.type=='text'" type="text" ng-model="currentSlide.content[templateElement]" class="form-control">
-                                    <div text-angular ng-if="value.type=='html'" type="text" ng-model="currentSlide.content[templateElement]" ></div>
+                            <label class="control-label" for="name">Name</label>
+                            <div class="controls">
+                                <input type="text" data-ng-model="slideshow.name" id="name" class="form-control" placeholder="Name" required/>
                             </div>
                         </div>
+                        <div>
+                            <label class="control-label" for="name">Tags</label>
+                            <div class="controls">
+                                <ui-select multiple tagging tagging-label="(custom 'new' tag)" ng-model="slideshow.tags" theme="bootstrap" sortable="true" style="width: 300px;" title="Choose a tag">
+                                    <ui-select-match placeholder="Select tags or enter a new one...">{{$item}}</ui-select-match>
+                                        <ui-select-choices repeat="tag in possibleTags"
+                                            refresh="refreshTags($select.search)"
+                                            refresh-delay="0">
+                                            {{tag}}
+                                        </ui-select-choices>
+                                  </ui-select>
+                            </div>
+                        </div>
+                        <select ng-options="template for template in templates" ng-model="currentSlide.templateName"></select>
+                        <label class="control-label" for="zoomPercent">Zoom percent ({{currentSlide.zoomPercent}}%)</label>
+                        <div ui-slider min=0 max=1000 ng-model="currentSlide.zoomPercent" id="selectedResolution"></div>
+                        <label class="control-label" for="selectedResolution">Resolution ({{currentSlide.resolution.width}} / {{currentSlide.resolution.height}})</label>
+                        <div ui-slider min=0 max={{resolutions.length-1}} ng-model="selectedResolution" id="selectedResolution"></div>
+                        <label class="control-label" for="detailsUrl">Details URL</label>
+                        <input type="text" data-ng-model="currentSlide.detailsUrl" id="detailsUrl" class="form-control" placeholder="detailsUrl" required>
+                        <label class="control-label" for="hidden">Hidden</label>
+                        <input ng-true-value="true" ng-false-value="false" ng-model-options="{allowInvalid: true}" type="checkbox" data-ng-model="currentSlide.hidden" id="hidden" class="form-control" required>
+                        <label class="control-label">Save to Blueprints</label>
+                        <input type="button" ng-click="saveSlideToBlueprints()" value="save">
+                    </uib-tab>
+                    <!--SLIDE INFO END-->
 
-                        </uib-tab>
-                        <!--SLIDE CONTENT END-->
-
-                        <!--ANIMATION START-->
-                        <uib-tab heading="Animation">
-                            <label class="control-label" for="animationType">Animation Type</label>
-                            <select ng-options="animationType for animationType in animationTypes" ng-model="currentSlide.animationType"></select>
-                            <label class="control-label" for="durationInSeconds">Duration is seconds</label>
-                            <input type="number" ng-model="currentSlide.durationInSeconds" id="durationInSeconds" class="form-control" placeholder="Duration in seconds" required>
-                        </uib-tab>
-                        <!--ANIMATION END-->
-                    </uib-tabset>
-                </div>
-
-                <div class="iqss-slideshowedit-emptyColumn">&nbsp;</div>
-
-                <div class="iqss-slideshowedit-preview" >
-                    <label class="control-label" for="durationInSeconds">Preview</label>
-                    <div style="width:426px;height:240px;border:1px solid black;display:inline-block;">
-                        <div ng-slide-view reference-slide="currentSlide" slide-width="426" slide-height="240">
+                    <!--SLIDE CONTENT START-->
+                    <uib-tab heading="Slide content">
+                        <label class="control-label" for="title">Title</label>
+                        <input type="text" ng-model="currentSlide.title" id="title" class="form-control" placeholder="Title">
+                        <div class="form-group" ng-repeat="(templateElement, value) in templateElements">
+                            <label class="control-label">{{value.label}}</label>
+                            <div class="controls" >
+                                <input ng-if="value.type=='text'" type="text" ng-model="currentSlide.content[templateElement]" class="form-control">
+                                <div text-angular ng-if="value.type=='html'" type="text" ng-model="currentSlide.content[templateElement]" ></div>
                         </div>
                     </div>
-                </div>
 
-                <div data-ng-show="error" class="text-danger">
-                    <strong data-ng-bind="error"></strong>
+                    </uib-tab>
+                    <!--SLIDE CONTENT END-->
+
+                    <!--ANIMATION START-->
+                    <uib-tab heading="Animation">
+                        <label class="control-label" for="animationType">Animation Type</label>
+                        <select ng-options="animationType for animationType in animationTypes" ng-model="currentSlide.animationType"></select>
+                        <label class="control-label" for="durationInSeconds">Duration is seconds</label>
+                        <input type="number" ng-model="currentSlide.durationInSeconds" id="durationInSeconds" class="form-control" placeholder="Duration in seconds" required>
+                    </uib-tab>
+                    <!--ANIMATION END-->
+                </uib-tabset>
+            </div>
+
+            <div class="iqss-slideshowedit-emptyColumn">&nbsp;</div>
+
+            <div class="iqss-slideshowedit-preview" >
+                <div ng-slide-view reference-slide="currentSlide">
                 </div>
+            </div>
         </div>
     </form>
 </section>

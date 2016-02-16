@@ -8,7 +8,7 @@
             $scope.possibleTags = [];
             $scope.refreshTags = function (text) {
                 return Tags.query({tag: text}, function (result) {
-                    $scope.possibleTags = _.pluck(result, 'value');
+                    $scope.possibleTags = _.map(result, 'value');
                 });
             };
             $scope.save = function () {

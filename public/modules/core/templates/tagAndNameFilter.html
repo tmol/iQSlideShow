@@ -1,7 +1,7 @@
 <div>
     <span items-filter-summary filter-Parameters="filterParameters"></span>
     <div class='iqss-ui-select'>
-        <span>
+        <div>
             <ui-select ng-model="filterParameters.namesAndTagsFilter" sortable="true" title="Select" on-select='filterUpdated($select)' reset-search-input='false'>
                 <ui-select-match placeholder="{{filterValuePlaceholder}}" data-ng-init='initNamesAndTagsFilter($select)'>{{$select.selected}}</ui-select-match>
                 <ui-select-choices repeat="filterValue in possibleFilterValues"
@@ -10,7 +10,7 @@
                     {{filterValue.name}}
                 </ui-select-choices>
             </ui-select>
-        </span>
+        </div>
         <hr class='iqss-ui-select-bottom-line'>
     </div>
 </div>

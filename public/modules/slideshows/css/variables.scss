@@ -1,5 +1,8 @@
 @import '../../core/css/variables.scss';
 
+/*
+    list
+*/
 $slideshow-list-header-content-top-padding: $header-height + $page-header-height + 48px;
 
 $slideshow-list-slideshow-width: 194px;
@@ -9,3 +12,10 @@ $slideshow-list-slideshow-height: 195px;
 $slideshow-list-slideshow-preview-height: 100px;
 
 $slideshow-list-default-horizontal-padding: 7px;
+
+/*
+    edit
+*/
+$slideshow-edit-slide-leftRightPadding: 8px;
+
+$slideshow-edit-slide-indexWidth: 15px;

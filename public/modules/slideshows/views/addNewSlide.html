@@ -7,15 +7,15 @@
         </uib-tab>
         <uib-tab heading="From repository">
             <div>
-                <div tag-and-name-filter label='"Search"' search-Provider="blueprintsSearchProvider"></div>
+                <div tag-and-name-filter label='"Search"' search-Provider="blueprintsSearchProvider" class='iqss-slideshowedit-addNewSlide-selectFromBluerprints-search'></div>
                 <div>&nbsp;</div>
             </div>
-            <div class="modal-body">
-                <div class="row">
-                    <div class="col-sm-6" ng-repeat="slide in slides" style="border:1px solid #000;min-height:150px;cursor:pointer" ng-click="selectSlide(slide)">
-                        <div style="font-weight:bold">{{slide.bluePrintTitle}}</div>
-                        <div style="font-weight:bold">{{slide.publisher}}</div>
-                        <div style="height:140px;width:100%">
+            <div>
+                <div class='iqss-slideshowedit-addNewSlide-selectFromBluerprints-blueprints-list'>
+                    <div ng-repeat="slide in slides" class='iqss-slideshowedit-addNewSlide-selectFromBluerprints-blueprint-container' ng-click="selectSlide(slide)">
+                        <div>{{slide.bluePrintTitle}}</div>
+                        <div>{{slide.publisher}}</div>
+                        <div class='iqss-slideshowedit-addNewSlide-selectFromBluerprints-blueprint'>
                             <div ng-slide-view reference-slide='slide'>
                             </div>
                         </div>

@@ -10,20 +10,6 @@
     line-height: 11px;
 }
 
-.slide-label{
-     line-height: 12px;
-}
-
-.slide {
-    cursor: pointer;
-    padding-left: 8px;
-    padding-right: 8px;
-}
-
-.current-slide{
-    background-color: #CCCCCC !important;
-}
-
 .slides-controllers{
   border-bottom: 1px solid #CCCCCC;
   padding-bottom: 11px;
@@ -32,20 +18,4 @@
 
 .slides-ops{
   display: inline-block;
-}
-
-.slides-ops button{
-  width: 17px;
-  padding-left: 2px;
-  padding-right: 2px;
-}
-
-.slides-update{
-  border-top: 1px solid #CCCCCC;
-  padding-top: 10px;
-}
-
-.hidden-slide {
-    background-color: #EEEEEE;
-    opacity: 0.5;
 }

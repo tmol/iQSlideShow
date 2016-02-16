@@ -205,7 +205,7 @@
                 Devices.getFilteredNames({
                     nameFilter: search
                 }, function (filteredNames) {
-                    var uniqueDevicesName = _.uniq(_.pluck(filteredNames, 'name'));
+                    var uniqueDevicesName = _.uniq(_.map(filteredNames, 'name'));
                     $scope.possibleSearchedDeviceNames = _.sortBy(uniqueDevicesName, function (name) {
                         return name.toLowerCase();
                     });
