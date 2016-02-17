@@ -158,30 +158,28 @@
                 updateTemplate();
             };
 
-            $scope.moveSlideUp = function (slide) {
-                var slideIndex, tmp;
+            function getDraftSlideIndex(slideId) {
+                return _.findIndex($scope.slideshow.draftSlides, function (aSlide) {
+                    return aSlide._id === slideId;
+                });
+            }
 
-                slideIndex = $scope.slideshow.draftSlides.indexOf(slide);
-                if (slideIndex === 0) {
+            $scope.slideDropped = function (targetSlideId, draggedSlideId) {
+                var targetSlideIndex = getDraftSlideIndex(targetSlideId);
+                if (targetSlideIndex === -1) {
                     return;
                 }
 
-                tmp = $scope.slideshow.draftSlides[slideIndex - 1];
-                $scope.slideshow.draftSlides[slideIndex - 1] = slide;
-                $scope.slideshow.draftSlides[slideIndex] = tmp;
-            };
-
-            $scope.moveSlideDown = function (slide) {
-                var slideIndex, tmp;
-
-                slideIndex = $scope.slideshow.draftSlides.indexOf(slide);
-                if (slideIndex === $scope.slideshow.slides.length - 1) {
+                var draggedSlideIndex = getDraftSlideIndex(draggedSlideId);
+                if (draggedSlideIndex === -1) {
                     return;
                 }
 
-                tmp = $scope.slideshow.draftSlides[slideIndex + 1];
-                $scope.slideshow.draftSlides[slideIndex + 1] = slide;
-                $scope.slideshow.draftSlides[slideIndex] = tmp;
+                var indexAdjuster = (draggedSlideIndex > targetSlideIndex) ? 1 : 0;
+                var draftSlides = $scope.slideshow.draftSlides;
+                var draggedSlide = draftSlides.splice(draggedSlideIndex, 1)[0];
+                draftSlides.splice(targetSlideIndex + indexAdjuster, 0, draggedSlide);
+                $scope.$apply();
             };
 
             $scope.isCurrentSlide = function (slide) {

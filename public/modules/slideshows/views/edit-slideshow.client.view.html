@@ -27,13 +27,13 @@
 
                 <!-- SLIDE LIST PREVIEW start-->
 
-                <div ng-class="{'iqss-slideshowedit-slide-hidden':slide.hidden, 'iqss-slideshowedit-slide-current':isCurrentSlide(slide)}" data-ng-repeat="slide in slideshow.draftSlides" ng-click="setCurrentSlide(slide)">
+                <div ng-class="{'iqss-slideshowedit-slide-hidden':slide.hidden, 'iqss-slideshowedit-slide-current':isCurrentSlide(slide)}" data-ng-repeat="slide in slideshow.draftSlides" ng-click="setCurrentSlide(slide)" drag-and-drop drag-and-drop-header-height='115' drag-and-drop-footer-height='30' drag-and-drop-move-event-name="'slideShowDragged'" slide-drag-and-drop-receiver slideShowId='{{slide._id}}'>
                     <div class='iqss-slideshowedit-slide-container'>
                         <div class='iqss-slideshowedit-slide-actions'>
                             <span ng-class="{'iqss-slideshowedit-slide-actions-index': true, 'iqss-slideshowedit-slide-actions-index-selected': isCurrentSlide(slide)}">{{$index + 1}}</span>
                             <span class='iqss-slideshowedit-slide-actions-showHide'>
-                                <input id='showHideCheckBox' ng-true-value="true" ng-false-value="false" ng-model-options="{allowInvalid: true}" type="checkbox" data-ng-model="slide.hidden">
-                                <label for='showHideCheckBox'>
+                                <input id='{{slide._id}}' ng-true-value="true" ng-false-value="false" ng-model-options="{allowInvalid: true}" type="checkbox" data-ng-model="slide.hidden">
+                                <label for='{{slide._id}}'>
                                     <span ng-if='!slide.hidden' style='background: url(../../../modules/core/img/hide-slide.svg) left bottom no-repeat;vertical-align: middle;'></span>
                                     <span ng-if='slide.hidden' style='background: url(../../../modules/core/img/view-slide.svg) left bottom no-repeat;vertical-align: middle;'></span>
                                 </label>

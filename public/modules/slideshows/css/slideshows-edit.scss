@@ -40,12 +40,10 @@
     padding-top: $page-header-content-padding;
     padding-left: $header-padding-left;
     padding-right: $header-padding-left;
-    margin-bottom: $footer-height;
-    padding-bottom: 10px;
-    height: 100%;
+    margin-bottom: $footer-height + 5px;
     display: flex;
     flex-wrap: nowrap;
-    align-items: stretch;
+    align-items: flex-start;
 }
 
 .iqss-slideshowedit-form {
