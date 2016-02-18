@@ -31,7 +31,7 @@ angular.module('core').directive('dragAndDrop', ['$document', function ($documen
             scrolling = true;
             angular.element('body').animate({
                 scrollTop: body.scrollTop + distanceInPixels
-            }, 'slow', function () {
+            }, 'fast', function () {
                 console.log('done');
                 scrolling = false;
             });
