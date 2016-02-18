@@ -4,8 +4,6 @@ angular.module('slideshows').directive('slideDragAndDropReceiver', function () {
     'use strict';
 
     function link(scope, element, attrs) {
-        var draggingBorderStyle = '1px dashed red';
-
         function getDraggedSlideId(draggedSlideElement) {
             if (draggedSlideElement && draggedSlideElement[0] && draggedSlideElement[0].attributes.slideShowId) {
                 return draggedSlideElement[0].attributes.slideShowId.value;
@@ -27,13 +25,11 @@ angular.module('slideshows').directive('slideDragAndDropReceiver', function () {
         var initialBorderStyle = element.css('border');
 
         function revertToInitialStyle() {
-            if (element.css('border').indexOf('dashed') > -1) {
-                element.css('border', '');
-            }
+            element.removeClass('iqss-slideshowedit-slide-readyToReceiveDrop');
         }
 
         function setDraggingStyle() {
-            element.css('border', draggingBorderStyle);
+            element.addClass('iqss-slideshowedit-slide-readyToReceiveDrop');
         }
 
         scope.$on('slideShowDragged', function (event, args) {
