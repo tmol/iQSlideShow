@@ -28,3 +28,10 @@
     left: 50%;
     transform: translate(-50%, 0);
 }
+
+@mixin formControl {
+    border: 1px solid $dark-grey-color;
+    height: $font-size + 15px;
+    box-shadow: 2px 2px 2px $dark-grey-color;
+    border-radius: 0px;
+}

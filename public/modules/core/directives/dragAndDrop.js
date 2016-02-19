@@ -38,7 +38,7 @@ angular.module('core').directive('dragAndDrop', ['$document', function ($documen
         }
 
         function getRelativePosition(mouseEvent) {
-            return { x: event.pageX - startX, y: event.pageY - startY};
+            return { x: mouseEvent.pageX - startX, y: mouseEvent.pageY - startY};
         }
 
         function broadcastEvent(dragAndDropEvent, mouseEvent) {

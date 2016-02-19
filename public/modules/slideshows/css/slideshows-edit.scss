@@ -169,12 +169,13 @@
     overflow: hidden;
     padding: 0 5px;
     flex: 1;
+    font-size: $small-font-size;
 }
 
 @mixin slideAction($backgroundImgPath) {
     background: url($backgroundImgPath) left center no-repeat;
-    width: 20px;
-    height: 20px;
+    width: 16px;
+    height: 16px;
     align-self: center;
     cursor: pointer;
 }
@@ -193,4 +194,43 @@
     height: 130px;
     display: inline-block;
     overflow: hidden;
+}
+
+.iqss-slideshowedit-data .nav > li > a {
+    padding-left: $slideshow-edit-slide-data-tab-padding;
+    padding-right: $slideshow-edit-slide-data-tab-padding;
+}
+
+.iqss-slideshowedit-data-tab {
+    padding: $slideshow-edit-slide-data-tab-padding;
+    display: flex;
+    flex-flow: column;
+}
+
+.iqss-slideshowedit-data .ui-select-container {
+    @include formControl;
+    width: $form-controls-width !important;
+}
+
+.iqss-slideshowedit-data span.ui-select-match:first-of-type {
+    margin-left: $form-controls-padding-left;
+}
+
+.iqss-slideshowedit-data .ui-select-container input[type='text'] {
+    padding-left: 0;
+}
+
+.iqss-slideshowedit-data .ui-select-container * {
+    font-size: $font-size;
+    color: $very-dark-grey-color;
+}
+
+.iqss-slideshowedit-data .ui-select-match-item {
+    border: 1px solid $dark-grey-color;
+    border-radius: 0px;
+}
+
+.iqss-slideshowedit-data .ui-slider {
+    margin-top: 3px;
+    width: $form-controls-width;
 }
