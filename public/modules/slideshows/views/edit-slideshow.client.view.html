@@ -82,6 +82,16 @@
                             <div ui-slider min=0 max={{resolutions.length-1}} ng-model="selectedResolution" id="selectedResolution"></div>
                             <div class='iqss-form-label'>Details URL</div>
                             <input type="text" data-ng-model="currentSlide.detailsUrl" id="detailsUrl" placeholder="detailsUrl" required>
+
+                            <div>
+                                <input id='{{slide._id}}InTab' ng-true-value="true" ng-false-value="false" ng-model-options="{allowInvalid: true}" type="checkbox" data-ng-model="currentSlide.hidden">
+                                <label for='{{slide._id}}InTab'>
+                                    <span ng-if='!currentSlide.hidden' style='background: url(../../../modules/core/img/hide-slide.svg) left bottom no-repeat;vertical-align: middle;height: 15px;padding-left:20px;width:100%;margin-top:25px;'>Hide</span>
+                                    <span ng-if='currentSlide.hidden' style='background: url(../../../modules/core/img/view-slide.svg) left bottom no-repeat;vertical-align: middle;height: 15px;padding-left:20px;width:100%;margin-top:25px;'>Show</span>
+                                </label>
+                            </div>
+                            <div class='iqss-slideshowedit-slide-actions-saveToBlueprints iqss-slideshowedit-slideInfo-actions' ng-click="saveSlideToBlueprints(currentSlide)">Update / Save New in repository</div>
+                            <div class='iqss-slideshowedit-slide-actions-delete iqss-slideshowedit-slideInfo-actions' ng-click='removeSlide(slide)'>Delete slide</div>
                         </div>
                     </uib-tab>
                     <!--SLIDE INFO END-->
@@ -91,11 +101,11 @@
                         <div class='iqss-slideshowedit-data-tab'>
                             <div>Title</div>
                             <input type="text" ng-model="currentSlide.title" id="title" placeholder="Title">
-                            <div class="form-group" ng-repeat="(templateElement, value) in templateElements">
+                            <div ng-repeat="(templateElement, value) in templateElements">
                                 <div class='iqss-form-label'>{{value.label}}</div>
                                 <div class="controls" >
                                     <input ng-if="value.type=='text'" type="text" ng-model="currentSlide.content[templateElement]">
-                                    <div text-angular ng-if="value.type=='html'" type="text" ng-model="currentSlide.content[templateElement]" ></div>
+                                    <div text-angular ng-if="value.type=='html'" type="text" ng-model="currentSlide.content[templateElement]"></div>
                                 </div>
                             </div>
                         </div>

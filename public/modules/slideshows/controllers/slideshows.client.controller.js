@@ -92,6 +92,9 @@
                     slideshowId: $stateParams.slideshowId
                 }, function (slideshow) {
                     $scope.slideshow  = slideshow;
+                    if ($scope.slideshow.draftSlides && $scope.slideshow.draftSlides.length > 0) {
+                        $scope.setCurrentSlide($scope.slideshow.draftSlides[0]);
+                    }
                     $scope.getNrOfDevicesTheSlideIsAttachedTo();
                 });
             };
