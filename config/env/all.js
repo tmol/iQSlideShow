@@ -16,7 +16,7 @@
                 css: [
                     'public/lib/bootstrap/dist/css/bootstrap.css',
                     'public/lib/bootstrap/dist/css/bootstrap-theme.css',
-                    'public/lib/jquery-ui/themes/base/jquery-ui.css',
+                    'public/lib/jquery-ui/themes/base/jquery-ui.css'
                 ],
                 js: [
                     'public/lib/jquery/dist/jquery.js',
