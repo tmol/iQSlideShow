@@ -95,14 +95,39 @@ select:focus, select:active, select:hover, select:visited {
 /*
     iqss Angular UI Tab
 */
-.nav-tabs > li.active > a, .nav-tabs > li.active > a:hover, .nav-tabs > li.active > a:focus {
+.nav-tabs > li.active > a, .nav-tabs > li.active > a:focus {
     color: $orange-color;
+    border-radius: 0;
+    margin-top: -6px;
+    margin-bottom: -5px;
+    margin-left: -1px;
+    line-height: $tab-header-line-height + 6px;
+}
+
+.nav > li > a:hover {
+    background: #FFFFEE;
+    background: $light-grey-color;
+    border: 1px solid $grey-color;
+}
+
+.nav-tabs > ul {
+    background: black;
+}
+
+.nav-tabs > li > a {
+    margin: 0;
+    line-height: $tab-header-line-height;
+    background: $light-grey-color;
+    border: 1px solid $grey-color;
+    border-radius: 0;
+    margin-top: -1px;
+    margin-left: -1px;
 }
 
 /*
     iqss text box
 */
-input[type="text"] {
+input {
     border: 0;
     border-bottom: 1px solid $blue-color;
     color: $blue-color;
@@ -111,7 +136,7 @@ input[type="text"] {
     height: $form-controls-height;
 }
 
-input[type="text"]:focus {
+input:focus {
     outline-color: white;
 }
 

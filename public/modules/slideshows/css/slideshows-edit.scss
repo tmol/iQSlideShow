@@ -65,10 +65,8 @@
 
 .iqss-slideshowedit-data {
     display: inline-block;
-    flex: 2 1;
     @include border;
     background: white;
-    width: 40%;
 }
 
 .iqss-slideshowedit-preview {
@@ -177,6 +175,7 @@
     background: url($backgroundImgPath) left center no-repeat;
     width: 16px;
     height: 16px;
+    height: 100%;
     cursor: pointer;
 }
 
@@ -245,20 +244,33 @@
     background-color: $dark-grey-color;
     margin: 0;
     padding: 2px;
+    display: flex;
+    flex-flow: row wrap;
 }
 
 .iqss-slideshowedit-data-tab .btn-group {
     margin: 0;
+    margin-right: 10px;
+    border-radius: 4px;
+    clear: both;
+    flex: 1;
+    align-self: flex-start;
+    display: flex;
 }
 
-.iqss-slideshowedit-data-tab .btn-group .btn{
+.iqss-slideshowedit-data-tab .btn-group .btn {
     font-size: $font-size;
     border-radius: 0;
 }
 
-
 .iqss-slideshowedit-data-tab .btn-group button {
     width: 24px;
     height: 24px;
+}
+
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
 }
 
