@@ -16,7 +16,6 @@ $search-box-placeholder-font-size: 15px;
     padding-left: $search-box-left-padding;
     height: $page-header-height;
     line-height: $page-header-height;
-    margin-left: 10px;
     box-sizing: content-box;
     padding-top: 3px;
 }
@@ -35,8 +34,10 @@ $search-box-placeholder-font-size: 15px;
 }
 
 .iqss-ui-select input {
+    border: 0;
     color: $normal-text-color;
     padding-left: 20px;
+    height: auto;
     font-size: $search-box-placeholder-font-size;
 }
 
