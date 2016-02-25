@@ -98,10 +98,6 @@ select:focus, select:active, select:hover, select:visited {
 .nav-tabs > li.active > a, .nav-tabs > li.active > a:focus {
     color: $orange-color;
     border-radius: 0;
-    margin-top: -6px;
-    margin-bottom: -5px;
-    margin-left: -1px;
-    line-height: $tab-header-line-height + 6px;
 }
 
 .nav > li > a:hover {
@@ -127,7 +123,7 @@ select:focus, select:active, select:hover, select:visited {
 /*
     iqss text box
 */
-input {
+input[type='text'], input[type='number'] {
     border: 0;
     border-bottom: 1px solid $blue-color;
     color: $blue-color;

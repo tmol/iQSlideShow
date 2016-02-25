@@ -4,8 +4,8 @@
     'use strict';
 
     // Slideshows controller
-    angular.module('slideshows').controller('SlideshowsController', ['$scope', '$stateParams', '$location', 'Authentication', 'Slideshows', 'Templates', '$timeout', 'ServerMessageBroker', 'Tags', '$uibModal', 'Path', '$cacheFactory', 'resolutions', 'DateFormatter',
-        function ($scope, $stateParams, $location, Authentication, Slideshows, Templates, $timeout, ServerMessageBroker, Tags, $uibModal, Path, $cacheFactory, resolutions, DateFormatter) {
+    angular.module('slideshows').controller('SlideshowsController', ['$scope', '$stateParams', '$location', 'Authentication', 'Slideshows', '$timeout', 'ServerMessageBroker', 'Tags', '$uibModal', 'Path', '$cacheFactory', 'resolutions', 'DateFormatter',
+        function ($scope, $stateParams, $location, Authentication, Slideshows, $timeout, ServerMessageBroker, Tags, $uibModal, Path, $cacheFactory, resolutions, DateFormatter) {
             var serverMessageBroker = new ServerMessageBroker();
 
             $scope.resolutions = resolutions;
@@ -28,10 +28,6 @@
             if ($scope.setPlayerMode) {
                 $scope.setPlayerMode(false);
             }
-
-            Templates.getAll(function (response) {
-                $scope.templates = response;
-            });
 
             // Create new Slideshow
             $scope.create = function () {
@@ -249,7 +245,6 @@
 
             $scope.addNewSlide = function () {
                 var scope = $scope.$new(true);
-                scope.templates = $scope.templates;
 
                 $uibModal.open({
                     animation: false,

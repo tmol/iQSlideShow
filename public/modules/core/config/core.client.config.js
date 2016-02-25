@@ -18,7 +18,7 @@
                     ['insertImage'],
                     ['insertLink'],
                     ['html'],
-                    ['undo', 'redo'],
+                    ['undo', 'redo']
                 ];
                 /*taOptions.classes = {
                     focussed: 'focussed',

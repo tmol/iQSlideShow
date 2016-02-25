@@ -2,9 +2,14 @@
 /*global angular, ApplicationConfiguration, _*/
 (function () {
     'use strict';
-    angular.module('slideshows').controller('AddNewSlideController', ['$scope', 'Tags', 'SlideBlueprints', 'SlideBlueprintsSearch', '$timeout',
-        function ($scope, Tags, SlideBlueprints, SlideBlueprintsSearch, $timeout) {
+    angular.module('slideshows').controller('AddNewSlideController', ['$scope', 'Tags', 'SlideBlueprints', 'SlideBlueprintsSearch', '$timeout', 'Templates',
+        function ($scope, Tags, SlideBlueprints, SlideBlueprintsSearch, $timeout, Templates) {
             $scope.newSlideData = {};
+
+            Templates.getAll(function (response) {
+                $scope.templates = response;
+            });
+
 
             $scope.close = function (template) {
                 $scope.$close($scope.newSlideData);
@@ -22,7 +27,6 @@
                 filterEventName: 'filterBluePrintsToBeAddedToSlideShows',
                 cacheId: 'bluePrintsToBeAddedToSlideShowsFilter',
                 filter: function (blueprintsFilterParameters) {
-                    $scope.filterParameters = blueprintsFilterParameters;
                     $scope.searchBlueprints();
                 },
                 getPossibleFilterValues: function (search, callback) {
@@ -32,6 +36,35 @@
                         callback(filterResult);
                     });
                 }
+            };
+
+            $scope.searchBlueprints();
+
+            $scope.templatesFilterParameters = {namesAndTagsFilter: ''};
+
+            $scope.searchTemplates = function () {
+                /*TemplatesSearch.search($scope.templatesFilterParameters, function (templates) {
+                    $scope.$parent.slides = slides;
+                });*/
+            };
+
+            $scope.templatesSearchProvider = {
+                filterEventName: 'filterTemplatesToBeAddedToSlideShows',
+                cacheId: 'templatesToBeAddedToSlideShowsFilter',
+                filter: function (templatesFilterParameters) {
+                    $scope.searchTemplates();
+                },
+                getPossibleFilterValues: function (search, callback) {
+                    /*SlideBlueprints.getFilteredNamesAndTags({
+                        namesAndTagsFilter: search
+                    }, function (filterResult) {
+                        callback(filterResult);
+                    });*/
+                }
+            };
+
+            $scope.setTemplate = function (template) {
+                $scope.newSlideData.templateName = template;
             };
 
             $scope.searchBlueprints();
