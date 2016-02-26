@@ -2,10 +2,10 @@
     <uib-tabset>
         <uib-tab heading="New from templates">
             <div class='iqss-slideshowedit-addNewSlide-selectTemplate-container'>
-                <div tag-and-name-filter search-Provider="searchProvider"></div>
+                <div tag-and-name-filter hide-summary='true' search-Provider="templatesSearchProvider" label='"Search"'></div>
 
                 <div class="iqss-slideshowedit-addNewSlide-templates">
-                    <section data-ng-repeat="template in templates">
+                    <section data-ng-repeat="template in filteredTemplates">
                         <div iqss-slideshowedit-addNewSlide-templates-template-name>{{template}}</div>
                         <div class="iqss-slideshowedit-addNewSlide-templates-template" ng-click="setTemplate(template);close();" ng-slide-view reference-slide='{templateName: template, zoomPercent: 75, resolution: {width: 1600, height: 900}}'>
                         </div>

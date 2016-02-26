@@ -7,6 +7,7 @@
             $scope.newSlideData = {};
 
             Templates.getAll(function (response) {
+                $scope.filteredTemplates = response;
                 $scope.templates = response;
             });
 
@@ -40,26 +41,34 @@
 
             $scope.searchBlueprints();
 
-            $scope.templatesFilterParameters = {namesAndTagsFilter: ''};
+            $scope.templatesFilterParameters = {namesAndTagsFilter: '', noFilterSummary: true};
 
-            $scope.searchTemplates = function () {
-                /*TemplatesSearch.search($scope.templatesFilterParameters, function (templates) {
-                    $scope.$parent.slides = slides;
-                });*/
+            function executeTemplatesSearch (search) {
+                search = _.toLower(search);
+
+                var filterResult = _.filter($scope.templates, function(aTemplate) {
+                    return _.startsWith(_.toLower(aTemplate), search);
+                });
+
+                return filterResult;
+            }
+
+            $scope.searchTemplates = function (search) {
+                $scope.filteredTemplates = executeTemplatesSearch(search);
             };
 
             $scope.templatesSearchProvider = {
                 filterEventName: 'filterTemplatesToBeAddedToSlideShows',
                 cacheId: 'templatesToBeAddedToSlideShowsFilter',
                 filter: function (templatesFilterParameters) {
-                    $scope.searchTemplates();
+                    $scope.searchTemplates(templatesFilterParameters.namesAndTagsFilter);
                 },
                 getPossibleFilterValues: function (search, callback) {
-                    /*SlideBlueprints.getFilteredNamesAndTags({
-                        namesAndTagsFilter: search
-                    }, function (filterResult) {
-                        callback(filterResult);
-                    });*/
+                    var searchResult = executeTemplatesSearch(search);
+                    searchResult = _.map(searchResult, function (item) {
+                        return ({name : item});
+                    });
+                    callback({names: searchResult});
                 }
             };
 

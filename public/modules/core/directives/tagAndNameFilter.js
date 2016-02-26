@@ -123,7 +123,8 @@ angular.module('core').directive('tagAndNameFilter', ['$cacheFactory', function 
         templateUrl: 'modules/core/templates/tagAndNameFilter.html',
         scope: {
             label: '=',
-            searchProvider: '='
+            searchProvider: '=',
+            hideSummary: '='
         }
     };
 }]);

@@ -10,7 +10,6 @@
             var serverMessageBroker = new ServerMessageBroker();
             $scope.dateFormatter = DateFormatter;
 
-            // Remove existing Slideshow
             $scope.remove = function (slideshow) {
                 slideshow.$remove();
                 var i;
@@ -32,7 +31,7 @@
 
             $scope.navigateToCreateNewSlideShow = function () {
                 $location.path('/slideshows/create');
-            }
+            };
 
             $scope.cache = $cacheFactory.get('slideshows.client.controller');
             if (angular.isUndefined($scope.cache)) {
@@ -99,21 +98,21 @@
             $scope.filterSlideShows = function (scrolling) {
                 delete $scope.filterParameters.lastPageLastItemCreated;
                 delete $scope.filterParameters.fullyLoaded;
-                executeFilter(function(results) {
+                executeFilter(function (results) {
                     results.splice(0, 0, { isPlacheloderForCreateNew: true});
                     $scope.slideshows = results;
                 });
             };
 
-            $scope.getNextChunk = function() {
+            $scope.getNextChunk = function () {
                 if ($scope.filterParameters.fullyLoaded) {
                     return;
                 }
-                executeFilter(function(results) {
+                executeFilter(function (results) {
                     var concatenatedSlideshows = _($scope.slideshows).concat(results).value();
                     $scope.slideshows = concatenatedSlideshows;
                 });
-            }
+            };
 
             $scope.$on("$destroy", function () {
                 $scope.cache.put('slideshows.client.controller.filterParameters', $scope.filterParameters);

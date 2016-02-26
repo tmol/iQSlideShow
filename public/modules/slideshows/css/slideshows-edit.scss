@@ -118,12 +118,17 @@
     max-height: 500px;
 }
 
+.iqss-slideshowedit-addNewSlide-selectTemplate-container .iqss-ui-select-bottom-line {
+    top: 65px;
+}
+
 .iqss-slideshowedit-addNewSlide-templates {
     display: flex;
     flex-wrap: wrap;
     overflow-y: scroll;
     overflow-x: hidden;
     max-height: 200px;
+    margin-top: 25px;
     justify-content: space-around;
 }
 
@@ -142,6 +147,7 @@
 .iqss-slideshowedit-addNewSlide-templates-template {
     margin: 20px;
     margin-left: 0;
+    margin-top: 5px;
     cursor: pointer;
     width: $addNewSlide-template-width;
     height: $addNewSlide-template-height;

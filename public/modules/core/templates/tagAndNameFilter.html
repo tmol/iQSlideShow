@@ -1,5 +1,5 @@
 <div>
-    <span items-filter-summary filter-Parameters="filterParameters"></span>
+    <span items-filter-summary ng-hide='hideSummary' filter-Parameters="filterParameters"></span>
     <div class='iqss-ui-select'>
         <div>
             <ui-select ng-model="filterParameters.namesAndTagsFilter" sortable="true" title="Select" on-select='filterUpdated($select)' reset-search-input='false'>
