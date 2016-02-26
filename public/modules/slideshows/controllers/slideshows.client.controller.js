@@ -250,7 +250,6 @@
                     animation: false,
                     templateUrl: Path.getViewUrl('addNewSlide'),
                     windowClass: 'iqss-slideshowedit-addNewSlide',
-                    backdrop: 'static',
                     controller: 'AddNewSlideController',
                     scope: scope
                 }).result.then(function (newSlideData) {

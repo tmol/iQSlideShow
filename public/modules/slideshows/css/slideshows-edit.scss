@@ -97,15 +97,30 @@
 }
 
 .iqss-slideshowedit-addNewSlide {
-    width: 50%;
     overflow-y: hidden !important;
-    @include dynamicallyAlingCenter;
 }
 
 .iqss-slideshowedit-addNewSlide .modal-dialog {
-    width: 100%;
+    width: 500px;
 }
 
+.iqss-slideshowedit-addNewSlide .modal-content {
+    border-radius: 0;
+}
+
+.iqss-slideshowedit-addNewSlide .nav-tabs > li.active > a, .iqss-slideshowedit-data  .nav-tabs > li.active > a:focus {
+    margin-top: 0px;
+    margin-bottom: 0px;
+    margin-left: 0px;
+}
+
+.iqss-slideshowedit-addNewSlide .nav-tabs > li.active > a, .iqss-slideshowedit-data  .nav-tabs > li.active > a:focus, .iqss-slideshowedit-addNewSlide .nav-tabs > li > a {
+    margin: 0;
+    margin-right: -1px;
+    font-size: $big-font-size;
+    padding-left: 60px;
+    padding-right: 60px;
+}
 
 .iqss-slideshowedit-addNewSlide-container {
     margin: 10px;
