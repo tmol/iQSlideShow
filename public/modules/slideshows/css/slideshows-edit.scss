@@ -146,6 +146,7 @@
     width: $addNewSlide-template-width;
     height: $addNewSlide-template-height;
     border: 1px solid $dark-grey-color;
+    overflow: hidden;
 }
 
 .iqss-slideshowedit-addNewSlide-selectFromBluerprints-search hr {
@@ -158,12 +159,14 @@
 
 .iqss-slideshowedit-addNewSlide-selectFromBluerprints-blueprint-container {
     cursor: pointer;
-    width: 33%;
+    width: 213px;
 }
 
 .iqss-slideshowedit-addNewSlide-selectFromBluerprints-blueprint {
-    height:140px;
-    width:100%;
+    width: 213px;
+    height: 140px;
+    display: inline-block;
+    overflow: hidden;
 }
 
 .iqss-slideshowedit-slide-hidden {
