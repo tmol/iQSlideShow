@@ -66,18 +66,28 @@ angular.module('core').directive('tagAndNameFilter', ['$cacheFactory', function 
         scope.filterUpdated = function (select) {
             var clickTriggeredTheSelect = select.clickTriggeredSelect === true;
 
-            if (clickTriggeredTheSelect) {
-                if (!_.includes(scope.filterParameters.filterItems, scope.filterParameters.namesAndTagsFilter)) {
-                    scope.filterParameters.filterItems.push(scope.filterParameters.namesAndTagsFilter);
+            if (!scope.noSummary) {
+                if (clickTriggeredTheSelect) {
+                    if (!_.includes(scope.filterParameters.filterItems, scope.filterParameters.namesAndTagsFilter)) {
+                        scope.filterParameters.filterItems.push(scope.filterParameters.namesAndTagsFilter);
+                    }
+                    scope.filterParameters.namesAndTagsFilter = '';
+                } else {
+                    scope.filterParameters.namesAndTagsFilter = select.placeholder;
                 }
-                scope.filterParameters.namesAndTagsFilter = '';
             } else {
-                scope.filterParameters.namesAndTagsFilter = select.placeholder;
+                if (clickTriggeredTheSelect) {
+                    scope.filterParameters.namesAndTagsFilter = scope.filterParameters.namesAndTagsFilter.name;
+                } else {
+                    scope.filterParameters.namesAndTagsFilter = select.search;
+                }
+                select.placeholder = scope.filterParameters.namesAndTagsFilter;
+                select.search = scope.filterParameters.namesAndTagsFilter;
             }
 
             scope.filterValuePlaceholder = select.search;
             filter();
-            if (clickTriggeredTheSelect) {
+            if (clickTriggeredTheSelect && !scope.noSummary) {
                 setDefaultFilterValuePlaceholder();
                 scope.filterParameters.namesAndTagsFilter = null;
             }
@@ -124,7 +134,7 @@ angular.module('core').directive('tagAndNameFilter', ['$cacheFactory', function 
         scope: {
             label: '=',
             searchProvider: '=',
-            hideSummary: '='
+            noSummary: '='
         }
     };
 }]);
