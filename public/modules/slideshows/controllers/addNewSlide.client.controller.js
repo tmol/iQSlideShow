@@ -19,8 +19,24 @@
             $scope.blueprintsFilterParameters = {namesAndTagsFilter: ''};
 
             $scope.searchBlueprints = function () {
+                var idx, concatenatedTags;
                 SlideBlueprintsSearch.search($scope.blueprintsFilterParameters, function (slides) {
                     $scope.$parent.slides = slides;
+                    _(slides).forEach(function (slide) {
+                        concatenatedTags = '';
+                        _(slide.tags).forEach(function (tag) {
+                            if (concatenatedTags.length > 0) {
+                                concatenatedTags = concatenatedTags + ' ';
+                            }
+                            concatenatedTags = concatenatedTags + tag;
+                        });
+                        if (concatenatedTags.length > 35) {
+                            concatenatedTags = concatenatedTags.substring(0, 32);
+                            concatenatedTags = concatenatedTags + '...';
+
+                        }
+                        slide.concatenatedTags = concatenatedTags;
+                    });
                 });
             };
 
@@ -28,6 +44,7 @@
                 filterEventName: 'filterBluePrintsToBeAddedToSlideShows',
                 cacheId: 'bluePrintsToBeAddedToSlideShowsFilter',
                 filter: function (blueprintsFilterParameters) {
+                    $scope.blueprintsFilterParameters = blueprintsFilterParameters;
                     $scope.searchBlueprints();
                 },
                 getPossibleFilterValues: function (search, callback) {
@@ -43,10 +60,10 @@
 
             $scope.templatesFilterParameters = {namesAndTagsFilter: '', noFilterSummary: true};
 
-            function executeTemplatesSearch (search) {
+            function executeTemplatesSearch(search) {
                 search = _.toLower(search);
 
-                var filterResult = _.filter($scope.templates, function(aTemplate) {
+                var filterResult = _.filter($scope.templates, function (aTemplate) {
                     return _.startsWith(_.toLower(aTemplate), search);
                 });
 

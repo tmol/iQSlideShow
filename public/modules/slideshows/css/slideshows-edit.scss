@@ -126,18 +126,18 @@
     margin: 10px;
 }
 
-.iqss-slideshowedit-addNewSlide-selectTemplate-container {
+.iqss-slideshowedit-addNewSlide-tab-container {
     margin: 10px;
     display: flex;
     flex-flow: column wrap;
     max-height: 500px;
 }
 
-.iqss-slideshowedit-addNewSlide-selectTemplate-container .iqss-ui-select-bottom-line {
+.iqss-slideshowedit-addNewSlide-tab-container .iqss-ui-select-bottom-line {
     top: 65px;
 }
 
-.iqss-slideshowedit-addNewSlide-templates {
+.iqss-slideshowedit-addNewSlide-items {
     display: flex;
     flex-wrap: wrap;
     overflow-y: scroll;
@@ -147,25 +147,22 @@
     justify-content: space-around;
 }
 
-.iqss-slideshowedit-addNewSlide-templates-empty {
+.iqss-slideshowedit-addNewSlide-item-empty {
     height: 0;
-    width: $addNewSlide-template-width;
-    margin: 0 17px 20px 17px;
+    width: $addNewSlide-item-width + $addNewSlide-item-margin-right;
     padding-right: 0;
 }
 
-.iqss-slideshowedit-addNewSlide-templates-template-name {
+.iqss-slideshowedit-addNewSlide-item-name {
     margin: 20px;
     margin-bottom: -10px;
 }
 
-.iqss-slideshowedit-addNewSlide-templates-template {
-    margin: 20px;
-    margin-left: 0;
-    margin-top: 5px;
+.iqss-slideshowedit-addNewSlide-item {
+    margin: 10px $addNewSlide-item-margin-right 0 0;
     cursor: pointer;
-    width: $addNewSlide-template-width;
-    height: $addNewSlide-template-height;
+    width: $addNewSlide-item-width;
+    height: $addNewSlide-item-height;
     border: 1px solid $dark-grey-color;
     overflow: hidden;
 }
@@ -178,16 +175,13 @@
     display: flex;
 }
 
-.iqss-slideshowedit-addNewSlide-selectFromBluerprints-blueprint-container {
-    cursor: pointer;
-    width: 213px;
-}
-
-.iqss-slideshowedit-addNewSlide-selectFromBluerprints-blueprint {
-    width: 213px;
-    height: 140px;
-    display: inline-block;
-    overflow: hidden;
+.iqss-slideshowedit-addNewSlide-selectFromBluerprints-tags {
+    padding: 5px;
+    height: 38px;
+    text-overflow: ellipsis;
+    max-width: $addNewSlide-item-width;
+    font-size: $small-font-size;
+    color: $very-dark-grey-color;
 }
 
 .iqss-slideshowedit-slide-hidden {
@@ -338,10 +332,3 @@
     width: 24px;
     height: 24px;
 }
-
-input[type="number"]::-webkit-inner-spin-button,
-input[type="number"]::-webkit-outer-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
-}
-
