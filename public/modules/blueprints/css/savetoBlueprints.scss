@@ -1,0 +1,50 @@
+@import 'variables.scss';
+@import '../../core/css/variables.scss';
+
+.iqss-slideshowedit-saveSlideToBlueprints-header {
+    padding: $blueprints-save-to-vertical-padding $blueprints-save-to-horizontal-padding;
+    background: $light-grey-color;
+    border-bottom: 1px solid $dark-grey-color;
+    color: $orange-color;
+    font-size: $big-font-size;
+}
+
+.iqss-slideshowedit-saveSlideToBlueprints-controls {
+    padding: $blueprints-save-to-vertical-padding $blueprints-save-to-horizontal-padding;
+    display: flex;
+    flex-flow: column;
+}
+
+.iqss-slideshowedit-saveSlideToBlueprints-body-row {
+    display: flex;
+}
+
+.iqss-slideshowedit-saveSlideToBlueprints-controls .iqss-slideshowedit-saveSlideToBlueprints-body-row:nth-child(2){
+    margin-bottom: 20px;
+}
+
+.iqss-slideshowedit-saveSlideToBlueprints-error {
+    color: $error-color;
+    margin-bottom: 20px;
+}
+
+.iqss-slideshowedit-saveSlideToBlueprints-body-row-label {
+    width: 100px;
+    margin-right: 10px;
+}
+
+.iqss-slideshowedit-saveSlideToBlueprints-control {
+    flex: 1;
+}
+
+.iqss-slideshowedit-saveSlideToBlueprints-body-buttonsContainer {
+    background: $light-grey-color;
+    border-top: 1px solid $dark-grey-color;
+    padding: 10px $blueprints-save-to-horizontal-padding;
+    display: flex;
+    flex-flow: row-reverse;
+}
+
+.iqss-slideshowedit-saveSlideToBlueprints-body-buttonsContainer-cancelButton {
+    margin-right: 10px;
+}

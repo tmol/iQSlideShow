@@ -67,10 +67,14 @@
                 });
             }
 
-            if (!slide) {
-                slide = new SlideBlueprint();
+            if (slide) {
+                return res.status(400).send({
+                    message: 'Blueprint with the given name already exists.'
+                });
             }
 
+            slide = new SlideBlueprint();
+            delete req.body._id;
             slide = lodash.extend(slide, req.body);
             slide.user = req.user;
             slide.save(function (err) {

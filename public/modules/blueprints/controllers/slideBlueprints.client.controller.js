@@ -6,15 +6,21 @@
         function ($scope, Tags, SlideBlueprints) {
             $scope.bluePrintInstance = SlideBlueprints.get({slideId: $scope.Slide._id});
             $scope.possibleTags = [];
+
             $scope.refreshTags = function (text) {
                 return Tags.query({tag: text}, function (result) {
                     $scope.possibleTags = _.map(result, 'value');
                 });
             };
+
+            $scope.errMessage = '';
             $scope.save = function () {
+                $scope.errMessage = '';
                 $scope.bluePrintInstance.slide = [$scope.Slide];
                 $scope.bluePrintInstance.$save().then(function () {
                     $scope.$close();
+                }, function (err) {
+                    $scope.errMessage = err.data.message;
                 });
             };
         }]);

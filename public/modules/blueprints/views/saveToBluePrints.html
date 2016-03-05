@@ -1,14 +1,19 @@
-<div class="modal-header">
-    <h1 class="modal-title">Save slide to blueprints</h1>
-</div>
-<div class="modal-body">
-    <label>Slide name
-        <input type="text" ng-model="bluePrintInstance.name" </label>
-        <form class="form-horizontal" data-ng-submit="update()" novalidate>
-            <div class="form-group col-md-12">
-                <label class="control-label" for="name">Tags</label>
-                <div class="controls">
-                    <ui-select multiple tagging tagging-label="(custom 'new' tag)" ng-model="bluePrintInstance.tags" theme="bootstrap" sortable="true" style="width: 300px;" title="Choose a tag">
+
+<div class="iqss-slideshowedit-saveSlideToBlueprints-header">Save slide to blueprints</div>
+<div>
+        <form data-ng-submit="update()" novalidate>
+            <div class="iqss-slideshowedit-saveSlideToBlueprints-controls">
+                <div class="iqss-slideshowedit-saveSlideToBlueprints-body-row">
+                    <span class="iqss-slideshowedit-saveSlideToBlueprints-error" ng-show="errMessage !== ''">{{errMessage}}</span>
+                </div>
+                <div class="iqss-slideshowedit-saveSlideToBlueprints-body-row">
+                    <span class="iqss-slideshowedit-saveSlideToBlueprints-body-row-label">Slide name:</span>
+                    <input type="text" ng-model="bluePrintInstance.name" class="iqss-slideshowedit-saveSlideToBlueprints-control">
+                </div>
+
+                <div class="iqss-slideshowedit-saveSlideToBlueprints-body-row">
+                    <span class="iqss-slideshowedit-saveSlideToBlueprints-body-row-label">Add tag:</span>
+                    <ui-select multiple tagging tagging-label="(custom 'new' tag)" ng-model="bluePrintInstance.tags" sortable="true" title="Choose a tag" class="iqss-slideshowedit-saveSlideToBlueprints-control">
                         <ui-select-match placeholder="Select tags or enter a new one...">{{$item}}</ui-select-match>
                         <ui-select-choices repeat="tag in possibleTags" refresh="refreshTags($select.search)" refresh-delay="0">
                             {{tag}}
@@ -16,9 +21,9 @@
                     </ui-select>
                 </div>
             </div>
-            <input type="button" ng-click="save()" value="save" />
-            <input type="button" ng-click="$close()" value="cancel" />
+            <div class="iqss-slideshowedit-saveSlideToBlueprints-body-buttonsContainer">
+                <input type="button" class='iqss-button' value="Save" ng-click="save()" />
+                <input type="button" class='iqss-cancelButton iqss-slideshowedit-saveSlideToBlueprints-body-buttonsContainer-cancelButton' value="Cancel" ng-click="$close()" />
+            </div>
         </form>
-
-
 </div>

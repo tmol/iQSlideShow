@@ -75,8 +75,39 @@
     flex: 3 1;
     @include border;
     width: 33%;
-    max-height: 350px;
     overflow: hidden;
+}
+
+.iqss-slideshowedit-preview-footer {
+    height: $font-size + 20px;
+    background: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.iqss-slideshowedit-preview-footer-emptyLeft {
+    margin-left: 10px;
+    flex: 1;
+}
+
+.iqss-slideshowedit-preview-footer-title {
+    flex: 1;
+    text-align: center;
+}
+
+.iqss-slideshowedit-preview-footer-fullScreen-container {
+    margin-right: 10px;
+    flex: 1;
+    display: flex;
+    flex-flow: row-reverse;
+}
+
+.iqss-slideshowedit-preview-footer-fullScreen {
+    height: $font-size + 5;
+    width: $font-size + 5;
+    cursor: pointer;
+    background: url(../../../modules/core/img/fullscreen.svg) right center no-repeat;
 }
 
 .iqss-slideshowedit-slides-addNew-container {
@@ -331,4 +362,17 @@
 .iqss-slideshowedit-data-tab .btn-group button {
     width: 24px;
     height: 24px;
+}
+
+.iqss-slideshowedit-saveSlideToBlueprints-container .modal-dialog {
+    width: 450px;
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) !important;
+}
+
+.iqss-slideshowedit-saveSlideToBlueprints-container .modal-content {
+    border-radius: 0;
 }
