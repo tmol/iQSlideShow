@@ -9,7 +9,8 @@
             $stateProvider.
                 state('deviceInteraction', {
                     url: '/deviceInteraction/:deviceId/:slideShowId/:slideNumber',
-                    templateUrl: 'modules/slideshows/views/deviceInteraction.client.view.html'
+                    templateUrl: 'modules/slideshows/views/deviceInteraction.client.view.html',
+                    noApplicationHeader:true
                 }).
                 state('listSlideshows', {
                     url: '/slideshows',

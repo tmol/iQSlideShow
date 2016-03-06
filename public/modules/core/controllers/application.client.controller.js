@@ -1,8 +1,11 @@
 'use strict';
-angular.module('core').controller('ApplicationController', ['$scope', 'Authentication','$rootScope',
-	function($scope, Authentication,$rootScope) {
+angular.module('core').controller('ApplicationController', ['$scope', 'Authentication','$rootScope','$state',
+	function($scope, Authentication,$rootScope,$state) {
 		// This provides Authentication context.
-		     
+        $scope.$on("$stateChangeStart",function(event, toState, toParams, fromState, fromParams){
+            $scope.noHeader = toState.noApplicationHeader||false;
+        });
+
         $scope.keyDown = function($event){
             if ($event.keyCode === 38)
                 $rootScope.$broadcast('upArrowPressed');
