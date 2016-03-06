@@ -4,6 +4,7 @@ angular.module('core').controller('ApplicationController', ['$scope', 'Authentic
 		// This provides Authentication context.
         $scope.$on("$stateChangeStart",function(event, toState, toParams, fromState, fromParams){
             $scope.noHeader = toState.noApplicationHeader||false;
+            $scope.interactionMode = toState.interactionMode||false;
         });
 
         $scope.keyDown = function($event){
