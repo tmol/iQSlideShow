@@ -1,3 +1,41 @@
+@import '../../core/css/variables.scss';
+@import 'variables.scss';
+@import 'mixins.scss';
+
 .device-interaction {
     padding-top: 0px;
+}
+
+.device-interaction-content {
+    max-width: 100%;
+    width: 100%;
+    margin: auto;
+    font-size: $font-size;
+    color: $very-dark-grey-color;
+    height:100%;
+}
+
+.device-interaction-content-player-container {
+    background: white;
+    display: block;
+    width: 100%;
+    @media (orientation : portrait) {
+       height: 50%;
+    }
+    @media (orientation : landscape) {
+       height: 100%;
+    }
+}
+
+.device-interaction-content-player-data {
+    padding: 3% 0 0 3%;
+    width: 100%;
+    margin-left: auto;
+    background: white;
+    @media (orientation : portrait) {
+       display: block;
+    }
+    @media (orientation : landscape) {
+        display: none;
+    }
 }

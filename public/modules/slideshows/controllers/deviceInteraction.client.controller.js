@@ -5,15 +5,8 @@
     angular.module('slideshows').controller('DeviceInteractionController', ['$scope', '$stateParams', 'Slides', 'Slideshows', 'DeviceMessageBroker', 'Admin',
         function ($scope, $stateParams, Slides, Slideshows, DeviceMessageBroker, Admin) {
             $scope.deviceId = $stateParams.deviceId;
-            $scope.slideshowId = $stateParams.slideshowId;
+            $scope.previewSlideshowId = $stateParams.slideShowId;
             var messageBroker = new DeviceMessageBroker($scope.deviceId);
-            Slideshows.query(function (res) {
-                $scope.slideshows = res;
-            });
-
-            Slides.get({slideId : $stateParams.slideShowId, slideNumber : $stateParams.slideNumber}, function (slide) {
-                $scope.slideUrl = slide.detailsUrl || "/slideshow#!/preview/" + $stateParams.slideShowId + "/" + $stateParams.slideNumber;
-            });
 
             $scope.setSlideShow = function () {
                 Admin.getConfig(function (config) {
@@ -24,10 +17,29 @@
                 });
             };
 
-            $scope.goToPreviousSlide = messageBroker.sendMoveSlideLeft;
-            $scope.goToNextSlide = messageBroker.sendMoveSlideRight;
-            $scope.holdSlideShow = messageBroker.sendHoldSlideShow;
-            $scope.resetSlideShow = messageBroker.sendResetSlideShow;
-
+            $scope.moveSlideLeft = function () {
+                $scope.$broadcast("moveSlideLeft");
+                messageBroker.sendMoveSlideLeft();
+            };
+            $scope.moveSlideRight = function () {
+                $scope.$broadcast("moveSlideRight");
+                messageBroker.sendMoveSlideRight();
+            };
+            $scope.togglePlay = function () {
+                $scope.playSlideShow = !$scope.playSlideShow;
+                var messageToBroadcast = $scope.playSlideShow ? 'resetOnHold' : 'putPlayerOnHold';
+                $scope.$broadcast(messageToBroadcast, $scope.viewPlayerId);
+                if (!$scope.playSlideShow) {
+                    messageBroker.sendHoldSlideShow();
+                } else {
+                    messageBroker.sendResetSlideShow();
+                }
+            };
+            $scope.$on("slidesLoaded", function (event, slides) {
+                $scope.numberOfSlides = slides.length;
+            });
+            $scope.$on("currentSlideChanged", function (event, slideIndex) {
+                $scope.currentPreviewSlideIndex = slideIndex + 1;
+            });
         }]);
 }());
