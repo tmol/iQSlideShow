@@ -4,7 +4,7 @@
   "version": "0.0.1",
   "author": "IQuest",
   "engines": {
-    "node": "0.10.x",
+    "node": ">=4.4.0",
     "npm": "1.4.x"
   },
   "scripts": {
