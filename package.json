@@ -5,7 +5,7 @@
   "author": "IQuest",
   "engines": {
     "node": ">=4.4.0",
-    "npm": "1.4.x"
+    "npm": ">=3.7.3"
   },
   "scripts": {
     "start": "grunt",
