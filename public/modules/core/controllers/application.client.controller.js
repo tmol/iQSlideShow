@@ -29,5 +29,9 @@ angular.module('core').controller('ApplicationController', ['$scope', 'Authentic
         $scope.setPlayerMode = function(value){
             $scope.playerMode = value;
         };
+
+        $scope.isInteractionMode = function () {
+            return $scope.interactionMode;
+        }
 	}
 ]);
