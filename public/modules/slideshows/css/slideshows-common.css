@@ -1,0 +1,86 @@
+/*
+    Genric common styles
+*/
+/*
+    color palette
+*/
+/*
+    colors
+*/
+/*
+    Fonts
+*/
+/*
+    list
+*/
+/*
+    edit
+*/
+/*
+    Genric common styles
+*/
+/*
+    color palette
+*/
+/*
+    colors
+*/
+/*
+    Fonts
+*/
+/*
+    list
+*/
+/*
+    edit
+*/
+/*
+    Genric common styles
+*/
+/*
+    color palette
+*/
+/*
+    colors
+*/
+/*
+    Fonts
+*/
+.iqss-slideshows-header-container {
+  display: flex; }
+
+.iqss-slideshows-header-title-container {
+  display: flex;
+  flex-flow: column;
+  margin-right: 20px; }
+
+.iqss-slideshows-header-actions {
+  height: 44px;
+  line-height: 44px;
+  display: flex;
+  font-size: 12px; }
+
+.iqss-slideshows-slideshow-publishLink {
+  background: url(../../../modules/core/img/publish.svg) left center no-repeat;
+  flex: 1;
+  background-size: 20px 20px;
+  line-height: 44px;
+  width: 100px;
+  padding-left: 25px; }
+
+.iqss-slideshows-slideshow-deleteLink {
+  background: url(../../../modules/core/img/delete.svg) left center no-repeat;
+  flex: 1;
+  background-size: 20px 20px;
+  line-height: 44px;
+  width: 100px;
+  padding-left: 25px; }
+
+.iqss-slideshows-links a:visited, a:focus {
+  text-decoration: none;
+  color: #009da5;
+  font-size: 12px;
+  color: #009da5; }
+
+.iqss-slideshows-links a:hover {
+  text-decoration: none; }

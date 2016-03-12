@@ -1,0 +1,93 @@
+/*
+    Genric common styles
+*/
+/*
+    color palette
+*/
+/*
+    colors
+*/
+/*
+    Fonts
+*/
+/*
+    Genric common styles
+*/
+/*
+    color palette
+*/
+/*
+    colors
+*/
+/*
+    Fonts
+*/
+/*
+    list
+*/
+/*
+    edit
+*/
+/*
+    Genric common styles
+*/
+/*
+    color palette
+*/
+/*
+    colors
+*/
+/*
+    Fonts
+*/
+/*
+    list
+*/
+/*
+    edit
+*/
+/*
+    Genric common styles
+*/
+/*
+    color palette
+*/
+/*
+    colors
+*/
+/*
+    Fonts
+*/
+.device-interaction {
+  padding-top: 0px; }
+
+.device-interaction-content {
+  max-width: 100%;
+  width: 100%;
+  margin: auto;
+  font-size: 12px;
+  color: #5a5a5a;
+  height: 100%; }
+
+.device-interaction-content-player-container {
+  background: white;
+  display: block;
+  width: 100%; }
+  @media (orientation: portrait) {
+    .device-interaction-content-player-container {
+      height: 50%; } }
+  @media (orientation: landscape) {
+    .device-interaction-content-player-container {
+      height: 100%; } }
+
+.device-interaction-content-player-data {
+  padding: 3% 0 0 3%;
+  width: 100%;
+  margin-left: auto;
+  background: white; }
+  @media (orientation: portrait) {
+    .device-interaction-content-player-data {
+      display: block; } }
+  @media (orientation: landscape) {
+    .device-interaction-content-player-data {
+      display: none; } }

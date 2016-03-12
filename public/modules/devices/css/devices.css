@@ -1,0 +1,106 @@
+/*
+    Genric common styles
+*/
+/*
+    color palette
+*/
+/*
+    colors
+*/
+/*
+    Fonts
+*/
+.iqss-devicelist-device > div {
+  background-color: white;
+  height: 100%;
+  border: 1px solid #eeeeee;
+  padding-left: 10px;
+  padding-right: 10px;
+  box-shadow: 2px 2px 3px #DFDFDF;
+  cursor: pointer; }
+
+.iqss-devicelist-device {
+  height: 100px;
+  margin: 0 17px 15px 17px;
+  padding: 0;
+  width: 194px; }
+
+.iqss-devicelist-content {
+  padding-top: 30px;
+  height: 100%; }
+
+.iqss-devicelist-content * {
+  line-height: 12px; }
+
+.iqss-devicelist-content > div {
+  max-width: 85%;
+  margin: auto;
+  min-width: 194px;
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%, 0);
+  top: 0px;
+  display: flex;
+  justify-content: center;
+  flex-flow: row wrap; }
+
+.iqss-devicelist-device-title-container {
+  font-size: 12px;
+  color: #5a5a5a;
+  margin: 7px;
+  box-sizing: content-box;
+  display: inline-block;
+  width: 154px; }
+
+.iqss-devicelist-device-title-container.unhealthy {
+  background: url(../../../modules/core/img/warning.svg) right center no-repeat; }
+
+.iqss-devicelist-device-title-container.active {
+  background: url(../../../modules/core/img/published-ok.svg) right center no-repeat; }
+
+.iqss-devicelist-device-title-container.inactive {
+  background: url(../../../modules/core/img/draft.svg) right center no-repeat; }
+
+.iqss-devicelist-device-title-container > div {
+  width: 194px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  line-height: 16px;
+  padding-right: 35px; }
+
+.iqss-devicelist-device-delimiter {
+  height: 1px;
+  width: 180px;
+  position: relative;
+  left: 50%;
+  transform: translate(-50%, 0);
+  background-color: #eeeeee; }
+
+.iqss-devicelist-device-content {
+  border-top: 1px solid #DFDFDF;
+  padding: 5px;
+  padding-top: 10px; }
+
+.iqss-devicelist-card-empty {
+  height: 0;
+  width: 194px;
+  margin: 0 17px 20px 17px;
+  padding-right: 0; }
+
+.iqss-device-location {
+  font-size: 12px; }
+
+.iqss-device-date {
+  color: #A9A9A9;
+  font-size: 12px; }
+
+.iqss-device-by {
+  color: #A9A9A9;
+  font-size: 11px; }
+
+.iqss-device-play {
+  color: #A9A9A9;
+  font-size: 11px;
+  bottom: -14px;
+  position: relative; }

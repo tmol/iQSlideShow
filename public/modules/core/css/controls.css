@@ -1,0 +1,146 @@
+/*
+    Genric common styles
+*/
+/*
+    color palette
+*/
+/*
+    colors
+*/
+/*
+    Fonts
+*/
+/*
+    iqss buttons
+*/
+.iqss-cancelButton {
+  background-color: white;
+  border: 1px solid #eeeeee;
+  outline-color: #eeeeee;
+  display: inline-block;
+  height: 25px;
+  line-height: 25px;
+  text-align: center;
+  padding: 0 10px;
+  color: #5a5a5a; }
+
+.iqss-cancelButton:hover {
+  background-color: #eeeeee; }
+
+.iqss-cancelButton:active {
+  position: relative;
+  top: 1px; }
+
+.iqss-button {
+  background-color: white;
+  border: 1px solid #009da5;
+  outline-color: #009da5;
+  display: inline-block;
+  height: 25px;
+  line-height: 25px;
+  text-align: center;
+  padding: 0 10px;
+  color: #009da5; }
+
+.iqss-button:hover {
+  background-color: #eeeeee; }
+
+.iqss-button:active {
+  position: relative;
+  top: 1px; }
+
+/*
+    iqss checkbox
+*/
+input[type="checkbox"] {
+  display: none; }
+
+input[type="checkbox"] + label {
+  font-weight: normal;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  margin: 0; }
+
+input[type="checkbox"] + label span {
+  display: inline-block;
+  background: url(../img/uncheck-box.png) left bottom no-repeat;
+  cursor: pointer;
+  display: inline-block;
+  width: 19px;
+  height: 19px; }
+
+input[type="checkbox"]:checked + label span {
+  background: url(../img/check-box.png) left bottom no-repeat; }
+
+/*
+    iqss select
+*/
+select {
+  border: 1px solid #eeeeee;
+  height: 27px;
+  box-shadow: 2px 2px 2px #eeeeee;
+  border-radius: 0px;
+  -webkit-appearance: none;
+  /*Removes default chrome and safari style*/
+  -moz-appearance: none;
+  /*Removes default style Firefox*/
+  width: 200px;
+  height: 25px;
+  padding-left: 15px;
+  background: url(../img/drop-down.svg) right no-repeat;
+  background-size: 10px 10px;
+  background-origin: content-box;
+  padding-right: 5px; }
+
+select:focus, select:active, select:hover, select:visited {
+  outline-color: white; }
+
+/*
+    iqss Angular UI Tab
+*/
+.nav-tabs > li.active > a, .nav-tabs > li.active > a:focus {
+  color: #faa61a;
+  border-radius: 0; }
+
+.nav > li > a:hover {
+  background: #FFFFEE;
+  background: #f5f5f5;
+  border: 1px solid #DFDFDF; }
+
+.nav-tabs > ul {
+  background: black; }
+
+.nav-tabs > li > a {
+  margin: 0;
+  line-height: 17px;
+  background: #f5f5f5;
+  border: 1px solid #DFDFDF;
+  border-radius: 0;
+  margin-top: -1px;
+  margin-left: -1px; }
+
+/*
+    iqss text box
+*/
+input[type='text'], input[type='number'] {
+  border: 0;
+  border-bottom: 1px solid #009da5;
+  color: #009da5;
+  padding-left: 21px;
+  width: 200px;
+  height: 25px; }
+
+input:focus {
+  outline-color: white; }
+
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0; }
+
+/*
+    iqss form label
+*/
+.iqss-form-label {
+  margin-top: 15px; }
