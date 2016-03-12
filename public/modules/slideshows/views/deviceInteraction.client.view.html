@@ -2,8 +2,8 @@
 
     <div class="iqss-device-interaction-content">
         <div class='iqss-device-interaction-content-player-container'>
-            <div class='iqss-slideshowview-content-player' dynamic-resizer dynamic-resizer-height-width-ratio="0.57" data-ng-controller="PlayerController" ng-init="initPreview(previewSlideshowId)">
-                <div ng-player slides="slides" ng-player-on-hold='true' ng-player-id='viewPlayerId'></div>
+            <div class='iqss-device-interaction-content-player' data-ng-controller="PlayerController" ng-init="initPreview(previewSlideshowId)">
+                <div ng-player slides="slides" ng-player-on-hold='true' ng-player-id='viewPlayerId' style="height:100%"></div>
             </div>
             <div class='iqss-slideshowview-content-player-actions'>
                 <div ng-if='!playSlideShow' class='iqss-slideshowview-content-player-container-play' ng-click='togglePlay()'></div>
@@ -21,10 +21,8 @@
                 <div class="iqss-device-interaction-author" ng-bind="author"></div>
                 <div class="iqss-device-interaction-created-on">Created on: {{createdOn | date}}</div>
             </div>
-
         </div>
-        <div class='iqss-device-interaction-content-slideshows'>
+        <div class='iqss-device-interaction-content-slideshows'></div>
 
-        </div>
     </div>
 </section>
