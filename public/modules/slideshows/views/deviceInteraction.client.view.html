@@ -1,40 +1,30 @@
 <section data-ng-controller="DeviceInteractionController" style="height:100%">
 
-    <div class="device-interaction-content">
-        <div class='device-interaction-content-player-container'>
-            <div class='iqss-slideshowview-content-player' dynamic-resizer dynamic-resizer-height-width-ratio="0.5" data-ng-controller="PlayerController" ng-init="initPreview(previewSlideshowId)">
+    <div class="iqss-device-interaction-content">
+        <div class='iqss-device-interaction-content-player-container'>
+            <div class='iqss-slideshowview-content-player' dynamic-resizer dynamic-resizer-height-width-ratio="0.57" data-ng-controller="PlayerController" ng-init="initPreview(previewSlideshowId)">
                 <div ng-player slides="slides" ng-player-on-hold='true' ng-player-id='viewPlayerId'></div>
             </div>
             <div class='iqss-slideshowview-content-player-actions'>
                 <div ng-if='!playSlideShow' class='iqss-slideshowview-content-player-container-play' ng-click='togglePlay()'></div>
                 <div ng-if='playSlideShow' class='iqss-slideshowview-content-player-container-pause' ng-click='togglePlay()'></div>
-                <div class='iqss-slideshowview-content-player-actions-center'>
+                <div class='iqss-device-interaction-content-player-actions-center'>
                     <div ng-click='moveSlideLeft()' class='iqss-slideshowview-content-player-actions-center-previous'></div>
                     <div class='iqss-slideshowview-content-player-actions-center-slideInfo'>Slide {{currentPreviewSlideIndex}} of {{numberOfSlides}}</div>
                     <div ng-click='moveSlideRight()' class='iqss-slideshowview-content-player-actions-center-next'></div>
                 </div>
-                <a href="/slideshow#!/preview/{{slideshow._id}}" target="_blank" class='iqss-slideshowview-content-player-actions-maximize'>
-                </a>
             </div>
+            <div class="iqss-device-interaction-separator"></div>
+
+            <div class="iqss-device-interaction-slideshow-info">
+                <div class="iqss-device-interaction-title" ng-bind="title"></div>
+                <div class="iqss-device-interaction-author" ng-bind="author"></div>
+                <div class="iqss-device-interaction-created-on">Created on: {{createdOn | date}}</div>
+            </div>
+
         </div>
-        <div class='device-interaction-content-player-data'>
-            <div class="form-group slides-controllers">
-                <input type="button" class="btn btn-default" ng-click="goToPreviousSlide()" value="Previous Slide"></input>
-                <input type="button" class="btn btn-default" ng-click="goToNextSlide()" value="Next slide"></input>
-            </div>
-            <div class="form-group slides-controllers">
-                <input type="button" class="btn btn-default" ng-click="holdSlideShow()" value="Hold"></input>
-                <input type="button" class="btn btn-default" ng-click="resetSlideShow()" value="Reset slideshow"></input>
-            </div>
-            <div class="form-group slides-controllers">
-                <select ng-model="slideShowId" ng-options="slideshow._id as slideshow.name for slideshow in slideshows"></select>
-                <div class="slides-ops">
-                    <input type="button" class="btn btn-default" ng-click="setSlideShow()" value="Set"></input>
-                </div>
-            </div>
-            <div class="col-md-12">
-                <a href="{{slideUrl}}">Go to selected SlideShow</a>
-            </div>
+        <div class='iqss-device-interaction-content-slideshows'>
+
         </div>
     </div>
 </section>

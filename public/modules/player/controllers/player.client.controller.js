@@ -93,6 +93,7 @@
 
             var updateSildes = function (callback) {
                 Slides.get({slideId : $scope.slideShowId}, function (result) {
+                    $scope.$emit("slideShowLoaded", result);
                     setupSlides(result.slides);
                     if (callback) {
                         callback(result);

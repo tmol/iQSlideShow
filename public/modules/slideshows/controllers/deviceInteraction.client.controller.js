@@ -41,5 +41,10 @@
             $scope.$on("currentSlideChanged", function (event, slideIndex) {
                 $scope.currentPreviewSlideIndex = slideIndex + 1;
             });
+            $scope.$on("slideShowLoaded", function (event, slideShow) {
+                $scope.title = slideShow.name;
+                $scope.createdOn = new Date(slideShow.created);
+                $scope.author = slideShow.user.displayName;
+            })
         }]);
 }());

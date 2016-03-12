@@ -65,7 +65,7 @@
         <header ng-show="!playerMode" id="app-header" data-ng-include="'/modules/core/views/header.client.view.html'" class="navbar navbar-fixed-top navbar-inverse iqss-navbar"></header>
 
         <section class="content iqss-content">
-            <section class="container-fluid iqss-container-fluid" ng-class="{'player-container':playerMode,'device-interaction':interactionMode}">
+            <section class="container-fluid iqss-container-fluid" ng-class="{'player-container':playerMode,'iqss-device-interaction':interactionMode}">
                 {% block content %}{% endblock %}
             </section>
         </section>

@@ -2,11 +2,11 @@
 @import 'variables.scss';
 @import 'mixins.scss';
 
-.device-interaction {
+.iqss-device-interaction {
     padding-top: 70px;
 }
 
-.device-interaction-content {
+.iqss-device-interaction-content {
     max-width: 100%;
     width: 100%;
     margin: auto;
@@ -15,7 +15,7 @@
     height:100%;
 }
 
-.device-interaction-content-player-container {
+.iqss-device-interaction-content-player-container {
     background: white;
     display: block;
     width: 100%;
@@ -27,7 +27,7 @@
     }
 }
 
-.device-interaction-content-player-data {
+.iqss-device-interaction-content-player-data {
     padding: 3% 0 0 3%;
     width: 100%;
     margin-left: auto;
@@ -39,3 +39,44 @@
         display: none;
     }
 }
+
+.iqss-device-interaction-content-player-actions-center {
+    flex: 0 0 167px;
+    align-self: center;
+}
+
+.iqss-device-interaction-separator {
+    border-bottom: 1px solid #5A5A5A;
+    margin-left: 16px;
+    margin-right: 16px;
+    margin-top: 11px;
+}
+
+.iqss-device-interaction-slideshow-info {
+    padding-left: 16px;
+    padding-right: 16px;
+    margin-top: 10px;
+    .iqss-device-interaction-title {
+        padding-right: 110px;
+        text-overflow: ellipsis;
+        font-size: 17px;
+    }
+    .iqss-device-interaction-author {
+
+    }
+    .iqss-device-interaction-created-on {
+        position: relative;
+        top: -29px;
+        width: 101px;
+        overflow: hidden;
+        line-height: 10px;
+        white-space: nowrap;
+        float: right;
+        font-size: 8px;
+    }
+}
+.iqss-device-interaction-content-slideshows {
+    min-height: 100%;
+    background-color: #5A5A5A;
+}
+
