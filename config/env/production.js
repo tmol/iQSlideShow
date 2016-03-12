@@ -2,7 +2,7 @@
 
 module.exports = {
 	db: process.env.MONGOHQ_URL || process.env.MONGOLAB_URI || 'mongodb://' + (process.env.DB_1_PORT_27017_TCP_ADDR || 'localhost') + '/iqslideshow',
-	assets: {
+	/*assets: {
 		lib: {
 			css: [
 				'public/lib/bootstrap/dist/css/bootstrap.min.css',
@@ -49,7 +49,7 @@ module.exports = {
         sharedJs: [
             'config/shared/appVersion.js'
         ]
-	},
+	},*/
 	facebook: {
 		clientID: process.env.FACEBOOK_ID || 'APP_ID',
 		clientSecret: process.env.FACEBOOK_SECRET || 'APP_SECRET',
