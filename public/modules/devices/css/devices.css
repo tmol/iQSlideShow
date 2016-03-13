@@ -26,7 +26,6 @@
   width: 194px; }
 
 .iqss-devicelist-content {
-  padding-top: 30px;
   height: 100%; }
 
 .iqss-devicelist-content * {
@@ -36,10 +35,6 @@
   max-width: 85%;
   margin: auto;
   min-width: 194px;
-  position: absolute;
-  left: 50%;
-  transform: translate(-50%, 0);
-  top: 0px;
   display: flex;
   justify-content: center;
   flex-flow: row wrap; }

@@ -179,15 +179,18 @@
   width: 15px;
   height: 15px;
   vertical-align: middle;
-  cursor: pointer; }
+  cursor: pointer;
+  display: inline-block; }
 
 .iqss-slideshowview-content-player-actions-center-next {
   background: url(../../../modules/core/img/next.svg) right center no-repeat;
   width: 15px;
   height: 15px;
   vertical-align: middle;
-  cursor: pointer; }
+  cursor: pointer;
+  display: inline-block; }
 
 .iqss-slideshowview-content-player-actions-center-slideInfo {
   margin-left: 20px;
-  margin-right: 10px; }
+  margin-right: 10px;
+  display: inline-block; }
