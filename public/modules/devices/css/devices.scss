@@ -21,7 +21,6 @@
 }
 
 .iqss-devicelist-content {
-    padding-top: $device-list-header-content-top-padding;
     height: 100%;
 }
 
@@ -32,9 +31,7 @@
 .iqss-devicelist-content > div {
     max-width: 85%;
     margin: auto;
-
     min-width: $device-list-card-width;
-    @include positionInCenterInResponsiveContainer;
     display: flex;
     justify-content: center;
     flex-flow: row wrap;

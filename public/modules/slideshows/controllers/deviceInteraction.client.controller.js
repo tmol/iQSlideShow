@@ -35,11 +35,24 @@
                     messageBroker.sendResetSlideShow();
                 }
             };
+            $scope.numberOfSlidehsows = 0;
+            Slideshows.filter({
+                    pageSize: 1000
+                }, function (result) {
+                    $scope.slideshows = result;
+                    $scope.numberOfSlidehsows = slideshows.length;
+                });
+
             $scope.$on("slidesLoaded", function (event, slides) {
                 $scope.numberOfSlides = slides.length;
             });
             $scope.$on("currentSlideChanged", function (event, slideIndex) {
                 $scope.currentPreviewSlideIndex = slideIndex + 1;
             });
+            $scope.$on("slideShowLoaded", function (event, slideShow) {
+                $scope.title = slideShow.name;
+                $scope.createdOn = new Date(slideShow.created);
+                $scope.author = slideShow.user.displayName;
+            })
         }]);
 }());
