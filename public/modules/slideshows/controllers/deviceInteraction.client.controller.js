@@ -35,6 +35,14 @@
                     messageBroker.sendResetSlideShow();
                 }
             };
+            $scope.numberOfSlidehsows = 0;
+            Slideshows.filter({
+                    pageSize: 1000
+                }, function (result) {
+                    $scope.slideshows = result;
+                    $scope.numberOfSlidehsows = slideshows.length;
+                });
+
             $scope.$on("slidesLoaded", function (event, slides) {
                 $scope.numberOfSlides = slides.length;
             });

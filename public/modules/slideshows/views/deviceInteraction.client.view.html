@@ -5,7 +5,7 @@
             <div class='iqss-device-interaction-content-player' data-ng-controller="PlayerController" ng-init="initPreview(previewSlideshowId)">
                 <div ng-player slides="slides" ng-player-on-hold='true' ng-player-id='viewPlayerId' style="height:100%"></div>
             </div>
-            <div class='iqss-slideshowview-content-player-actions'>
+            <div class='iqss-device-interaction-content-player-actions'>
                 <div ng-if='!playSlideShow' class='iqss-slideshowview-content-player-container-play' ng-click='togglePlay()'></div>
                 <div ng-if='playSlideShow' class='iqss-slideshowview-content-player-container-pause' ng-click='togglePlay()'></div>
                 <div class='iqss-device-interaction-content-player-actions-center'>
@@ -14,15 +14,30 @@
                     <div ng-click='moveSlideRight()' class='iqss-slideshowview-content-player-actions-center-next'></div>
                 </div>
             </div>
-            <div class="iqss-device-interaction-separator"></div>
+            <div class="iqss-device-interaction-separator iqss-device-interaction-hide-landscape"></div>
 
-            <div class="iqss-device-interaction-slideshow-info">
+            <div class="iqss-device-interaction-slideshow-info iqss-device-interaction-hide-landscape">
                 <div class="iqss-device-interaction-title" ng-bind="title"></div>
                 <div class="iqss-device-interaction-author" ng-bind="author"></div>
                 <div class="iqss-device-interaction-created-on">Created on: {{createdOn | date}}</div>
             </div>
         </div>
-        <div class='iqss-device-interaction-content-slideshows'></div>
+        <div class='iqss-device-interaction-content-slideshows'>
+            <div class="iqss-device-interaction-content-slideshows-title">All slideshows ({{numberOfSlidehsows}})</div>
+            <section class="iqss-device-interaction-content-slide" data-ng-repeat="slideshow in slideshows">
+                <div class="iqss-device-interaction-slide-view">
+                    <div class='iqss-slideshowlist-slideshow-preview' data-ng-controller="PlayerController" ng-init="initPreview(slideshow._id)" ng-click=''>
+                        <div ng-player style="background-color: #ffffff;height:100px;max-height:100%;width:100%;display:inline-block" slides="slides" ng-player-on-hold='true'></div>
+                    </div>
+                </div>
+                <div class="iqss-device-interaction-slide-info">
+                    <div class="iqss-device-interaction-slide-info-title" data-ng-bind="slideshow.name"></div>
+                    <div class="iqss-device-interaction-slide-info-author" data-ng-bind="slideshow.user.displayName"></div>
+                    <div class="iqss-device-interaction-slide-info-number">({{slideshow.slides.length}} slides)</div>
+                    <div class="iqss-device-interaction-slide-info-date">Last modified: <span data-ng-bind="dateFormatter.formatDate(slideshow.modified)"></span> </div>
+                </div>
+            </section>
+        </div>
 
     </div>
 </section>

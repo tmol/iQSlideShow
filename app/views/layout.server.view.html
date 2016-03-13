@@ -62,15 +62,18 @@
          ng-swipe-right = "swipeRight()"
          class='iqss-main-container'
          >
-        <header ng-show="!playerMode" id="app-header" data-ng-include="'/modules/core/views/header.client.view.html'" class="navbar navbar-fixed-top navbar-inverse iqss-navbar"></header>
+        <header ng-show="!playerMode" id="app-header"
+                data-ng-include="'/modules/core/views/header.client.view.html'" class="navbar navbar-fixed-top navbar-inverse iqss-navbar"
+                ng-class = "{'iqss-device-interaction-navbar':interactionMode}"
+                ></header>
 
-        <section class="content iqss-content">
+        <section class="content iqss-content" ng-class="{'iqss-content-device-interaction':interactionMode}">
             <section class="container-fluid iqss-container-fluid" ng-class="{'player-container':playerMode,'iqss-device-interaction':interactionMode}">
                 {% block content %}{% endblock %}
             </section>
         </section>
 
-        <footer>
+        <footer ng-show="!interactionMode">
             <hr>
             <label>Terms Privacy Copyright © 2016</label>
         </footer>
