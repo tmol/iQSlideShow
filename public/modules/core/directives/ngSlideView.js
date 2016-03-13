@@ -60,22 +60,26 @@
 
                     };
                     scope.onSlideClicked = function (event) {
-
+                        var pageX = 0;
+                        var pageY = 0;
                         if (event.originalEvent.touches && event.originalEvent.touches.length > 0) {
-                            var pageX = event.originalEvent.touches[0].pageX;
-                            var pageY = event.originalEvent.touches[0].pageY;
-                            var target = $(event.currentTarget);
-
-                            var x = pageX - target.offset().left;
-                            var y = pageY - target.offset().top;
-
-
-                            var percentX = x * 100 / (scope.resolution.width*positionScale.scale);
-                            var percentY = y * 100 / (scope.resolution.height*positionScale.scale);
-
-
-                            $rootScope.$broadcast("slideShowClicked", {percentX : percentX, percentY : percentY});
+                            pageX = event.originalEvent.touches[0].pageX;
+                            pageY = event.originalEvent.touches[0].pageY;
+                        } else {
+                            pageX = event.originalEvent.pageX;
+                            pageY = event.originalEvent.pageY;
                         }
+                        var target = $(event.currentTarget);
+
+                        var x = pageX - target.offset().left;
+                        var y = pageY - target.offset().top;
+
+
+                        var percentX = x * 100 / (scope.resolution.width*positionScale.scale);
+                        var percentY = y * 100 / (scope.resolution.height*positionScale.scale);
+
+
+                        $rootScope.$broadcast("slideShowClicked", {percentX : percentX, percentY : percentY});
                     }
                     scope.$watch("referenceSlide", function (newValue, oldValue) {
                         if (newValue) {
