@@ -254,8 +254,11 @@
                     $window.location.reload(true);
                     auditAction('reload');
                 });
-                messageBroker.onSlideShowClicked(function (position) {
-                   console.log(position);
+                messageBroker.onSlideShowClicked(function (message) {
+                    $scope.$broadcast("displayIndicator", message.content);
+                    $timeout(function () {
+                        $scope.$broadcast("hideIndicator");
+                    }, 2000);
                 });
             };
 
