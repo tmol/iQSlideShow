@@ -5,7 +5,7 @@
      * Module dependencies.
      */
     var mongoose = require('mongoose'),
-        Promise = require("Promise"),
+        Promise = require("promise"),
         Slide = require("./slide.server.model"),
         Tag = require("./tag.server.model"),
         Schema = mongoose.Schema;

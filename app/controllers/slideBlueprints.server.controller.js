@@ -6,7 +6,7 @@
         errorHandler = require('./errors.server.controller'),
         SlideBlueprint = mongoose.model("SlideBlueprint"),
         lodash = require('lodash'),
-        Promise = require('Promise'),
+        Promise = require('promise'),
         NamesAndTagsFilter = require('../services/namesAndTagsFilter');
 
     exports.renderSlide = function (req, res) {

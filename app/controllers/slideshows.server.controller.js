@@ -8,7 +8,7 @@
         errorHandler = require('./errors.server.controller'),
         Slideshow = mongoose.model('Slideshow'),
         Device = mongoose.model('Device'),
-        Promise = require('Promise'),
+        Promise = require('promise'),
         lodash = require('lodash'),
         Async = require('async'),
         NamesAndTagsFilter = require('../services/namesAndTagsFilter');

@@ -4,7 +4,7 @@
     'use strict';
 
     var lodash = require('lodash'),
-        Promise = require('Promise');
+        Promise = require('promise');
 
     var mapItemToTags = function (item) {
         return item.tags;

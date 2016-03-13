@@ -1,0 +1,58 @@
+/*
+    Genric common styles
+*/
+/*
+    color palette
+*/
+/*
+    colors
+*/
+/*
+    Fonts
+*/
+.iqss-page-header {
+  background-color: white;
+  height: 44px;
+  line-height: 44px;
+  position: fixed;
+  left: 0px;
+  top: 70px;
+  width: 100%;
+  z-index: 1000;
+  box-sizing: content-box;
+  box-shadow: 0 2px 4px #eeeeee;
+  color: #5a5a5a; }
+
+.iqss-page-header > hr {
+  width: 100%;
+  background: #aa0000;
+  border-bottom-color: none;
+  height: 1px;
+  margin-top: 0;
+  margin: 0 10px 0 10px;
+  position: absolute;
+  top: 42px; }
+
+.iqss-page-header div div {
+  float: left; }
+
+.iqss-page-header div div:first-child {
+  padding-right: 10px;
+  font-size: 11px; }
+
+.iqss-page-header > div {
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%, 0);
+  top: 0px; }
+
+@media (max-width: 768px) {
+  .iqss-page-header > div {
+    position: absolute;
+    top: 0;
+    left: 200px;
+    min-width: 365px; } }
+
+.iqss-page-header > section {
+  height: 44px;
+  line-height: 44px; }

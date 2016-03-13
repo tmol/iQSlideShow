@@ -1,0 +1,386 @@
+/*
+    Genric common styles
+*/
+/*
+    color palette
+*/
+/*
+    colors
+*/
+/*
+    Fonts
+*/
+/*
+    Genric common styles
+*/
+/*
+    color palette
+*/
+/*
+    colors
+*/
+/*
+    Fonts
+*/
+/*
+    list
+*/
+/*
+    edit
+*/
+/*
+    Genric common styles
+*/
+/*
+    color palette
+*/
+/*
+    colors
+*/
+/*
+    Fonts
+*/
+/*
+    list
+*/
+/*
+    edit
+*/
+/*
+    Genric common styles
+*/
+/*
+    color palette
+*/
+/*
+    colors
+*/
+/*
+    Fonts
+*/
+.iqss-slideshowedit-main {
+  height: 100%; }
+
+.iqss-slideshowedit-header-title {
+  color: #009da5; }
+
+.iqss-slideshowedit-header-title-bottom-line {
+  background: #009da5;
+  height: 1px;
+  margin: 0;
+  border: none;
+  width: 200px;
+  margin-top: -5px; }
+
+.iqss-slideshowedit-saveLink {
+  background: url(../../../modules/core/img/save.svg) left center no-repeat;
+  flex: 1;
+  background-size: 20px 20px;
+  line-height: 44px;
+  width: 100px;
+  padding-left: 25px;
+  cursor: pointer; }
+
+.iqss-slideshowedit-previewLink {
+  background: url(../../../modules/core/img/play%20button.svg) left center no-repeat;
+  flex: 1;
+  background-size: 20px 20px;
+  line-height: 44px;
+  width: 100px;
+  padding-left: 25px; }
+
+.iqss-slideshowedit-error {
+  padding-left: 15px;
+  padding-right: 15px; }
+
+.iqss-slideshowedit-content {
+  padding-top: 48px;
+  padding-left: 15px;
+  padding-right: 15px;
+  margin-bottom: 35px;
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: flex-start; }
+
+.iqss-slideshowedit-form {
+  height: 100%; }
+
+.iqss-slideshowedit-emptyColumn {
+  flex: 0.2 0.2;
+  background-color: #eeeeee; }
+
+.iqss-slideshowedit-slides {
+  display: inline-block;
+  flex: 1 1;
+  border: 1px solid #dfdfdf;
+  box-shadow: 1px 4px 4px #dfdfdf;
+  background: white;
+  width: 20%; }
+
+.iqss-slideshowedit-data {
+  display: inline-block;
+  border: 1px solid #dfdfdf;
+  box-shadow: 1px 4px 4px #dfdfdf;
+  background: white;
+  width: 351px; }
+
+.iqss-slideshowedit-preview {
+  display: inline-block;
+  flex: 3 1;
+  border: 1px solid #dfdfdf;
+  box-shadow: 1px 4px 4px #dfdfdf;
+  width: 33%;
+  overflow: hidden; }
+
+.iqss-slideshowedit-preview-footer {
+  height: 32px;
+  background: white;
+  display: flex;
+  justify-content: center;
+  align-items: center; }
+
+.iqss-slideshowedit-preview-footer-emptyLeft {
+  margin-left: 10px;
+  flex: 1; }
+
+.iqss-slideshowedit-preview-footer-title {
+  flex: 1;
+  text-align: center; }
+
+.iqss-slideshowedit-preview-footer-fullScreen-container {
+  margin-right: 10px;
+  flex: 1;
+  display: flex;
+  flex-flow: row-reverse; }
+
+.iqss-slideshowedit-preview-footer-fullScreen {
+  height: 17px;
+  width: 17px;
+  cursor: pointer;
+  background: url(../../../modules/core/img/fullscreen.svg) right center no-repeat; }
+
+.iqss-slideshowedit-slides-addNew-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 32px;
+  padding: 8px 8px; }
+
+.iqss-slideshowedit-slides-addNew {
+  background: url(../../../modules/core/img/add-slide.svg) left center no-repeat;
+  line-height: 14px;
+  height: 14px;
+  color: #009da5;
+  padding-left: 30px;
+  cursor: pointer; }
+
+.iqss-slideshowedit-addNewSlide {
+  overflow-y: hidden !important; }
+
+.iqss-slideshowedit-addNewSlide .modal-dialog {
+  width: 500px; }
+
+.iqss-slideshowedit-addNewSlide .modal-content {
+  border-radius: 0; }
+
+.iqss-slideshowedit-addNewSlide .nav-tabs > li.active > a, .iqss-slideshowedit-data .nav-tabs > li.active > a:focus {
+  margin-top: 0px;
+  margin-bottom: 0px;
+  margin-left: 0px; }
+
+.iqss-slideshowedit-addNewSlide .nav-tabs > li.active > a, .iqss-slideshowedit-data .nav-tabs > li.active > a:focus, .iqss-slideshowedit-addNewSlide .nav-tabs > li > a {
+  margin: 0;
+  margin-right: -1px;
+  font-size: 14px;
+  padding-left: 60px;
+  padding-right: 60px; }
+
+.iqss-slideshowedit-addNewSlide-container {
+  margin: 10px; }
+
+.iqss-slideshowedit-addNewSlide-tab-container {
+  margin: 10px;
+  display: flex;
+  flex-flow: column wrap;
+  max-height: 500px; }
+
+.iqss-slideshowedit-addNewSlide-tab-container .iqss-ui-select-bottom-line {
+  top: 65px; }
+
+.iqss-slideshowedit-addNewSlide-items {
+  display: flex;
+  flex-wrap: wrap;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  max-height: 200px;
+  margin-top: 25px;
+  justify-content: space-around; }
+
+.iqss-slideshowedit-addNewSlide-item-empty {
+  height: 0;
+  width: 140px;
+  padding-right: 0; }
+
+.iqss-slideshowedit-addNewSlide-item-name {
+  margin: 20px;
+  margin-bottom: -10px; }
+
+.iqss-slideshowedit-addNewSlide-item {
+  margin: 10px 20px 0 0;
+  cursor: pointer;
+  width: 120px;
+  height: 79px;
+  border: 1px solid #eeeeee;
+  overflow: hidden; }
+
+.iqss-slideshowedit-addNewSlide-selectFromBluerprints-search hr {
+  top: 56px; }
+
+.iqss-slideshowedit-addNewSlide-selectFromBluerprints-list {
+  display: flex; }
+
+.iqss-slideshowedit-addNewSlide-selectFromBluerprints-tags {
+  padding: 5px;
+  height: 38px;
+  text-overflow: ellipsis;
+  max-width: 120px;
+  font-size: 11px;
+  color: #5a5a5a; }
+
+.iqss-slideshowedit-slide-hidden {
+  background-color: #EEEEEE;
+  opacity: 0.5;
+  width: 100%; }
+
+.iqss-slideshowedit-slide-current {
+  border: 1px solid #5a5a5a;
+  width: 100%; }
+
+.iqss-slideshowedit-slide-readyToReceiveDrop {
+  border: 1px dashed #faa61a; }
+
+.iqss-slideshowedit-slide-container {
+  display: flex;
+  flex-direction: column; }
+
+.iqss-slideshowedit-slide-actions {
+  display: flex;
+  height: 25px;
+  line-height: 25px;
+  padding: 0 8px;
+  border-top: 1px solid #dfdfdf; }
+
+.iqss-slideshowedit-slide-actions-index {
+  width: 15px; }
+
+.iqss-slideshowedit-slide-actions-index-selected {
+  color: #faa61a; }
+
+.iqss-slideshowedit-slide-actions-title {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  padding: 0 5px;
+  flex: 1;
+  font-size: 11px; }
+
+.iqss-slideshowedit-slide-actions-saveToBlueprints {
+  background: url("../../../modules/core/img/save_in_repo.svg") left center no-repeat;
+  width: 16px;
+  height: 16px;
+  height: 100%;
+  cursor: pointer; }
+
+.iqss-slideshowedit-slide-actions-delete {
+  background: url("../../../modules/core/img/delete.svg") left center no-repeat;
+  width: 16px;
+  height: 16px;
+  height: 100%;
+  cursor: pointer; }
+
+.iqss-slideshowedit-slide-preview {
+  padding: 0 23px;
+  width: 213px;
+  height: 130px;
+  display: inline-block;
+  overflow: hidden; }
+
+.iqss-slideshowedit-data .nav-tabs > li.active > a, .iqss-slideshowedit-data .nav-tabs > li.active > a:focus {
+  margin-top: -6px;
+  margin-bottom: -5px;
+  margin-left: -1px;
+  line-height: 23px; }
+
+.iqss-slideshowedit-data .nav > li > a {
+  padding-left: 25px;
+  padding-right: 25px; }
+
+.iqss-slideshowedit-data-tab {
+  padding: 25px;
+  display: flex;
+  flex-flow: column; }
+
+.iqss-slideshowedit-data .ui-select-container {
+  border: 1px solid #eeeeee;
+  height: 27px;
+  box-shadow: 2px 2px 2px #eeeeee;
+  border-radius: 0px;
+  width: 200px !important; }
+
+.iqss-slideshowedit-data span.ui-select-match:first-of-type {
+  margin-left: 15px; }
+
+.iqss-slideshowedit-data .ui-select-container input[type='text'] {
+  padding-left: 0; }
+
+.iqss-slideshowedit-data .ui-select-container * {
+  font-size: 12px;
+  color: #5a5a5a; }
+
+.iqss-slideshowedit-data .ui-select-match-item {
+  border: 1px solid #eeeeee;
+  border-radius: 0px; }
+
+.iqss-slideshowedit-data .ui-slider {
+  margin-top: 3px;
+  width: 200px; }
+
+.iqss-slideshowedit-slideInfo-actions {
+  width: 100%;
+  padding-left: 20px;
+  margin-top: 20px; }
+
+.iqss-slideshowedit-data-tab .ta-toolbar {
+  background-color: #eeeeee;
+  margin: 0;
+  padding: 2px;
+  display: flex;
+  flex-flow: row wrap; }
+
+.iqss-slideshowedit-data-tab .btn-group {
+  margin: 0;
+  margin-right: 10px;
+  border-radius: 4px;
+  clear: both;
+  flex: 1;
+  align-self: flex-start;
+  display: flex; }
+
+.iqss-slideshowedit-data-tab .btn-group .btn {
+  font-size: 12px;
+  border-radius: 0; }
+
+.iqss-slideshowedit-data-tab .btn-group button {
+  width: 24px;
+  height: 24px; }
+
+.iqss-slideshowedit-saveSlideToBlueprints-container .modal-dialog {
+  width: 450px;
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) !important; }
+
+.iqss-slideshowedit-saveSlideToBlueprints-container .modal-content {
+  border-radius: 0; }
