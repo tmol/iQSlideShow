@@ -30,7 +30,9 @@
                 this.sendResetSlideShow = function () {
                     messagingEngine.publishToDeviceChannel('resetSlideShow', self.deviceId);
                 };
-
+                this.sendSlideShowClicked = function (position) {
+                    messagingEngine.publishToDeviceChannel('slideShowClicked', self.deviceId, position);
+                };
                 this.onMoveSlideRight = function (callback) {
                     messageHandler.moveSlideRight = callback;
                 };
@@ -55,7 +57,9 @@
                 this.onReload = function (callback) {
                     messageHandler.reload = callback;
                 };
-
+                this.onSlideShowClicked = function (callback) {
+                    messageHandler.slideShowClicked = callback;
+                };
                 this.unSubscribe = function () {
                     messageEventUnBind();
                     messagingEngine.unSubscribeFromDevice(self.deviceId);

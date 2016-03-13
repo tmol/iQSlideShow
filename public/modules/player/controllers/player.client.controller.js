@@ -178,7 +178,28 @@
                 activationDialog.close();
             };
 
-            if (messageBroker) {
+            $scope.$on("rightArrowPressed", function () {
+                $scope.$broadcast("moveSlideRight");
+            });
+
+            $scope.$on("leftArrowPressed", function () {
+                $scope.$broadcast("moveSlideLeft");
+            });
+
+            $scope.$on("slideLoaded", function (event, slide) {
+                $scope.qrConfig.slideUrl = "/#!/deviceInteraction/" + $scope.deviceId + "/" + slide.slideShowId + "/" + slide.slideNumber;
+            });
+
+            $scope.$on("$destroy", function () {
+                timers.reset();
+                if (messageBroker) {
+                    messageBroker.unSubscribe();
+                }
+            });
+
+            var setupMessagining = function (deviceId) {
+                messageBroker = new DeviceMessageBroker(deviceId);
+                serverMessageBroker = new ServerMessageBroker();
 
                 messageBroker.onMoveSlideRight(function () {
                     $scope.$broadcast("moveSlideRight");
@@ -208,7 +229,6 @@
                         }, duration * 60 * 1000);
                     }
                 });
-
                 messageBroker.onDeviceSetup(handleDeviceSetup);
 
                 messageBroker.onHoldSlideShow(function () {
@@ -234,41 +254,19 @@
                     $window.location.reload(true);
                     auditAction('reload');
                 });
-            }
-
-
-            $scope.$on("rightArrowPressed", function () {
-                $scope.$broadcast("moveSlideRight");
-            });
-
-            $scope.$on("leftArrowPressed", function () {
-                $scope.$broadcast("moveSlideLeft");
-            });
-
-            $scope.$on("slideLoaded", function (event, slide) {
-                $scope.qrConfig.slideUrl = "/#!/deviceInteraction/" + $scope.deviceId + "/" + slide.slideShowId + "/" + slide.slideNumber;
-            });
-
-            $scope.$on("$destroy", function () {
-                timers.reset();
-                if (messageBroker) {
-                    messageBroker.unSubscribe();
-                }
-            });
-
-            var setupMessagining = function () {
-                messageBroker = new DeviceMessageBroker();
-                serverMessageBroker = new ServerMessageBroker();
+                messageBroker.onSlideShowClicked(function (position) {
+                   console.log(position);
+                });
             };
 
             var startSlideshow = function () {
-                setupMessagining();
+
                 $scope.deviceId = LocalStorage.getDeviceId();
                 if ($scope.deviceId === null) {
                     $scope.deviceId = PUBNUB.unique();
                     LocalStorage.setDeviceId($scope.deviceId);
                 }
-
+                setupMessagining($scope.deviceId);
                 messageBroker.deviceId = $scope.deviceId;
                 messageBroker.subscribe(function () {
                     sendHiToServer();

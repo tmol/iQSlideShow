@@ -42,7 +42,9 @@
                     $scope.slideshows = result;
                     $scope.numberOfSlidehsows = slideshows.length;
                 });
-
+            $scope.$on("slideShowClicked", function (event, position) {
+                messageBroker.sendSlideShowClicked(position);
+            })
             $scope.$on("slidesLoaded", function (event, slides) {
                 $scope.numberOfSlides = slides.length;
             });
