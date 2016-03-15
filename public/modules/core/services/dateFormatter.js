@@ -2,7 +2,7 @@
 (function () {
     'use strict';
 
-    angular.module('slideshows').factory('DateFormatter', ['$resource',
+    angular.module('core').factory('DateFormatter', ['$resource',
         function ($resource) {
             return {
                 formatDate: function (dateString) {

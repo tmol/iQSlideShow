@@ -2,8 +2,8 @@
 /*global angular, ApplicationConfiguration, _*/
 (function () {
     'use strict';
-    angular.module('slideshows').controller('AddNewSlideController', ['$scope', 'Tags', 'SlideBlueprints', 'SlideBlueprintsSearch', '$timeout', 'Templates',
-        function ($scope, Tags, SlideBlueprints, SlideBlueprintsSearch, $timeout, Templates) {
+    angular.module('slideshows').controller('AddNewSlideController', ['$scope', 'Tags', 'SlideBlueprints', 'SlideBlueprintsSearch', '$timeout', 'Templates', 'slidesConcatenatedTagsListWithLimitedLength',
+        function ($scope, Tags, SlideBlueprints, SlideBlueprintsSearch, $timeout, Templates, slidesConcatenatedTagsListWithLimitedLength) {
             $scope.newSlideData = {};
 
             Templates.getAll(function (response) {
@@ -22,21 +22,7 @@
                 var idx, concatenatedTags;
                 SlideBlueprintsSearch.search($scope.blueprintsFilterParameters, function (slides) {
                     $scope.$parent.slides = slides;
-                    _(slides).forEach(function (slide) {
-                        concatenatedTags = '';
-                        _(slide.tags).forEach(function (tag) {
-                            if (concatenatedTags.length > 0) {
-                                concatenatedTags = concatenatedTags + ' ';
-                            }
-                            concatenatedTags = concatenatedTags + tag;
-                        });
-                        if (concatenatedTags.length > 35) {
-                            concatenatedTags = concatenatedTags.substring(0, 32);
-                            concatenatedTags = concatenatedTags + '...';
-
-                        }
-                        slide.concatenatedTags = concatenatedTags;
-                    });
+                    slidesConcatenatedTagsListWithLimitedLength.format(slides, 25);
                 });
             };
 

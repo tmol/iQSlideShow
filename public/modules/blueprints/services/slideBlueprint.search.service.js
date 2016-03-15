@@ -15,6 +15,7 @@
                             var slide = item.slide[0];
                             slide.bluePrintTitle = item.name;
                             slide.tags = item.tags;
+                            slide.created = item.created;
                             if (item.user) {
                                 slide.publisher = item.user.displayName;
                             }

@@ -98,21 +98,30 @@
 
 .iqss-blueprintslist-slideshow-delimiter {
     height: 1px;
-    width: $blueprints-list-slideshow-width - 2 * $blueprints-list-default-horizontal-padding;
+    width: $blueprints-list-slideshow-width - 4 * $blueprints-list-default-horizontal-padding;
     position: relative;
     left: 50%;
     transform: translate(-50%, 0);
     background-color: #DFDFDF;
 }
+
 .iqss-blueprintslist-slideshow-tag {
     font-size: 11px;
     color: #AFAFAF;
 }
-.iqss-blueprintslist-slideshow-linksContainer {
-    padding: 5px;
-    height: 38px;
+
+.iqss-blueprintslist-slideshow-details {
+    padding: 3px 2 * $blueprints-list-default-horizontal-padding;
+    height: 34px;
     overflow: hidden;
+    font-size: $small-font-size;
 }
+
 .iqss-blueprintslist-slideshow-authorName {
-    padding: 6px;
+    padding: 3px 2 * $blueprints-list-default-horizontal-padding;
+}
+
+.iqss-blueprintslist-slideshow-savedOn {
+    padding: 0 2 * $blueprints-list-default-horizontal-padding;
+    font-size: $small-font-size;
 }

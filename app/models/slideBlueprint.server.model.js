@@ -7,6 +7,7 @@
      */
     var mongoose = require('mongoose'),
         Schema = mongoose.Schema,
+        Promise = require("promise"),
         Tag = require("./tag.server.model"),
         Slide = require("./slide.server.model"),
         SlideBlueprintSchema = new Schema({
@@ -20,6 +21,10 @@
                 index: true
             },
             slide: [Slide.schema],
+            created: {
+                type: Date,
+                default: Date.now
+            },
             user: {
                 type: Schema.ObjectId,
                 ref: 'User'

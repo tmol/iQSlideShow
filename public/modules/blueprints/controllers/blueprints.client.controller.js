@@ -2,13 +2,15 @@
 /*global _, angular, ApplicationConfiguration*/
 (function () {
     'use strict';
-    angular.module('blueprints').controller('BlueprintsController', ['$scope', 'Tags', 'SlideBlueprints', 'SlideBlueprintsSearch',
-        function ($scope, Tags, SlideBlueprints, SlideBlueprintsSearch) {
+    angular.module('blueprints').controller('BlueprintsController', ['$scope', 'Tags', 'SlideBlueprints', 'SlideBlueprintsSearch', 'slidesConcatenatedTagsListWithLimitedLength', 'DateFormatter',
+        function ($scope, Tags, SlideBlueprints, SlideBlueprintsSearch, slidesConcatenatedTagsListWithLimitedLength, DateFormatter) {
             $scope.filterParameters = {namesAndTagsFilter: ''};
+            $scope.dateFormatter = DateFormatter;
 
             $scope.search = function () {
                 SlideBlueprintsSearch.search($scope.filterParameters, function (slides) {
                     $scope.slides = slides;
+                    slidesConcatenatedTagsListWithLimitedLength.format(slides, 50);
                 });
             };
 
@@ -27,7 +29,6 @@
                     });
                 }
             };
-            $scope.search();
 
             $scope.removeSlide = function (slide) {
                 SlideBlueprints.delete({
