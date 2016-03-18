@@ -4,12 +4,12 @@
     var exports = {
         app: {
             title: 'iQSlideShow',
-            description: 'Full-Stack JavaScript with MongoDB, Express, AngularJS, and Node.js',
-            keywords: 'MongoDB, Express, AngularJS, Node.js'
+            description: 'Bring valuable information to employees in a easily manageable and interactive way using big screen devices.',
+            keywords: 'Slideshows, big screen, real time devie management'
         },
         port: process.env.PORT || 3000,
         templateEngine: 'swig',
-        sessionSecret: 'MEAN',
+        sessionSecret: 'iqslideshow',
         sessionCollection: 'sessions',
         assets: {
             lib: {

@@ -119,9 +119,10 @@
 
 .iqss-blueprintslist-slideshow-authorName {
     padding: 3px 2 * $blueprints-list-default-horizontal-padding;
+    padding-top: 6px;
 }
 
 .iqss-blueprintslist-slideshow-savedOn {
-    padding: 0 2 * $blueprints-list-default-horizontal-padding;
+    padding: 0px 2 * $blueprints-list-default-horizontal-padding;
     font-size: $small-font-size;
 }

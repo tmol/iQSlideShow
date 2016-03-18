@@ -10,7 +10,7 @@
             $scope.search = function () {
                 SlideBlueprintsSearch.search($scope.filterParameters, function (slides) {
                     $scope.slides = slides;
-                    slidesConcatenatedTagsListWithLimitedLength.format(slides, 50);
+                    slidesConcatenatedTagsListWithLimitedLength.format(slides, 45);
                 });
             };
 
