@@ -58,8 +58,8 @@
                 });
             };
 
-            var setupSlides = function (slides) {
-                $scope.$emit("slidesLoaded", slides);
+            var setupSlides = function (slides, slideShowId) {
+                $scope.$emit("slidesLoaded", slides, slideShowId);
                 $scope.slides = slides;
                 $scope.slides.forEach(function (slide, index) {
                     slide.index = index;
@@ -94,7 +94,7 @@
             var updateSildes = function (callback) {
                 Slides.get({slideId : $scope.slideShowId}, function (result) {
                     $scope.$emit("slideShowLoaded", result);
-                    setupSlides(result.slides);
+                    setupSlides(result.slides, $scope.slideShowId);
                     if (callback) {
                         callback(result);
                     }
@@ -200,7 +200,22 @@
             var setupMessagining = function (deviceId) {
                 messageBroker = new DeviceMessageBroker(deviceId);
                 serverMessageBroker = new ServerMessageBroker();
+                var onlinePollingTime = 60 * 10000;
+                var lastAnounceTime = Date.now();
+                var deviceInteractionIsOnline = function () {
+                    var timeDiff = Date.now() - lastAnounceTime;
+                    var timeDiffInSec = timeDiff / 1000;
+                    var timeDiffInMin = timeDiffInSec / 60;
 
+                    return timeDiffInMin < 3;
+                };
+                messageBroker.onDeviceInteractionIsPresent(function () {
+                    lastAnounceTime = Date.now();
+                });
+                messageBroker.onGotoSlideNumber(function (message) {
+                    $scope.$broadcast("goToSlideNumber", message.content);
+                    auditAction('goToSlideNumber');
+                });
                 messageBroker.onMoveSlideRight(function () {
                     $scope.$broadcast("moveSlideRight");
                     auditAction('moveToRight');
@@ -225,6 +240,9 @@
                     var duration = content.minutesToPlayBeforeGoingBackToDefaultSlideShow;
                     if (duration) {
                         timers.registerTimeout("revertToOriginalSlideShow", function () {
+                            if (deviceInteractionIsOnline()) {
+                                return;
+                            }
                             sendHiToServer(); //this should revert the device state
                         }, duration * 60 * 1000);
                     }
@@ -234,10 +252,20 @@
                 messageBroker.onHoldSlideShow(function () {
                     $scope.slideIsOnHold = true;
                     $scope.$broadcast("putPlayerOnHold");
-                    timers.registerTimeout('resetOnHold', function () {
-                        $scope.slideIsOnHold = false;
-                        $scope.$broadcast("resetOnHold");
-                    }, 60 * 1000);
+
+                    var resetOnHold = function () {
+                        timers.registerTimeout('resetOnHold', function () {
+                            if (deviceInteractionIsOnline()) {
+                                resetOnHold();
+                                return;
+                            }
+                            $scope.slideIsOnHold = false;
+                            $scope.$broadcast("resetOnHold");
+                        }, onlinePollingTime);
+                    }
+                    resetOnHold();
+
+
                     auditAction('holdSlideShow');
                 });
                 messageBroker.onResetSlideShow(function () {

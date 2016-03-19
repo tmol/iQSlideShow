@@ -7,7 +7,9 @@
             var instance;
             var pubnub;
             function publishToChannel(channelName, action, deviceId, content, callback) {
-                content = content || {};
+                if (content == undefined || content == null) {
+                    content = {};
+                }
                 pubnub.publish({
                     channel: channelName,
                     message: {

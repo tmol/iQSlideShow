@@ -46,6 +46,8 @@
         app.locals.messageChannelName = config.getMessageChannelName();
         app.locals.appVersion = config.getAppVersion();
 
+
+
         // Passing the request url to environment locals
         app.use(function (req, res, next) {
             res.locals.url = req.protocol + '://' + req.headers.host + req.url;
@@ -92,10 +94,14 @@
         // CookieParser should be above session
         app.use(cookieParser());
 
+        // Setting the app router and static folder
+        app.use(express.static(path.resolve('./public')));
+        app.use(express.static(path.resolve('./config/shared')));
+
         // Express MongoDB session storage
         app.use(session({
             saveUninitialized: true,
-            resave: true,
+            resave: false,
             secret: config.sessionSecret,
             store: new mongoStore({
                 db: db.connection.db,
@@ -117,9 +123,7 @@
         app.use(helmet.ienoopen());
         app.disable('x-powered-by');
 
-        // Setting the app router and static folder
-        app.use(express.static(path.resolve('./public')));
-        app.use(express.static(path.resolve('./config/shared')));
+
 
 
         // Globbing routing files
