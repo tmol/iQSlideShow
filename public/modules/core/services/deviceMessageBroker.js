@@ -33,6 +33,12 @@
                 this.sendSlideShowClicked = function (position) {
                     messagingEngine.publishToDeviceChannel('slideShowClicked', self.deviceId, position);
                 };
+                this.sendPresence = function (position) {
+                    messagingEngine.publishToDeviceChannel('deviceInteractionIsPresent', self.deviceId);
+                };
+                this.onDeviceInteractionIsPresent = function (callback) {
+                    messageHandler.deviceInteractionIsPresent = callback;
+                };
                 this.onMoveSlideRight = function (callback) {
                     messageHandler.moveSlideRight = callback;
                 };

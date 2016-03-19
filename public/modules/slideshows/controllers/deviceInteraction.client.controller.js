@@ -2,8 +2,8 @@
 /*global angular, ApplicationConfiguration, _*/
 (function () {
     'use strict';
-    angular.module('slideshows').controller('DeviceInteractionController', ['$scope', '$stateParams', 'Slides', 'Slideshows', 'DeviceMessageBroker', 'Admin',
-        function ($scope, $stateParams, Slides, Slideshows, DeviceMessageBroker, Admin) {
+    angular.module('slideshows').controller('DeviceInteractionController', ['$scope', '$stateParams', 'Slides', 'Slideshows', 'DeviceMessageBroker', 'Admin', 'Timers',
+        function ($scope, $stateParams, Slides, Slideshows, DeviceMessageBroker, Admin, Timers) {
             $scope.deviceId = $stateParams.deviceId;
             $scope.previewSlideshowId = $stateParams.slideShowId;
             var messageBroker = new DeviceMessageBroker($scope.deviceId);
@@ -17,6 +17,12 @@
                 });
             };
             messageBroker.sendHoldSlideShow();
+            var timers = new Timers();
+
+            timers.registerInterval("presenceTimeOut", function () {
+                messageBroker.sendPresence();
+            }, 10000);
+
             $scope.moveSlideLeft = function () {
                 $scope.$broadcast("moveSlideLeft");
                 messageBroker.sendMoveSlideLeft();
@@ -59,5 +65,8 @@
                 $scope.createdOn = new Date(slideShow.created);
                 $scope.author = slideShow.user.displayName;
             })
+            $scope.$on("$destroy", function () {
+                timers.reset();
+            });
         }]);
 }());
