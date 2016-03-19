@@ -16,6 +16,8 @@ packages/
 .vs/*
 *.dll
 *.css
+public/dist/admin.js
+public/dist/player.js
 !public/dist/*.min.css
 !public/css/*
 
