@@ -40,12 +40,15 @@
                     pageSize: 1000
                 }, function (result) {
                     $scope.slideshows = result;
-                    $scope.numberOfSlidehsows = slideshows.length;
+                    $scope.numberOfSlidehsows = result.length;
                 });
             $scope.$on("slideShowClicked", function (event, position) {
                 messageBroker.sendSlideShowClicked(position);
             })
-            $scope.$on("slidesLoaded", function (event, slides) {
+            $scope.$on("slidesLoaded", function (event, slides, slideShowId) {
+                if (slideShowId!=$scope.previewSlideshowId) {
+                    return;
+                }
                 $scope.numberOfSlides = slides.length;
             });
             $scope.$on("currentSlideChanged", function (event, slideIndex) {

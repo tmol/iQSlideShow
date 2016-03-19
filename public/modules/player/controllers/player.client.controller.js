@@ -58,8 +58,8 @@
                 });
             };
 
-            var setupSlides = function (slides) {
-                $scope.$emit("slidesLoaded", slides);
+            var setupSlides = function (slides, slideShowId) {
+                $scope.$emit("slidesLoaded", slides, slideShowId);
                 $scope.slides = slides;
                 $scope.slides.forEach(function (slide, index) {
                     slide.index = index;
@@ -94,7 +94,7 @@
             var updateSildes = function (callback) {
                 Slides.get({slideId : $scope.slideShowId}, function (result) {
                     $scope.$emit("slideShowLoaded", result);
-                    setupSlides(result.slides);
+                    setupSlides(result.slides, $scope.slideShowId);
                     if (callback) {
                         callback(result);
                     }
