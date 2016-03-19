@@ -200,7 +200,7 @@
             var setupMessagining = function (deviceId) {
                 messageBroker = new DeviceMessageBroker(deviceId);
                 serverMessageBroker = new ServerMessageBroker();
-                var onlinePollingTime = 10000;
+                var onlinePollingTime = 60 * 10000;
                 var lastAnounceTime = Date.now();
                 var deviceInteractionIsOnline = function () {
                     var timeDiff = Date.now() - lastAnounceTime;
