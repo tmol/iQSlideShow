@@ -6,7 +6,7 @@
     Nav bar styling
 */
 .iqss-navbar {
-    background-image: url(../img/brand/head-bg.png);
+    background-image: url(/modules/core/img/brand/head-bg.png);
     font-family: 'Karla', Arial, sans-serif;
     color: white;
 }
@@ -65,7 +65,7 @@
     float: right;
     padding-right: 30px;
     padding-top: 25px;
-    background-image: url(../img/settings.png);
+    background-image: url(/modules/core/img/settings.png);
     background-repeat: no-repeat;
     background-position: center right;
     height: $header-height;

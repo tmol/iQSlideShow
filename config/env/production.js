@@ -1,55 +1,18 @@
 'use strict';
 
 module.exports = {
-	db: process.env.MONGOHQ_URL || process.env.MONGOLAB_URI || 'mongodb://' + (process.env.DB_1_PORT_27017_TCP_ADDR || 'localhost') + '/iqslideshow',
-	/*assets: {
+	db: process.env.MONGOHQ_URL || process.env.MONGOLAB_URI || 'mongodb://' + (process.env.DB_1_PORT_27017_TCP_ADDR || 'localhost') + '/iqslideshow-dev',
+	assets: {
 		lib: {
-			css: [
-				'public/lib/bootstrap/dist/css/bootstrap.min.css',
-				'public/lib/bootstrap/dist/css/bootstrap-theme.min.css',
-                'public/lib/jquery-ui/themes/base/jquery-ui.css'
-			],
-			js: [
-				'public/lib/angular/angular.min.js',
-				'public/lib/angular-resource/angular-resource.js',
-				'public/lib/angular-cookies/angular-cookies.js',
-				'public/lib/angular-animate/angular-animate.js',
-				'public/lib/angular-touch/angular-touch.js',
-				'public/lib/angular-sanitize/angular-sanitize.js',
-				'public/lib/angular-ui-router/release/angular-ui-router.min.js',
-				'public/lib/angular-ui-utils/ui-utils.min.js',
-				'public/lib/angular-bootstrap/ui-bootstrap-tpls.min.js',
-				'public/lib/jquery/dist/jquery.js',
-                'public/lib/bootstrap/dist/js/bootstrap.js',
-                'public/lib/textAngular/dist/textAngular-rangy.min.js',
-                'public/lib/textAngular/dist/textAngular-sanitize.min.js',
-                'public/lib/textAngular/dist/textAngular.min.js',
-                'public/lib/qrcode/lib/qrcode.min.js',
-                'public/lib/angular-qr/angular-qr.min.js',
-                'public/lib/pubnub/pubnub.min.js',
-                'public/lib/pubnub-angular/lib/pubnub-angular.js',
-                'public/lib/ui-select/dist/select.min.js',
-                'public/lib/angular-ui-grid/ui-grid.min.js',
-                'public/lib/lodash/lodash.js',
-                'public/lib/angular-ui-slider/src/slider.js',
-                'public/lib/jquery-ui/ui/jquery-ui.js'
-			]
+			css: [],
+			js: []
 		},
-		css: [
-                'public/lib/font-awesome/css/font-awesome.min.css',
-                'public/lib/textAngular/dist/textAngular.css',
-                'public/lib/ui-select/dist/select.min.css',
-                'public/lib/angular-ui-grid/ui-grid.css',
-                'public/css/*.css'
-		],
-		js: [
-			'public/config.js',
-			'public/application.js'
-		],
-        sharedJs: [
-            'config/shared/appVersion.js'
-        ]
-	},*/
+		css: [],
+		js: [],
+        sharedJs: [],
+        admin: { css: ['public/dist/admin.min.css'], js: ['public/dist/admin.min.js'] },
+        player: { css: ['public/dist/player.min.css'], js: ['public/dist/player.min.js'] }
+	},
 	facebook: {
 		clientID: process.env.FACEBOOK_ID || 'APP_ID',
 		clientSecret: process.env.FACEBOOK_SECRET || 'APP_SECRET',

@@ -36,12 +36,11 @@
 	<link href="/modules/core/img/brand/favicon.ico" rel="shortcut icon" type="image/x-icon">
 
     <!--StartUp CSS Files-->
-    {% for cssFile in cssFiles.appStart %}<link rel="stylesheet" href="/{{cssFile}}?version={{appVersion}}">{% endfor %}
-    {% for cssFile in cssFiles.appContext %}<link rel="stylesheet" href="/{{cssFile}}?version={{appVersion}}">{% endfor %}
+    {% for cssFile in playerCssFiles.appStart %}<link rel="stylesheet" href="/{{cssFile}}?version={{appVersion}}">{% endfor %}
+    {% for cssFile in playerCssFiles.appContext %}<link rel="stylesheet" href="/{{cssFile}}?version={{appVersion}}">{% endfor %}
 
 	<!--Application CSS Files-->
-	{% for cssFile in cssFiles.core %}<link rel="stylesheet" href="/{{cssFile}}?version={{appVersion}}">{% endfor %}
-    {% for cssFile in cssFiles.player %}<link rel="stylesheet" href="/{{cssFile}}?version={{appVersion}}">{% endfor %}
+	{% for cssFile in playerCssFiles.css %}<link rel="stylesheet" href="/{{cssFile}}?version={{appVersion}}">{% endfor %}
 
 	<!-- HTML5 Shim -->
 	<!--[if lt IE 9]>
@@ -66,14 +65,11 @@
             var serverChannelName = "{{messageChannelName}}";
         </script>
         <!--StartUp JavaScript Files-->
-        {% for jsFile in jsFiles.appContext %}<script type="text/javascript" src="/{{jsFile}}?version={{appVersion}}"></script>{% endfor %}
-        {% for jsFile in jsFiles.appStart %}<script type="text/javascript" src="/{{jsFile}}?version={{appVersion}}"></script>{% endfor %}
+        {% for jsFile in playerJsFiles.appContext %}<script type="text/javascript" src="/{{jsFile}}?version={{appVersion}}"></script>{% endfor %}
+        {% for jsFile in player.appStart %}<script type="text/javascript" src="/{{jsFile}}?version={{appVersion}}"></script>{% endfor %}
 
         <!--Application JavaScript Files-->
-        {% for jsFile in jsFiles.core %}<script type="text/javascript" src="/{{jsFile}}?version={{appVersion}}"></script>{% endfor %}
-        {% for jsFile in jsFiles.player %}<script type="text/javascript" src="/{{jsFile}}?version={{appVersion}}"></script>{% endfor %}
-
-
+        {% for jsFile in player.js %}<script type="text/javascript" src="/{{jsFile}}?version={{appVersion}}"></script>{% endfor %}
 
 
         {% if process.env.NODE_ENV === 'development' %}

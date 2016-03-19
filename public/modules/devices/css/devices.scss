@@ -48,15 +48,15 @@
 }
 
 .iqss-devicelist-device-title-container.unhealthy {
-    background: url(../../../modules/core/img/warning.svg) right center no-repeat;
+    background: url(/modules/core/img/warning.svg) right center no-repeat;
 }
 
 .iqss-devicelist-device-title-container.active {
-    background: url(../../../modules/core/img/published-ok.svg) right center no-repeat;
+    background: url(/modules/core/img/published-ok.svg) right center no-repeat;
 }
 
 .iqss-devicelist-device-title-container.inactive {
-    background: url(../../../modules/core/img/draft.svg) right center no-repeat;
+    background: url(/modules/core/img/draft.svg) right center no-repeat;
 }
 
 .iqss-devicelist-device-title-container > div {

@@ -39,8 +39,10 @@
         app.locals.description = config.app.description;
         app.locals.keywords = config.app.keywords;
         app.locals.facebookAppId = config.facebook.clientID;
-        app.locals.jsFiles = config.getJavaScriptAssets();
-        app.locals.cssFiles = config.getCSSAssets();
+        app.locals.playerJsFiles = config.getPlayerJsFiles();
+        app.locals.playerCssFiles = config.getPlayerCssFiles();
+        app.locals.adminJsFiles = config.getAdminJsFiles();
+        app.locals.adminCssFiles = config.getAdminCssFiles();
         app.locals.messageChannelName = config.getMessageChannelName();
         app.locals.appVersion = config.getAppVersion();
 

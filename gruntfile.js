@@ -89,17 +89,31 @@ module.exports = function(grunt) {
 		uglify: {
 			production: {
 				options: {
-					mangle: false
+					mangle: false,
+                    screwIE8: true
 				},
 				files: {
-					'public/dist/application.min.js': 'public/dist/application.js'
+					'public/dist/admin.min.js': 'public/dist/admin.js',
+                    'public/dist/player.min.js': 'public/dist/player.js'
 				}
 			}
 		},
+        concat: {
+            production: {
+                options: {
+                    stripBanners: true
+                },
+                files: {
+                    'public/dist/admin.js': '<%= allAdminJavaScriptFiles %>',
+                    'public/dist/player.js': '<%= allPlayerJavaScriptFiles %>'
+                }
+            }
+        },
 		cssmin: {
 			combine: {
 				files: {
-					'public/dist/application.min.css': '<%= applicationCSSFiles %>'
+					'public/dist/admin.min.css': '<%= allAdminCssFiles %>',
+                    'public/dist/player.min.css': '<%= allPlayerCssFiles %>'
 				}
 			}
 		},
@@ -129,7 +143,7 @@ module.exports = function(grunt) {
 		ngAnnotate: {
 			production: {
 				files: {
-					'public/dist/application.js': '<%= applicationJavaScriptFiles %>'
+					'public/dist/applicationAdmin.js': '<%= applicationAdminJavaScriptFiles %>'
 				}
 			}
 		},
@@ -147,6 +161,9 @@ module.exports = function(grunt) {
 			},
 			secure: {
 				NODE_ENV: 'secure'
+			},
+			build: {
+				NODE_ENV: 'build'
 			}
 		},
 		mochaTest: {
@@ -174,8 +191,12 @@ module.exports = function(grunt) {
 		var init = require('./config/init')();
 		var config = require('./config/config');
 
-		grunt.config.set('applicationJavaScriptFiles', config.assets.js);
-		grunt.config.set('applicationCSSFiles', config.assets.css);
+        console.log('config.assets.allAdminJs: ' + config.assets.allAdminJs);
+        console.log('config.assets.allPlayerJs: ' + config.assets.allPlayerJs);
+		grunt.config.set('allAdminJavaScriptFiles', config.assets.allAdminJs);
+		grunt.config.set('allAdminCssFiles', config.assets.allAdminCss);
+		grunt.config.set('allPlayerJavaScriptFiles', config.assets.allPlayerJs);
+		grunt.config.set('allPlayerCssFiles', config.assets.allPlayerCss);
 	});
 
 	// Default task(s).
@@ -191,7 +212,7 @@ module.exports = function(grunt) {
 	grunt.registerTask('lint', ['jshint', 'csslint']);
 
 	// Build task(s).
-	grunt.registerTask('build', ['lint', 'loadConfig', 'ngAnnotate', 'uglify', 'cssmin']);
+	grunt.registerTask('build', ['env:build', 'loadConfig', 'concat', 'uglify', 'sass', 'cssmin']);
 
 	// Test task.
 	grunt.registerTask('test', ['env:test', 'mochaTest', 'karma:unit']);

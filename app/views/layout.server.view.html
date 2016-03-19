@@ -36,19 +36,11 @@
 	<link href="/modules/core/img/brand/favicon.ico" rel="shortcut icon" type="image/x-icon">
 
     <!--StartUp CSS Files-->
-    {% for cssFile in cssFiles.appStart %}<link rel="stylesheet" href="{{cssFile}}">{% endfor %}
+    {% for cssFile in adminCssFiles.appStart %}<link rel="stylesheet" href="{{cssFile}}">{% endfor %}
 
 	<!--Application CSS Files-->
-	{% for cssFile in cssFiles.appContext %}<link rel="stylesheet" href="{{cssFile}}?version={{appVersion}}">{% endfor %}
-    {% for cssFile in cssFiles.core %}<link rel="stylesheet" href="{{cssFile}}?version={{appVersion}}">{% endfor %}
-    {% for cssFile in cssFiles.admin %}<link rel="stylesheet" href="{{cssFile}}?version={{appVersion}}">{% endfor %}
-    {% for cssFile in cssFiles.devices %}<link rel="stylesheet" href="{{cssFile}}?version={{appVersion}}">{% endfor %}
-    {% for cssFile in cssFiles.slideshows %}<link rel="stylesheet" href="{{cssFile}}?version={{appVersion}}">{% endfor %}
-    {% for cssFile in cssFiles.users %}<link rel="stylesheet" href="{{cssFile}}?version={{appVersion}}">{% endfor %}
-    {% for cssFile in cssFiles.blueprints %}<link rel="stylesheet" href="{{cssFile}}?version={{appVersion}}">{% endfor %}
-    {% for cssFile in cssFiles.player %}<link rel="stylesheet" href="/{{cssFile}}?version={{appVersion}}">{% endfor %}
-
-
+	{% for cssFile in adminCssFiles.appContext %}<link rel="stylesheet" href="{{cssFile}}?version={{appVersion}}">{% endfor %}
+    {% for cssFile in adminCssFiles.css %}<link rel="stylesheet" href="{{cssFile}}?version={{appVersion}}">{% endfor %}
 
 	<!-- HTML5 Shim -->
 	<!--[if lt IE 9]>
@@ -83,20 +75,13 @@
             var user = {{ user | json | safe }};
             var serverChannelName = "{{messageChannelName}}";
         </script>
+
         <!--StartUp JavaScript Files-->
-        {% for jsFile in jsFiles.appContext %}<script type="text/javascript" src="{{jsFile}}?version={{appVersion}}"></script>{% endfor %}
-        {% for jsFile in jsFiles.appStart %}<script type="text/javascript" src="{{jsFile}}?version={{appVersion}}"></script>{% endfor %}
+        {% for jsFile in adminJsFiles.appContext %}<script type="text/javascript" src="{{jsFile}}?version={{appVersion}}"></script>{% endfor %}
+        {% for jsFile in adminJsFiles.appStart %}<script type="text/javascript" src="{{jsFile}}?version={{appVersion}}"></script>{% endfor %}
 
         <!--Application JavaScript Files-->
-        {% for jsFile in jsFiles.users %}<script type="text/javascript" src="{{jsFile}}?version={{appVersion}}"></script>{% endfor %}
-        {% for jsFile in jsFiles.core %}<script type="text/javascript" src="{{jsFile}}?version={{appVersion}}"></script>{% endfor %}
-        {% for jsFile in jsFiles.admin %}<script type="text/javascript" src="{{jsFile}}?version={{appVersion}}"></script>{% endfor %}
-        {% for jsFile in jsFiles.devices %}<script type="text/javascript" src="{{jsFile}}?version={{appVersion}}"></script>{% endfor %}
-        {% for jsFile in jsFiles.player %}<script type="text/javascript" src="/{{jsFile}}?version={{appVersion}}"></script>{% endfor %}
-        {% for jsFile in jsFiles.slideshows %}<script type="text/javascript" src="{{jsFile}}?version={{appVersion}}"></script>{% endfor %}
-        {% for jsFile in jsFiles.blueprints %}<script type="text/javascript" src="{{jsFile}}?version={{appVersion}}"></script>{% endfor %}
-
-
+        {% for jsFile in adminJsFiles.js %}<script type="text/javascript" src="{{jsFile}}?version={{appVersion}}"></script>{% endfor %}
 
         {% if process.env.NODE_ENV === 'development' %}
         <!--Livereload script rendered -->

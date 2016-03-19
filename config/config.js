@@ -18,7 +18,7 @@ module.exports = _.extend(
 /**
  * Get files by glob patterns
  */
-module.exports.getGlobbedFiles = function(globPatterns, removeRoot) {
+module.exports.getGlobbedFiles = function (globPatterns, removeRoot) {
 	// For context switching
 	var _this = this;
 
@@ -30,7 +30,7 @@ module.exports.getGlobbedFiles = function(globPatterns, removeRoot) {
 
 	// If glob pattern is array so we use each pattern in a recursive way, otherwise we use glob 
 	if (_.isArray(globPatterns)) {
-		globPatterns.forEach(function(globPattern) {
+		globPatterns.forEach(function (globPattern) {
 			output = _.union(output, _this.getGlobbedFiles(globPattern, removeRoot));
 		});
 	} else if (_.isString(globPatterns)) {
@@ -39,11 +39,11 @@ module.exports.getGlobbedFiles = function(globPatterns, removeRoot) {
 		} else {
 			glob(globPatterns, {
 				sync: true
-			}, function(err, files) {
+			}, function (err, files) {
 				if (removeRoot) {
-					files = files.map(function(file) {
-						return file.replace(removeRoot, '').replace('.scss','.css');
-					});
+					files = files.map(function (file) {
+                        return file.replace(removeRoot, '');
+                    });
 				}
 
 				output = _.union(output, files);
@@ -57,8 +57,9 @@ module.exports.getGlobbedFiles = function(globPatterns, removeRoot) {
 /**
  * Get the modules JavaScript files
  */
-module.exports.getJavaScriptAssets = function(includeTests) {
-    var assets = {};
+module.exports.getJavaScriptAssets = function (bundle, includeTests) {
+    var prop,
+        assets = {};
 
 	assets.appContext = this.getGlobbedFiles(this.assets.lib.js, 'public/');
     assets.appContext = _.union(assets.appContext, this.getGlobbedFiles(this.assets.sharedJs, 'config/shared/'));
@@ -69,38 +70,44 @@ module.exports.getJavaScriptAssets = function(includeTests) {
 		assets.core = _.union(assets.core, this.getGlobbedFiles(this.assets.tests));
 	}
 
-    for (var prop in this.assets.modules) {
-        if (!this.assets.modules[prop].js) {
-            continue;
-        }
-        assets[prop] = this.getGlobbedFiles(this.assets.modules[prop].js, 'public/');
-    }
-
+    assets.js = this.getGlobbedFiles(bundle.js, 'public/');
 	return assets;
 };
+
+module.exports.getAdminJsFiles = function () {
+    return this.getJavaScriptAssets(this.assets.admin, false);
+}
+
+module.exports.getPlayerJsFiles = function () {
+    return this.getJavaScriptAssets(this.assets.player, false);
+}
 
 /**
  * Get the modules CSS files
  */
-module.exports.getCSSAssets = function() {
-    var assets = {};
+module.exports.getCSSAssets = function (bundle) {
+    var prop,
+        assets = {};
 	assets.appContext = this.getGlobbedFiles(this.assets.lib.css, 'public/');
     assets.appStart = this.getGlobbedFiles(this.assets.css, 'public/');
+    assets.css = this.getGlobbedFiles(bundle.css, 'public/');
 
-    for (var prop in this.assets.modules) {
-        if (!this.assets.modules[prop].css) {
-            continue;
-        }
-        assets[prop] = this.getGlobbedFiles(this.assets.modules[prop].css, 'public/');
-    }
 	return assets;
 };
+
+module.exports.getAdminCssFiles = function () {
+    return this.getCSSAssets(this.assets.admin);
+}
+
+module.exports.getPlayerCssFiles = function () {
+    return this.getCSSAssets(this.assets.player);
+}
 
 module.exports.getMessageChannelName = function () {
     try {
         var messageChannel = require('./messageChannel');
         return messageChannel.channelName;
-    }catch(e) {
+    } catch (e) {
         return "iQSlideShow";
     }
 };
