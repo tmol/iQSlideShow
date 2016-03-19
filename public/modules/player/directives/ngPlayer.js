@@ -9,7 +9,8 @@
             return {
                 scope: {
                     slides: '&',
-                    ngPlayerOnHold: '&'
+                    ngPlayerOnHold: '&',
+                    ngPlayerIgnoreMessages: "&"
                 },
                 transclude: true,
                 template: '<div ng-repeat="slide in slides() track by $index" ng-if="$index==currentIndex" class="{{slide.animationType}} slideShow" style="width:100%;height:100%;position:relative;display:block;overflow:hidden" ng-slide-view is-playing="true" reference-slide="slide">'
@@ -17,6 +18,10 @@
                 link: function (scope, element, attrs) {
                     var slideNumber = -1;
                     var timers = new Timers();
+                    var ignoreMessages = false;
+                    if (scope.ngPlayerIgnoreMessages) {
+                        ignoreMessages = scope.ngPlayerIgnoreMessages();
+                    }
                     if (scope.ngPlayerOnHold) {
                         scope.onHold = scope.ngPlayerOnHold();
                     }
@@ -77,42 +82,44 @@
 
                     });
 
-                    scope.$on("moveSlideRight", function () {
-                        timers.unRegisterTimeout('loadNextSlide');
-                        loadNextSlide(true);
-                    });
+                    if (!ignoreMessages) {
+                        scope.$on("moveSlideRight", function () {
+                            timers.unRegisterTimeout('loadNextSlide');
+                            loadNextSlide(true);
+                        });
 
-                    scope.$on("moveSlideLeft", function () {
-                        timers.unRegisterTimeout('loadNextSlide');
+                        scope.$on("moveSlideLeft", function () {
+                            timers.unRegisterTimeout('loadNextSlide');
 
-                        slideNumber -= 2;
-                        if (slideNumber < -1) {
-                            slideNumber = scope.slides.length - 2;
-                        }
+                            slideNumber -= 2;
+                            if (slideNumber < -1) {
+                                slideNumber = scope.slides.length - 2;
+                            }
 
-                        loadNextSlide(true);
-                    });
+                            loadNextSlide(true);
+                        });
 
-                    scope.$on("resetOnHold", function (event, playerId) {
-                        scope.onHold = false;
-                        loadNextSlide();
-                    });
+                        scope.$on("resetOnHold", function (event, playerId) {
+                            scope.onHold = false;
+                            loadNextSlide();
+                        });
 
-                    scope.$on("putPlayerOnHold", function (event, playerId) {
-                        scope.onHold = true;
-                    });
+                        scope.$on("putPlayerOnHold", function (event, playerId) {
+                            scope.onHold = true;
+                        });
 
-                    scope.$on("resetSlideShow", function () {
-                        scope.onHold = false;
-                        timers.resetTimeouts();
-                        loadNextSlide();
-                    });
+                        scope.$on("resetSlideShow", function () {
+                            scope.onHold = false;
+                            timers.resetTimeouts();
+                            loadNextSlide();
+                        });
 
-                    scope.$on("goToSlideNumber", function (e, slideIndex) {
-                        slideNumber = slideIndex;
-                        scope.onHold = true;
-                        loadSlide(slideNumber);
-                    });
+                        scope.$on("goToSlideNumber", function (e, slideIndex) {
+                            slideNumber = slideIndex;
+                            scope.onHold = true;
+                            loadSlide(slideNumber);
+                        });
+                    }
 
                     scope.$on("$destroy", function () {
                         timers.resetTimeouts();
