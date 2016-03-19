@@ -16,7 +16,7 @@
                     throw err;
                 });
             };
-
+            messageBroker.sendHoldSlideShow();
             $scope.moveSlideLeft = function () {
                 $scope.$broadcast("moveSlideLeft");
                 messageBroker.sendMoveSlideLeft();
@@ -37,11 +37,11 @@
             };
             $scope.numberOfSlidehsows = 0;
             Slideshows.filter({
-                    pageSize: 1000
-                }, function (result) {
-                    $scope.slideshows = result;
-                    $scope.numberOfSlidehsows = result.length;
-                });
+                pageSize: 1000
+            }, function (result) {
+                $scope.slideshows = result;
+                $scope.numberOfSlidehsows = result.length;
+            });
             $scope.$on("slideShowClicked", function (event, position) {
                 messageBroker.sendSlideShowClicked(position);
             })
