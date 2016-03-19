@@ -25,11 +25,9 @@
 
             $scope.moveSlideLeft = function () {
                 $scope.$broadcast("moveSlideLeft");
-                messageBroker.sendMoveSlideLeft();
             };
             $scope.moveSlideRight = function () {
                 $scope.$broadcast("moveSlideRight");
-                messageBroker.sendMoveSlideRight();
             };
             $scope.togglePlay = function () {
                 $scope.playSlideShow = !$scope.playSlideShow;
@@ -59,6 +57,7 @@
             });
             $scope.$on("currentSlideChanged", function (event, slideIndex) {
                 $scope.currentPreviewSlideIndex = slideIndex + 1;
+                messageBroker.sendGotoSlideNumber(slideIndex);
             });
             $scope.$on("slideShowLoaded", function (event, slideShow) {
                 $scope.title = slideShow.name;

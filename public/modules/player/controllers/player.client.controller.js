@@ -212,6 +212,10 @@
                 messageBroker.onDeviceInteractionIsPresent(function () {
                     lastAnounceTime = Date.now();
                 });
+                messageBroker.onGotoSlideNumber(function (message) {
+                    $scope.$broadcast("goToSlideNumber", message.content);
+                    auditAction('goToSlideNumber');
+                });
                 messageBroker.onMoveSlideRight(function () {
                     $scope.$broadcast("moveSlideRight");
                     auditAction('moveToRight');
