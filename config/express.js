@@ -99,7 +99,7 @@
         // Express MongoDB session storage
         app.use(session({
             saveUninitialized: true,
-            resave: true,
+            resave: false,
             secret: config.sessionSecret,
             store: new mongoStore({
                 db: db.connection.db,
