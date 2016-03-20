@@ -162,8 +162,8 @@
 
             handleDeviceSetup = function (message) {
                 timers.resetTimeouts();
-                loadSlidesForDevice(message.device.deviceId);
-                $scope.active = message.device.active;
+                loadSlidesForDevice($scope.deviceId);
+                $scope.active = message.active;
 
                 if (!$scope.active) {
                     activationDialog.close();

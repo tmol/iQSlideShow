@@ -4,6 +4,5 @@ module.exports = function(app) {
 	// Root routing
 	var core = require('../../app/controllers/core.server.controller');
 	app.route('/').get(core.index);
-	app.route('/slideshows').get(core.index);
     app.route('/slideshow').get(core.slideshow);
 };

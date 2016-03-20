@@ -76,7 +76,7 @@
     DeviceSchema.methods.getDeviceSetupMessage = function (content, callback) {
         return {
             action: 'deviceSetup',
-            device: this,
+            active: this.active,
             content: content
         };
     };
