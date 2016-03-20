@@ -66,10 +66,10 @@
         </script>
         <!--StartUp JavaScript Files-->
         {% for jsFile in playerJsFiles.appContext %}<script type="text/javascript" src="/{{jsFile}}?version={{appVersion}}"></script>{% endfor %}
-        {% for jsFile in player.appStart %}<script type="text/javascript" src="/{{jsFile}}?version={{appVersion}}"></script>{% endfor %}
+        {% for jsFile in playerJsFiles.appStart %}<script type="text/javascript" src="/{{jsFile}}?version={{appVersion}}"></script>{% endfor %}
 
         <!--Application JavaScript Files-->
-        {% for jsFile in player.js %}<script type="text/javascript" src="/{{jsFile}}?version={{appVersion}}"></script>{% endfor %}
+        {% for jsFile in playerJsFiles.js %}<script type="text/javascript" src="/{{jsFile}}?version={{appVersion}}"></script>{% endfor %}
 
 
         {% if process.env.NODE_ENV === 'development' %}
