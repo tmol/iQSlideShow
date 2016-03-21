@@ -79,7 +79,7 @@
             $scope.$on("slideShowLoaded", function(event, slideShow) {
                 $scope.title = slideShow.name;
                 $scope.createdOn = new Date(slideShow.created);
-                $scope.author = slideShow.user.displayName;
+                $scope.author = slideShow.user ? slideShow.user.displayName:"";
             })
             $scope.$on("$destroy", function() {
                 timers.reset();
