@@ -15,10 +15,9 @@
                                <div data-ng-bind="device.name"></div>
                             </div>
                         </div>
-                           <div class='iqss-devicelist-device-content'>
-                               <div class="iqss-device-location" data-ng-bind="device.location"></div>
-                                <div class="iqss-device-by" data-ng-bind="device.user.displayName"></div>
-                                <div class="iqss-device-play">Playing 0 slidehwos</div>
+                            <div class='iqss-devicelist-device-content'>
+                                <div class="iqss-device-location" data-ng-bind="device.location"></div>
+                                <div class="iqss-device-play">Playing {{device.slideAgregation.playList.length}} slideshows</div>
                             </div>
 
                     </div>
