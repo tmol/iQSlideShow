@@ -29,10 +29,10 @@
                 <div class='iqss-deviceedit-attributes-label'>Device status:</div>
                 <div class='iqss-deviceedit-attributes-value iqss-deviceedit-attributes-value-active'>
                     <div class='iqss-deviceedit-attributes-value-active-true'>
-                        <input type="radio" data-ng-model="device.active" data-ng-value="true" />Active
+                        <input type="radio" id='active' name='isActivated' data-ng-model="device.active" data-ng-value="true" /><label for='active'>Active</label>
                     </div>
                     <div class='iqss-deviceedit-attributes-value-active-false'>
-                        <input type="radio" data-ng-model="device.active" data-ng-value="false" />Inactive
+                        <input type="radio" id='inactive' name='isActivated' data-ng-model="device.active" data-ng-value="false" /><label for='inactive'>Inactive</label>
                     </div>
                 </div>
             </div>

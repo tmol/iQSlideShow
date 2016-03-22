@@ -148,3 +148,32 @@ input[type="number"]::-webkit-outer-spin-button {
 .iqss-form-label{
     margin-top:15px;
 }
+
+/*
+    iqss radio button
+*/
+input[type="radio"] {
+    display:none;
+}
+
+input[type="radio"] + label {
+    cursor: pointer;
+    position: relative;
+    padding-left: 25px;
+    font-weight: normal;
+}
+
+input[type="radio"] + label:before {
+    content: '';
+    display: inline-block;
+    width: 19px;
+    height: 19px;
+    position: absolute;
+    left: 0;
+    bottom: 1px;
+    background: url(/modules/core/img/uncheck-radio-button.png) left bottom no-repeat;
+}
+
+input[type=radio]:checked + label:before {
+    background:url(/modules/core/img/check-radio-button.png) left bottom no-repeat;
+}
