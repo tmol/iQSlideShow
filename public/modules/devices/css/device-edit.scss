@@ -1,0 +1,114 @@
+@import '../../core/css/variables.scss';
+@import '../../core/css/mixins.scss';
+
+.iqss-deviceedit-header-container {
+    display: flex;
+}
+
+.iqss-deviceedit-header-title {
+    width: 200px;
+    font-size: $header-big-font-size !important;
+    @include textEllipsis;
+}
+
+.iqss-deviceedit-header-status {
+    width: 20px;
+    margin-right: 10px;
+}
+
+.iqss-deviceedit-header-status-unhealthy {
+    background: url(/modules/core/img/warning.svg) left center no-repeat;
+}
+
+.iqss-deviceedit-header-status-container-active {
+    background: url(/modules/core/img/published-ok.svg) left center no-repeat;
+}
+
+.iqss-deviceedit-header-status-container-inactive {
+    background: url(/modules/core/img/draft.svg) left center no-repeat;
+}
+
+.iqss-deviceedit-attributes {
+    width: 80%;
+    margin: auto;
+    border: 1px solid $dark-grey-color;
+    background: white;
+    box-shadow: 2px 2px 3px $grey-color;
+    display: flex;
+    padding: 15px;
+    margin-top: 40px;
+}
+
+.iqss-deviceedit-attributes-column {
+    height: 100%;
+    flex: 1;
+    display: flex;
+    flex-flow: column;
+}
+
+.iqss-deviceedit-attributes-delimiter {
+    border-left: 1px solid $darker-grey-color;
+    margin: 0 30px;
+}
+
+.iqss-deviceedit-attributes-item {
+    display: flex;
+    margin-bottom: 10px;
+    align-items: center;
+}
+
+.iqss-deviceedit-attributes-column > .iqss-deviceedit-attributes-item:last-child {
+    margin-bottom: 0px;
+}
+
+.iqss-deviceedit-attributes-label {
+    flex: 1;
+}
+
+.iqss-deviceedit-attributes-value {
+    flex: 2;
+}
+
+.iqss-deviceedit-attributes-value input[type='text'] {
+    border: 0;
+    color: $blue-color;
+    padding-left: 0;
+    width: $form-controls-width;
+    height: $form-controls-height;
+}
+
+.iqss-deviceedit-attributes-value-active {
+    display: flex;
+}
+
+.iqss-deviceedit-attributes-value-active-true {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    margin-right: 10px;
+}
+
+.iqss-deviceedit-attributes-value-active-false {
+    flex: 2;
+    display: flex;
+    align-items: center;
+    margin-right: 10px;
+}
+
+.iqss-deviceedit-playlist-header {
+    width: 80%;
+    margin: auto;
+    border: 1px solid $dark-grey-color;
+    background: white;
+    box-shadow: 2px 2px 3px $grey-color;
+    display: flex;
+    padding: 5px;
+    padding-left: 15px;
+    margin-top: 20px;
+}
+
+.iqss-deviceedit-playlist {
+    width: 80%;
+    margin: auto;
+    padding-left: 15px;
+}

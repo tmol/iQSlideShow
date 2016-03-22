@@ -35,3 +35,9 @@
     box-shadow: 2px 2px 2px $dark-grey-color;
     border-radius: 0px;
 }
+
+@mixin textEllipsis{
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}

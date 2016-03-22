@@ -79,9 +79,7 @@
 
 .iqss-blueprintslist-slideshow-title-container > div {
     width: $blueprints-list-slideshow-width;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+    @include textEllipsis;
     line-height: 16px;
     padding-right: 35px;
 }

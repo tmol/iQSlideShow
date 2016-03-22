@@ -252,9 +252,7 @@
 }
 
 .iqss-slideshowedit-slide-actions-title {
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    overflow: hidden;
+    @include textEllipsis;
     padding: 0 5px;
     flex: 1;
     font-size: $small-font-size;
