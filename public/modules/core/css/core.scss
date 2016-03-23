@@ -61,7 +61,18 @@ footer hr {
     box-sizing: border-box;
 }
 
-footer label {
+.iqss-appVersion {
+    float: left;
+    font-weight: normal;
+    color: $blue-color;
+    font-size: $small-font-size;
+    line-height: 30px;
+    margin: 0;
+    margin-left: 10px;
+    vertical-align: middle;
+}
+
+.iqss-terms {
     float: right;
     font-weight: normal;
     color: $blue-color;
