@@ -65,8 +65,6 @@
                                     <input type="text" data-ng-model="currentSlide.title" id="name" placeholder="Name" required/>
                                 </div>
                             </div>
-                            <div class='iqss-form-label'>Slide template</div>
-                            <select ng-options="template for template in templates" ng-model="currentSlide.templateName"></select>
                             <div class='iqss-form-label'>Tags</div>
                             <ui-select multiple tagging tagging-label="(custom 'new' tag)" ng-model="slideshow.tags" sortable="true" style="width: 300px;" title="Choose a tag">
                                 <ui-select-match placeholder="Select tags or enter new...">{{$item}}</ui-select-match>
