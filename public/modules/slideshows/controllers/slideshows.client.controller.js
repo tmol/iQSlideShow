@@ -225,7 +225,7 @@
 
                 $uibModal.open({
                     animation: false,
-                    templateUrl: Path.getViewUrl('saveToBlueprints', 'blueprints'),
+                    templateUrl: Path.getViewUrl('saveToBluePrints', 'blueprints'),
                     windowClass: 'iqss-slideshowedit-saveSlideToBlueprints-container',
                     controller: 'SlideBlueprintsController',
                     scope: scope
