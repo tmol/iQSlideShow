@@ -8,7 +8,8 @@
 }
 
 .iqss-slideshowedit-header-title {
-    color: $blue-color;
+    height: 35px !important;
+    padding-left: 0 !important;
 }
 
 .iqss-slideshowedit-header-title-bottom-line {
@@ -148,7 +149,7 @@
 .iqss-slideshowedit-addNewSlide .nav-tabs > li.active > a, .iqss-slideshowedit-data  .nav-tabs > li.active > a:focus, .iqss-slideshowedit-addNewSlide .nav-tabs > li > a {
     margin: 0;
     margin-right: -1px;
-    font-size: $big-font-size;
+    font-size: $font-size;
     padding-left: 60px;
     padding-right: 60px;
 }

@@ -2,10 +2,10 @@
     <div class='iqss-page-header'>
         <div class='iqss-slideshows-header-container'>
             <div class='iqss-slideshows-header-title-container'>
-                <span class='iqss-slideshowedit-header-title' ng-bind='slideshow.name'></span>
-                <div>
+                <input type="text" data-ng-model="slideshow.name" class='iqss-slideshowedit-header-title' placeholder="Name" required/>
+                <!--div>
                     <hr class='iqss-slideshowedit-header-title-bottom-line'>
-                </div>
+                </div-->
             </div>
             <div class='iqss-slideshows-header-actions iqss-slideshows-links'>
                 <div class='iqss-slideshowedit-saveLink' ng-click="update()">Save</div>
@@ -62,7 +62,7 @@
                             <div>
                                 <div>Slide name</div>
                                 <div>
-                                    <input type="text" data-ng-model="slideshow.name" id="name" placeholder="Name" required/>
+                                    <input type="text" data-ng-model="currentSlide.title" id="name" placeholder="Name" required/>
                                 </div>
                             </div>
                             <div class='iqss-form-label'>Slide template</div>
@@ -99,8 +99,6 @@
                     <!--SLIDE CONTENT START-->
                     <uib-tab heading="Slide content">
                         <div class='iqss-slideshowedit-data-tab'>
-                            <div>Title</div>
-                            <input type="text" ng-model="currentSlide.title" id="title" placeholder="Title">
                             <div ng-repeat="(templateElement, value) in templateElements">
                                 <div class='iqss-form-label'>{{value.label}}</div>
                                 <div class="controls" >
