@@ -1,6 +1,6 @@
 'use strict';
-angular.module('core').controller('ApplicationController', ['$scope', 'Authentication','$rootScope','$state',
-	function($scope, Authentication,$rootScope,$state) {
+angular.module('core').controller('ApplicationController', ['$scope', 'Authentication','$rootScope',
+	function($scope, Authentication,$rootScope) {
 		// This provides Authentication context.
         $scope.$on("$stateChangeStart",function(event, toState, toParams, fromState, fromParams){
             $scope.noHeader = toState.noApplicationHeader||false;

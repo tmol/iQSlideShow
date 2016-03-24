@@ -4,8 +4,8 @@
     'use strict';
 
     // Slideshows controller
-    angular.module('slideshows').controller('SlideshowsController', ['$scope', '$stateParams', '$location', 'Authentication', 'Slideshows', '$timeout', 'ServerMessageBroker', 'Tags', '$uibModal', 'Path', '$cacheFactory', 'resolutions',
-        function ($scope, $stateParams, $location, Authentication, Slideshows, $timeout, ServerMessageBroker, Tags, $uibModal, Path, $cacheFactory, resolutions) {
+    angular.module('slideshows').controller('SlideshowsController', ['$scope', '$stateParams', 'Authentication', 'Slideshows', '$timeout', 'ServerMessageBroker', 'Tags', '$uibModal', 'Path', '$cacheFactory', 'resolutions', '$state',
+        function ($scope, $stateParams, Authentication, Slideshows, $timeout, ServerMessageBroker, Tags, $uibModal, Path, $cacheFactory, resolutions, $state) {
             var serverMessageBroker = new ServerMessageBroker();
 
             $scope.resolutions = resolutions;
@@ -31,26 +31,34 @@
             // Remove existing Slideshow
             $scope.remove = function (slideshow) {
                 $scope.slideshow.$remove(function () {
-                    $location.path('slideshows');
+                    $state.go('listSlideshows');
                 });
             };
+
+            var goToViewSlideshow = function () {
+                $state.go('viewSlideshow', { slideshowId: $scope.slideshow._id });
+            }
 
             // Update existing Slideshow
             $scope.upsert = function () {
                 var slideshow = $scope.slideshow,
-                    setLocationToPreview = function () {
-                        $location.path('slideshows/' + slideshow._id);
+                    goToPreview = function () {
+                        goToViewSlideshow();
                     },
                     setScopeError = function (errorResponse) {
                         $scope.error = errorResponse.data.message;
                     };
 
                 if (slideshow._id) {
-                    slideshow.$update(setLocationToPreview, setScopeError);
+                    slideshow.$update(goToPreview, setScopeError);
                 } else {
-                    $scope.slideshow.$save(setLocationToPreview, setScopeError);
+                    $scope.slideshow.$save(goToPreview, setScopeError);
                 }
             };
+
+            $scope.preview = function () {
+                goToViewSlideshow();
+            }
 
             $scope.nonSaveActionsEnabled = function () {
 
