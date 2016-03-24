@@ -34,7 +34,7 @@
                     <div class="iqss-device-interaction-slide-info-title" data-ng-bind="slideshow.name"></div>
                     <div class="iqss-device-interaction-slide-info-author" data-ng-bind="slideshow.user.displayName"></div>
                     <div class="iqss-device-interaction-slide-info-number">({{slideshow.slides.length}} slides)</div>
-                    <div class="iqss-device-interaction-slide-info-date">Last modified: <span data-ng-bind="dateFormatter.formatDate(slideshow.modified)"></span> </div>
+                    <div class="iqss-device-interaction-slide-info-date">Last modified: <span data-ng-bind="slideshow.modified | date:'dd.MM.yyyy'"></span> </div>
                 </div>
             </section>
         </div>

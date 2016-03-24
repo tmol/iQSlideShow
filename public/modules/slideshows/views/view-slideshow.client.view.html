@@ -36,10 +36,10 @@
                 <span>Status:</span><span ng-bind='getCurrentSlideShowStatus()' ng-class="{'iqss-slideshowview-content-player-data-status-published': slideshow.published, 'iqss-slideshowview-content-player-data-status-draft': !slideshow.published}"></span>
             </div>
             <div>
-                <span>Created on:</span><span ng-bind='dateFormatter.formatDate(slideshow.created)'></span>
+                <span>Created on:</span><span ng-bind="slideshow.created | date:'dd.MM.yyyy'"></span>
             </div>
             <div>
-                <span>Last modified on:</span><span ng-bind='dateFormatter.formatDate(slideshow.modified)'></span>
+                <span>Last modified on:</span><span ng-bind="slideshow.modified | date:'dd.MM.yyyy'"></span>
             </div>
             <hr>
             <div>

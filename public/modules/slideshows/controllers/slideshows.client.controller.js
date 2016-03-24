@@ -4,8 +4,8 @@
     'use strict';
 
     // Slideshows controller
-    angular.module('slideshows').controller('SlideshowsController', ['$scope', '$stateParams', '$location', 'Authentication', 'Slideshows', '$timeout', 'ServerMessageBroker', 'Tags', '$uibModal', 'Path', '$cacheFactory', 'resolutions', 'DateFormatter',
-        function ($scope, $stateParams, $location, Authentication, Slideshows, $timeout, ServerMessageBroker, Tags, $uibModal, Path, $cacheFactory, resolutions, DateFormatter) {
+    angular.module('slideshows').controller('SlideshowsController', ['$scope', '$stateParams', '$location', 'Authentication', 'Slideshows', '$timeout', 'ServerMessageBroker', 'Tags', '$uibModal', 'Path', '$cacheFactory', 'resolutions',
+        function ($scope, $stateParams, $location, Authentication, Slideshows, $timeout, ServerMessageBroker, Tags, $uibModal, Path, $cacheFactory, resolutions) {
             var serverMessageBroker = new ServerMessageBroker();
 
             $scope.resolutions = resolutions;
@@ -19,7 +19,6 @@
                 tags: []
             };
             $scope.possibleTags = [];
-            $scope.dateFormatter = DateFormatter;
             $scope.playSlideShow = false;
             $scope.viewPlayerId = 'viewPlayer';
             $scope.animationTypes = ["enter-left", "enter-right", "enter-bottom", "enter-top"];

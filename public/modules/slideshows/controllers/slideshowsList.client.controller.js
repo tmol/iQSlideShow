@@ -4,11 +4,10 @@
     'use strict';
 
     // Slideshows controller
-    angular.module('slideshows').controller('SlideshowsListController', ['$scope', '$location', 'Slideshows', '$timeout', 'ServerMessageBroker', 'Path', '$cacheFactory', 'DateFormatter',
-        function ($scope, $location, Slideshows, $timeout, ServerMessageBroker, Path, $cacheFactory, DateFormatter) {
+    angular.module('slideshows').controller('SlideshowsListController', ['$scope', '$location', 'Slideshows', '$timeout', 'ServerMessageBroker', 'Path', '$cacheFactory',
+        function ($scope, $location, Slideshows, $timeout, ServerMessageBroker, Path, $cacheFactory) {
 
             var serverMessageBroker = new ServerMessageBroker();
-            $scope.dateFormatter = DateFormatter;
 
             $scope.remove = function (slideshow) {
                 slideshow.$remove();

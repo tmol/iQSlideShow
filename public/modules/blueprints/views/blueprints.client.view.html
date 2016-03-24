@@ -26,7 +26,7 @@
                         <div class='iqss-blueprintslist-slideshow-delimiter'>
                         </div>
                         <div class='iqss-blueprintslist-slideshow-authorName' data-ng-bind="slide.publisher"></div>
-                        <div class='iqss-blueprintslist-slideshow-savedOn'>Saved on <span data-ng-bind="dateFormatter.formatDate(slide.created)"></span></div>
+                        <div class='iqss-blueprintslist-slideshow-savedOn'>Saved on <span data-ng-bind="slide.created | date:'dd.MM.yyyy'"></span></div>
                     </div>
                 </div>
             </section>

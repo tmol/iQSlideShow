@@ -39,7 +39,7 @@
                         </div>
 
                         <div class='iqss-slideshowlist-slideshow-authorName' data-ng-bind="slideshow.user.displayName"></div>
-                        <div class='iqss-slideshowlist-slideshow-lastModified'>Last modified: <span data-ng-bind="dateFormatter.formatDate(slideshow.modified)"></span></div>
+                        <div class='iqss-slideshowlist-slideshow-lastModified'>Last modified: <span data-ng-bind="slideshow.modified | date:'dd.MM.yyyy'"></span></div>
                     </div>
                 </div>
             </section>

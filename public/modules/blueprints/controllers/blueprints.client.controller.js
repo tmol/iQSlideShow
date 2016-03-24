@@ -2,10 +2,9 @@
 /*global _, angular, ApplicationConfiguration*/
 (function () {
     'use strict';
-    angular.module('blueprints').controller('BlueprintsController', ['$scope', 'Tags', 'SlideBlueprints', 'SlideBlueprintsSearch', 'slidesConcatenatedTagsListWithLimitedLength', 'DateFormatter',
-        function ($scope, Tags, SlideBlueprints, SlideBlueprintsSearch, slidesConcatenatedTagsListWithLimitedLength, DateFormatter) {
+    angular.module('blueprints').controller('BlueprintsController', ['$scope', 'Tags', 'SlideBlueprints', 'SlideBlueprintsSearch', 'slidesConcatenatedTagsListWithLimitedLength',
+        function ($scope, Tags, SlideBlueprints, SlideBlueprintsSearch, slidesConcatenatedTagsListWithLimitedLength) {
             $scope.filterParameters = {namesAndTagsFilter: ''};
-            $scope.dateFormatter = DateFormatter;
 
             $scope.search = function () {
                 SlideBlueprintsSearch.search($scope.filterParameters, function (slides) {
