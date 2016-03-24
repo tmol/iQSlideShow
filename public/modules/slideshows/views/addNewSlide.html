@@ -29,7 +29,7 @@
             <div class='iqss-slideshowedit-addNewSlide-tab-container'>
                 <div tag-and-name-filter label='"Search"' search-Provider="blueprintsSearchProvider" class='iqss-slideshowedit-addNewSlide-selectFromBluerprints-search'></div>
                 <div class='iqss-slideshowedit-addNewSlide-items'>
-                    <div ng-repeat="slide in slides" ng-click="selectSlide(slide)">
+                    <div class='iqss-slideshowedit-addNewSlide-selectFromBluerprints-item' ng-repeat="slide in slides" ng-click="selectSlide(slide)">
                         <div>{{slide.bluePrintTitle}}</div>
                         <div>{{slide.publisher}}</div>
                         <div class='iqss-slideshowedit-addNewSlide-item'>
@@ -38,6 +38,7 @@
                         <div class='iqss-slideshowedit-addNewSlide-selectFromBluerprints-tags'>
                             {{slide.concatenatedTags}}
                         </div>
+                        <div class='iqss-slideshowedit-addNewSlide-selectFromBluerprints-created' ng-bind="slide.created | date:'dd.MM.yyyy HH:mm:ss'"></div>
                     </div>
                     <div class="iqss-slideshowedit-addNewSlide-item-empty">
                     </div>
