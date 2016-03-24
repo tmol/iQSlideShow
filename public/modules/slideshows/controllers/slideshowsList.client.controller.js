@@ -30,7 +30,7 @@
             };
 
             $scope.navigateToCreateNewSlideShow = function () {
-                $location.path('/slideshows/create');
+                $location.path('/slideshows/new/edit');
             };
 
             $scope.cache = $cacheFactory.get('slideshows.client.controller');

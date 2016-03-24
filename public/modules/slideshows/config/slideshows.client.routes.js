@@ -17,10 +17,6 @@
                     url: '/slideshows',
                     templateUrl: 'modules/slideshows/views/list-slideshows.client.view.html'
                 }).
-                state('createSlideshow', {
-                    url: '/slideshows/create',
-                    templateUrl: 'modules/slideshows/views/create-slideshow.client.view.html'
-                }).
                 state('viewSlideshow', {
                     url: '/slideshows/:slideshowId',
                     templateUrl: 'modules/slideshows/views/view-slideshow.client.view.html'

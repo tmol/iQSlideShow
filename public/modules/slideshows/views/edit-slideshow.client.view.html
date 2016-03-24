@@ -3,13 +3,10 @@
         <div class='iqss-slideshows-header-container'>
             <div class='iqss-slideshows-header-title-container'>
                 <input type="text" data-ng-model="slideshow.name" class='iqss-slideshowedit-header-title' placeholder="Name" required/>
-                <!--div>
-                    <hr class='iqss-slideshowedit-header-title-bottom-line'>
-                </div-->
             </div>
             <div class='iqss-slideshows-header-actions iqss-slideshows-links'>
-                <div class='iqss-slideshowedit-saveLink' ng-click="update()">Save</div>
-                <a href="/slideshow#!/preview/{{slideshow._id}}" target="_blank" class='iqss-slideshowedit-previewLink'>Preview</a>
+                <div class='iqss-slideshowedit-saveLink' ng-click="upsert()">Save</div>
+                <a href="/slideshow#!/preview/{{slideshow._id}}" target="_blank" ng-class="{'iqss-slideshowedit-previewLink':true}">Preview</a>
                 <a href='#' ng-click="publish()" class='iqss-slideshows-slideshow-publishLink'>Publish</a>
                 <a href='#' data-ng-click='remove();' class='iqss-slideshows-slideshow-deleteLink'>Remove</a>
             </div>

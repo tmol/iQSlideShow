@@ -16,6 +16,7 @@
     line-height: $page-header-height;
     display: flex;
     font-size: $font-size;
+    color: $blue-color;
 }
 
 .iqss-slideshows-slideshow-publishLink {
@@ -31,9 +32,6 @@
 
 .iqss-slideshows-links a:visited, a:focus {
     text-decoration: none;
-    color: $blue-color;
-    font-size: $header-big-font-size;
-    color: $blue-color;
 }
 
 .iqss-slideshows-links a:hover {

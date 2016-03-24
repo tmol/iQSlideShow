@@ -61,11 +61,8 @@
 
 .iqss-devicelist-device-title-container > div {
     width: $device-list-card-width;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    line-height: 16px;
-    padding-right: 35px;
+    @include textEllipsis;
+    padding-right: 60px;
 }
 
 .iqss-devicelist-device-delimiter {

@@ -9,6 +9,7 @@
     width: 200px;
     font-size: $header-big-font-size !important;
     @include textEllipsis;
+    margin-right: 20px;
 }
 
 .iqss-deviceedit-header-status {

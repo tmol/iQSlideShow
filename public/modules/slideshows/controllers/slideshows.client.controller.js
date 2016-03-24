@@ -29,25 +29,6 @@
                 $scope.setPlayerMode(false);
             }
 
-            // Create new Slideshow
-            $scope.create = function () {
-                // Create new Slideshow object
-                var slideshow = new Slideshows({
-                    name: this.name,
-                    slides: this.slides
-                });
-
-                // Redirect after save
-                slideshow.$save(function (response) {
-                    $location.path('slideshows/' + response._id);
-
-                    // Clear form fields
-                    $scope.name = '';
-                }, function (errorResponse) {
-                    $scope.error = errorResponse.data.message;
-                });
-            };
-
             // Remove existing Slideshow
             $scope.remove = function (slideshow) {
                 $scope.slideshow.$remove(function () {
@@ -56,15 +37,25 @@
             };
 
             // Update existing Slideshow
-            $scope.update = function () {
-                var slideshow = $scope.slideshow;
+            $scope.upsert = function () {
+                var slideshow = $scope.slideshow,
+                    setLocationToPreview = function () {
+                        $location.path('slideshows/' + slideshow._id);
+                    },
+                    setScopeError = function (errorResponse) {
+                        $scope.error = errorResponse.data.message;
+                    };
 
-                slideshow.$update(function () {
-                    $location.path('slideshows/' + slideshow._id);
-                }, function (errorResponse) {
-                    $scope.error = errorResponse.data.message;
-                });
+                if (slideshow._id) {
+                    slideshow.$update(setLocationToPreview, setScopeError);
+                } else {
+                    $scope.slideshow.$save(setLocationToPreview, setScopeError);
+                }
             };
+
+            $scope.nonSaveActionsEnabled = function () {
+
+            }
 
             // todo what happens when error occures?
             $scope.publishById = function (id) {
@@ -321,6 +312,13 @@
             $scope.$on("currentSlideChanged", function (event, slideIndex) {
                 $scope.currentPreviewSlideIndex = slideIndex + 1;
             });
-            $scope.findById();
+            if ($stateParams.slideshowId !== 'new') {
+                $scope.findById();
+            } else {
+                $scope.slideshow = new Slideshows({
+                    name: '',
+                    slides: []
+                });
+            }
         }]);
 }());

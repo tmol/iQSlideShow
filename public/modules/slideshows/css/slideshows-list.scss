@@ -4,6 +4,10 @@
 @import '../../core/css/mixins.scss';
 @import '../../core/css/notInlcudedInCore/tagAndNameFilter.scss';
 
+.iqss-slideshowlist-showOnlyMineContainer {
+    margin-right: 20px;
+}
+
 .iqss-slideshowlist-content {
     height: 100%;
 }
