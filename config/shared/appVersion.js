@@ -2,6 +2,6 @@
 
     // your code goes here
 
-   exports.version = '0.2';
+   exports.version = '0.3';
 
 })(typeof exports === 'undefined'? this : exports);
