@@ -93,8 +93,8 @@ module.exports = function(grunt) {
                     screwIE8: true
 				},
 				files: {
-					'public/dist/admin.min.js': 'public/dist/admin.js',
-                    'public/dist/player.min.js': 'public/dist/player.js'
+					'public/dist/js/admin.min.js': 'public/dist/js/admin.js',
+                    'public/dist/js/player.min.js': 'public/dist/js/player.js'
 				}
 			}
 		},
@@ -104,16 +104,16 @@ module.exports = function(grunt) {
                     stripBanners: true
                 },
                 files: {
-                    'public/dist/admin.js': '<%= allAdminJavaScriptFiles %>',
-                    'public/dist/player.js': '<%= allPlayerJavaScriptFiles %>'
+                    'public/dist/js/admin.js': '<%= allAdminJavaScriptFiles %>',
+                    'public/dist/js/player.js': '<%= allPlayerJavaScriptFiles %>'
                 }
             }
         },
 		cssmin: {
 			combine: {
 				files: {
-					'public/dist/admin.min.css': '<%= allAdminCssFiles %>',
-                    'public/dist/player.min.css': '<%= allPlayerCssFiles %>'
+					'public/dist/css/admin.min.css': '<%= allAdminCssFiles %>',
+                    'public/dist/css/player.min.css': '<%= allPlayerCssFiles %>'
 				}
 			}
 		},
@@ -143,7 +143,6 @@ module.exports = function(grunt) {
 		ngAnnotate: {
 			production: {
 				files: {
-					'public/dist/applicationAdmin.js': '<%= applicationAdminJavaScriptFiles %>'
 				}
 			}
 		},

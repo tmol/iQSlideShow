@@ -10,8 +10,8 @@ module.exports = {
 		css: [],
 		js: [],
         sharedJs: [],
-        admin: { css: ['public/dist/admin.min.css'], js: ['public/dist/admin.min.js'] },
-        player: { css: ['public/dist/player.min.css'], js: ['public/dist/player.min.js'] }
+        admin: { css: ['public/dist/css/admin.min.css'], js: ['public/dist/js/admin.min.js'] },
+        player: { css: ['public/dist/css/player.min.css'], js: ['public/dist/js/player.min.js'] }
 	},
 	facebook: {
 		clientID: process.env.FACEBOOK_ID || 'APP_ID',

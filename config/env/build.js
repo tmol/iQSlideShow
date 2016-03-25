@@ -9,7 +9,8 @@
                     adminCss: [
                         'public/lib/bootstrap/dist/css/bootstrap.min.css',
                         'public/lib/bootstrap/dist/css/bootstrap-theme.min.css',
-                        'public/lib/jquery-ui/themes/base/minified/jquery-ui.min.css'
+                        'public/lib/jquery-ui/themes/base/minified/jquery-ui.min.css',
+                        'public/lib/font-awesome/font-awesome.min.css'
                     ],
                     adminJs: [
                         'public/lib/jquery/dist/jquery.min.js',
