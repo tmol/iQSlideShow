@@ -35,9 +35,6 @@
      */
     exports.read = function (req, res) {
         var slideshow = req.slideshow;
-        if (!slideshow.draftSlides || slideshow.draftSlides.length === 0) {
-            slideshow.draftSlides = slideshow.slides;
-        }
         res.jsonp(slideshow);
     };
 

@@ -5,7 +5,9 @@
         function (ScriptInjector) {
             return {
                 link: function postLink(scope, element, attrs) {
-                    if (element.attr("type") !== "script") {
+                    if (scope.referenceSlide
+                            && scope.referenceSlide.fireSetTemplateElementEvent
+                            && element.attr("type") !== "script") {
                         scope.$emit("setTemplateElement", attrs.member, {
                             type: attrs.type || 'text',
                             label: attrs.label || attrs.member

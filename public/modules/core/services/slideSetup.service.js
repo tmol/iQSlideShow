@@ -35,10 +35,14 @@
 
             return {
                 setup: function (scope, element) {
-                    scope.templateUrl = 'modules/slideshows/slideTemplates/' + (scope.referenceSlide.templateName || 'default') + '/slide.html?version=' + Date();
-                    scope.cssUrl = 'modules/slideshows/slideTemplates/' + (scope.referenceSlide.templateName || 'default') + '/slide.css?version=' + Date();
-                    scope.jsUrl = 'modules/slideshows/slideTemplates/' + (scope.referenceSlide.templateName || 'default') + '/slide.js?version=' + Date();
-                    scope.referencePath = 'modules/slideshows/slideTemplates/' + (scope.referenceSlide.templateName || 'default') + '/';
+                    if (scope.referenceSlide) {
+                        scope.templateUrl = 'modules/slideshows/slideTemplates/' + (scope.referenceSlide.templateName || 'default') + '/slide.html?version=' + Date();
+                        scope.cssUrl = 'modules/slideshows/slideTemplates/' + (scope.referenceSlide.templateName || 'default') + '/slide.css?version=' + Date();
+                        scope.jsUrl = 'modules/slideshows/slideTemplates/' + (scope.referenceSlide.templateName || 'default') + '/slide.js?version=' + Date();
+                        scope.referencePath = 'modules/slideshows/slideTemplates/' + (scope.referenceSlide.templateName || 'default') + '/';
+                    } else {
+                        scope.templateUrl = 'modules/slideshows/slideTemplates/default/slide.html?version=' + Date();
+                    }
                 },
                 loadScripts: function (scope, element) {
                     var deferred = $q.defer();

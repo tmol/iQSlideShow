@@ -37,7 +37,7 @@
 
             var goToViewSlideshow = function () {
                 $state.go('viewSlideshow', { slideshowId: $scope.slideshow._id });
-            }
+            };
 
             // Update existing Slideshow
             $scope.upsert = function () {
@@ -58,11 +58,11 @@
 
             $scope.preview = function () {
                 goToViewSlideshow();
-            }
+            };
 
             $scope.nonSaveActionsEnabled = function () {
 
-            }
+            };
 
             // todo what happens when error occures?
             $scope.publishById = function (id) {
@@ -134,10 +134,18 @@
             };
 
             $scope.setCurrentSlide = function (slide) {
+                if ($scope.currentSlide) {
+                    $scope.currentSlide.fireSetTemplateElementEvent = false;
+                }
+
                 $scope.templateElements = {};
                 $scope.currentSlide = slide;
-
                 $scope.selectedResolution = -1;
+
+                if (!slide) {
+                    return;
+                }
+
                 if (!slide.resolution) {
                     slide.resolution = $scope.resolutions[0];
                 }
@@ -152,6 +160,7 @@
                     $scope.selectedResolution = 0;
                     slide.resolution = $scope.resolutions[0];
                 }
+                $scope.currentSlide.fireSetTemplateElementEvent = true;
                 updateTemplate();
             };
 
@@ -187,8 +196,17 @@
             };
 
             $scope.removeSlide = function (slide) {
-                var slideIndex = $scope.slideshow.draftSlides.indexOf(slide);
+                var slideIndex = $scope.slideshow.draftSlides.indexOf(slide),
+                    newCurrentSlide = null,
+                    wasCurrentSlide = $scope.currentSlide === slide;
                 $scope.slideshow.draftSlides.splice(slideIndex, 1);
+                if (!wasCurrentSlide) {
+                    return;
+                }
+                if ($scope.slideshow.draftSlides.length > 0) {
+                    newCurrentSlide = $scope.slideshow.draftSlides[0];
+                }
+                $scope.setCurrentSlide(newCurrentSlide);
             };
 
             $scope.removeTag = function (index) {
@@ -230,18 +248,9 @@
                 });
             };
 
-            $scope.addNewSlideByTemplate = function (templateName) {
-                $scope.currentSlide = {
-                    templateName: templateName,
-                    content: {}
-                };
-                $scope.slideshow.draftSlides = $scope.slideshow.draftSlides || [];
-                $scope.slideshow.draftSlides.push($scope.currentSlide);
-                updateTemplate();
-            };
-
             $scope.addNewSlide = function () {
-                var scope = $scope.$new(true);
+                var scope = $scope.$new(true),
+                    newSlide;
 
                 $uibModal.open({
                     animation: false,
@@ -253,16 +262,22 @@
                     if (!newSlideData) {
                         return;
                     }
+
                     if (newSlideData.templateName) {
-                        $scope.addNewSlideByTemplate(newSlideData.templateName);
+                        newSlide = {
+                            templateName: newSlideData.templateName,
+                            content: {}
+                        };
+                        $scope.slideshow.draftSlides = $scope.slideshow.draftSlides || [];
+                        $scope.slideshow.draftSlides.push(newSlide);
                     }
                     if (newSlideData.slide) {
                         delete newSlideData.slide._id;
                         delete newSlideData.slide._v;
-                        $scope.currentSlide = angular.merge({}, newSlideData.slide);
-                        $scope.slideshow.draftSlides.push($scope.currentSlide);
-                        updateTemplate();
+                        newSlide = angular.merge({}, newSlideData.slide);
+                        $scope.slideshow.draftSlides.push(newSlide);
                     }
+                    $scope.setCurrentSlide(newSlide);
                 });
             };
 

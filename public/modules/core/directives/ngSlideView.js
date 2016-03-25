@@ -37,7 +37,7 @@
                         var pad_x = ((scope.resolution.width * positionScale.sx) - scope.resolution.width) / 2;
                         var pad_y = ((scope.resolution.height * positionScale.sy) - scope.resolution.height) / 2;
                         positionScale.scale = Math.min(positionScale.sx, positionScale.sy);
-                        scope.indicatorSize = Math.max(scope.resolution.width, scope.resolution.height)*10/100;
+                        scope.indicatorSize = Math.max(scope.resolution.width, scope.resolution.height) * 10 / 100;
                         scope.transform = "translate(" + pad_x + "px," + pad_y + "px) scale(" + positionScale.scale + ")";
                         if (!$rootScope.$$phase) {
                             $rootScope.$apply();
@@ -75,16 +75,14 @@
                         var y = pageY - target.offset().top;
 
 
-                        var percentX = x * 100 / (scope.resolution.width*positionScale.scale);
-                        var percentY = y * 100 / (scope.resolution.height*positionScale.scale);
+                        var percentX = x * 100 / (scope.resolution.width * positionScale.scale);
+                        var percentY = y * 100 / (scope.resolution.height * positionScale.scale);
 
 
                         $rootScope.$broadcast("slideShowClicked", {percentX : percentX, percentY : percentY});
-                    }
+                    };
                     scope.$watch("referenceSlide", function (newValue, oldValue) {
-                        if (newValue) {
-                            SlideSetup.setup(scope, element);
-                        }
+                        SlideSetup.setup(scope, element);
                     });
                     scope.$watch("referenceSlide.resolution", function (newValue, oldValue) {
                         if (!scope.isPlaying) {
@@ -98,6 +96,9 @@
                     });
 
                     scope.$on("getSlideContentPart", function (event, contentPartName, callback) {
+                        if (!scope.referenceSlide) {
+                            return;
+                        }
                         var content = scope.referenceSlide.content || {};
                         callback(content[contentPartName]);
                     });
@@ -105,17 +106,17 @@
                         callback(scope.referencePath);
                     });
                     scope.$on("displayIndicator", function (event, position) {
-                        scope.indicatorLeft = (scope.resolution.width * position.percentX)/100;
-                        scope.indicatorTop = (scope.resolution.height * position.percentY)/100;
+                        scope.indicatorLeft = (scope.resolution.width * position.percentX) / 100;
+                        scope.indicatorTop = (scope.resolution.height * position.percentY) / 100;
                         scope.indicatorVisible = true;
                         if (!$rootScope.$$phase) {
                             $rootScope.$apply();
                         }
-                        element.find('svg').animate({width:scope.indicatorSize+"px", height:scope.indicatorSize+"px"},1000, "easeInOutElastic");
+                        element.find('svg').animate({width: scope.indicatorSize + "px", height: scope.indicatorSize + "px"}, 1000, "easeInOutElastic");
 
                     });
                     scope.$on("hideIndicator", function (event, position) {
-                        element.find('svg').animate({width:"0px", height:"0px"},1000, "easeInOutElastic", function () {
+                        element.find('svg').animate({width: "0px", height: "0px"}, 1000, "easeInOutElastic", function () {
                             scope.indicatorVisible = false;
                             if (!$rootScope.$$phase) {
                                 $rootScope.$apply();
@@ -136,6 +137,10 @@
                     });
 
                     scope.templateLoaded = function () {
+                        if (!scope.referenceSlide) {
+                            // no slide was specified, for exampel empty slideshow edit page
+                            return;
+                        }
                         templateLoaded = true;
                         scope.slideLoaded = true;
                         SlideSetup.loadScripts(scope, element).then(function () {
@@ -149,5 +154,5 @@
                 }
             };
         }
-    ]);
+                                                    ]);
 }());
