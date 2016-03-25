@@ -1,0 +1,45 @@
+@import 'variables.scss';
+
+.iqss-core-okDialog {
+    width: 200px;
+    height: 150px;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 6px;
+}
+
+.iqss-core-okDialog .modal-dialog {
+    margin: 0;
+    height: 100%;
+    width: 100%;
+}
+
+.iqss-core-okDialog .modal-dialog .modal-content {
+    height: 100%;
+    width: 100%;
+}
+
+.iqss-core-okDialog-container {
+    display: flex;
+    flex-flow: column;
+    height: 100%;
+}
+
+.iqss-core-okDialog-message {
+    margin: 10px;
+    font-size: $big-font-size;
+    align-items: flex-end;
+    height: 100%;
+    display: flex;
+    flex: 1;
+    align-items: center;
+    justify-content: center;
+}
+
+.iqss-core-okDialog-footer {
+    display: flex;
+    flex-flow: row-reverse;
+    margin: 5px 10px;
+}

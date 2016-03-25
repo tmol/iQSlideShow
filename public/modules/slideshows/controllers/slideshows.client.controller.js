@@ -42,17 +42,23 @@
             // Update existing Slideshow
             $scope.upsert = function () {
                 var slideshow = $scope.slideshow,
-                    goToPreview = function () {
-                        goToViewSlideshow();
+                    upsertSucceeded = function (msg) {
+                        $scope.okModalMessage = msg;
+                        $uibModal.open({
+                            animation: false,
+                            templateUrl: Path.getViewUrl('okDialog', 'core'),
+                            windowClass: 'iqss-core-okDialog',
+                            scope: $scope
+                        });
                     },
                     setScopeError = function (errorResponse) {
                         $scope.error = errorResponse.data.message;
                     };
 
                 if (slideshow._id) {
-                    slideshow.$update(goToPreview, setScopeError);
+                    slideshow.$update(upsertSucceeded('Update succeeded.'), setScopeError);
                 } else {
-                    $scope.slideshow.$save(goToPreview, setScopeError);
+                    $scope.slideshow.$save(upsertSucceeded('Create succeeded'), setScopeError);
                 }
             };
 
