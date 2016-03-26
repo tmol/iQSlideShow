@@ -5,6 +5,7 @@
     angular.module('slideshows').controller('DeviceInteractionController', ['$scope', '$stateParams', 'Slides', 'Slideshows', 'DeviceMessageBroker', 'Admin', 'Timers',
         function($scope, $stateParams, Slides, Slideshows, DeviceMessageBroker, Admin, Timers) {
 
+            $scope.playerContext = {};
 
             var i = document.body;
 
@@ -63,6 +64,11 @@
                 $scope.slideshows = result;
                 $scope.numberOfSlidehsows = result.length;
             });
+            $scope.selectSlideShow = function (slideShow) {
+                $scope.previewSlideshowId = slideShow._id;
+                $scope.playerContext.playerScope.switchSlideShow(slideShow._id);
+                messageBroker.sendSwitchSlide(slideShow._id, slideShow.name);
+            }
             $scope.$on("slideShowClicked", function(event, position) {
                 messageBroker.sendSlideShowClicked(position);
             })
