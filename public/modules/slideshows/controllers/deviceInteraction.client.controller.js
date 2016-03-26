@@ -51,11 +51,6 @@
                 $scope.playSlideShow = !$scope.playSlideShow;
                 var messageToBroadcast = $scope.playSlideShow ? 'resetOnHold' : 'putPlayerOnHold';
                 $scope.playerContext.playerScope.$broadcast(messageToBroadcast, $scope.viewPlayerId);
-                if (!$scope.playSlideShow) {
-                    messageBroker.sendHoldSlideShow();
-                } else {
-                    messageBroker.sendResetSlideShow();
-                }
             };
             $scope.numberOfSlidehsows = 0;
             Slideshows.filter({
