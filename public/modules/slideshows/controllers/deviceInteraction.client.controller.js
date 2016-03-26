@@ -82,7 +82,7 @@
                     return;
                 }
                 $scope.title = slideShow.name;
-                $scope.createdOn = new Date(slideShow.created);
+                $scope.publishedOnDate = new Date(slideShow.publishedOnDate);
                 $scope.author = slideShow.user ? slideShow.user.displayName:"";
             })
             $scope.$on("$destroy", function() {

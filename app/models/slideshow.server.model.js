@@ -35,6 +35,10 @@
             type: Date,
             default: Date.now
         },
+        publishedOnDate: {
+            type: Date,
+            default: Date.now
+        },
         user: {
             type: Schema.ObjectId,
             ref: 'User'
