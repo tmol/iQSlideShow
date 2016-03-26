@@ -42,15 +42,15 @@
             }, 10000);
 
             $scope.moveSlideLeft = function() {
-                $scope.$broadcast("moveSlideLeft");
+                $scope.playerContext.playerScope.$broadcast("moveSlideLeft");
             };
             $scope.moveSlideRight = function() {
-                $scope.$broadcast("moveSlideRight");
+                $scope.playerContext.playerScope.$broadcast("moveSlideRight");
             };
             $scope.togglePlay = function() {
                 $scope.playSlideShow = !$scope.playSlideShow;
                 var messageToBroadcast = $scope.playSlideShow ? 'resetOnHold' : 'putPlayerOnHold';
-                $scope.$broadcast(messageToBroadcast, $scope.viewPlayerId);
+                $scope.playerContext.playerScope.$broadcast(messageToBroadcast, $scope.viewPlayerId);
                 if (!$scope.playSlideShow) {
                     messageBroker.sendHoldSlideShow();
                 } else {
@@ -91,6 +91,7 @@
                 $scope.author = slideShow.user ? slideShow.user.displayName:"";
             })
             $scope.$on("$destroy", function() {
+                $scope.playerContext = null;
                 timers.reset();
             });
         }
