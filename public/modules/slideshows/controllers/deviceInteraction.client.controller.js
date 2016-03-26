@@ -83,6 +83,9 @@
                 messageBroker.sendGotoSlideNumber(slideIndex);
             });
             $scope.$on("slideShowLoaded", function(event, slideShow) {
+                if (slideShow._id != $scope.previewSlideshowId) {
+                    return;
+                }
                 $scope.title = slideShow.name;
                 $scope.createdOn = new Date(slideShow.created);
                 $scope.author = slideShow.user ? slideShow.user.displayName:"";
