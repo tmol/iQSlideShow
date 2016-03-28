@@ -1,7 +1,7 @@
-(function(exports){
+(function (exports) {
 
-    // your code goes here
+    'use strict';
 
-   exports.version = '0.3';
+    exports.version = '0.4';
 
-})(typeof exports === 'undefined'? this : exports);
+})(typeof exports === 'undefined' ? this : exports);
