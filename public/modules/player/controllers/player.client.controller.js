@@ -135,7 +135,7 @@
             }());
 
 
-            var switchSlideShow = function (slideShowIdToPlay) {
+            $scope.switchSlideShow = function (slideShowIdToPlay) {
                 timers.resetTimeouts();
                 $scope.slideShowId = slideShowIdToPlay;
                 activationDialog.close();
@@ -234,8 +234,7 @@
                         return;
                     }
 
-                    $scope.$broadcast("resetOnHold");
-                    switchSlideShow(content.slideShowIdToPlay);
+                    $scope.switchSlideShow(content.slideShowIdToPlay);
                     auditAction('switchSlideShow', {newSlideShowId: content.slideShowIdToPlay, newSlideShowName: content.slideShowName});
 
                     var duration = content.minutesToPlayBeforeGoingBackToDefaultSlideShow;
@@ -307,16 +306,19 @@
 
             };
 
-            $scope.initPreview = function (previewSlideId) {
+            $scope.initPreview = function (previewSlideId, context) {
                 $scope.usePreview = true;
-                switchSlideShow(previewSlideId);
+                $scope.switchSlideShow(previewSlideId);
+                if (context) {
+                    context.playerScope = $scope;
+                }
             };
 
             if ($state.current.name === "player") {
                 startSlideshow();
             }
             if ($state.current.name === "preview") {
-                switchSlideShow($stateParams.slideName);
+                $scope.switchSlideShow($stateParams.slideName);
             }
         }]);
 }());

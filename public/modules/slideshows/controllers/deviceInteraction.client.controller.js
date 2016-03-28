@@ -5,6 +5,7 @@
     angular.module('slideshows').controller('DeviceInteractionController', ['$scope', '$stateParams', 'Slides', 'Slideshows', 'DeviceMessageBroker', 'Admin', 'Timers',
         function($scope, $stateParams, Slides, Slideshows, DeviceMessageBroker, Admin, Timers) {
 
+            $scope.playerContext = {};
 
             var i = document.body;
 
@@ -41,20 +42,15 @@
             }, 10000);
 
             $scope.moveSlideLeft = function() {
-                $scope.$broadcast("moveSlideLeft");
+                $scope.playerContext.playerScope.$broadcast("moveSlideLeft");
             };
             $scope.moveSlideRight = function() {
-                $scope.$broadcast("moveSlideRight");
+                $scope.playerContext.playerScope.$broadcast("moveSlideRight");
             };
             $scope.togglePlay = function() {
                 $scope.playSlideShow = !$scope.playSlideShow;
                 var messageToBroadcast = $scope.playSlideShow ? 'resetOnHold' : 'putPlayerOnHold';
-                $scope.$broadcast(messageToBroadcast, $scope.viewPlayerId);
-                if (!$scope.playSlideShow) {
-                    messageBroker.sendHoldSlideShow();
-                } else {
-                    messageBroker.sendResetSlideShow();
-                }
+                $scope.playerContext.playerScope.$broadcast(messageToBroadcast, $scope.viewPlayerId);
             };
             $scope.numberOfSlidehsows = 0;
             Slideshows.filter({
@@ -63,6 +59,11 @@
                 $scope.slideshows = result;
                 $scope.numberOfSlidehsows = result.length;
             });
+            $scope.selectSlideShow = function (slideShow) {
+                $scope.previewSlideshowId = slideShow._id;
+                $scope.playerContext.playerScope.switchSlideShow(slideShow._id);
+                messageBroker.sendSwitchSlide(slideShow._id, slideShow.name);
+            }
             $scope.$on("slideShowClicked", function(event, position) {
                 messageBroker.sendSlideShowClicked(position);
             })
@@ -77,11 +78,15 @@
                 messageBroker.sendGotoSlideNumber(slideIndex);
             });
             $scope.$on("slideShowLoaded", function(event, slideShow) {
+                if (slideShow._id != $scope.previewSlideshowId) {
+                    return;
+                }
                 $scope.title = slideShow.name;
-                $scope.createdOn = new Date(slideShow.created);
+                $scope.publishedOnDate = new Date(slideShow.publishedOnDate);
                 $scope.author = slideShow.user ? slideShow.user.displayName:"";
             })
             $scope.$on("$destroy", function() {
+                $scope.playerContext = null;
                 timers.reset();
             });
         }

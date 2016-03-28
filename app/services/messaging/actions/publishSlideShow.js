@@ -33,6 +33,7 @@
             });
 
             slideShow.published = true;
+            slideShow.publishedOnDate = new Date();
             slideShow.save(function (err) {
                 if (err) {
                     console.log("Error when saving ", err);
