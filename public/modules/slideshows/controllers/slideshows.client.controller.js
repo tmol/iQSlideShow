@@ -4,8 +4,8 @@
     'use strict';
 
     // Slideshows controller
-    angular.module('slideshows').controller('SlideshowsController', ['$scope', '$stateParams', 'Authentication', 'Slideshows', '$timeout', 'ServerMessageBroker', 'Tags', '$uibModal', 'Path', '$cacheFactory', 'resolutions', '$state',
-        function ($scope, $stateParams, Authentication, Slideshows, $timeout, ServerMessageBroker, Tags, $uibModal, Path, $cacheFactory, resolutions, $state) {
+    angular.module('slideshows').controller('SlideshowsController', ['$scope', '$stateParams', 'Authentication', 'Slideshows', '$timeout', 'ServerMessageBroker', 'Tags', '$uibModal', 'Path', '$cacheFactory', 'resolutions', '$state', 'ActionResultDialogService',
+        function ($scope, $stateParams, Authentication, Slideshows, $timeout, ServerMessageBroker, Tags, $uibModal, Path, $cacheFactory, resolutions, $state, ActionResultDialogService) {
             var serverMessageBroker = new ServerMessageBroker();
 
             $scope.resolutions = resolutions;
@@ -39,26 +39,25 @@
                 $state.go('viewSlideshow', { slideshowId: $scope.slideshow._id });
             };
 
+            var showOkDialog = function (msg) {
+                ActionResultDialogService.showOkDialog(msg, $scope);
+            };
+
             // Update existing Slideshow
             $scope.upsert = function () {
                 var slideshow = $scope.slideshow,
-                    upsertSucceeded = function (msg) {
-                        $scope.okModalMessage = msg;
-                        $uibModal.open({
-                            animation: false,
-                            templateUrl: Path.getViewUrl('okDialog', 'core'),
-                            windowClass: 'iqss-core-okDialog',
-                            scope: $scope
-                        });
-                    },
                     setScopeError = function (errorResponse) {
                         $scope.error = errorResponse.data.message;
                     };
 
                 if (slideshow._id) {
-                    slideshow.$update(upsertSucceeded('Update succeeded.'), setScopeError);
+                    slideshow.$update(function () {
+                        showOkDialog('Update succeeded.');
+                    }, setScopeError);
                 } else {
-                    $scope.slideshow.$save(upsertSucceeded('Create succeeded'), setScopeError);
+                    $scope.slideshow.$save(function () {
+                        showOkDialog('Create succeeded.');
+                    }, setScopeError);
                 }
             };
 
