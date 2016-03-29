@@ -1,7 +1,7 @@
-<section data-ng-controller="DevicesController" data-ng-init="findOne()">
+<section data-ng-controller="DevicesEditController" data-ng-init="findOne()">
     <div class='iqss-page-header'>
         <div class='iqss-deviceedit-header-container'>
-            <div class="iqss-deviceedit-header-status iqss-deviceedit-header-status-{{getDeviceStatus(device)}}">
+            <div class="iqss-deviceedit-header-status iqss-deviceedit-header-status-{{device.status}}">
             </div>
             <div class="iqss-deviceedit-header-title" ng-bind="device.name">
             </div>
@@ -64,11 +64,22 @@
             <select ng-model="selectedSlideShow" ng-options="slideshow as slideshow.name for slideshow in slideshows"></select>
             <input type="button" ng-click="addSlideShow()" value="Add to slideshows"/>
         </div>
-        <div>
-            Slide shows to play:
-            <div ng-repeat = "entry in device.slideAgregation.playList">
-                <div>{{entry.slideShow.name}}
-                    <input type="button" ng-click="removeSlideshow(entry)" value="X">
+    </div>
+    <div class='iqss-deviceedit-playlist-container'>
+        <div ng-repeat = "entry in device.slideAgregation.playList">
+            <div class='iqss-deviceedit-content-player-container'>
+                <div class='iqss-slideshowview-content-player-actions'>
+                    <div ng-if='playSlideShow' class='iqss-slideshowview-content-player-container-pause' ng-click='togglePlay()'></div>
+                    <div class='iqss-slideshowview-content-player-actions-center'>
+                        <div ng-click='moveSlideLeft()' class='iqss-slideshowview-content-player-actions-center-previous'></div>
+                        <div class='iqss-slideshowview-content-player-actions-center-slideInfo'>Position {{currentPreviewSlideIndex}} of {{numberOfSlides}}</div>
+                        <div ng-click='moveSlideRight()' class='iqss-slideshowview-content-player-actions-center-next'></div>
+                    </div>
+                    <a ng-click='removeSlideshow(entry)' class='iqss-deviceedit-content-player-actions-remove'>
+                    </a>
+                </div>
+                <div class='iqss-deviceedit-playlist-player' dynamic-resizer dynamic-resizer-height-width-ratio="0.5" data-ng-controller="PlayerController" ng-init="initPreview(entry.slideShow._id)">
+                    <div ng-player slides="slides" ng-player-on-hold='true' ng-player-id='viewPlayerId'></div>
                 </div>
             </div>
         </div>

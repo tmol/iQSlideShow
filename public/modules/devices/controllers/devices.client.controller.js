@@ -4,8 +4,8 @@
     'use strict';
 
     // Devices controller
-    angular.module('devices').controller('DevicesController', ['$scope', '$stateParams', '$state', 'Authentication', 'Slideshows', 'Devices', 'ServerMessageBroker', '$uibModal', 'Admin', 'Timers', '$cacheFactory',
-        function ($scope, $stateParams, $state, Authentication, Slideshows, Devices, ServerMessageBroker, $uibModal, Admin, Timers, $cacheFactory) {
+    angular.module('devices').controller('DevicesController', ['$scope', '$state', 'Authentication', 'Slideshows', 'Devices', 'ServerMessageBroker', 'Admin', 'Timers', '$cacheFactory', 'DeviceStatusService',
+        function ($scope, $state, Authentication, Slideshows, Devices, ServerMessageBroker, Admin, Timers, $cacheFactory, DeviceStatusService) {
             var modalInstance,
                 timers = new Timers(),
                 messageBroker = new ServerMessageBroker();
@@ -17,65 +17,16 @@
                 $scope.slideshows = res;
             });
 
-            Admin.getLocations(function (locations) {
-                $scope.locations = locations;
-            });
-
-            // Create new Device
-            $scope.create = function () {
-                // Create new Device object
-                if (!this.active) {
-                    this.active = false;
-                }
-                var device = new Devices({
-                    deviceId: this.deviceId,
-                    name: this.name,
-                    location: this.location,
-                    defaultSlideShowId: this.defaultSlideShowId,
-                    active: this.active
-                });
-
-                // Redirect after save
-                device.$create(function () {
-                    $state.go('listDevices');
-
-                    // Clear form fields
-                    $scope.name = '';
-                }, function (errorResponse) {
-                    $scope.error = errorResponse.data.message;
-                });
-            };
-
             // Remove existing Device
             $scope.remove = function (device) {
                 var i;
-                if (device) {
-                    device.$remove();
+                device.$remove();
 
-                    for (i in $scope.devices) {
-                        if ($scope.devices[i] === device) {
-                            $scope.devices.splice(i, 1);
-                        }
+                for (i in $scope.devices) {
+                    if ($scope.devices[i] === device) {
+                        $scope.devices.splice(i, 1);
                     }
-                } else {
-                    $scope.device.$remove(function () {
-                        $state.go('listDevices');
-                    });
                 }
-            };
-
-            // Update existing Device
-            $scope.update = function () {
-                var device = $scope.device;
-
-                if (!device.active) {
-                    device.active = false;
-                }
-                device.$update(function () {
-                    $state.go('listDevices');
-                }, function (errorResponse) {
-                    $scope.error = errorResponse.data.message;
-                });
             };
 
             $scope.find = function () {
@@ -92,25 +43,8 @@
             $scope.adminConfig = Admin.getConfig();
 
             $scope.getDeviceStatus = function (device) {
-                if (!device.lastHealthReport) {
-                    return 'unhealthy';
-                }
-
-                var lastHeathReport = new Date(device.lastHealthReport),
-                    minutesPassedSinceLastHealthReport = (new Date().getTime() - lastHeathReport.getTime()) / (1000 * 60);
-                if (minutesPassedSinceLastHealthReport > $scope.adminConfig.nrOfMinutesAfterLastHealthReportToConsiderDeviceUnheathy) {
-                    return 'unhealthy';
-                }
-
-                return device.active ? 'active' : 'inactive';
-            };
-
-            // Find existing Device
-            $scope.findOne = function () {
-                $scope.device = Devices.get({
-                    deviceId: $stateParams.deviceId
-                });
-            };
+                return DeviceStatusService.getStatus(device, $scope.adminConfig);
+            }
 
             $scope.cancel = function () {
                 $state.go('listDevices');
@@ -136,17 +70,6 @@
                 });
             });
 
-            $scope.addSlideShow = function () {
-                $scope.device.slideAgregation.playList.push({
-                    slideShow : $scope.selectedSlideShow
-                });
-            };
-
-            $scope.removeSlideshow = function (slideShow) {
-                var index = $scope.device.slideAgregation.playList.indexOf(slideShow);
-                $scope.device.slideAgregation.playList.splice(index, 1);
-            };
-
             $scope.cache = $cacheFactory.get('devices.client.controller');
             if (angular.isUndefined($scope.cache)) {
                 $scope.cache = $cacheFactory('devices.client.controller');
@@ -170,24 +93,6 @@
                     }
                 };
             }
-
-            $scope.onShowLocationsFilter = function () {
-                modalInstance = $modal.open({
-                    animation: false,
-                    templateUrl: 'deviceFilterPopup.html',
-                    windowClass: 'waitingForActivationDialog',
-                    backdrop: 'static',
-                    controller: 'DeviceFilterModalController',
-                    resolve: {
-                        filterParameters: function () {
-                            return $scope.filterParameters;
-                        },
-                        locations: function () {
-                            return $scope.locations;
-                        }
-                    }
-                });
-            };
 
             $scope.possibleSearchedDeviceNames = [ ];
 

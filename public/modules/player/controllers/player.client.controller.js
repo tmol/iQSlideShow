@@ -262,7 +262,7 @@
                             $scope.slideIsOnHold = false;
                             $scope.$broadcast("resetOnHold");
                         }, onlinePollingTime);
-                    }
+                    };
                     resetOnHold();
 
 
