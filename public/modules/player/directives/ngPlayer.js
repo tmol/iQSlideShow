@@ -10,7 +10,8 @@
                 scope: {
                     slides: '&',
                     ngPlayerOnHold: '&',
-                    ngPlayerIgnoreMessages: "&"
+                    ngPlayerIgnoreMessages: "&",
+                    slideShowId: '='
                 },
                 transclude: true,
                 template: '<div ng-repeat="slide in slides() track by $index" ng-if="$index==currentIndex" class="{{slide.animationType}} slideShow" style="width:100%;height:100%;position:relative;display:block;overflow:hidden" ng-slide-view is-playing="true" reference-slide="slide">'
@@ -25,6 +26,11 @@
                     if (scope.ngPlayerOnHold) {
                         scope.onHold = scope.ngPlayerOnHold();
                     }
+
+                    var emitCurrentSlideChanged = function () {
+                        scope.$emit("currentSlideChanged", scope.currentIndex, scope.slideShowId);
+                    };
+
                     var loadSlide = function (slideIndex) {
 
                         scope.currentIndex = slideNumber;
@@ -39,10 +45,10 @@
                             return null;
                         }
 
+                        emitCurrentSlideChanged();
                         if (!slide.content) {
                             return null;
                         }
-                        scope.$emit("currentSlideChanged", slideNumber);
                         return slide;
                     };
                     var loadNextSlide;
@@ -63,11 +69,13 @@
                         if (slideNumber < 0 || slideNumber >= slides.length) {
                             slideNumber = 0;
                         }
+                        scope.currentIndex = slideNumber;
                         var slide = loadSlide(slideNumber);
                         if (!slide) { //if there were no slide displayed, than advance to the next one
                             advanceSlide(1000);
                             return;
                         }
+                        emitCurrentSlideChanged();
                     };
 
                     scope.$on("slideLoaded", function (event, slide) {
@@ -82,13 +90,25 @@
 
                     });
 
+                    var isIdSpecifiedAndNotEqualsWithGivenId = function (id) {
+                        return scope.slideShowId && scope.slideShowId !== id;
+                    };
+
                     if (!ignoreMessages) {
-                        scope.$on("moveSlideRight", function () {
+                        scope.$on("moveSlideRight", function (event, id) {
+                            if (isIdSpecifiedAndNotEqualsWithGivenId(id)) {
+                                return;
+                            }
+
                             timers.unRegisterTimeout('loadNextSlide');
                             loadNextSlide(true);
                         });
 
-                        scope.$on("moveSlideLeft", function () {
+                        scope.$on("moveSlideLeft", function (event, id) {
+                            if (isIdSpecifiedAndNotEqualsWithGivenId(id)) {
+                                return;
+                            }
+
                             timers.unRegisterTimeout('loadNextSlide');
 
                             slideNumber -= 2;

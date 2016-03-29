@@ -94,6 +94,11 @@
             var updateSildes = function (callback) {
                 Slides.get({slideId : $scope.slideShowId}, function (result) {
                     $scope.$emit("slideShowLoaded", result);
+                    if (result.user) {
+                        $scope.nameOfAuthor = result.user.displayName;
+                    }
+                    $scope.lastModified = result.modified;
+                    $scope.title = result.name;
                     setupSlides(result.slides, $scope.slideShowId);
                     if (callback) {
                         callback(result);
@@ -133,7 +138,6 @@
                     close: close
                 };
             }());
-
 
             $scope.switchSlideShow = function (slideShowIdToPlay) {
                 timers.resetTimeouts();

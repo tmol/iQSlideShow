@@ -66,21 +66,30 @@
         </div>
     </div>
     <div class='iqss-deviceedit-playlist-container'>
-        <div ng-repeat = "entry in device.slideAgregation.playList">
+        <div ng-repeat="entry in device.slideAgregation.playList">
             <div class='iqss-deviceedit-content-player-container'>
-                <div class='iqss-slideshowview-content-player-actions'>
-                    <div ng-if='playSlideShow' class='iqss-slideshowview-content-player-container-pause' ng-click='togglePlay()'></div>
-                    <div class='iqss-slideshowview-content-player-actions-center'>
-                        <div ng-click='moveSlideLeft()' class='iqss-slideshowview-content-player-actions-center-previous'></div>
-                        <div class='iqss-slideshowview-content-player-actions-center-slideInfo'>Position {{currentPreviewSlideIndex}} of {{numberOfSlides}}</div>
-                        <div ng-click='moveSlideRight()' class='iqss-slideshowview-content-player-actions-center-next'></div>
+                <div class='iqss-deviceedit-content-player-actions'>
+                    <div class='iqss-deviceedit-content-player-actions-center'>
+                        <div ng-click='moveSlideLeft(entry)' class='iqss-slideshowview-content-player-actions-center-previous'></div>
+                        <div class='iqss-deviceedit-content-player-actions-slideInfo'>Position <span class='iqss-deviceedit-content-player-actions-slideInfo-currentIndex'>{{entry.currentSlideNr}}</span> of {{entry.playerScope.slides.length}}</div>
+                        <div ng-click='moveSlideRight(entry)' class='iqss-slideshowview-content-player-actions-center-next'></div>
                     </div>
-                    <a ng-click='removeSlideshow(entry)' class='iqss-deviceedit-content-player-actions-remove'>
-                    </a>
+                    <div ng-click='removeSlideshow(entry)' class='iqss-deviceedit-content-player-actions-remove'>
+                    </div>
                 </div>
-                <div class='iqss-deviceedit-playlist-player' dynamic-resizer dynamic-resizer-height-width-ratio="0.5" data-ng-controller="PlayerController" ng-init="initPreview(entry.slideShow._id)">
-                    <div ng-player slides="slides" ng-player-on-hold='true' ng-player-id='viewPlayerId'></div>
+                <div class='iqss-deviceedit-playlist-player' dynamic-resizer dynamic-resizer-height-width-ratio="0.5" data-ng-controller="PlayerController" ng-init="initPreview(entry.slideShow._id, entry)">
+                    <div ng-player slide-Show-Id='entry.slideShow._id' slides="slides" ng-player-on-hold='true' ng-player-id='viewPlayerId'></div>
                 </div>
+                <div class='iqss-deviceedit-content-player-titleAndSlidesNrAndEditLink'>
+                    <div class='iqss-deviceedit-content-player-titleAndSlidesNr'>
+                        <div class='iqss-deviceedit-content-player-title textEllipsis' data-ng-bind="entry.playerScope.title"></div>
+                        <div class='iqss-deviceedit-content-player-slidesNr'>({{entry.playerScope.slides.length}} slides)</div>
+                    </div>
+                    <div class='iqss-deviceedit-content-player-editLink' ng-click='navigateToEdit(entry.slideShow._id)'></div>
+                </div>
+                <div class='iqss-deviceedit-content-player-delimiter'></div>
+                <div class='iqss-deviceedit-content-player-authorName' data-ng-bind="entry.playerScope.nameOfAuthor"></div>
+                <div class='iqss-deviceedit-content-player-lastModified'>Last modified: <span data-ng-bind="entry.playerScope.lastModified | date:'dd.MM.yyyy'"></span></div>
             </div>
         </div>
     </div>

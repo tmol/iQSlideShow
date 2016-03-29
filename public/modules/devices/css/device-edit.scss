@@ -1,5 +1,6 @@
 @import '../../core/css/variables.scss';
 @import '../../core/css/mixins.scss';
+@import 'variables.scss';
 
 .iqss-deviceedit-header-container {
     display: flex;
@@ -127,12 +128,13 @@
 }
 
 .iqss-deviceedit-content-player-container {
-    width: 200px;
-    background: $dark-grey-color;
+    width: $device-edit-content-player-container-width;
+    background: white;
     @media (max-width: $bootstrap-xs-breakpoint) {
         width: 100%;
     }
     margin: 5px 10px;
+    padding-bottom: 3px;
 }
 
 .iqss-deviceedit-playlist-player {
@@ -147,6 +149,30 @@
     height:100%
 }
 
+.iqss-deviceedit-content-player-actions {
+    display: flex;
+    align-self: center;
+    background: white;
+    height: 30px;
+}
+
+.iqss-deviceedit-content-player-actions-center {
+    align-self: center;
+    flex: 100;
+}
+
+.iqss-deviceedit-content-player-actions-slideInfo {
+    font-size: $small-font-size;
+    margin: 0 5px;
+    margin-right: 0px;
+    display: inline-block;
+}
+
+.iqss-deviceedit-content-player-actions-slideInfo-currentIndex {
+    color: $orange-color;
+    font-weight: bold;
+}
+
 .iqss-deviceedit-content-player-actions-remove {
     flex: 1 1 15px;
     background: url(../../../modules/core/img/cancel-remove.svg) right center no-repeat;
@@ -158,4 +184,51 @@
     cursor: pointer;
 }
 
+.iqss-deviceedit-content-player-titleAndSlidesNrAndEditLink {
+    display: flex;
+}
+
+.iqss-deviceedit-content-player-titleAndSlidesNr {
+    width: $device-edit-content-player-container-width - $device-edit-content-player-editImageWidth;
+    display: flex;
+    flex-flow: column;
+}
+
+.iqss-deviceedit-content-player-title {
+    font-size: $font-size;
+    padding: 0 $deviceedit-content-player-default-horizontal-padding;
+    @include textEllipsis;
+}
+
+.iqss-deviceedit-content-player-slidesNr {
+    font-size: $very-small-font-size;
+    padding: 3px $deviceedit-content-player-default-horizontal-padding;
+}
+
+.iqss-deviceedit-content-player-editLink {
+    background: url(../../../modules/core/img/edit.svg) center center no-repeat;
+    width: 15px;
+    cursor: pointer;
+}
+
+.iqss-deviceedit-content-player-delimiter {
+    height: 2px;
+    width: $device-edit-content-player-container-width - 2 * ($deviceedit-content-player-default-horizontal-padding - 2);
+    position: relative;
+    left: 50%;
+    transform: translate(-50%, 0);
+    background-color: $dark-grey-color;
+}
+
+.iqss-deviceedit-content-player-authorName {
+    font-size: $very-small-font-size;
+    font-weight: bold;
+    margin-top: 3px;
+    padding: 0 $deviceedit-content-player-default-horizontal-padding;
+}
+
+.iqss-deviceedit-content-player-lastModified {
+    font-size: $very-small-font-size;
+    padding: 0 $deviceedit-content-player-default-horizontal-padding;
+}
 
