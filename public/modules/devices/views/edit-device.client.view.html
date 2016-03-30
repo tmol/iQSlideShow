@@ -58,14 +58,12 @@
     <div class='iqss-deviceedit-playlist-header'>
         Device playlist
     </div>
-    <div class='iqss-deviceedit-playlist'>
-        <div>
-            Slide Show:
-            <select ng-model="selectedSlideShow" ng-options="slideshow as slideshow.name for slideshow in slideshows"></select>
-            <input type="button" ng-click="addSlideShow()" value="Add to slideshows"/>
-        </div>
-    </div>
     <div class='iqss-deviceedit-playlist-container'>
+        <div class='iqss-deviceedit-playlist-player-createNew-container' ng-click='addSlideShow()'>
+            <div class='iqss-deviceedit-playlist-player-createNew'>
+                <span class='iqss-deviceedit-playlist-player-createNew-link'>Add slideshow to playlist</span>
+            </div>
+        </div>
         <div ng-repeat="entry in device.slideAgregation.playList">
             <div class='iqss-deviceedit-content-player-container'>
                 <div class='iqss-deviceedit-content-player-actions'>

@@ -1,8 +1,10 @@
 @import '../../core/css/variables.scss';
+@import '../../core/css/mixins.scss';
 @import 'mixins.scss';
 
 .iqss-slideshowview-playing-on {
     color: $very-dark-grey-color;
+    font-size: $font-size;
 }
 
 .iqss-slideshowview-playing-on-header {
@@ -20,10 +22,6 @@
 .iqss-slideshowview-playing-on-header-scrollbar-holder {
     overflow-y: scroll;
     visibility: hidden;
-}
-
-.iqss-slideshowview-playing-on {
-    font-size: $font-size;
 }
 
 .iqss-slideshowview-playing-on .modal-dialog {
@@ -67,6 +65,10 @@
     background: $light-grey-color;
     color: $blue-color;
     @include input-placeholder($blue-color);
+}
+
+.iqss-slideshowview-playing-on-searchControls-search-container input[type='text'] {
+    border: 0;
 }
 
 .iqss-slideshowview-playing-on-searchControls-search-input-disabled {

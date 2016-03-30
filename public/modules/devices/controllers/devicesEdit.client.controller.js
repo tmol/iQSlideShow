@@ -4,8 +4,8 @@
     'use strict';
 
     // Devices controller
-    angular.module('devices').controller('DevicesEditController', ['$scope', '$stateParams', 'Authentication', '$state', 'Slideshows', 'Devices', 'Admin', 'DeviceStatusService',
-        function ($scope, $stateParams, Authentication, $state, Slideshows, Devices, Admin, DeviceStatusService) {
+    angular.module('devices').controller('DevicesEditController', ['$scope', '$stateParams', 'Authentication', '$state', 'Slideshows', 'Devices', 'Admin', 'DeviceStatusService', '$uibModal', 'Path',
+        function ($scope, $stateParams, Authentication, $state, Slideshows, Devices, Admin, DeviceStatusService, $uibModal, Path) {
             var modalInstance;
 
             $scope.authentication = Authentication;
@@ -84,8 +84,23 @@
             };
 
             $scope.addSlideShow = function () {
-                $scope.device.slideAgregation.playList.push({
-                    slideShow : $scope.selectedSlideShow
+                $uibModal.open({
+                    animation: false,
+                    templateUrl: Path.getViewUrl('selectSlideShows'),
+                    windowClass: 'iqss-deviceedit-selectSlideShows',
+                    backdrop: 'static',
+                    controller: 'SelectSlideShowsController',
+                    scope: $scope
+                }).result.then(function (selectedSlideShows) {
+                    if (!selectedSlideShows) {
+                        return;
+                    }
+
+                    _.forEach(selectedSlideShows, function (selectedSlideShow) {
+                        $scope.device.slideAgregation.playList.push({
+                            slideShow : selectedSlideShow
+                        });
+                    });
                 });
             };
 

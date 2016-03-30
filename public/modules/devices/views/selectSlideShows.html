@@ -1,0 +1,35 @@
+<div class='iqss-deviceedit-selectSlideShows'>
+    <div class='iqss-deviceedit-selectSlideShows-header'>
+        <div class='iqss-deviceedit-selectSlideShows-header-controls'>
+            <div class='iqss-deviceedit-selectSlideShows-label'>Add slideshow to device playlist</div>
+            <div class="iqss-deviceedit-selectSlideShows-searchControls">
+                <div class='iqss-deviceedit-selectSlideShows-searchControls-search'>
+                    <div class='iqss-deviceedit-selectSlideShows-searchControls-search-container'>
+                        <input type="text" id='slideShowsSerchInput' placeholder="Search" ng-model="filter" class='iqss-deviceedit-selectSlideShows-searchControls-search-input'>
+                    </div>
+                    <div>
+                        <hr class='iqss-deviceedit-selectSlideShows-searchControls-search-bottom-line'>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div ng-class="{'iqss-deviceedit-selectSlideShows-header-scrollbar-holder': scrollBarVisibleInSlideShowsList}"></div>
+    </div>
+    <div class='iqss-deviceedit-selectSlideShows-slideShows-list' devices-to-play-on-div-scroll-bar-detector>
+        <div class="iqss-deviceedit-selectSlideShows-slideShows-list-item" ng-repeat="slideShow in slideShows">
+            <input type="checkbox" ng-model="slideShow.checked" id='{{slideShow._id}}'/>
+            <label for='{{slideShow._id}}'><span></span>{{slideShow.name}}</label>
+        </div>
+    </div>
+    <div class='iqss-deviceedit-selectSlideShows-footer'>
+        <div class='iqss-deviceedit-selectSlideShows-footer-actions-container'>
+            <div class='iqss-deviceedit-selectSlideShows-footer-actions'>
+                <input type="button" class='iqss-deviceedit-selectSlideShows-footer-actions-cancel iqss-cancelButton' value="Cancel" ng-click="$close()" />
+                <input type="button" class='iqss-deviceedit-selectSlideShows-footer-actions-add iqss-button' value="Add" ng-click="add()" />
+            </div>
+        </div>
+        <div ng-class="{'iqss-deviceedit-selectSlideShows-header-scrollbar-holder': scrollBarVisibleInSlideShowsList}"></div>
+    </div>
+</div>
+
+

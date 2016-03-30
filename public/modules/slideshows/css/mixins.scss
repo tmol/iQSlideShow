@@ -25,18 +25,3 @@
     margin-left: 15px;
     width:15px;
 }
-
-@mixin input-placeholder($color) {
-  &::-webkit-input-placeholder {
-      color: $color;
-  }
-  &:-moz-placeholder {
-      color: $color;
-  }
-  &::-moz-placeholder {
-      color: $color; //for newer versions of Firefox
-  }
-  &:-ms-input-placeholder {
-      color: $color;
-  }
-}

@@ -1,0 +1,121 @@
+@import '../../core/css/variables.scss';
+@import '../../core/css/mixins.scss';
+
+.iqss-deviceedit-selectSlideShows {
+    color: $very-dark-grey-color;
+    font-size: $font-size;
+}
+
+.iqss-deviceedit-selectSlideShows-header {
+    background: $light-grey-color;
+    padding:  10px 0px 10px 20px;
+    border-bottom: 1px solid $dark-grey-color;
+    display: flex;
+}
+
+.iqss-deviceedit-selectSlideShows-header-controls {
+    padding-right: 20px;
+    flex: 1;
+}
+
+.iqss-deviceedit-selectSlideShows-header-scrollbar-holder {
+    overflow-y: scroll;
+    visibility: hidden;
+}
+
+.iqss-deviceedit-selectSlideShows .modal-dialog {
+  width: 500px;
+}
+
+.iqss-deviceedit-selectSlideShows-label {
+    color: $orange-color;
+}
+
+.iqss-deviceedit-selectSlideShows-searchControls {
+    display: flex;
+    margin: 5px 0;
+}
+
+.iqss-deviceedit-selectSlideShows-searchControls > * {
+    flex: 1 1 50%;
+}
+
+.iqss-deviceedit-selectSlideShows-searchControls-search {
+    display: flex;
+    flex-flow: column;
+}
+
+.iqss-deviceedit-selectSlideShows-searchControls-search-container {
+    border: 0px;
+    background: $light-grey-color;
+    color: $dark-grey-color;
+    background-image: url(../../../../modules/core/img/search.png);
+    background-repeat: no-repeat;
+    background-position: left center;
+}
+
+.iqss-deviceedit-selectSlideShows-searchControls-search-container input[type='text'] {
+    border: 0;
+}
+
+.iqss-deviceedit-selectSlideShows-searchControls-search-input {
+    margin-left: 30px;
+    border: 0px;
+    background: $light-grey-color;
+    color: $blue-color;
+    @include input-placeholder($blue-color);
+}
+
+.iqss-deviceedit-selectSlideShows-searchControls-search-input:focus {
+    outline-color: $light-grey-color;
+}
+
+.iqss-deviceedit-selectSlideShows-searchControls-search-bottom-line {
+    background: $blue-color;
+    height: 1px;
+    margin: 0;
+    border: none;
+    width: 200px;
+    margin-top: 5px;
+}
+
+.iqss-deviceedit-selectSlideShows-slideShows-list {
+    display: flex nowrap;
+    padding-left: 20px;
+    padding-right: 20px;
+    max-height: 200px;
+    overflow-y: auto;
+}
+
+.iqss-deviceedit-selectSlideShows-slideShows-list-item {
+    width: 50%;
+    display: inline-block;
+}
+
+.iqss-deviceedit-selectSlideShows-footer {
+    background: $light-grey-color;
+    border-top: 1px solid $dark-grey-color;
+    display: flex;
+    height: 40px;
+}
+
+.iqss-deviceedit-selectSlideShows-footer-actions-container {
+    flex: 1;
+    display: flex;
+    flex-flow: row-reverse;
+    align-items: center;
+}
+
+.iqss-deviceedit-selectSlideShows-footer-actions {
+    width: 50%;
+}
+
+.iqss-deviceedit-selectSlideShows-footer-actions-cancel {
+    width: 70px;
+}
+
+.iqss-deviceedit-selectSlideShows-footer-actions-add {
+    width: 70px;
+    margin-left: 20px;
+}
+
