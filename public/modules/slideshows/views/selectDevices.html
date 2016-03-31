@@ -21,7 +21,7 @@
         </div>
         <div ng-class="{'iqss-slideshowview-playing-on-header-scrollbar-holder': scrollBarVisibleInDevicesList}"></div>
     </div>
-    <div class='iqss-slideshowview-playing-on-devices-list' devices-to-play-on-div-scroll-bar-detector>
+    <div class='iqss-slideshowview-playing-on-devices-list' dom-element-scroll-bar-detector>
         <div class="iqss-slideshowview-playing-on-devices-list-item" ng-repeat="device in devices">
             <input type="checkbox" ng-model="device.checked" id='{{device._id}}'/>
             <label for='{{device._id}}'><span></span>{{device.name}}</label>

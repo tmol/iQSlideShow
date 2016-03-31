@@ -15,7 +15,7 @@
         </div>
         <div ng-class="{'iqss-deviceedit-selectSlideShows-header-scrollbar-holder': scrollBarVisibleInSlideShowsList}"></div>
     </div>
-    <div class='iqss-deviceedit-selectSlideShows-slideShows-list' devices-to-play-on-div-scroll-bar-detector>
+    <div class='iqss-deviceedit-selectSlideShows-slideShows-list' dom-element-scroll-bar-detector>
         <div class="iqss-deviceedit-selectSlideShows-slideShows-list-item" ng-repeat="slideShow in slideShows">
             <input type="checkbox" ng-model="slideShow.checked" id='{{slideShow._id}}'/>
             <label for='{{slideShow._id}}'><span></span>{{slideShow.name}}</label>
