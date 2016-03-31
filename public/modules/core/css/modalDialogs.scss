@@ -1,6 +1,6 @@
 @import 'variables.scss';
 
-.iqss-core-okDialog {
+.iqss-core-dialog {
     width: 200px;
     height: 150px;
     position: absolute;
@@ -10,24 +10,24 @@
     border-radius: 6px;
 }
 
-.iqss-core-okDialog .modal-dialog {
+.iqss-core-dialog .modal-dialog {
     margin: 0;
     height: 100%;
     width: 100%;
 }
 
-.iqss-core-okDialog .modal-dialog .modal-content {
+.iqss-core-dialog .modal-dialog .modal-content {
     height: 100%;
     width: 100%;
 }
 
-.iqss-core-okDialog-container {
+.iqss-core-dialog-container {
     display: flex;
     flex-flow: column;
     height: 100%;
 }
 
-.iqss-core-okDialog-message {
+.iqss-core-dialog-message {
     margin: 10px;
     font-size: $big-font-size;
     align-items: flex-end;
@@ -38,7 +38,7 @@
     justify-content: center;
 }
 
-.iqss-core-okDialog-footer {
+.iqss-core-dialog-footer {
     display: flex;
     flex-flow: row-reverse;
     margin: 5px 10px;

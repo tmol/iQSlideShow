@@ -4,8 +4,8 @@
     'use strict';
 
     // Devices controller
-    angular.module('devices').controller('DevicesEditController', ['$scope', '$stateParams', 'Authentication', '$state', 'Slideshows', 'Devices', 'Admin', 'DeviceStatusService', '$uibModal', 'Path',
-        function ($scope, $stateParams, Authentication, $state, Slideshows, Devices, Admin, DeviceStatusService, $uibModal, Path) {
+    angular.module('devices').controller('DevicesEditController', ['$scope', '$stateParams', 'Authentication', '$state', 'Slideshows', 'Devices', 'Admin', 'DeviceStatusService', '$uibModal', 'Path', 'ActionResultDialogService',
+        function ($scope, $stateParams, Authentication, $state, Slideshows, Devices, Admin, DeviceStatusService, $uibModal, Path, ActionResultDialogService) {
             var modalInstance;
 
             $scope.authentication = Authentication;
@@ -17,35 +17,16 @@
                 $scope.locations = locations;
             });
 
-            // Create new Device
-            $scope.create = function () {
-                // Create new Device object
-                if (!this.active) {
-                    this.active = false;
-                }
-                var device = new Devices({
-                    deviceId: this.deviceId,
-                    name: this.name,
-                    location: this.location,
-                    defaultSlideShowId: this.defaultSlideShowId,
-                    active: this.active
-                });
-
-                // Redirect after save
-                device.$create(function () {
-                    $state.go('listDevices');
-
-                    // Clear form fields
-                    $scope.name = '';
-                }, function (errorResponse) {
-                    $scope.error = errorResponse.data.message;
-                });
-            };
-
             // Remove existing Device
             $scope.remove = function (device) {
-                $scope.device.$remove(function () {
-                    $state.go('listDevices');
+                ActionResultDialogService.showOkCancelDialog('Are you sure do you want to remove the device?', $scope, function (result) {
+                    if (result === ActionResultDialogService.okResult) {
+                        $scope.device.$remove(function () {
+                            ActionResultDialogService.showOkDialog('Remove was successful.', $scope, function () {
+                                $state.go('listDevices');
+                            });
+                        });
+                    }
                 });
             };
 
@@ -57,7 +38,7 @@
                     device.active = false;
                 }
                 device.$update(function () {
-                    $state.go('listDevices');
+                    ActionResultDialogService.showOkDialog('Save was successful.', $scope);
                 }, function (errorResponse) {
                     $scope.error = errorResponse.data.message;
                 });
