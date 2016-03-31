@@ -29,6 +29,11 @@
                     method: 'GET',
                     url: '/slideshows/filter',
                     isArray: true
+                },
+                filterByName: {
+                    method: 'GET',
+                    url: '/slideshows/filterByName',
+                    isArray: true
                 }
             });
         }]);

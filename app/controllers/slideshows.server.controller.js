@@ -120,6 +120,25 @@
         });
     };
 
+    exports.filterByName = function (req, res) {
+        var searchParam = req.query.nameFilter,
+            filter = {name : { $regex: '^' + searchParam, $options: 'i' }};
+        Slideshow.find(filter).sort('-created').exec(function (err, slideshowsFound) {
+            if (err) {
+                return res.status(400).send({
+                    message: errorHandler.getErrorMessage(err)
+                });
+            }
+            if (!slideshowsFound) {
+                return res.status(400).send({
+                    message: 'Failed to search for active slideshows by name with the following search parameter: ' + searchParam
+                });
+            }
+
+            res.jsonp(slideshowsFound);
+        });
+    };
+
     /**
      * Slideshow middleware
      */

@@ -13,6 +13,9 @@ module.exports = function (app) {
 	app.route('/slideshows/filter')
 		.get(users.requiresLogin, slideshows.list);
 
+	app.route('/slideshows/filterByName')
+		.get(users.requiresLogin, slideshows.filterByName);
+
 	app.route('/slideshows/filteredNamesAndTags')
 		.get(users.requiresLogin, slideshows.getFilteredNamesAndTags);
 

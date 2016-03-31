@@ -11,7 +11,6 @@
                 $scope.templates = response;
             });
 
-
             $scope.close = function (template) {
                 $scope.$close($scope.newSlideData);
             };
