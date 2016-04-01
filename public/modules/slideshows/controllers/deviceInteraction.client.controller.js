@@ -68,12 +68,17 @@
                 messageBroker.sendSlideShowClicked(position);
             })
             $scope.$on("slidesLoaded", function(event, slides, slideShowId) {
+                if (event.targetScope != $scope.playerContext.playerScope) {
+                    return;
+                }
+                $scope.playerContext.playerScope.$broadcast("goToSlideNumber", 0);
+                $scope.numberOfSlides = slides.length;
+            });
+            $scope.$on("currentSlideChanged", function(event, slideIndex, slideShowId, slideShowName) {
                 if (slideShowId != $scope.previewSlideshowId) {
                     return;
                 }
-                $scope.numberOfSlides = slides.length;
-            });
-            $scope.$on("currentSlideChanged", function(event, slideIndex) {
+                $scope.title = slideShowName;
                 $scope.currentPreviewSlideIndex = slideIndex + 1;
                 messageBroker.sendGotoSlideNumber(slideIndex);
             });
