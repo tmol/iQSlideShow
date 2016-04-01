@@ -14,7 +14,7 @@
                     slideShowId: '='
                 },
                 transclude: true,
-                template: '<div ng-repeat="slide in slides() track by $index" ng-if="$index==currentIndex" class="{{slide.animationType}} slideShow" style="width:100%;height:100%;position:relative;display:block;overflow:hidden" ng-slide-view is-playing="true" reference-slide="slide">'
+                template: '<div ng-repeat="slide in slides() track by $index" ng-show="$index==currentIndex" class="{{slide.animationType}} slideShow" style="width:100%;height:100%;position:relative;display:block;overflow:hidden" ng-slide-view is-playing="true" reference-slide="slide">'
                     + '</div>',
                 link: function (scope, element, attrs) {
                     var slideNumber = -1;
@@ -27,8 +27,8 @@
                         scope.onHold = scope.ngPlayerOnHold();
                     }
 
-                    var emitCurrentSlideChanged = function () {
-                        scope.$emit("currentSlideChanged", scope.currentIndex, scope.slideShowId);
+                    var emitCurrentSlideChanged = function (slide) {
+                        scope.$emit("currentSlideChanged", scope.currentIndex, slide.slideShowId, slide.slideShowName);
                     };
 
                     var loadSlide = function (slideIndex) {
@@ -45,7 +45,7 @@
                             return null;
                         }
 
-                        emitCurrentSlideChanged();
+                        emitCurrentSlideChanged(slide);
                         if (!slide.content) {
                             return null;
                         }
