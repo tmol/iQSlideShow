@@ -59,8 +59,9 @@
             };
 
             var setupSlides = function (slides, slideShowId) {
-                $scope.$emit("slidesLoaded", slides, slideShowId);
                 $scope.slides = slides;
+                $scope.$emit("slidesLoaded", slides, slideShowId);
+
                 $scope.slides.forEach(function (slide, index) {
                     slide.index = index;
                 });
@@ -86,6 +87,9 @@
                             });
                         }
                     });
+                    if ($scope.usePreviewFirstSlide && slides && slides.length) {
+                        slides = [slides[0]];
+                    }
                     $scope.slides = slides;
                     $scope.$emit("slidesLoaded", slides, slideShowId);
                 });
@@ -94,12 +98,16 @@
 
             var updateSildes = function (callback) {
                 Slides.get({slideId : $scope.slideShowId}, function (result) {
+
                     $scope.$emit("slideShowLoaded", result);
                     if (result.user) {
                         $scope.nameOfAuthor = result.user.displayName;
                     }
                     $scope.lastModified = result.modified;
                     $scope.title = result.name;
+                    if ($scope.usePreviewFirstSlide && result.slides && result.slides.length) {
+                        result.slides = [result.slides[0]];
+                    }
                     setupSlides(result.slides, $scope.slideShowId);
                     if (callback) {
                         callback(result);
@@ -154,6 +162,9 @@
 
             var loadSlidesForDevice = function (deviceId) {
                 Slides.getSlidesForDevice({deviceId : deviceId}, function (result) {
+                    if ($scope.usePreviewFirstSlide && result && result.length) {
+                        result = [result[0]];
+                    }
                     setupSlides(result);
                 });
             };
@@ -309,6 +320,11 @@
                 });
                 activationDialog.show();
 
+            };
+
+            $scope.initPreviewFirstSlide = function (previewSlideId, context) {
+                $scope.usePreviewFirstSlide = true;
+                $scope.initPreview(previewSlideId, context);
             };
 
             $scope.initPreview = function (previewSlideId, context) {
