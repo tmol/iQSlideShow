@@ -12,7 +12,10 @@
             }
 
             entry.slideShow.slides.forEach(function (slide) {
-                slides.push(slide);
+                var objectSlide = slide.toObject();
+                objectSlide.slideShowName = entry.slideShow.name;
+                console.log(objectSlide.slideShowName);
+                slides.push(objectSlide);
             });
         });
 
