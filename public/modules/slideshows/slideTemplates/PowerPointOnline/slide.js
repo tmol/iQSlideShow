@@ -4,7 +4,8 @@ function PowerPointScript($scope, $q, $timeout) {
     'use strict';
 
     /*temporary testing*/
-    var content = $scope.referenceSlide.content,
+
+    var content = $scope.referenceSlide.content || {},
         url = '/pdfProxy/' + encodeURIComponent(content.url),
         pageRendering = false,
         pageNr = 1,
@@ -108,6 +109,9 @@ function PowerPointScript($scope, $q, $timeout) {
         }
 
         PDFJS.workerSrc = '/modules/slideshows/slideTemplates/PowerPointOnline/pdf.worker.js';
+        if (!content.url) {
+            return;
+        }
         PDFJS.getDocument(url).then(function (pdfDoc_) {
             pdfDoc = pdfDoc_;
             $scope.pdfDocLoaded = true;
