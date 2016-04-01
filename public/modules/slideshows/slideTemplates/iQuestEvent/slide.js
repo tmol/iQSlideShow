@@ -54,6 +54,7 @@ function iQuestEvent($scope, $http) {
         var slide = $scope.referenceSlide || {};
 
         if (!slide.content) {
+            callback();
             return;
         }
         $scope.$on("slide.content.description", function() {
