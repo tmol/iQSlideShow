@@ -25,6 +25,10 @@
                 if (callback) {
                     callback();
                 }
+            }).error(function () {
+                if (callback) {
+                    callback();
+                }
             });
         };
         $rootScope.$on("slideContextUnloaded", function () {
