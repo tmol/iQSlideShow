@@ -75,7 +75,7 @@
                 $scope.numberOfSlides = slides.length;
             });
             $scope.$on("currentSlideChanged", function(event, slideIndex, slideShowId, slideShowName) {
-                if (slideShowId != $scope.previewSlideshowId) {
+                if (event.targetScope.$parent != $scope.playerContext.playerScope) {
                     return;
                 }
                 $scope.title = slideShowName;
