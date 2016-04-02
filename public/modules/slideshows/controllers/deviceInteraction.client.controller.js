@@ -56,7 +56,7 @@
             Slideshows.filter({
                 pageSize: 1000
             }, function(result) {
-                $scope.slideshows = result;
+                //$scope.slideshows = result;
                 $scope.numberOfSlidehsows = result.length;
             });
             $scope.selectSlideShow = function (slideShow) {
@@ -74,22 +74,16 @@
                 $scope.playerContext.playerScope.$broadcast("goToSlideNumber", 0);
                 $scope.numberOfSlides = slides.length;
             });
-            $scope.$on("currentSlideChanged", function(event, slideIndex, slideShowId, slideShowName) {
+            $scope.$on("currentSlideChanged", function(event, slideIndex, slideShowId, slideInfo) {
                 if (event.targetScope.$parent != $scope.playerContext.playerScope) {
                     return;
                 }
-                $scope.title = slideShowName;
+                $scope.title = slideInfo.slideShowName;
+                $scope.publishedOnDate = slideInfo.publishedOnDate;
+                $scope.author = slideInfo.author;
                 $scope.currentPreviewSlideIndex = slideIndex + 1;
                 messageBroker.sendGotoSlideNumber(slideIndex);
             });
-            $scope.$on("slideShowLoaded", function(event, slideShow) {
-                if (slideShow._id != $scope.previewSlideshowId) {
-                    return;
-                }
-                $scope.title = slideShow.name;
-                $scope.publishedOnDate = new Date(slideShow.publishedOnDate);
-                $scope.author = slideShow.user ? slideShow.user.displayName:"";
-            })
             $scope.$on("$destroy", function() {
                 $scope.playerContext = null;
                 timers.reset();
