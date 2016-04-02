@@ -56,7 +56,7 @@
             Slideshows.filter({
                 pageSize: 1000
             }, function(result) {
-                //$scope.slideshows = result;
+                $scope.slideshows = result;
                 $scope.numberOfSlidehsows = result.length;
             });
             $scope.selectSlideShow = function (slideShow) {
