@@ -45,9 +45,6 @@
                             return null;
                         }
 
-                        if (!slide.content) {
-                            return null;
-                        }
                         return slide;
                     };
                     var loadNextSlide;
@@ -136,7 +133,11 @@
                         scope.$on("goToSlideNumber", function (e, slideIndex) {
                             slideNumber = slideIndex;
                             scope.onHold = true;
-                            loadSlide(slideNumber);
+                            var slide = loadSlide(slideNumber);
+                            if (!slide) {
+                                return;
+                            }
+                             emitCurrentSlideChanged(slide);
                         });
                     }
 
