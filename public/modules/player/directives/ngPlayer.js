@@ -45,7 +45,6 @@
                             return null;
                         }
 
-                        emitCurrentSlideChanged(slide);
                         if (!slide.content) {
                             return null;
                         }
@@ -75,7 +74,7 @@
                             advanceSlide(1000);
                             return;
                         }
-                        emitCurrentSlideChanged();
+                        emitCurrentSlideChanged(slide);
                     };
 
                     scope.$on("slideLoaded", function (event, slide) {
