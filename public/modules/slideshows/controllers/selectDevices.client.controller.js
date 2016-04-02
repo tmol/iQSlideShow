@@ -23,7 +23,7 @@
                     });
             };
 
-            $scope.$on('devicesToPlayOnDivScrollBarVisible', function () {
+            $scope.$on('domElementScrollBarVisible', function () {
                 $scope.scrollBarVisibleInDevicesList = true;
             });
 

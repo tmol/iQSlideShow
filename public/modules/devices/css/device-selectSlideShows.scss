@@ -1,6 +1,20 @@
 @import '../../core/css/variables.scss';
 @import '../../core/css/mixins.scss';
 
+.iqss-deviceedit-selectSlideShows-container {
+    visibility: hidden;
+    border-radius: 6px;
+}
+
+.iqss-deviceedit-selectSlideShows-container .modal-dialog {
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+.iqss-deviceedit-selectSlideShows-container .modal-dialog .modal-content {
+    margin-top: 0;
+}
+
 .iqss-deviceedit-selectSlideShows {
     color: $very-dark-grey-color;
     font-size: $font-size;
@@ -28,6 +42,7 @@
 }
 
 .iqss-deviceedit-selectSlideShows-label {
+    font-size: $big-font-size;
     color: $orange-color;
 }
 
@@ -72,7 +87,7 @@
 
 .iqss-deviceedit-selectSlideShows-searchControls-search-bottom-line {
     background: $blue-color;
-    height: 1px;
+    height: 1.1px;
     margin: 0;
     border: none;
     width: 200px;
@@ -90,6 +105,7 @@
 .iqss-deviceedit-selectSlideShows-slideShows-list-item {
     width: 50%;
     display: inline-block;
+    font-size: $small-font-size;
 }
 
 .iqss-deviceedit-selectSlideShows-footer {
@@ -112,7 +128,6 @@
 
 .iqss-deviceedit-selectSlideShows-footer-actions-cancel {
     width: 70px;
-    margin-left: 10px;
 }
 
 .iqss-deviceedit-selectSlideShows-footer-actions-add {

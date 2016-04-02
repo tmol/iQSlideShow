@@ -12,7 +12,7 @@ angular.module('core').directive('domElementScrollBarDetector', ['$timeout', '$r
             },
             function (value) {
                 if (value) {
-                    $rootScope.$broadcast('devicesToPlayOnDivScrollBarVisible');
+                    $rootScope.$broadcast('domElementScrollBarVisible');
                 }
             }
         );

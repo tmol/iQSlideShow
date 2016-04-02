@@ -68,7 +68,7 @@
                 $uibModal.open({
                     animation: false,
                     templateUrl: Path.getViewUrl('selectSlideShows'),
-                    windowClass: 'iqss-deviceedit-selectSlideShows',
+                    windowClass: 'iqss-deviceedit-selectSlideShows-container',
                     backdrop: 'static',
                     controller: 'SelectSlideShowsController',
                     scope: $scope

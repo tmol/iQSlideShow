@@ -21,7 +21,7 @@
                     return false;
                 });
                 $scope.slideShows = _.orderBy(resultsToBeDisplayed, 'lowerCaseName', 'asc');
-            }
+            };
 
             $scope.search = function () {
                 Slideshows.filterByName({
@@ -40,14 +40,12 @@
                 $scope.$close(selectedSlideShows);
             };
 
-            $scope.$on('devicesToPlayOnDivScrollBarVisible', function () {
+            $scope.$on('domElementScrollBarVisible', function () {
                 $scope.scrollBarVisibleInSlideShowsList = true;
             });
 
             $scope.$watch('filter', function () {
                 $scope.search();
             });
-
-            $scope.search();
         }]);
 }());
