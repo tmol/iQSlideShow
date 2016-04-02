@@ -10,11 +10,14 @@
             if (!entry.slideShow.slides) {
                 return;
             }
-
             entry.slideShow.slides.forEach(function (slide) {
                 var objectSlide = slide.toObject();
+
+                //todo: move this part on slide save
                 objectSlide.slideShowName = entry.slideShow.name;
-                console.log(objectSlide.slideShowName);
+                objectSlide.author = entry.slideShow.user ? entry.slideShow.user.displayName : "";
+                objectSlide.publishedOnDate = entry.slideShow.publishedOnDate;
+
                 slides.push(objectSlide);
             });
         });
