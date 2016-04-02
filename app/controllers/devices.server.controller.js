@@ -12,6 +12,8 @@
         Device = mongoose.model('Device'),
         Config = mongoose.model('Config'),
         lodash = require('lodash'),
+        Promise = require('promise'),
+        User = mongoose.model('User'),
         messageHandler = require('../services/messaging/messageHandler');
 
     /**
@@ -154,15 +156,40 @@
     };
 
     exports.deviceWithSlidesByID = function (req, res, next, id) {
-        Device.findOne({"deviceId": id}).populate('slideAgregation.playList.slideShow').exec(function (err, device) {
+        Device.findOne({"deviceId": id}).populate({ //TODO: this dosen't work. I don't understand why!!!!
+            path:'slideAgregation.playList.slideShow',
+            model: 'Slideshow',
+            populate: {
+                path: 'user',
+                model: 'User',
+                select: 'displayName'
+            }
+        }).exec(function (err, device) {
             if (err) {
                 return next(err);
             }
             if (!device) {
                 return next(new Error('Failed to load Device ' + id));
             }
-            req.device = device;
-            next();
+
+            //TODO: had to populate the users in this way because populate on graph dosen't work :(
+            var promises = [];
+            device.slideAgregation.playList.forEach(function(item) {
+                 promises.push(new Promise(function (resolve, error) {
+                    item.slideShow.populate('user', 'displayName', function() {
+                        resolve();
+                    })
+                 }))
+            })
+            Promise.all(promises).then(function () {
+                req.device = device;
+                next();
+            }, function () {
+                next();
+            });
+
+
+            //next();
         });
     };
 
