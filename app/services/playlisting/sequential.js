@@ -11,14 +11,7 @@
                 return;
             }
             entry.slideShow.slides.forEach(function (slide) {
-                var objectSlide = slide.toObject();
-
-                //todo: move this part on slide save
-                objectSlide.slideShowName = entry.slideShow.name;
-                objectSlide.author = entry.slideShow.user ? entry.slideShow.user.displayName : "";
-                objectSlide.publishedOnDate = entry.slideShow.publishedOnDate;
-
-                slides.push(objectSlide);
+                slides.push(slide);
             });
         });
 

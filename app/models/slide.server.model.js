@@ -62,6 +62,18 @@
         resolution: {
             width: {type: Number, default: 960},
             height: {type: Number, default: 540}
+        },
+        slideShowName: {
+            type: String,
+            default: ''
+        },
+        author: {
+            type: String,
+            default: ''
+        },
+        publishedOnDate: {
+            type: String,
+            default: ''
         }
     });
 

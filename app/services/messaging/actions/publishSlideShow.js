@@ -11,7 +11,7 @@
         console.log("Handling publishSlide message, slideShowId: " + message.slideShowId);
 
         console.log("searching for slideShow: " + message.slideShowId);
-        Slideshow.findById(message.slideShowId).exec(function (err, slideShow) {
+        Slideshow.findById(message.slideShowId).populate('user').exec(function (err, slideShow) {
             if (err) {
                 errorPublish(err);
                 return;
@@ -20,20 +20,24 @@
                 errorPublish("Slideshow not found!");
                 return;
             }
-            console.log("found");
+
             slideShow.slides = slideShow.draftSlides.filter(function (slide) {
                 return !slide.hidden;
             });
+
+            slideShow.published = true;
+            slideShow.publishedOnDate = new Date();
 
             //reindex slides because of the hidden one;
             slideShow.slides.forEach(function (slide, index) {
                 slide.slideNumber = index + 1;
                 slide.slideShowId = slideShow._id;
 
+                slide.slideShowName = slideShow.name;
+                slide.author = slideShow.user ? slideShow.user.displayName : "";
+                slide.publishedOnDate = slideShow.publishedOnDate;
             });
 
-            slideShow.published = true;
-            slideShow.publishedOnDate = new Date();
             slideShow.save(function (err) {
                 if (err) {
                     console.log("Error when saving ", err);
