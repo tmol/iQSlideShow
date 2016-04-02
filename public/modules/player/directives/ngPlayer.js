@@ -28,7 +28,12 @@
                     }
 
                     var emitCurrentSlideChanged = function (slide) {
-                        scope.$emit("currentSlideChanged", scope.currentIndex, slide.slideShowId, slide.slideShowName);
+                        var slideInfo = {
+                            slideShowName : slide.slideShowName,
+                            author : slide.author,
+                            publishedOnDate : new Date(slide.publishedOnDate)
+                        }
+                        scope.$emit("currentSlideChanged", scope.currentIndex, slide.slideShowId, slideInfo);
                     };
 
                     var loadSlide = function (slideIndex) {
