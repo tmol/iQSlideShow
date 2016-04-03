@@ -1,24 +1,19 @@
 @import 'variables.scss';
 
 .iqss-core-dialog {
-    width: 200px;
-    height: 150px;
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
     border-radius: 6px;
 }
 
 .iqss-core-dialog .modal-dialog {
-    margin: 0;
-    height: 100%;
-    width: 100%;
+    width: 200px;
+    height: 150px;
+    margin-top: 0;
+    margin-bottom: 0;
 }
 
 .iqss-core-dialog .modal-dialog .modal-content {
-    height: 100%;
-    width: 100%;
+    margin-top: 0;
+    height: 150px;
 }
 
 .iqss-core-dialog-container {
