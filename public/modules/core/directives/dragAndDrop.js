@@ -37,11 +37,15 @@ angular.module('core').directive('dragAndDrop', ['$document', function ($documen
         }
 
         function getRelativePosition(mouseEvent) {
-            var y = mouseEvent.pageY - startY;
-            if (scope.dragAndDropOnlyHorizontal) {
+            var x = mouseEvent.pageX - startX,
+                y = mouseEvent.pageY - startY;
+            if ('horizontalOnly' === scope.dragAndDropMode) {
                 y = 0;
             }
-            return { x: mouseEvent.pageX - startX, y: y};
+            if ('verticalOnly' === scope.dragAndDropMode) {
+                x = 0;
+            }
+            return { x: x, y: y};
         }
 
         function broadcastEvent(dragAndDropEvent, mouseEvent) {
@@ -94,7 +98,7 @@ angular.module('core').directive('dragAndDrop', ['$document', function ($documen
             dragAndDropHeaderHeight: '=',
             dragAndDropFooterHeight: '=',
             dragAndDropMoveEventName: '=',
-            dragAndDropOnlyHorizontal: '='
+            dragAndDropMode: '='
         }
     };
 }]);
