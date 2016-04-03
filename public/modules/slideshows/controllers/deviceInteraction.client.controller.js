@@ -39,7 +39,7 @@
 
             timers.registerInterval("presenceTimeOut", function() {
                 messageBroker.sendPresence();
-            }, 10000);
+            }, 30000);
 
             $scope.moveSlideLeft = function() {
                 $scope.playerContext.playerScope.$broadcast("moveSlideLeft");
