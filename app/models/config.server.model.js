@@ -24,6 +24,10 @@
                 type: Number,
                 default: 100
             },
+            defaultSlideDuration: {
+                type: Number,
+                default: 3
+            },
             created: {
                 type: Date,
                 default: Date.now
