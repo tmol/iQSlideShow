@@ -4,8 +4,8 @@
     'use strict';
 
     // Slideshows controller
-    angular.module('slideshows').controller('SlideshowsController', ['$scope', '$stateParams', 'Authentication', 'Slideshows', '$timeout', 'ServerMessageBroker', 'Tags', '$uibModal', 'Path', '$cacheFactory', 'resolutions', '$state', 'ActionResultDialogService',
-        function ($scope, $stateParams, Authentication, Slideshows, $timeout, ServerMessageBroker, Tags, $uibModal, Path, $cacheFactory, resolutions, $state, ActionResultDialogService) {
+    angular.module('slideshows').controller('SlideshowsController', ['$scope', '$stateParams', 'Authentication', 'Slideshows', '$timeout', 'ServerMessageBroker', 'Tags', '$uibModal', 'Path', '$cacheFactory', 'resolutions', '$state', 'ActionResultDialogService', 'Admin',
+        function ($scope, $stateParams, Authentication, Slideshows, $timeout, ServerMessageBroker, Tags, $uibModal, Path, $cacheFactory, resolutions, $state, ActionResultDialogService, Admin) {
             var serverMessageBroker = new ServerMessageBroker();
 
             $scope.resolutions = resolutions;
@@ -23,6 +23,7 @@
             $scope.viewPlayerId = 'viewPlayer';
             $scope.animationTypes = ["enter-left", "enter-right", "enter-bottom", "enter-top"];
             $scope.newSlideData = {};
+            $scope.adminConfig = Admin.getConfig();
 
             if ($scope.setPlayerMode) {
                 $scope.setPlayerMode(false);
@@ -93,6 +94,9 @@
                     $scope.slideshow  = slideshow;
                     if ($scope.slideshow.draftSlides && $scope.slideshow.draftSlides.length > 0) {
                         $scope.setCurrentSlide($scope.slideshow.draftSlides[0]);
+                        _.forEach($scope.slideshow.draftSlides, function (item) {
+                            item.dragAndDropId = item._id;
+                        });
                     }
                     $scope.getNrOfDevicesTheSlideIsAttachedTo();
                 });
@@ -255,13 +259,17 @@
                         };
                         $scope.slideshow.draftSlides = $scope.slideshow.draftSlides || [];
                         $scope.slideshow.draftSlides.push(newSlide);
+                        newSlide.dragAndDropId = 'Id' + Math.random();
                     }
                     if (newSlideData.slide) {
+                        var dragAndDropId = newSlideData.slide._id;
                         delete newSlideData.slide._id;
                         delete newSlideData.slide._v;
                         newSlide = angular.merge({}, newSlideData.slide);
+                        newSlide.dragAndDropId = dragAndDropId;
                         $scope.slideshow.draftSlides.push(newSlide);
                     }
+                    newSlide.durationInSeconds = $scope.adminConfig.defaultSlideDuration;
                     $scope.setCurrentSlide(newSlide);
                 });
             };

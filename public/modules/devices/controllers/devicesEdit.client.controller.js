@@ -57,6 +57,9 @@
                 }, function (result) {
                     $scope.device = result;
                     $scope.device.status = DeviceStatusService.getStatus($scope.device, $scope.adminConfig);
+                    _.forEach($scope.device.slideAgregation.playList, function (item) {
+                        item.dragAndDropId = item.slideShow._id;
+                    });
                 });
             };
 
@@ -79,7 +82,8 @@
 
                     _.forEach(selectedSlideShows, function (selectedSlideShow) {
                         $scope.device.slideAgregation.playList.push({
-                            slideShow : selectedSlideShow
+                            slideShow : selectedSlideShow,
+                            dragAndDropId: selectedSlideShow._id
                         });
                     });
                 });

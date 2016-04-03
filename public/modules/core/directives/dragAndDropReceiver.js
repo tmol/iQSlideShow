@@ -33,9 +33,9 @@ angular.module('core').directive('dragAndDropReceiver', function () {
             return dragAndDropId;
         }
 
-        function getDraggableItemIndex(id) {
+        function getDraggableItemIndex(dragAndDropId) {
             return _.findIndex(draggableItemsArray, function (item) {
-                return item._id === id;
+                return item.dragAndDropId === dragAndDropId;
             });
         }
 
