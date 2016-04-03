@@ -169,28 +169,8 @@
                 updateTemplate();
             };
 
-            function getDraftSlideIndex(slideId) {
-                return _.findIndex($scope.slideshow.draftSlides, function (aSlide) {
-                    return aSlide._id === slideId;
-                });
-            }
-
-            $scope.slideDropped = function (targetSlideId, draggedSlideId) {
-                var targetSlideIndex = getDraftSlideIndex(targetSlideId);
-                if (targetSlideIndex === -1) {
-                    return;
-                }
-
-                var draggedSlideIndex = getDraftSlideIndex(draggedSlideId);
-                if (draggedSlideIndex === -1) {
-                    return;
-                }
-
-                var indexAdjuster = (draggedSlideIndex > targetSlideIndex) ? 1 : 0;
-                var draftSlides = $scope.slideshow.draftSlides;
-                var draggedSlide = draftSlides.splice(draggedSlideIndex, 1)[0];
-                draftSlides.splice(targetSlideIndex + indexAdjuster, 0, draggedSlide);
-                $scope.$apply();
+            $scope.getDraggableItemsArray = function () {
+                return $scope.slideshow.draftSlides;
             };
 
             $scope.isCurrentSlide = function (slide) {

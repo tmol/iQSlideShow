@@ -64,8 +64,8 @@
                 <span class='iqss-deviceedit-playlist-player-createNew-link'>Add slideshow to playlist</span>
             </div>
         </div>
-        <div ng-repeat="entry in device.slideAgregation.playList">
-            <div class='iqss-deviceedit-content-player-container'>
+        <div ng-repeat="entry in device.slideAgregation.playList" drag-and-drop drag-and-drop-header-height='115' drag-and-drop-footer-height='30' drag-and-drop-move-event-name="'slideShowDragged'" drag-and-drop-only-horizontal='true' dragAndDropId='{{entry._id}}'>
+            <div class='iqss-deviceedit-content-player-container' drag-and-drop-receiver get-draggable-items-array='getDraggableItemsArray()' element-dragged-event-name="'slideShowDragged'" dragAndDropId='{{entry._id}}'>
                 <div class='iqss-deviceedit-content-player-actions'>
                     <div class='iqss-deviceedit-content-player-actions-center'>
                         <div ng-click='moveSlideLeft(entry)' class='iqss-slideshowview-content-player-actions-center-previous'></div>

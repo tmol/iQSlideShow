@@ -32,13 +32,16 @@ angular.module('core').directive('dragAndDrop', ['$document', function ($documen
             angular.element('body').animate({
                 scrollTop: body.scrollTop + distanceInPixels
             }, 'fast', function () {
-                console.log('done');
                 scrolling = false;
             });
         }
 
         function getRelativePosition(mouseEvent) {
-            return { x: mouseEvent.pageX - startX, y: mouseEvent.pageY - startY};
+            var y = mouseEvent.pageY - startY;
+            if (scope.dragAndDropOnlyHorizontal) {
+                y = 0;
+            }
+            return { x: mouseEvent.pageX - startX, y: y};
         }
 
         function broadcastEvent(dragAndDropEvent, mouseEvent) {
@@ -90,7 +93,8 @@ angular.module('core').directive('dragAndDrop', ['$document', function ($documen
         scope: {
             dragAndDropHeaderHeight: '=',
             dragAndDropFooterHeight: '=',
-            dragAndDropMoveEventName: '='
+            dragAndDropMoveEventName: '=',
+            dragAndDropOnlyHorizontal: '='
         }
     };
 }]);

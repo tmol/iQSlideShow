@@ -238,13 +238,10 @@
     width: 100%;
 }
 
-.iqss-slideshowedit-slide-readyToReceiveDrop {
-    border: 1px dashed $orange-color;
-}
-
 .iqss-slideshowedit-slide-container {
     display: flex;
     flex-direction: column;
+    height: 100%;
 }
 
 .iqss-slideshowedit-slide-actions {

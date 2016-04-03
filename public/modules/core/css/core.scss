@@ -82,6 +82,10 @@ footer hr {
     vertical-align: middle;
 }
 
+.iqss-readyToReceiveDrop {
+    border: 1px dashed $orange-color !important;
+}
+
 .undecorated-link:hover {
 	text-decoration: none;
 }
@@ -92,6 +96,7 @@ footer hr {
 .player {
     overflow: hidden;
 }
+
 .ng-slide-view {
     height: 100%;
     width: 100%;

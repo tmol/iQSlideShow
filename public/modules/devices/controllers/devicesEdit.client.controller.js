@@ -102,6 +102,10 @@
                 $scope.$broadcast("moveSlideRight", playListEntry.slideShow._id);
             };
 
+            $scope.getDraggableItemsArray = function () {
+                return $scope.device.slideAgregation.playList;
+            };
+
             $scope.$on('currentSlideChanged', function (event, currentIndex, slideShowId) {
                 var entryIndex = _.findIndex($scope.device.slideAgregation.playList, function (entry) {
                     return entry.slideShow._id === slideShowId;
