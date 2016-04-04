@@ -31,8 +31,15 @@
 
             // Remove existing Slideshow
             $scope.remove = function (slideshow) {
-                $scope.slideshow.$remove(function () {
-                    $state.go('listSlideshows');
+                ActionResultDialogService.showOkCancelDialog('Are you sure do you want to remove the slideshow?', $scope, function (result) {
+                    if (result !== ActionResultDialogService.okResult) {
+                        return;
+                    }
+                    $scope.slideshow.$remove(function () {
+                        ActionResultDialogService.showOkDialog('Remove succeeded', $scope, function () {
+                            $state.go('listSlideshows');
+                        });
+                    });
                 });
             };
 
@@ -75,7 +82,7 @@
                 serverMessageBroker
                     .publishSlideShow(id)
                     .then(function () {
-                        alert("Published");
+                        showOkDialog('Publish succeeded.');
                     });
             };
 
@@ -83,7 +90,7 @@
                 serverMessageBroker
                     .publishSlideShow($scope.slideshow._id)
                     .then(function () {
-                        alert("Published");
+                        showOkDialog('Publish succeeded.');
                     });
             };
 

@@ -4,19 +4,30 @@
     'use strict';
 
     // Slideshows controller
-    angular.module('slideshows').controller('SlideshowsListController', ['$scope', '$location', 'Slideshows', '$timeout', 'ServerMessageBroker', 'Path', '$cacheFactory',
-        function ($scope, $location, Slideshows, $timeout, ServerMessageBroker, Path, $cacheFactory) {
+    angular.module('slideshows').controller('SlideshowsListController', ['$scope', '$location', 'Slideshows', '$timeout', 'ServerMessageBroker', 'Path', '$cacheFactory', 'ActionResultDialogService',
+        function ($scope, $location, Slideshows, $timeout, ServerMessageBroker, Path, $cacheFactory, ActionResultDialogService) {
 
             var serverMessageBroker = new ServerMessageBroker();
 
+            var showOkDialog = function (msg) {
+                ActionResultDialogService.showOkDialog(msg, $scope);
+            };
+
             $scope.remove = function (slideshow) {
-                slideshow.$remove();
-                var i;
-                for (i in $scope.slideshows) {
-                    if ($scope.slideshows[i] === slideshow) {
-                        $scope.slideshows.splice(i, 1);
+                ActionResultDialogService.showOkCancelDialog('Are you sure do you want to remove the slideshow?', $scope, function (result) {
+                    if (result !== ActionResultDialogService.okResult) {
+                        return;
                     }
-                }
+                    slideshow.$remove(function () {
+                        var i;
+                        for (i in $scope.slideshows) {
+                            if ($scope.slideshows[i] === slideshow) {
+                                $scope.slideshows.splice(i, 1);
+                            }
+                        }
+                        showOkDialog('Remove succeeded');
+                    });
+                });
             };
 
             // todo what happens when error occures?
@@ -24,7 +35,7 @@
                 serverMessageBroker
                     .publishSlideShow(id)
                     .then(function () {
-                        alert("Published");
+                        showOkDialog('Publish succeeded.');
                     });
             };
 
