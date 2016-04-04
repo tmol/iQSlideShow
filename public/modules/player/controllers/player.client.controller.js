@@ -16,6 +16,7 @@
             if ($scope.isPreview()) {
                 $scope.active = true;
             }
+            $scope.showDraftSlides = false;
 
             var timers = new Timers();
             var handleDeviceSetup = null;
@@ -107,6 +108,9 @@
                     $scope.title = result.name;
                     if ($scope.usePreviewFirstSlide && result.slides && result.slides.length) {
                         result.slides = [result.slides[0]];
+                    }
+                    if ($scope.showDraftSlides) {
+                        result.slides = result.draftSlides;
                     }
                     setupSlides(result.slides, $scope.slideShowId);
                     if (callback) {
@@ -324,6 +328,11 @@
 
             $scope.initPreviewFirstSlide = function (previewSlideId, context) {
                 $scope.usePreviewFirstSlide = true;
+                $scope.initPreview(previewSlideId, context);
+            };
+
+            $scope.initPreviewDraftSlides = function (previewSlideId, context) {
+                $scope.showDraftSlides = true;
                 $scope.initPreview(previewSlideId, context);
             };
 
