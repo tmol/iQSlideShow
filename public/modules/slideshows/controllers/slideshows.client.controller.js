@@ -318,10 +318,18 @@
                 }
                 $scope.$emit("slideContextUnloaded");
             });
+            var watchElements = {}
             $scope.$on("setTemplateElement", function (event, name, value) {
+                var slidePartId = event.targetScope.$id;
                 $scope.templateElements = $scope.templateElements || {};
+                if (!$scope.templateElements.hasOwnProperty(name)) {
+                    $scope.$watch("currentSlide.content." + name, function (newValue, oldValue) {
+                        $scope.$broadcast("updateSlideContentPart", newValue, name, slidePartId);
+                    });
+                }
                 $scope.templateElements[name] = value;
             });
+
             $scope.moveSlideLeft = function () {
                 $scope.$broadcast("moveSlideLeft");
             };
