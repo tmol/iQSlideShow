@@ -1,6 +1,6 @@
 /*global angular, alert, confirm*/
 /*jslint nomen: true, es5: true */
-angular.module('admin').directive('locationItem', ['Admin', '$document', '$timeout', 'Devices', function (Admin, $document, $timeout, Devices) {
+angular.module('admin').directive('locationItem', ['Admin', '$document', '$timeout', 'Devices', 'ActionResultDialogService', function (Admin, $document, $timeout, Devices, ActionResultDialogService) {
     'use strict';
     function link(scope, element, attrs) {
         var rememberActualLocationName,
@@ -73,7 +73,7 @@ angular.module('admin').directive('locationItem', ['Admin', '$document', '$timeo
                 confirmationResult;
 
             if (!scope.isLocationNameUnique({location: scope.location})) {
-                alert('Location name must ne unique!');
+                ActionResultDialogService.showOkDialog('Location name must ne unique!', scope);
                 return;
             }
 
