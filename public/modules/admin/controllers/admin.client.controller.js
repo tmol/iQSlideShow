@@ -2,8 +2,8 @@
 (function () {
     'use strict';
 
-    angular.module('admin').controller('AdminController', ['$scope', '$stateParams', '$location', 'Authentication', 'Admin', 'Slideshows',
-        function ($scope, $stateParams, $location, Authentication, Admin, Slideshows) {
+    angular.module('admin').controller('AdminController', ['$scope', '$stateParams', '$location', 'Authentication', 'Admin', 'Slideshows', 'ActionResultDialogService',
+        function ($scope, $stateParams, $location, Authentication, Admin, Slideshows, ActionResultDialogService) {
             $scope.authentication = Authentication;
 
             Slideshows.query(function (res) {
@@ -14,7 +14,7 @@
                 var config = $scope.config;
 
                 config.$updateConfig(function () {
-                    $location.path('/');
+                    ActionResultDialogService.showOkDialog('Update succeeded', $scope);
                 }, function (errorResponse) {
                     $scope.error = errorResponse.data.message;
                 });
