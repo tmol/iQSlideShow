@@ -57,10 +57,12 @@
 
                 if (slideshow._id) {
                     slideshow.$update(function () {
+                        $scope.error = '';
                         showOkDialog('Update succeeded.');
                     }, setScopeError);
                 } else {
                     $scope.slideshow.$save(function () {
+                        $scope.error = '';
                         showOkDialog('Create succeeded.');
                     }, setScopeError);
                 }
@@ -315,7 +317,7 @@
                 }
                 $scope.$emit("slideContextUnloaded");
             });
-            var watchElements = {}
+
             $scope.$on("setTemplateElement", function (event, name, value) {
                 var slidePartId = event.targetScope.$id;
                 $scope.templateElements = $scope.templateElements || {};
