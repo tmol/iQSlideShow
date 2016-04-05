@@ -37,7 +37,7 @@
         animationType: {
             type: String,
             default: '',
-            required: 'Please fill the Animaion type',
+            required: 'Animation type required.',
             trim: true
         },
         detailsUrl: {

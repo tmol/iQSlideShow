@@ -48,23 +48,62 @@
                 ActionResultDialogService.showOkDialog(msg, $scope);
             };
 
+            var checkMandatoryFields = function () {
+                var errMsg = '',
+                    animationTypesRequiredMsg,
+                    idx = 0;
+
+                if (!$scope.slideshow.name) {
+                    errMsg = 'The slideshow title is not specified.';
+                }
+                _.forEach($scope.slideshow.draftSlides, function (slideshow) {
+                    idx = idx + 1;
+                    if (!slideshow.animationType) {
+                        if (animationTypesRequiredMsg) {
+                            animationTypesRequiredMsg = animationTypesRequiredMsg + ', ';
+                        }
+                        animationTypesRequiredMsg = (animationTypesRequiredMsg || '') + "'" + (slideshow.title || '') + "'" + ' (position ' + idx + ')';
+                    }
+                });
+                if (animationTypesRequiredMsg) {
+                    animationTypesRequiredMsg = 'The animation type is not specified for the following slides: ' + animationTypesRequiredMsg + '.';
+                }
+                if (animationTypesRequiredMsg) {
+                    if (errMsg.length > 0) {
+                        errMsg = errMsg + '\r\n';
+                    }
+                    errMsg = errMsg + animationTypesRequiredMsg;
+                }
+                return errMsg;
+            };
+
+            var setErrorMessage = function (errorResponse) {
+                $scope.error = errorResponse.data.message;
+            };
+
             // Update existing Slideshow
             $scope.upsert = function () {
                 var slideshow = $scope.slideshow,
-                    setScopeError = function (errorResponse) {
-                        $scope.error = errorResponse.data.message;
-                    };
+                    handleUpsertSuccess = function (msg) {
+                        $scope.error = '';
+                        $scope.slideShowChanged = false;
+                        showOkDialog(msg);
+                    },
+                    mandatoryFieldsCheckMsg = checkMandatoryFields();
+
+                if (mandatoryFieldsCheckMsg && mandatoryFieldsCheckMsg.length > 0) {
+                    $scope.error = mandatoryFieldsCheckMsg;
+                    return;
+                }
 
                 if (slideshow._id) {
                     slideshow.$update(function () {
-                        $scope.error = '';
-                        showOkDialog('Update succeeded.');
-                    }, setScopeError);
+                        handleUpsertSuccess('Update succeeded.');
+                    }, setErrorMessage);
                 } else {
                     $scope.slideshow.$save(function () {
-                        $scope.error = '';
-                        showOkDialog('Create succeeded.');
-                    }, setScopeError);
+                        handleUpsertSuccess('Create succeeded.');
+                    }, setErrorMessage);
                 }
             };
 
@@ -308,7 +347,6 @@
                     return;
                 }
                 $scope.currentSlide.resolution = $scope.resolutions[newValue];
-
             });
 
             $scope.$on("$destroy", function () {

@@ -1,6 +1,6 @@
 'use strict';
 
-module.exports = function(grunt) {
+module.exports = function (grunt) {
     require('time-grunt')(grunt);
 
 	// Unified Watch Object
@@ -8,7 +8,7 @@ module.exports = function(grunt) {
 		serverViews: ['app/views/**/*.*'],
 		serverJS: ['gruntfile.js', 'server.js', 'config/**/*.js', 'app/**/*.js'],
 		clientViews: ['public/modules/**/views/**/*.html'],
-		clientJS: ['public/js/*.js', 'public/modules/**/*.js', '!public/modules/slideshows/slideTemplates/PowerPointOnline/pdf*.js'],
+		clientJS: ['public/js/*.js', 'public/modules/**/*.js', '!public/modules/slideshows/slideTemplates/Pdf/pdf*.js'],
 		clientCSS: ['public/modules/**/*.css'],
         clientSCSS: ['public/modules/**/*.scss'],
 		mochaTests: ['app/tests/**/*.js']
@@ -34,7 +34,7 @@ module.exports = function(grunt) {
 			clientViews: {
 				files: watchFiles.clientViews,
 				options: {
-					livereload: true,
+					livereload: true
 				}
 			},
 			clientJS: {
@@ -80,7 +80,7 @@ module.exports = function(grunt) {
 		},
 		csslint: {
 			options: {
-				csslintrc: '.csslintrc',
+				csslintrc: '.csslintrc'
 			},
 			all: {
 				src: watchFiles.clientCSS
@@ -186,7 +186,7 @@ module.exports = function(grunt) {
 	grunt.option('force', true);
 
 	// A Task for loading the configuration object
-	grunt.task.registerTask('loadConfig', 'Task that loads the config into a grunt option.', function() {
+	grunt.task.registerTask('loadConfig', 'Task that loads the config into a grunt option.', function () {
 		var init = require('./config/init')();
 		var config = require('./config/config');
 
