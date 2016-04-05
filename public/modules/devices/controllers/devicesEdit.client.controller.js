@@ -19,14 +19,12 @@
 
             // Remove existing Device
             $scope.remove = function (device) {
-                ActionResultDialogService.showOkCancelDialog('Are you sure do you want to remove the device?', $scope, function (result) {
-                    if (result === ActionResultDialogService.okResult) {
-                        $scope.device.$remove(function () {
-                            ActionResultDialogService.showOkDialog('Remove was successful.', $scope, function () {
-                                $state.go('listDevices');
-                            });
+                ActionResultDialogService.showOkCancelDialog('Are you sure do you want to remove the device?', $scope, function () {
+                    $scope.device.$remove(function () {
+                        ActionResultDialogService.showOkDialog('Remove was successful.', $scope, function () {
+                            $state.go('listDevices');
                         });
-                    }
+                    });
                 });
             };
 

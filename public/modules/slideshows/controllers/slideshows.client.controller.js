@@ -31,10 +31,7 @@
 
             // Remove existing Slideshow
             $scope.remove = function (slideshow) {
-                ActionResultDialogService.showOkCancelDialog('Are you sure do you want to remove the slideshow?', $scope, function (result) {
-                    if (result !== ActionResultDialogService.okResult) {
-                        return;
-                    }
+                ActionResultDialogService.showOkCancelDialog('Are you sure do you want to remove the slideshow?', $scope, function () {
                     $scope.slideshow.$remove(function () {
                         ActionResultDialogService.showOkDialog('Remove succeeded', $scope, function () {
                             $state.go('listSlideshows');

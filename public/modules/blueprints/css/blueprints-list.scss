@@ -29,7 +29,7 @@
 
 .iqss-blueprintslist-slideshow {
     height: $blueprints-list-slideshow-height;
-    margin: 0 17px 15px 17px;
+    margin: 0 $blueprints-list-slideshow-margin 15px $blueprints-list-slideshow-margin;
     padding: 0;
     width: $blueprints-list-slideshow-width;
     box-shadow: 2px 2px 3px $grey-color;
@@ -38,7 +38,7 @@
 .iqss-blueprintslist-slideshow-empty {
     height: 0;
     width: $blueprints-list-slideshow-width;
-    margin: 0 17px 20px 17px;
+    margin: 0 $blueprints-list-slideshow-margin 20px $blueprints-list-slideshow-margin;
     padding-right: 0;
 }
 
@@ -57,13 +57,13 @@
     background-color: white;
 }
 
-.iqss-blueprintslist-slideshow-title-container {
+.iqss-blueprintslist-slideshow-header {
     font-size: $font-size;
     color: $very-dark-grey-color;
     box-sizing: content-box;
-    display: inline-block;
-    padding-right: 22px;
-    width: $blueprints-list-slideshow-width - 40px;
+    display: flex;
+    align-items: center;
+    width: $blueprints-list-slideshow-width - $blueprints-list-slideshow-margin - 5;
     height: 33px;
     line-height: 33px;
     padding-left: 10px;
@@ -77,21 +77,17 @@
     background: url(/modules/core/img/published-ok.svg) right center no-repeat;
 }
 
-.iqss-blueprintslist-slideshow-title-container > div {
-    width: $blueprints-list-slideshow-width;
+.iqss-blueprintslist-slideshow-title {
     @include textEllipsis;
     line-height: 16px;
-    padding-right: 35px;
+    flex: 1 1;
 }
 
 .iqss-blueprintslist-slideshow-deleteLink {
     background: url(/modules/core/img/delete.svg) right center no-repeat;
     width: 17px;
     height: 17px;
-    display: inline-block;
-    float: right;
-    margin-right: -21px;
-    margin-top: 7px;
+    cursor: pointer;
 }
 
 .iqss-blueprintslist-slideshow-delimiter {

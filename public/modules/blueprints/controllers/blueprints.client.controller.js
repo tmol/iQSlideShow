@@ -2,8 +2,8 @@
 /*global _, angular, ApplicationConfiguration*/
 (function () {
     'use strict';
-    angular.module('blueprints').controller('BlueprintsController', ['$scope', 'Tags', 'SlideBlueprints', 'SlideBlueprintsSearch', 'slidesConcatenatedTagsListWithLimitedLength',
-        function ($scope, Tags, SlideBlueprints, SlideBlueprintsSearch, slidesConcatenatedTagsListWithLimitedLength) {
+    angular.module('blueprints').controller('BlueprintsController', ['$scope', 'Tags', 'SlideBlueprints', 'SlideBlueprintsSearch', 'slidesConcatenatedTagsListWithLimitedLength', 'ActionResultDialogService',
+        function ($scope, Tags, SlideBlueprints, SlideBlueprintsSearch, slidesConcatenatedTagsListWithLimitedLength, ActionResultDialogService) {
             $scope.filterParameters = {namesAndTagsFilter: ''};
 
             $scope.search = function () {
@@ -30,10 +30,12 @@
             };
 
             $scope.removeSlide = function (slide) {
-                SlideBlueprints.delete({
-                    slideId: slide._id
-                }, function () {
-                    $scope.search();
+                ActionResultDialogService.showOkCancelDialog('Are you sure do you want to remove the slide?', $scope, function () {
+                    SlideBlueprints.delete({slideId: slide._id}, function () {
+                        ActionResultDialogService.showOkDialog('Remove succeeded', $scope, function () {
+                            $scope.search();
+                        });
+                    });
                 });
             };
         }]);

@@ -11,10 +11,9 @@
                 <div class="iqss-blueprintslist-slideshow">
                     <div>
                         <div>
-                            <div class="iqss-blueprintslist-slideshow-title-container" >
-                               {{slide.bluePrintTitle}}
-                               <a href='#' data-ng-click='removeSlide(slide);' class='iqss-blueprintslist-slideshow-deleteLink'></a>
-
+                            <div class="iqss-blueprintslist-slideshow-header" >
+                                <div class='iqss-blueprintslist-slideshow-title'>{{slide.bluePrintTitle}}</div>
+                                <div data-ng-click='removeSlide(slide);' class='iqss-blueprintslist-slideshow-deleteLink'></div>
                             </div>
                         </div>
                         <div class='iqss-blueprintslist-slideshow-preview'>

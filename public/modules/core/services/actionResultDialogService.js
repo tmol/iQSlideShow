@@ -5,6 +5,8 @@
     angular.module('core').service('ActionResultDialogService', ['Path', '$uibModal',
         function (Path, $uibModal) {
 
+            var okResult = 'ok';
+
             var showDialog = function (templateName, msg, scope, callback) {
                 scope.modalDialogMessage = msg;
                 $uibModal.open({
@@ -23,15 +25,20 @@
                 showDialog('okDialog', msg, scope, callback);
             };
 
-            var showOkCancelDialog = function (msg, scope, callback) {
-                showDialog('okCancelDialog', msg, scope, callback);
+            var showOkCancelDialog = function (confirmationMsg, scope, callback) {
+                showDialog('okCancelDialog', confirmationMsg, scope, function (result) {
+                    if (result !== okResult) {
+                        return;
+                    }
+                    callback();
+                });
             };
 
             return {
                 showOkDialog: showOkDialog,
                 showOkCancelDialog: showOkCancelDialog,
                 cancelResult: 'cancel',
-                okResult: 'ok'
+                okResult: okResult
             };
         }]);
 }());

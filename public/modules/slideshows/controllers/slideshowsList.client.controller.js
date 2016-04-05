@@ -14,10 +14,7 @@
             };
 
             $scope.remove = function (slideshow) {
-                ActionResultDialogService.showOkCancelDialog('Are you sure do you want to remove the slideshow?', $scope, function (result) {
-                    if (result !== ActionResultDialogService.okResult) {
-                        return;
-                    }
+                ActionResultDialogService.showOkCancelDialog('Are you sure do you want to remove the slideshow?', $scope, function () {
                     slideshow.$remove(function () {
                         var i;
                         for (i in $scope.slideshows) {
