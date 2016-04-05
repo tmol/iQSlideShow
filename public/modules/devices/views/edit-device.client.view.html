@@ -68,14 +68,14 @@
             <div class='iqss-deviceedit-content-player-container' drag-and-drop-receiver get-draggable-items-array='getDraggableItemsArray()' element-dragged-event-name="'slideShowDragged'" dragAndDropId='{{entry.dragAndDropId}}'>
                 <div class='iqss-deviceedit-content-player-actions'>
                     <div class='iqss-deviceedit-content-player-actions-center'>
-                        <div ng-click='moveSlideLeft(entry)' class='iqss-slideshowview-content-player-actions-center-previous'></div>
-                        <div class='iqss-deviceedit-content-player-actions-slideInfo'>Position <span class='iqss-deviceedit-content-player-actions-slideInfo-currentIndex'>{{entry.currentSlideNr}}</span> of {{entry.playerScope.slides.length}}</div>
-                        <div ng-click='moveSlideRight(entry)' class='iqss-slideshowview-content-player-actions-center-next'></div>
+                        <div ng-click='moveSlideShowLeft(entry)' ng-class="{'iqss-deviceedit-content-player-actions-moveLeft':$index !== 0, 'iqss-deviceedit-content-player-actions-moveLeft-disabled':$index === 0}"></div>
+                        <div class='iqss-deviceedit-content-player-actions-slideInfo'>Position <span class='iqss-deviceedit-content-player-actions-slideInfo-currentIndex'>{{$index + 1}}</span> of {{device.slideAgregation.playList.length}}</div>
+                        <div ng-click='moveSlideShowRight(entry)'  ng-class="{'iqss-deviceedit-content-player-actions-moveRight':$index !== device.slideAgregation.playList.length - 1, 'iqss-deviceedit-content-player-actions-moveRight-disabled':$index === device.slideAgregation.playList.length - 1}"></div>
                     </div>
                     <div ng-click='removeSlideshow(entry)' class='iqss-deviceedit-content-player-actions-remove'>
                     </div>
                 </div>
-                <div class='iqss-deviceedit-playlist-player' dynamic-resizer dynamic-resizer-height-width-ratio="0.5" data-ng-controller="PlayerController" ng-init="initPreview(entry.slideShow._id, entry)">
+                <div class='iqss-deviceedit-playlist-player' dynamic-resizer dynamic-resizer-height-width-ratio="0.5" data-ng-controller="PlayerController" ng-init="initPreviewFirstSlide(entry.slideShow._id, entry)">
                     <div ng-player slide-Show-Id='entry.slideShow._id' slides="slides" ng-player-on-hold='true' ng-player-id='viewPlayerId'></div>
                 </div>
                 <div class='iqss-deviceedit-content-player-titleAndSlidesNrAndEditLink'>

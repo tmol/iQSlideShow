@@ -1,6 +1,7 @@
 @import '../../core/css/variables.scss';
 @import '../../core/css/mixins.scss';
 @import 'variables.scss';
+@import 'mixins.scss';
 
 .iqss-deviceedit-header-container {
     display: flex;
@@ -191,6 +192,28 @@
 .iqss-deviceedit-content-player-actions-center {
     align-self: center;
     flex: 100;
+}
+
+.iqss-deviceedit-content-player-actions-moveLeft {
+    background: url(../../../modules/core/img/previous.svg) right center no-repeat;
+    @include slideShowMoveActionCommon;
+}
+
+.iqss-deviceedit-content-player-actions-moveLeft-disabled {
+    background: url(../../../modules/core/img/previous-disabled.svg) right center no-repeat;
+    @include slideShowMoveActionCommon;
+    cursor:inherit;
+}
+
+.iqss-deviceedit-content-player-actions-moveRight {
+    background: url(../../../modules/core/img/next.svg) right center no-repeat;
+    @include slideShowMoveActionCommon;
+}
+
+.iqss-deviceedit-content-player-actions-moveRight-disabled {
+    background: url(../../../modules/core/img/next-diabled.svg) right center no-repeat;
+    @include slideShowMoveActionCommon;
+    cursor:inherit;
 }
 
 .iqss-deviceedit-content-player-actions-slideInfo {

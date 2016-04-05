@@ -96,12 +96,25 @@
                 $state.go('editSlideshow', {slideshowId: slideshowId});
             };
 
-            $scope.moveSlideLeft = function (playListEntry) {
-                $scope.$broadcast("moveSlideLeft", playListEntry.slideShow._id);
+            var moveSlideShowInPlaylist = function (slideShow, placesToMove) {
+                var playList = $scope.device.slideAgregation.playList,
+                    index = playList.indexOf(slideShow),
+                    newIndex = index + placesToMove;
+
+                if (newIndex < 0 || newIndex > playList.length - 1) {
+                    return;
+                }
+
+                playList.splice(index, 1);
+                playList.splice(newIndex, 0, slideShow);
             };
 
-            $scope.moveSlideRight = function (playListEntry) {
-                $scope.$broadcast("moveSlideRight", playListEntry.slideShow._id);
+            $scope.moveSlideShowLeft = function (playListEntry) {
+                moveSlideShowInPlaylist(playListEntry, -1);
+            };
+
+            $scope.moveSlideShowRight = function (playListEntry) {
+                moveSlideShowInPlaylist(playListEntry, 1);
             };
 
             $scope.getDraggableItemsArray = function () {
