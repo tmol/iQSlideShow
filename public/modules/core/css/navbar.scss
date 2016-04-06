@@ -56,25 +56,37 @@
     padding-right: 10px;
 }
 
-.iqss-navbar-right > li > a{
-    padding: 0px;
-    font-size: 14px;
-}
-
 .iqss-navbar-right > li {
     float: right;
-    padding-right: 30px;
-    padding-top: 25px;
-    background-image: url(/modules/core/img/settings.png);
+    padding-right: 10px;
     background-repeat: no-repeat;
     background-position: center right;
     height: $header-height;
+    display: flex;
+    align-items: center;
 }
 
 
-.iqss-navbar-right li > span{
+.iqss-navbar-right-welcome {
     font-size: $header-small-font-size;
     float: right;
+}
+
+.iqss-navbar-right-profileActionsLink {
+    padding: 0px;
+    font-size: 14px;
+    display: flex;
+    cursor: pointer;
+}
+
+.iqss-navbar-right-settingIcon {
+    background: url(/modules/core/img/settings.svg) right center no-repeat;
+    width: 30px;
+    margin-left: 10px;
+}
+
+.iqss-navbar-right-userName {
+    color: $blue-color;
 }
 
 .navbar-nav .dropdown-menu.iqss-navbar-dropdown-menu {
