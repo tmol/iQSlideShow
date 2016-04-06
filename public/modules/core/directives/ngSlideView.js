@@ -3,7 +3,7 @@
     'use strict';
     angular.module('core').directive('ngSlideView', ['$timeout', 'resolutions', '$rootScope', 'SlideSetup',
         function ($timeout, resolutions, $rootScope, SlideSetup) {
-             var indicator = "<svg style='width:0px;height:0px;opacity:0.8;position: absolute;margin-left:0px;margin-top:0px;display:none;z-index:1000; transform: translate(-50%,-50%)'><circle cx='50%' cy='50%' r='46%' stroke='red' fill='red' fill-opacity='0.0' stroke-width='4%'></circle></svg>";
+            var indicator = "<svg style='width:0px;height:0px;opacity:0.8;position: absolute;margin-left:0px;margin-top:0px;display:none;z-index:1000; transform: translate(-50%,-50%)'><circle cx='50%' cy='50%' r='46%' stroke='red' fill='red' fill-opacity='0.0' stroke-width='4%'></circle></svg>";
 
             var template = '<div class="slideshow-placeholder" style="width:{{resolution.width}}px;height:{{resolution.height}}px;transform:{{transform}}" touch-start="onSlideClicked($event)">';
             template += "<div style='top: 50%; position: absolute; left: 50%;  transform: translate(-50%,-50%);zoom:{{zoomPercent}}%'>";
@@ -114,17 +114,17 @@
                                 "margin-left" : ((scope.resolution.width * position.percentX) / 100) + "px",
                                 "margin-top" : ((scope.resolution.height * position.percentY) / 100) + "px",
                                 "display" : "block"
-                            })
+                            });
                             element.find('.slideshow-placeholder').append(indicatorElement);
-                            indicatorElement.animate({width: scope.indicatorSize + "px", height: scope.indicatorSize + "px"}, 1000, "easeInOutElastic", function() {
+                            indicatorElement.animate({width: scope.indicatorSize + "px", height: scope.indicatorSize + "px"}, 1000, "easeInOutElastic", function () {
                                 $timeout(function () {
                                     indicatorElement.animate({width: "0px", height: "0px"}, 3000, "easeInOutElastic", function () {
                                         indicatorElement.remove();
                                     });
-                                },2000);
+                                }, 2000);
 
                             });
-                        },10)
+                        }, 10);
                     });
 
                     // TODO update only once per resize
