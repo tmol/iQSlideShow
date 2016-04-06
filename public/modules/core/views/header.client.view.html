@@ -39,12 +39,15 @@
 		</ul>
 		<ul class="nav navbar-nav navbar-right iqss-navbar-right col-sm-2" data-ng-show="authentication.user">
 			<li>
-                <span>
-                    Welcome
-                </span>
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                    <span data-ng-bind="authentication.user.displayName"></span>
-                </a>
+                <div class="dropdown-toggle iqss-navbar-right-profileActionsLink" data-toggle="dropdown">
+                    <div>
+                        <div class='iqss-navbar-right-welcome'>
+                            Welcome
+                        </div>
+                        <div class='iqss-navbar-right-userName' data-ng-bind="authentication.user.displayName"></div>
+                    </div>
+                    <div class="iqss-navbar-right-settingIcon"></div>
+                </div>
 				<ul class="dropdown-menu iqss-navbar-dropdown-menu" >
                     <div class="buble-indicator top"></div>
                     <li>
@@ -61,7 +64,6 @@
 						<a href="/auth/signout">Signout</a>
 					</li>
 				</ul>
-
 			</li>
 		</ul>
 	</nav>

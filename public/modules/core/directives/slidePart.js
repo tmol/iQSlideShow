@@ -18,7 +18,7 @@
                     var templatePath;
                     var oldContent;
                     var update = function (content) {
-                        if (oldContent==content) {
+                        if (oldContent === content) {
                             return;
                         }
                         oldContent = content;
@@ -41,7 +41,7 @@
                         }
                     };
                     scope.$on("updateSlideContentPart", function (event, content, member, slidePartId) {
-                        if (slidePartId!=scope.$id || member!=attrs.member) {
+                        if (slidePartId !== scope.$id || member !== attrs.member) {
                             return;
                         }
                         update(content);
