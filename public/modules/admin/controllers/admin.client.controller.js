@@ -23,7 +23,6 @@
             $scope.getConfig = function () {
                 Admin.getConfig(function (config) {
                     $scope.config = config;
-                    $scope.gridOptionsLocations.data = $scope.config.locations;
                 });
             };
         }
