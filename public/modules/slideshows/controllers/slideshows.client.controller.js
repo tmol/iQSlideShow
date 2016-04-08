@@ -219,7 +219,11 @@
             };
 
             $scope.getDraggableItemsArray = function () {
-                return $scope.slideshow.draftSlides;
+                return {
+                    items: $scope.slideshow.draftSlides,
+                    moveItem: function (dragAndDropId, horizontalApproach, verticalApproach) {
+                    }
+                }
             };
 
             $scope.isCurrentSlide = function (slide) {

@@ -26,7 +26,10 @@ angular.module('slideshows').directive('dynamicResizer', ['$window', '$timeout',
 
         window.on('resize', onResize);
 
-        update();
+        $timeout(function () {
+            update();
+        });
+
         scope.$on('$destroy', function () {
             window.off('resize', onResize);
         });

@@ -134,15 +134,81 @@
     @media (max-width: $bootstrap-xs-breakpoint) {
         width: 100%;
     }
-    margin: 5px 10px;
+    margin: 5px $device-edit-content-player-container-horizontal-margin;
     padding-bottom: 3px;
     border: 1px solid $darker-grey-color;
+    position: relative;
+    left: 0;
+    right: 0;
 }
+
+@keyframes moveLeft{
+    from {
+        left: 0;
+    }
+    to {
+        left: -$device-edit-content-player-container-fullWidth;
+    }
+}
+
+@keyframes moveCenterFromLeft{
+    from {
+        left: -$device-edit-content-player-container-fullWidth;
+    }
+    to {
+        left: 0;
+    }
+}
+
+@keyframes moveRight{
+    from {
+        left: 0;
+    }
+    to {
+        left: $device-edit-content-player-container-fullWidth;
+    }
+}
+
+@keyframes moveCenterFromRight{
+    from {
+        left: $device-edit-content-player-container-fullWidth;
+    }
+    to {
+        left: 0;
+    }
+}
+
+@mixin move($animationName) {
+    position: relative;
+    animation-name: $animationName;
+    animation-duration: 0.3s;
+    animation-timing-function: cubic-bezier(0.460, 0.905, 0.630, 0.995);
+    animation-fill-mode: forwards;
+}
+
+
+.iqss-deviceedit-content-player-container-moveLeft {
+    @include move(moveLeft);
+}
+
+.iqss-deviceedit-content-player-container-moveCenterFromLeft {
+    @include move(moveCenterFromLeft);
+}
+
+.iqss-deviceedit-content-player-container-moveRight {
+    @include move(moveRight);
+}
+
+.iqss-deviceedit-content-player-container-moveCenterFromRight {
+    @include move(moveCenterFromRight);
+}
+
 
 .iqss-deviceedit-playlist-player {
     overflow: hidden;
     display: inline-block;
     width: 100%;
+    height: 100%;
 }
 
 .iqss-deviceedit-playlist-player > div {

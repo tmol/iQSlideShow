@@ -10,6 +10,10 @@ $device-list-default-horizontal-padding: 7px;
 
 $device-edit-content-player-container-width: 200px;
 
+$device-edit-content-player-container-horizontal-margin: 10px;
+
+$device-edit-content-player-container-fullWidth: $device-edit-content-player-container-width + 2 * $device-edit-content-player-container-horizontal-margin;
+
 $device-edit-content-player-editImageWidth: 40px;
 
 $deviceedit-content-player-default-horizontal-padding: 12px;
