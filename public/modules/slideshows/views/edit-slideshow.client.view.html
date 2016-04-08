@@ -32,8 +32,8 @@
                                 <input id='{{slide._id}}' ng-true-value="true" ng-false-value="false" ng-model-options="{allowInvalid: true}" type="checkbox" data-ng-model="slide.hidden">
                                 <label for='{{slide._id}}'>
                                     <span ng-if='!slide.hidden' style='background: url(../../../modules/core/img/hide-slide.svg) left bottom no-repeat;vertical-align: middle;height: 15px;'></span>
-                                    <span ng-if='slide.hidden' style='background: url(../../../modules/core/img/view-slide.svg) left bottom no-repeat;vertical-align: middle;;height: 15px;'></span>
-                                </label>
+                            <span ng-if='slide.hidden' style='background: url(../../../modules/core/img/view-slide.svg) left bottom no-repeat;vertical-align: middle;;height: 15px;'></span>
+                            </label>
                             </span>
                             <span class='iqss-slideshowedit-slide-actions-title'>{{slide.title}}</span>
                             <span class='iqss-slideshowedit-slide-actions-saveToBlueprints' ng-click="saveSlideToBlueprints(slide)"></span>
@@ -41,8 +41,8 @@
                         </div>
                         <div class='iqss-slideshowedit-slide-preview'>
                             <div ng-slide-view reference-slide="slide">
+                            </div>
                         </div>
-                    </div>
                     </div>
                 </div>
                 <!-- SLIDE LIST PREVIEW end-->
@@ -53,7 +53,7 @@
             <div class="iqss-slideshowedit-data">
                 <uib-tabset>
 
-                   <!--SLIDE INFO START-->
+                    <!--SLIDE INFO START-->
                     <uib-tab heading="Slide info">
                         <div class='iqss-slideshowedit-data-tab'>
                             <div>
@@ -65,16 +65,13 @@
                             <div class='iqss-form-label'>Tags</div>
                             <ui-select multiple tagging tagging-label="(custom 'new' tag)" ng-model="slideshow.tags" sortable="true" style="width: 300px;" title="Choose a tag">
                                 <ui-select-match placeholder="Select tags or enter new...">{{$item}}</ui-select-match>
-                                    <ui-select-choices repeat="tag in possibleTags"
-                                        refresh="refreshTags($select.search)"
-                                        refresh-delay="0">
-                                        {{tag}}
-                                    </ui-select-choices>
-                              </ui-select>
+                                <ui-select-choices repeat="tag in possibleTags" refresh="refreshTags($select.search)" refresh-delay="0">
+                                    {{tag}}
+                                </ui-select-choices>
+                            </ui-select>
                             <div class='iqss-form-label'>Zoom percent ({{currentSlide.zoomPercent}}%)</div>
-                            <div ui-slider min=0 max=1000 ng-model="currentSlide.zoomPercent"></div>
-                            <div class='iqss-form-label'>Resolution ({{currentSlide.resolution.width}} / {{currentSlide.resolution.height}})</div>
-                            <div ui-slider min=0 max={{resolutions.length-1}} ng-model="selectedResolution" id="selectedResolution"></div>
+                            <div ui-slider min=0 max=200 ng-model="currentSlide.zoomPercent"></div>
+
                             <div class='iqss-form-label'>Details URL</div>
                             <input type="text" data-ng-model="currentSlide.detailsUrl" id="detailsUrl" placeholder="detailsUrl" required>
 
@@ -96,7 +93,7 @@
                         <div class='iqss-slideshowedit-data-tab'>
                             <div ng-repeat="(templateElement, value) in templateElements">
                                 <div class='iqss-form-label'>{{value.label}}</div>
-                                <div class="controls" >
+                                <div class="controls">
                                     <input ng-if="value.type=='text'" type="text" ng-model="currentSlide.content[templateElement]">
                                     <div text-angular ng-if="value.type=='html'" type="text" ng-model="currentSlide.content[templateElement]"></div>
                                 </div>
@@ -120,7 +117,8 @@
 
             <div class="iqss-slideshowedit-emptyColumn">&nbsp;</div>
 
-            <div class="iqss-slideshowedit-preview" >
+            <div class="iqss-slideshowedit-preview">
+
                 <div ng-slide-view reference-slide="currentSlide">
                 </div>
                 <div class="iqss-slideshowedit-preview-footer">

@@ -4,17 +4,18 @@
     'use strict';
 
     // Slideshows controller
-    angular.module('slideshows').controller('SlideshowsController', ['$scope', '$stateParams', 'Authentication', 'Slideshows', '$timeout', 'ServerMessageBroker', 'Tags', '$uibModal', 'Path', '$cacheFactory', 'resolutions', '$state', 'ActionResultDialogService', 'Admin',
-        function ($scope, $stateParams, Authentication, Slideshows, $timeout, ServerMessageBroker, Tags, $uibModal, Path, $cacheFactory, resolutions, $state, ActionResultDialogService, Admin) {
+    angular.module('slideshows').controller('SlideshowsController', ['$scope', '$stateParams', 'Authentication', 'Slideshows', '$timeout', 'ServerMessageBroker', 'Tags', '$uibModal', 'Path', '$cacheFactory', '$state', 'ActionResultDialogService', 'Admin',
+        function ($scope, $stateParams, Authentication, Slideshows, $timeout, ServerMessageBroker, Tags, $uibModal, Path, $cacheFactory, $state, ActionResultDialogService, Admin) {
             var serverMessageBroker = new ServerMessageBroker();
 
-            $scope.resolutions = resolutions;
+            var defResolution = {width: 1920, height: 1080};
             $scope.authentication = Authentication;
             $scope.currentSlide = null;
             $scope.playerView = Path.getViewUrl('player.client.view', 'preview');
             $scope.previewSlideshowId = $stateParams.slideshowId;
             $scope.currentPreviewSlideIndex = 0;
             $scope.numberOfSlides = 0;
+            $scope.view ={};
             $scope.slideshow = {
                 tags: []
             };
@@ -194,26 +195,13 @@
 
                 $scope.templateElements = {};
                 $scope.currentSlide = slide;
-                $scope.selectedResolution = -1;
+                $scope.view.selectedResolution = -1;
 
                 if (!slide) {
                     return;
                 }
 
-                if (!slide.resolution) {
-                    slide.resolution = $scope.resolutions[0];
-                }
-
-                $scope.resolutions.forEach(function (item, index) {
-                    if (item.width === slide.resolution.width && item.height === slide.resolution.height) {
-                        $scope.selectedResolution = index;
-                    }
-                });
-
-                if ($scope.selectedResolution === -1) {
-                    $scope.selectedResolution = 0;
-                    slide.resolution = $scope.resolutions[0];
-                }
+                slide.resolution = defResolution; //todo: remove this later
                 $scope.currentSlide.fireSetTemplateElementEvent = true;
                 updateTemplate();
             };
@@ -318,6 +306,8 @@
                         newSlide.dragAndDropId = dragAndDropId;
                         $scope.slideshow.draftSlides.push(newSlide);
                     }
+                    newSlide.resolution = defResolution;
+                    newSlide.zoomPercent = 100;
                     newSlide.durationInSeconds = $scope.adminConfig.defaultSlideDuration;
                     $scope.setCurrentSlide(newSlide);
                 });
@@ -345,13 +335,6 @@
                 var messageToBroadcast = $scope.playSlideShow ? 'resetOnHold' : 'putPlayerOnHold';
                 $scope.$broadcast(messageToBroadcast, $scope.viewPlayerId);
             };
-
-            $scope.$watch("selectedResolution", function (newValue, oldValue) {
-                if (!$scope.currentSlide) {
-                    return;
-                }
-                $scope.currentSlide.resolution = $scope.resolutions[newValue];
-            });
 
             $scope.$on("$destroy", function () {
                 if ($scope.cache) {

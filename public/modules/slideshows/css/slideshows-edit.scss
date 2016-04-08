@@ -52,13 +52,13 @@
 }
 
 .iqss-slideshowedit-emptyColumn {
-    flex: 0.2 0.2;
+    flex: 0.05;
     background-color: $dark-grey-color;
 }
 
 .iqss-slideshowedit-slides {
     display: inline-block;
-    flex: 1 1;
+    flex: 0.4;
     @include border;
     background: white;
     width: 20%;
@@ -68,14 +68,17 @@
     display: inline-block;
     @include border;
     background: white;
-    width: 351px;
+    flex: 1;
 }
 
 .iqss-slideshowedit-preview {
     display: inline-block;
-    flex: 3 1;
+    flex: 1;
+    align-self: flex-start;
+    flex-direction: column;
     @include border;
     width: 33%;
+    height: 400px;
     overflow: hidden;
 }
 
