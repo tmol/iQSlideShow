@@ -61,8 +61,6 @@
 
             var setupSlides = function (slides, slideShowId) {
                 $scope.slides = slides;
-                $scope.$emit("slidesLoaded", slides, slideShowId);
-
                 $scope.slides.forEach(function (slide, index) {
                     slide.index = index;
                 });
@@ -208,7 +206,7 @@
 
             $scope.$on("slideLoaded", function (event, slide) {
                 var url = $location.$$absUrl.split("/slideshow")[0];
-                $scope.qrConfig.slideUrl = url + "/#!/deviceInteraction/" + $scope.deviceId + "/" + slide.slideShowId + "/" + slide.slideNumber;
+                $scope.qrConfig.slideUrl = url + "/slideshow#!/deviceInteraction/" + $scope.deviceId + "/" + slide.slideShowId + "/" + slide.slideNumber;
             });
 
             $scope.$on("$destroy", function () {

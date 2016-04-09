@@ -2,11 +2,11 @@
 /*global angular, ApplicationConfiguration, _*/
 (function() {
     'use strict';
-    angular.module('slideshows').controller('DeviceInteractionController', ['$scope', '$stateParams', 'Slides', 'Slideshows', 'DeviceMessageBroker', 'Admin', 'Timers',
-        function($scope, $stateParams, Slides, Slideshows, DeviceMessageBroker, Admin, Timers) {
+    angular.module('player').controller('DeviceInteractionController', ['$scope', '$stateParams', 'Slides', 'Slideshows', 'DeviceMessageBroker', 'Timers',
+        function($scope, $stateParams, Slides, Slideshows, DeviceMessageBroker, Timers) {
 
             $scope.playerContext = {};
-
+            var slideShowSelected = false;
             var i = document.body;
 
             // go full-screen: POC - will be removed after tests
@@ -24,16 +24,6 @@
             $scope.previewSlideshowId = $stateParams.slideShowId;
             var messageBroker = new DeviceMessageBroker($scope.deviceId);
 
-            $scope.setSlideShow = function() {
-                Admin.getConfig(function(config) {
-                    var slideShowName = _.filter($scope.slideshows, {
-                        _id: $scope.slideShowId
-                    })[0].name;
-                    messageBroker.sendSwitchSlide($scope.slideShowId, slideShowName, config.userSelectedSlideShowsPlayTimeInMinutes);
-                }, function(err) {
-                    throw err;
-                });
-            };
             messageBroker.sendHoldSlideShow();
             var timers = new Timers();
 
@@ -60,6 +50,7 @@
                 $scope.numberOfSlidehsows = result.length;
             });
             $scope.selectSlideShow = function (slideShow) {
+                slideShowSelected = true;
                 $scope.previewSlideshowId = slideShow._id;
                 $scope.playerContext.playerScope.switchSlideShow(slideShow._id);
                 messageBroker.sendSwitchSlide(slideShow._id, slideShow.name);
@@ -71,7 +62,12 @@
                 if (event.targetScope != $scope.playerContext.playerScope) {
                     return;
                 }
-                $scope.playerContext.playerScope.$broadcast("goToSlideNumber", 0);
+                var slideNumber =parseInt($stateParams.slideNumber)-1;
+                if (slideShowSelected)
+                {
+                    slideNumber = 0;
+                }
+                $scope.playerContext.playerScope.$broadcast("goToSlideNumber", slideNumber);
                 $scope.numberOfSlides = slides.length;
             });
             $scope.$on("currentSlideChanged", function(event, slideIndex, slideShowId, slideInfo) {
