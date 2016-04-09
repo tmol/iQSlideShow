@@ -1,26 +1,23 @@
-.enter-right.ng-enter,.enter-right.ng-leave {
-  -webkit-transition:all .5s ease-in-out;
-  -moz-transition:all .5s ease-in-out;
-  -o-transition:all .5s ease-in-out;
+.enter-right.ng-hide-add, .enter-right.ng-hide-remove {
   transition:all .5s ease-in-out;
 }
 
-.enter-right.ng-enter {
+.enter-right.ng-hide-remove {
   opacity: 0;
-  left: -5000px;
-}
-
-.enter-right.ng-enter-active {
-  opacity: 1;
-  left: 0px;
-}
-
-.enter-right.ng-leave {
-  opacity: 1;
-  left: 0px;
-}
-
-.enter-right.ng-leave-active {
-  opacity: 1;
   left: 5000px;
+}
+
+.enter-right.ng-hide-remove-active {
+  opacity: 1;
+  left: 0px;
+}
+
+.enter-right.ng-hide-add {
+  opacity: 1;
+  left: 0px;
+}
+
+.enter-right.ng-hide-add-active {
+  opacity: 1;
+  left: -5000px;
 }

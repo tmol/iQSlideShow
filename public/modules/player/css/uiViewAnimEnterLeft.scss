@@ -1,23 +1,23 @@
-.enter-left.ng-enter,.enter-left.ng-leave {
+.enter-left.ng-hide-add, .enter-left.ng-hide-remove {
   transition:all .5s ease-in-out;
 }
 
-.enter-left.ng-enter {
+.enter-left.ng-hide-remove {
   opacity: 0;
-  left: 5000px;
-}
-
-.enter-left.ng-enter-active {
-  opacity: 1;
-  left: 0px;
-}
-
-.enter-left.ng-leave {
-  opacity: 1;
-  left: 0px;
-}
-
-.enter-left.ng-leave-active {
-  opacity: 1;
   left: -5000px;
+}
+
+.enter-left.ng-hide-remove-active {
+  opacity: 1;
+  left: 0px;
+}
+
+.enter-left.ng-hide-add {
+  opacity: 1;
+  left: 0px;
+}
+
+.enter-left.ng-hide-add-active {
+  opacity: 1;
+  left: 5000px;
 }
