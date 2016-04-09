@@ -124,6 +124,8 @@
                         $timeout(function () {
                             $scope.$apply();
                         });
+                    },
+                    itemDropped: function () {
                     }
                 };
             };

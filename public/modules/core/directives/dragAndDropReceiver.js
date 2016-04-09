@@ -52,7 +52,13 @@ angular.module('core').directive('dragAndDropReceiver', ['$timeout', function ($
             var draggedElementArea = (draggedElementBoundaries.y2 - draggedElementBoundaries.y1) * (draggedElementBoundaries.x2 - draggedElementBoundaries.x1);
             if (overlapArea > draggedElementArea / 2) {
                 var horizontalApproach = (dragEventArgs.horizontalDelta > 0) ? 'left' : 'right';
-                var verticalApproach = (dragEventArgs.horizontalDelta < 0) ? 'top' : 'bottom';
+                if (dragEventArgs.horizontalDelta === 0) {
+                    horizontalApproach = '';
+                }
+                var verticalApproach = (dragEventArgs.verticalDelta > 0) ? 'top' : 'bottom';
+                if (dragEventArgs.verticalDelta === 0) {
+                    verticalApproach = '';
+                }
 
                 if (lastMoveHorizontalApproach !== horizontalApproach
                         || lastMoveVerticalApproach !== verticalApproach) {

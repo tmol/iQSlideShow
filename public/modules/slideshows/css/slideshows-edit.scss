@@ -248,10 +248,74 @@
     height: 100%;
 }
 
+@keyframes moveTop{
+    from {
+        top: 0;
+    }
+    to {
+        top: -$slideshow-edit-slide-height;
+    }
+}
+
+@keyframes moveCenterFromTop{
+    from {
+        top: -$slideshow-edit-slide-height;
+    }
+    to {
+        top: 0;
+    }
+}
+
+@keyframes moveBottom{
+    from {
+        top: 0;
+    }
+    to {
+        top: $slideshow-edit-slide-height;
+    }
+}
+
+@keyframes moveCenterFromBottom{
+    from {
+        top: $slideshow-edit-slide-height;
+    }
+    to {
+        top: 0;
+    }
+}
+
+@mixin move($animationName) {
+    position: relative;
+    animation-name: $animationName;
+    animation-duration: 0.3s;
+    animation-timing-function: cubic-bezier(0.460, 0.905, 0.630, 0.995);
+    animation-fill-mode: forwards;
+}
+
+.iqss-slideshowedit-slide-container-moveTop {
+    @include move(moveTop);
+}
+
+.iqss-slideshowedit-slide-container-moveBottom {
+    @include move(moveBottom);
+}
+
+.iqss-slideshowedit-slide-container-moveCenterFromTop {
+    @include move(moveCenterFromTop);
+}
+
+.iqss-slideshowedit-slide-container-moveCenterFromBottom {
+    @include move(moveCenterFromBottom);
+}
+
+.iqss-slideshowedit-slide-container-dragging {
+    z-index: 100000;
+}
+
 .iqss-slideshowedit-slide-actions {
     display: flex;
     height: 25px;
-    line-height: 25px;
+    line-height: $slideshow-edit-slide-actions-height;
     padding: 0 $slideshow-edit-slide-leftRightPadding;
     border-top: 1px solid $darker-grey-color;
 }
@@ -290,7 +354,7 @@
 .iqss-slideshowedit-slide-preview {
     padding: 0 $slideshow-edit-slide-indexWidth + $slideshow-edit-slide-leftRightPadding;
     width: 213px;
-    height: 130px;
+    height: $slideshow-edit-slide-preview-height;
     display: inline-block;
     overflow: hidden;
 }

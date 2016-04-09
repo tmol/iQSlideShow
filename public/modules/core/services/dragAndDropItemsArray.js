@@ -28,39 +28,48 @@
                 };
 
                 this.dragItem = function (dragAndDropId) {
-                    var playListItem = this.getItemByDragAndDropId(dragAndDropId);
-                    playListItem.moveStatus = 'drag';
+                    var item = this.getItemByDragAndDropId(dragAndDropId);
+                    item.moveStatus = 'drag';
                 };
 
                 this.dropItem = function (dragAndDropId) {
-                    var playListItem = this.getItemByDragAndDropId(dragAndDropId);
-                    this.moveItemInItemsList(playListItem, draggedArray.lastIndexMovedDuringDragAndDrop);
+                    var item = this.getItemByDragAndDropId(dragAndDropId);
+                    this.moveItemInItemsList(item, draggedArray.lastIndexMovedDuringDragAndDrop);
                     _.forEach(items, function (item) {
                         delete item.moveStatus;
                         delete item.lastMoveDirection;
                     });
                     draggedArray.itemsChanged();
+                    draggedArray.itemDropped(item);
                 };
 
-                this.moveItem = function (dragAndDropId, horizontalApproach) {
-                    var playListItem = this.getItemByDragAndDropId(dragAndDropId),
+                var approachIsFromDirection = function (horizontalApproach, verticalApproach, direction) {
+                    if (direction === 'prev') {
+                        return horizontalApproach === 'left' || verticalApproach === 'top';
+                    } else if (direction === 'next') {
+                        return horizontalApproach === 'right' || verticalApproach === 'bottom';
+                    }
+                };
+
+                this.moveItem = function (dragAndDropId, horizontalApproach, verticalApproach) {
+                    var item = this.getItemByDragAndDropId(dragAndDropId),
                         setMoveStatus = function (direction, nonCenterMoveStatus, oppositeMoveStatus, moveToCenterStatus) {
-                            if (horizontalApproach === direction
-                                    && playListItem.moveStatus !== nonCenterMoveStatus
-                                    && playListItem.lastMoveDirection !== direction) {
-                                if (playListItem.moveStatus === oppositeMoveStatus) {
-                                    playListItem.moveStatus = moveToCenterStatus;
+                            if (approachIsFromDirection(horizontalApproach, verticalApproach, direction)
+                                    && item.moveStatus !== nonCenterMoveStatus
+                                    && item.lastMoveDirection !== direction) {
+                                if (item.moveStatus === oppositeMoveStatus) {
+                                    item.moveStatus = moveToCenterStatus;
                                 } else {
-                                    playListItem.moveStatus = nonCenterMoveStatus;
+                                    item.moveStatus = nonCenterMoveStatus;
                                 }
-                                playListItem.lastMoveDirection = direction;
+                                item.lastMoveDirection = direction;
                             }
                         };
 
-                    console.log('horizontalApproach: ' + horizontalApproach + ', moveStatus: ' + playListItem.moveStatus + ', lastMoveDirection:' + playListItem.lastMoveDirection);
-                    setMoveStatus('left', 'moveLeft', 'moveRight', 'moveCenterFromRight');
-                    setMoveStatus('right', 'moveRight', 'moveLeft', 'moveCenterFromLeft');
-                    console.log('horizontalApproach: ' + horizontalApproach + ',' + playListItem.moveStatus);
+                    console.log('horizontalApproach: ' + horizontalApproach + ', moveStatus: ' + item.moveStatus + ', lastMoveDirection:' + item.lastMoveDirection);
+                    setMoveStatus('prev', 'movePrev', 'moveNext', 'moveCenterFromNext');
+                    setMoveStatus('next', 'moveNext', 'movePrev', 'moveCenterFromPrev');
+                    console.log('horizontalApproach: ' + horizontalApproach + ',' + item.moveStatus);
                     console.log('   ');
                     draggedArray.lastIndexMovedDuringDragAndDrop = this.getIndexByDragAndDropId(dragAndDropId);
                     draggedArray.itemsChanged();

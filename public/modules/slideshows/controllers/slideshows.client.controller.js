@@ -48,8 +48,8 @@
                 $state.go('viewSlideshow', { slideshowId: $scope.slideshow._id });
             };
 
-            var showOkDialog = function (msg) {
-                ActionResultDialogService.showOkDialog(msg, $scope);
+            var showOkDialog = function (msg, callback) {
+                ActionResultDialogService.showOkDialog(msg, $scope, callback);
             };
 
             var checkMandatoryFields = function () {
@@ -88,10 +88,14 @@
             // Update existing Slideshow
             $scope.upsert = function () {
                 var slideshow = $scope.slideshow,
+                    currentSlideIndex = $scope.slideshow.draftSlides.indexOf($scope.currentSlide),
                     handleUpsertSuccess = function (msg) {
                         $scope.error = '';
                         $scope.slideShowChanged = false;
-                        showOkDialog(msg);
+                        showOkDialog(msg, function () {
+                            // I don't know why the binding is lost, but this solves it
+                            $scope.setCurrentSlide($scope.slideshow.draftSlides[currentSlideIndex]);
+                        });
                     },
                     mandatoryFieldsCheckMsg = checkMandatoryFields();
 
@@ -220,10 +224,15 @@
                         $timeout(function () {
                             $scope.$apply();
                         });
+                    },
+                    itemDropped: function (slide) {
+                        $scope.currentSlide = slide;
+                        $timeout(function () {
+                            $scope.$apply();
+                        });
                     }
                 };
             };
-
 
             $scope.isCurrentSlide = function (slide) {
                 if (!$scope.currentSlide) {
