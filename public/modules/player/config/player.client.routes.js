@@ -1,8 +1,11 @@
 'use strict';
 
 //Setting up route
-angular.module('player').config(['$stateProvider',
-	function($stateProvider) {
+angular.module('player').config(['$stateProvider', '$urlRouterProvider',
+	function($stateProvider, $urlRouterProvider) {
+        if (window.location.pathname == "/slideshow") {
+            $urlRouterProvider.otherwise('/player');
+        }
 		// Player state routing
 		$stateProvider.state('player', {
 			url: '/player',
