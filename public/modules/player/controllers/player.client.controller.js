@@ -94,7 +94,7 @@
                     $scope.slides = slides;
                     $scope.$emit("slidesLoaded", slides, slideShowId);
                 });
-                $scope.$broadcast("goToSlideNumber", 0);
+                //$scope.$broadcast("goToSlideNumber", 0);
             };
 
             var updateSildes = function (callback) {
@@ -219,6 +219,25 @@
             });
 
             var setupMessagining = function (deviceId) {
+                var putSlideShowOnHold = function () {
+                    $scope.slideIsOnHold = true;
+                    $scope.$broadcast("putPlayerOnHold");
+
+                    var resetOnHold = function () {
+                        timers.registerTimeout('resetOnHold', function () {
+                            if (deviceInteractionIsOnline()) {
+                                resetOnHold();
+                                return;
+                            }
+                            $scope.slideIsOnHold = false;
+                            $scope.$broadcast("resetOnHold");
+                        }, onlinePollingTime);
+                    };
+                    resetOnHold();
+
+
+                    auditAction('holdSlideShow');
+                }
                 messageBroker = new DeviceMessageBroker(deviceId);
                 serverMessageBroker = new ServerMessageBroker();
                 var onlinePollingTime = 60 * 10000;
@@ -232,6 +251,7 @@
                 };
                 messageBroker.onDeviceInteractionIsPresent(function () {
                     lastAnounceTime = Date.now();
+                    putSlideShowOnHold();
                 });
                 messageBroker.onGotoSlideNumber(function (message) {
                     $scope.$broadcast("goToSlideNumber", message.content);
@@ -270,23 +290,7 @@
                 messageBroker.onDeviceSetup(handleDeviceSetup);
 
                 messageBroker.onHoldSlideShow(function () {
-                    $scope.slideIsOnHold = true;
-                    $scope.$broadcast("putPlayerOnHold");
-
-                    var resetOnHold = function () {
-                        timers.registerTimeout('resetOnHold', function () {
-                            if (deviceInteractionIsOnline()) {
-                                resetOnHold();
-                                return;
-                            }
-                            $scope.slideIsOnHold = false;
-                            $scope.$broadcast("resetOnHold");
-                        }, onlinePollingTime);
-                    };
-                    resetOnHold();
-
-
-                    auditAction('holdSlideShow');
+                    putSlideShowOnHold();
                 });
                 messageBroker.onResetSlideShow(function () {
                     timers.resetTimeouts();

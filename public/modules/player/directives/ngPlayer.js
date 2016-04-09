@@ -77,6 +77,9 @@
                             return;
                         }
                         emitCurrentSlideChanged(slide);
+
+                        slide.durationInSeconds = slide.durationInSeconds || 1;
+                        advanceSlide(slide.durationInSeconds * 1000);
                     };
 
                     scope.$on("slideLoaded", function (event, slide) {
