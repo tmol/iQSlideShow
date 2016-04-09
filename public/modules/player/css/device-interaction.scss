@@ -1,6 +1,5 @@
 @import '../../core/css/variables.scss';
-@import 'variables.scss';
-@import 'mixins.scss';
+
 .iqss-device-interaction-navbar {
     @media (orientation: landscape) {
         display: none;
@@ -9,9 +8,13 @@
 .iqss-device-interaction {
     @media (orientation: portrait) {
         padding-top: 70px;
+        padding-left: 0px;
+        padding-right: 0px;
     }
     @media (orientation: landscape) {
         padding-top: 0px;
+        padding-left: 0px;
+        padding-right: 0px;
     }
 }
 .iqss-content-device-interaction {
@@ -185,4 +188,63 @@
     font-size: 10px;
     margin-top: 20px;
     color: #A9A9A9;
+}
+
+.iqss-device-interaction-content-player-data-playingOn {
+    background: url(../../../modules/core/img/settings.svg) left center no-repeat;
+    padding-left: 35px;
+    color: $blue-color;
+    cursor: pointer;
+}
+
+.iqss-device-interaction-content-player-container-play {
+    background: url(../../../modules/core/img/play%20button.svg) left center no-repeat;
+    flex: 1 1 25px;
+    background-size: 20px 20px;
+    line-height: 44px;
+    cursor: pointer;
+    margin-left: 15px;
+    width:15px;
+}
+
+.iqss-device-interaction-content-player-container-pause {
+    background: url(../../../modules/core/img/pause_button.svg) left center no-repeat;
+    flex: 1 1 25px;
+    background-size: 20px 20px;
+    line-height: 44px;
+    cursor: pointer;
+    margin-left: 15px;
+    width:15px;
+}
+
+.iqss-device-interaction-content-player-actions-center-previous {
+    background: url(../../../modules/core/img/previous.svg) right center no-repeat;
+    width: 15px;
+    height: 15px;
+    vertical-align: middle;
+    cursor: pointer;
+    display: inline-block;
+}
+
+.iqss-device-interaction-content-player-actions-center-next {
+    background: url(../../../modules/core/img/next.svg) right center no-repeat;
+    width: 15px;
+    height: 15px;
+    vertical-align: middle;
+    cursor: pointer;
+    display: inline-block;
+}
+
+.iqss-device-interaction-content-player-actions-center-slideInfo {
+    margin-left: 20px;
+    margin-right: 10px;
+    display: inline-block;
+}
+
+.iqss-device-interaction-slideshow-preview {
+    height: 100px;
+    width: 100%;
+    display:inline-block;
+    border: 1px solid $dark-grey-color;
+    overflow: hidden;
 }

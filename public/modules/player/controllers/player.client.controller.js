@@ -208,7 +208,7 @@
 
             $scope.$on("slideLoaded", function (event, slide) {
                 var url = $location.$$absUrl.split("/slideshow")[0];
-                $scope.qrConfig.slideUrl = url + "/#!/deviceInteraction/" + $scope.deviceId + "/" + slide.slideShowId + "/" + slide.slideNumber;
+                $scope.qrConfig.slideUrl = url + "/slideshow#!/deviceInteraction/" + $scope.deviceId + "/" + slide.slideShowId + "/" + slide.slideNumber;
             });
 
             $scope.$on("$destroy", function () {

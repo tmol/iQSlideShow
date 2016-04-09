@@ -14,5 +14,11 @@ angular.module('player').config(['$stateProvider',
             templateUrl: 'modules/player/views/player.client.view.html',
 			controller:'PlayerController'
 		});
+        $stateProvider.state('deviceInteraction', {
+            url: '/deviceInteraction/:deviceId/:slideShowId/:slideNumber',
+            templateUrl: 'modules/player/views/deviceInteraction.client.view.html',
+            noApplicationHeader: true,
+            interactionMode: true
+        })
 	}
 ]);

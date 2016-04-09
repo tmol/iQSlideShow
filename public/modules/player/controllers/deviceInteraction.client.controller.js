@@ -2,8 +2,8 @@
 /*global angular, ApplicationConfiguration, _*/
 (function() {
     'use strict';
-    angular.module('slideshows').controller('DeviceInteractionController', ['$scope', '$stateParams', 'Slides', 'Slideshows', 'DeviceMessageBroker', 'Admin', 'Timers',
-        function($scope, $stateParams, Slides, Slideshows, DeviceMessageBroker, Admin, Timers) {
+    angular.module('player').controller('DeviceInteractionController', ['$scope', '$stateParams', 'Slides', 'Slideshows', 'DeviceMessageBroker', 'Timers',
+        function($scope, $stateParams, Slides, Slideshows, DeviceMessageBroker, Timers) {
 
             $scope.playerContext = {};
 
@@ -24,16 +24,6 @@
             $scope.previewSlideshowId = $stateParams.slideShowId;
             var messageBroker = new DeviceMessageBroker($scope.deviceId);
 
-            $scope.setSlideShow = function() {
-                Admin.getConfig(function(config) {
-                    var slideShowName = _.filter($scope.slideshows, {
-                        _id: $scope.slideShowId
-                    })[0].name;
-                    messageBroker.sendSwitchSlide($scope.slideShowId, slideShowName, config.userSelectedSlideShowsPlayTimeInMinutes);
-                }, function(err) {
-                    throw err;
-                });
-            };
             messageBroker.sendHoldSlideShow();
             var timers = new Timers();
 
