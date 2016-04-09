@@ -50,12 +50,12 @@
                 $scope.numberOfSlidehsows = result.length;
             });
             $scope.selectSlideShow = function (slideShow) {
+                slideShowSelected = true;
                 $scope.previewSlideshowId = slideShow._id;
                 $scope.playerContext.playerScope.switchSlideShow(slideShow._id);
                 messageBroker.sendSwitchSlide(slideShow._id, slideShow.name);
             }
             $scope.$on("slideShowClicked", function(event, position) {
-                slideShowSelected = true;
                 messageBroker.sendSlideShowClicked(position);
             })
             $scope.$on("slidesLoaded", function(event, slides, slideShowId) {
