@@ -52,6 +52,9 @@ angular.module('core').directive('dragAndDrop', ['$document', function ($documen
 
         function broadcastEvent(dragAndDropEvent, mouseEvent) {
             var relativePosition = getRelativePosition(mouseEvent);
+            if (relativePosition.x === 0 && relativePosition.y === 0) {
+                return;
+            }
             if (scope.dragAndDropMoveEventName) {
                 scope.$root.$broadcast(scope.dragAndDropMoveEventName, {
                     x: relativePosition.x,

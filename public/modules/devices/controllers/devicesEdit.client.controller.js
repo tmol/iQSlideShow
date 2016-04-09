@@ -4,11 +4,12 @@
     'use strict';
 
     // Devices controller
-    angular.module('devices').controller('DevicesEditController', ['$scope', '$stateParams', 'Authentication', '$state', 'Slideshows', 'Devices', 'Admin', 'DeviceStatusService', '$uibModal', 'Path', 'ActionResultDialogService', '$timeout',
-        function ($scope, $stateParams, Authentication, $state, Slideshows, Devices, Admin, DeviceStatusService, $uibModal, Path, ActionResultDialogService, $timeout) {
+    angular.module('devices').controller('DevicesEditController', ['$scope', '$stateParams', 'Authentication', '$state', 'Slideshows', 'Devices', 'Admin', 'DeviceStatusService', '$uibModal', 'Path', 'ActionResultDialogService', '$timeout', 'DragAndDropItemsArray',
+        function ($scope, $stateParams, Authentication, $state, Slideshows, Devices, Admin, DeviceStatusService, $uibModal, Path, ActionResultDialogService, $timeout, DragAndDropItemsArray) {
             var modalInstance,
                 playlist,
-                lastIndexMovedDuringDragAndDrop;
+                lastIndexMovedDuringDragAndDrop,
+                dragAndDropItemsArray;
 
             $scope.authentication = Authentication;
             Slideshows.query(function (res) {
@@ -57,25 +58,12 @@
                 }, function (result) {
                     $scope.device = result;
                     playlist = $scope.device.slideAgregation.playList;
-                    playlist.getIndexByDragAndDropId = function (dragAndDropId) {
-                        return _.findIndex(playlist, function (item) { return item.dragAndDropId === dragAndDropId;
-                                                                          });
-                    };
-                    playlist.moveGivenPlacesSlideShowInPlaylist = function (slideShow, placesToMove) {
-                        var index = playlist.indexOf(slideShow),
+                    dragAndDropItemsArray = new DragAndDropItemsArray($scope.getDraggableItemsArray());
+                    playlist.moveGivenPlacesSlideShowInPlaylist = function (item, placesToMove) {
+                        var index = playlist.indexOf(item),
                             newIndex = index + placesToMove;
 
-                        this.moveSlideShowInPlaylist(slideShow, newIndex);
-                    };
-                    playlist.moveSlideShowInPlaylist = function (slideShow, newIndex) {
-                        var index = playlist.indexOf(slideShow);
-
-                        if (newIndex < 0 || newIndex > playlist.length - 1) {
-                            return;
-                        }
-
-                        playlist.splice(index, 1);
-                        playlist.splice(newIndex, 0, slideShow);
+                        dragAndDropItemsArray.moveItemInItemsList(item, newIndex);
                     };
                     $scope.device.status = DeviceStatusService.getStatus($scope.device, $scope.adminConfig);
                     _.forEach(playlist, function (item) {
@@ -130,39 +118,12 @@
             $scope.getDraggableItemsArray = function () {
                 return {
                     items: playlist,
-                    moveItem: function (dragAndDropId, horizontalApproach) {
-                        var playlistItemIndex = playlist.getIndexByDragAndDropId(dragAndDropId),
-                            playListItem = playlist[playlistItemIndex],
-                            setMoveStatus = function (direction, nonCenterMoveStatus, oppositeMoveStatus, moveToCenterStatus) {
-                                if (horizontalApproach === direction
-                                    && playListItem.moveStatus !== nonCenterMoveStatus
-                                    && playListItem.lastMoveDirection !== direction) {
-                                    if (playListItem.moveStatus === oppositeMoveStatus) {
-                                        playListItem.moveStatus = moveToCenterStatus;
-                                    } else {
-                                        playListItem.moveStatus = nonCenterMoveStatus;
-                                    }
-                                    playListItem.lastMoveDirection = direction;
-                                }
-                            };
-
-                        if (playListItem.moving) {
-                            return;
-                        }
-
-                        try {
-                            console.log('horizontalApproach: ' + horizontalApproach + ', moveStatus: ' + playListItem.moveStatus + ', lastMoveDirection:' + playListItem.lastMoveDirection);
-                            setMoveStatus('left', 'moveLeft', 'moveRight', 'moveCenterFromRight');
-                            setMoveStatus('right', 'moveRight', 'moveLeft', 'moveCenterFromLeft');
-                            console.log('horizontalApproach: ' + horizontalApproach + ',' + playListItem.moveStatus);
-                            console.log('   ');
-                            lastIndexMovedDuringDragAndDrop = playlistItemIndex;
-                            $timeout(function () {
-                                $scope.$apply();
-                            });
-                        } finally {
-                            playListItem.moving = false;
-                        }
+                    dragAndDropItemsArray: dragAndDropItemsArray,
+                    lastIndexMovedDuringDragAndDrop: lastIndexMovedDuringDragAndDrop,
+                    itemsChanged: function () {
+                        $timeout(function () {
+                            $scope.$apply();
+                        });
                     }
                 };
             };

@@ -4,18 +4,21 @@
     'use strict';
 
     // Slideshows controller
-    angular.module('slideshows').controller('SlideshowsController', ['$scope', '$stateParams', 'Authentication', 'Slideshows', '$timeout', 'ServerMessageBroker', 'Tags', '$uibModal', 'Path', '$cacheFactory', '$state', 'ActionResultDialogService', 'Admin',
-        function ($scope, $stateParams, Authentication, Slideshows, $timeout, ServerMessageBroker, Tags, $uibModal, Path, $cacheFactory, $state, ActionResultDialogService, Admin) {
+    angular.module('slideshows').controller('SlideshowsController', ['$scope', '$stateParams', 'Authentication', 'Slideshows', '$timeout', 'ServerMessageBroker', 'Tags', '$uibModal', 'Path', '$cacheFactory', '$state', 'ActionResultDialogService', 'Admin', 'DragAndDropItemsArray',
+        function ($scope, $stateParams, Authentication, Slideshows, $timeout, ServerMessageBroker, Tags, $uibModal, Path, $cacheFactory, $state, ActionResultDialogService, Admin, DragAndDropItemsArray) {
             var serverMessageBroker = new ServerMessageBroker();
 
-            var defResolution = {width: 1920, height: 1080};
+            var defResolution = {width: 1920, height: 1080},
+                dragAndDropItemsArray,
+                lastIndexMovedDuringDragAndDrop;
+
             $scope.authentication = Authentication;
             $scope.currentSlide = null;
             $scope.playerView = Path.getViewUrl('player.client.view', 'preview');
             $scope.previewSlideshowId = $stateParams.slideshowId;
             $scope.currentPreviewSlideIndex = 0;
             $scope.numberOfSlides = 0;
-            $scope.view ={};
+            $scope.view = {};
             $scope.slideshow = {
                 tags: []
             };
@@ -138,12 +141,14 @@
                     slideshowId: $stateParams.slideshowId
                 }, function (slideshow) {
                     $scope.slideshow  = slideshow;
-                    if ($scope.slideshow.draftSlides && $scope.slideshow.draftSlides.length > 0) {
+                    if ($scope.slideshow.draftSlides.length > 0) {
                         $scope.setCurrentSlide($scope.slideshow.draftSlides[0]);
                         _.forEach($scope.slideshow.draftSlides, function (item) {
                             item.dragAndDropId = item._id;
                         });
                     }
+                    dragAndDropItemsArray = new DragAndDropItemsArray($scope.getDraggableItemsArray());
+
                     $scope.getNrOfDevicesTheSlideIsAttachedTo();
                 });
             };
@@ -209,10 +214,16 @@
             $scope.getDraggableItemsArray = function () {
                 return {
                     items: $scope.slideshow.draftSlides,
-                    moveItem: function (dragAndDropId, horizontalApproach, verticalApproach) {
+                    dragAndDropItemsArray: dragAndDropItemsArray,
+                    lastIndexMovedDuringDragAndDrop: lastIndexMovedDuringDragAndDrop,
+                    itemsChanged: function () {
+                        $timeout(function () {
+                            $scope.$apply();
+                        });
                     }
-                }
+                };
             };
+
 
             $scope.isCurrentSlide = function (slide) {
                 if (!$scope.currentSlide) {

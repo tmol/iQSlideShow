@@ -4,7 +4,7 @@ angular.module('core').directive('dragAndDropReceiver', ['$timeout', function ($
     'use strict';
 
     function link(scope, element, attrs) {
-        var draggableItemsArray = scope.getDraggableItemsArray(),
+        var draggableItemsArray = scope.getDraggableItemsArray().dragAndDropItemsArray,
             dragAndDropId,
             lastMoveHorizontalApproach,
             lastMoveVerticalApproach;
@@ -27,37 +27,18 @@ angular.module('core').directive('dragAndDropReceiver', ['$timeout', function ($
             return dragAndDropId;
         }
 
-        function getDraggableItemIndex(dragAndDropId) {
-            return _.findIndex(draggableItemsArray.items, function (item) {
-                return item.dragAndDropId === dragAndDropId;
-            });
-        }
+        function handleDrop(dropEventArgs) {
+            var draggedDragAndDropId = getElementDragAndDropId(dropEventArgs.element);
 
-       function handleDrop(targetItemId, draggedItemId) {
-            var targetItemIndex = getDraggableItemIndex(targetItemId);
-            if (targetItemIndex === -1) {
+            if (dragAndDropId !== draggedDragAndDropId) {
                 return;
             }
-
-            var draggedItemIndex = getDraggableItemIndex(draggedItemId);
-            if (draggedItemIndex === -1) {
-                return;
-            }
-
-            var indexAdjuster = (draggedItemIndex > targetItemIndex) ? 1 : 0;
-            var draggedItem = draggableItemsArray.items.splice(draggedItemIndex, 1)[0];
-            draggableItemsArray.items.splice(targetItemIndex + indexAdjuster, 0, draggedItem);
-            scope.$apply();
+            draggableItemsArray.dropItem(draggedDragAndDropId);
         }
 
-        scope.$on(scope.elementDraggedEventName, function (event, args) {
-            var draggedElement = args.element,
+        function handleDrag(dragEventArgs) {
+            var draggedElement = dragEventArgs.element,
                 draggedDragAndDropId = getElementDragAndDropId(draggedElement);
-
-            if (args.handled || !dragAndDropId) {
-                return;
-            }
-
             if (dragAndDropId === draggedDragAndDropId) {
                 return;
             }
@@ -70,17 +51,27 @@ angular.module('core').directive('dragAndDropReceiver', ['$timeout', function ($
             var overlapArea = x_overlap * y_overlap;
             var draggedElementArea = (draggedElementBoundaries.y2 - draggedElementBoundaries.y1) * (draggedElementBoundaries.x2 - draggedElementBoundaries.x1);
             if (overlapArea > draggedElementArea / 2) {
-                if (args.dragAndDropEvent === 'drag') {
-                    var horizontalApproach = (args.horizontalDelta > 0) ? 'left' : 'right';
-                    var verticalApproach = (args.horizontalDelta < 0) ? 'top' : 'bottom';
+                var horizontalApproach = (dragEventArgs.horizontalDelta > 0) ? 'left' : 'right';
+                var verticalApproach = (dragEventArgs.horizontalDelta < 0) ? 'top' : 'bottom';
 
-                    if (lastMoveHorizontalApproach !== horizontalApproach
-                            || lastMoveVerticalApproach !== verticalApproach) {
-                        draggableItemsArray.moveItem(dragAndDropId, horizontalApproach, verticalApproach);
-                        lastMoveHorizontalApproach = horizontalApproach;
-                        lastMoveVerticalApproach = verticalApproach;
-                    }
+                if (lastMoveHorizontalApproach !== horizontalApproach
+                        || lastMoveVerticalApproach !== verticalApproach) {
+                    draggableItemsArray.moveItem(dragAndDropId, horizontalApproach, verticalApproach);
+                    lastMoveHorizontalApproach = horizontalApproach;
+                    lastMoveVerticalApproach = verticalApproach;
                 }
+            }
+        }
+
+        scope.$on(scope.elementDraggedEventName, function (event, args) {
+            if (args.handled || !dragAndDropId) {
+                return;
+            }
+
+            if (args.dragAndDropEvent === 'drag') {
+                handleDrag(args);
+            } else if (args.dragAndDropEvent === 'drop') {
+                handleDrop(args);
             }
         });
 

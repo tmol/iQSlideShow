@@ -137,9 +137,6 @@
     margin: 5px $device-edit-content-player-container-horizontal-margin;
     padding-bottom: 3px;
     border: 1px solid $darker-grey-color;
-    position: relative;
-    left: 0;
-    right: 0;
 }
 
 @keyframes moveLeft{
@@ -203,6 +200,9 @@
     @include move(moveCenterFromRight);
 }
 
+.iqss-deviceedit-content-player-container-dragging {
+    z-index: 100000;
+}
 
 .iqss-deviceedit-playlist-player {
     overflow: hidden;
