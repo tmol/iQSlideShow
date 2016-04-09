@@ -61,8 +61,6 @@
 
             var setupSlides = function (slides, slideShowId) {
                 $scope.slides = slides;
-                $scope.$emit("slidesLoaded", slides, slideShowId);
-
                 $scope.slides.forEach(function (slide, index) {
                     slide.index = index;
                 });

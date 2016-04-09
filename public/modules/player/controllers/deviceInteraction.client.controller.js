@@ -6,7 +6,7 @@
         function($scope, $stateParams, Slides, Slideshows, DeviceMessageBroker, Timers) {
 
             $scope.playerContext = {};
-
+            var slideShowSelected = false;
             var i = document.body;
 
             // go full-screen: POC - will be removed after tests
@@ -55,13 +55,19 @@
                 messageBroker.sendSwitchSlide(slideShow._id, slideShow.name);
             }
             $scope.$on("slideShowClicked", function(event, position) {
+                slideShowSelected = true;
                 messageBroker.sendSlideShowClicked(position);
             })
             $scope.$on("slidesLoaded", function(event, slides, slideShowId) {
                 if (event.targetScope != $scope.playerContext.playerScope) {
                     return;
                 }
-                $scope.playerContext.playerScope.$broadcast("goToSlideNumber", 0);
+                var slideNumber =parseInt($stateParams.slideNumber)-1;
+                if (slideShowSelected)
+                {
+                    slideNumber = 0;
+                }
+                $scope.playerContext.playerScope.$broadcast("goToSlideNumber", slideNumber);
                 $scope.numberOfSlides = slides.length;
             });
             $scope.$on("currentSlideChanged", function(event, slideIndex, slideShowId, slideInfo) {
