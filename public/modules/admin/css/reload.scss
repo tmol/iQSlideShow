@@ -1,0 +1,34 @@
+@import '../../core/css/variables.scss';
+
+.iqss-admin-config-reloadLink {
+    background: url(../../../modules/core/img/restart-refresh.svg) left center no-repeat;
+    flex: 1;
+    background-size: 20px 20px;
+    line-height: 44px;
+    width: 100px;
+    padding-left: 25px;
+    cursor: pointer;
+    color: $blue-color;
+}
+
+.iqss-admin-config-reloadResult {
+    width: 80%;
+    margin: 30px auto;
+}
+
+.iqss-admin-config-reloadResult-device {
+    display: flex;
+}
+
+.iqss-admin-config-reloadResult-device-name {
+    flex: 1;
+}
+
+.iqss-admin-config-reloadResult-device-location {
+    flex: 1;
+}
+
+.iqss-admin-config-reloadResult-err {
+    color: red;
+    flex: 1;
+}

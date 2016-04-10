@@ -1,16 +1,20 @@
-<section data-ng-controller="ReloadController"  style="margin-top: 58px;">
-    <div class="page-header">
-        <h1>Reload application in devices after emtying the local device cache</h1>
+<section data-ng-controller="ReloadController">
+    <div class='iqss-page-header'>
+        <div class='iqss-admin-config-reloadLink' ng-click="reload()">Reload</div>
     </div>
-    <div class="col-md-12">
-        <div class="form-group" ng-show="reloadedDevices && reloadedDevices.length > 0">
-            The following devices were reloaded:<BR><BR>
-            <div class="form-group" ng-repeat="device in reloadedDevices">
-                <label>Name {{device.name}}, location: {{device.location}}</label>
-            </div>
+    <div class="iqss-admin-config-reloadResult" ng-show="reloadedDevices && reloadedDevices.length > 0">
+        The reload message was sent to all devices (name and location):<BR><BR>
+
+        <div class='iqss-admin-config-reloadResult-device'>
+            <div class='iqss-admin-config-reloadResult-device-name'><strong>Device name</strong></div>
+            <div class='iqss-admin-config-reloadResult-device-location'><strong>Location</strong></div>
+            <div class='iqss-admin-config-reloadResult-err'><strong>Error</strong></div>
         </div>
-        <div class="form-group">
-            <input type="button" ng-click="reload()" value="Reload" class="btn btn-default"/>
+        <BR>
+        <div ng-repeat="device in reloadedDevices" class='iqss-admin-config-reloadResult-device'>
+            <div class='iqss-admin-config-reloadResult-device-name'>{{device.name}}</div>
+            <div class='iqss-admin-config-reloadResult-device-location'>{{device.location}}</div>
+            <div class='iqss-admin-config-reloadResult-err'>{{device.err.data.messag}}</div>
         </div>
     </div>
 </section>

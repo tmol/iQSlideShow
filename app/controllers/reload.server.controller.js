@@ -21,18 +21,18 @@
                     promises.push(new Promise(function (resolve, error) {
                         var device = devices[idx];
                         device.sendReloadMessage(function () {
+                            var resolveResult = {
+                                name: device.name,
+                                deviceId: device.deviceId,
+                                location: device.location
+                            };
                             device.reloadRequested = new Date();
                             device.save(function (err) {
                                 if (err) {
-                                    return res.status(400).send({
-                                        message: errorHandler.getErrorMessage(err)
-                                    });
+                                    resolveResult.err = err;
+                                    resolve(resolveResult);
                                 }
-                                resolve({
-                                    name: device.name,
-                                    deviceId: device.deviceId,
-                                    location: device.location
-                                });
+                                resolve(resolveResult);
                             }
                                        );
                         });
