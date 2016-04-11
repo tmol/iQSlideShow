@@ -305,6 +305,10 @@
                     auditAction('reload');
                 });
                 messageBroker.onSlideShowClicked(function (message) {
+                    if (!$scope.active)
+                    {
+                        return;
+                    }
                     $scope.$broadcast("displayIndicator", message.content);
                     $timeout(function () {
                         $scope.$broadcast("hideIndicator");
