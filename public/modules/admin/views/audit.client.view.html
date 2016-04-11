@@ -14,7 +14,7 @@
 <section data-ng-controller="AuditController">
     <div class='iqss-page-header'>
         <div>
-            <a ng-href="/audits/csv?startDate={{fromDate}}&enDate={{toDate}}">
+            <a ng-href="/audits/csv?startDate={{fromDate.toISOString()}}&endDate={{toDate.toISOString()}}">
                 <div ng-href="/audits/csv?startDate={{fromDate}}&enDate={{toDate}}" class='iqss-admin-audit-downloadLink' ng-click="downloadAuditData()">Download</div>
             </a>
         </div>
