@@ -20,7 +20,8 @@
     "bootstrap": "~3",
     "textAngular": "1.5.0",
     "ui-select": "angular-ui-select#~0.12.1",
-    "fastclick": "^1.0.6"
+    "fastclick": "^1.0.6",
+    "lodash": "^4.10.0"
   },
   "resolutions": {
     "angular": "~1.4.x"
