@@ -43,8 +43,6 @@
                         if (!$rootScope.$$phase) {
                             $rootScope.$apply();
                         }
-
-                        scope.$emit("slideLoaded", scope.referenceSlide);
                     };
 
                     var lastTimeout;
