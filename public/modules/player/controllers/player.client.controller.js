@@ -217,6 +217,7 @@
             });
 
             var setupMessagining = function (deviceId) {
+                var onlinePollingTime = 60 * 1000;
                 var putSlideShowOnHold = function () {
                     $scope.slideIsOnHold = true;
                     $scope.$broadcast("putPlayerOnHold");
@@ -238,7 +239,6 @@
                 }
                 messageBroker = new DeviceMessageBroker(deviceId);
                 serverMessageBroker = new ServerMessageBroker();
-                var onlinePollingTime = 60 * 10000;
                 var lastAnounceTime = Date.now();
                 var deviceInteractionIsOnline = function () {
                     var timeDiff = Date.now() - lastAnounceTime;
