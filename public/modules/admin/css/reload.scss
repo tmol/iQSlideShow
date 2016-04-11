@@ -1,14 +1,9 @@
 @import '../../core/css/variables.scss';
+@import 'mixins.scss';
 
 .iqss-admin-config-reloadLink {
     background: url(../../../modules/core/img/restart-refresh.svg) left center no-repeat;
-    flex: 1;
-    background-size: 20px 20px;
-    line-height: 44px;
-    width: 100px;
-    padding-left: 25px;
-    cursor: pointer;
-    color: $blue-color;
+    @include subHeaderAction;
 }
 
 .iqss-admin-config-reloadResult {

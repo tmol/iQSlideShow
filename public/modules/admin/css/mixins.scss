@@ -1,0 +1,20 @@
+@mixin mainArea {
+    margin: auto;
+    border: 1px solid $dark-grey-color;
+    background: white;
+    box-shadow: 2px 2px 3px $grey-color;
+    display: flex;
+    flex-flow: column;
+    padding: 15px;
+    margin-top: 40px;
+}
+
+@mixin subHeaderAction {
+    flex: 1;
+    background-size: 20px 20px;
+    line-height: 44px;
+    width: 100px;
+    padding-left: 25px;
+    cursor: pointer;
+    color: $blue-color;
+}

@@ -1,0 +1,39 @@
+@import '../../core/css/variables.scss';
+@import 'mixins.scss';
+
+.iqss-admin-audit-filters-container {
+    width: 60%;
+    @include mainArea;
+    display: flex;
+    flex-flow: row;
+}
+
+.iqss-admin-audit-filters-column {
+    flex: 1;
+    display: flex;
+}
+
+.iqss-admin-audit-filters-label {
+    width: 100px;
+}
+
+.iqss-admin-audit-filters-datePicker {
+    width: 180px;
+    display: flex;
+}
+
+.iqss-admin-audit-filters-datePicker input {
+    border: 1px solid $light-grey-color;
+}
+
+.iqss-admin-audit-filters-datePicker button {
+    width: 30px;
+    height: 25px;
+    padding: 2px;
+}
+
+.iqss-admin-audit-downloadLink {
+    background: url(../../../modules/core/img/statistics.svg) left center no-repeat;
+    @include subHeaderAction;
+}
+
