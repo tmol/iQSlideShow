@@ -22,14 +22,7 @@
 
 .iqss-devicelist-content {
     height: 100%;
-}
-
-.iqss-devicelist-content * {
-    line-height: $font-size;
-}
-
-.iqss-devicelist-content > div {
-    max-width: 85%;
+    max-width: 80%;
     margin: auto;
     min-width: $device-list-card-width;
     display: flex;
@@ -37,6 +30,9 @@
     flex-flow: row wrap;
 }
 
+.iqss-devicelist-content * {
+    line-height: $font-size;
+}
 
 .iqss-devicelist-device-title-container {
     font-size: $font-size;

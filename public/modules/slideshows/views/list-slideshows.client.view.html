@@ -9,50 +9,48 @@
         </div>
     </div>
     <div class='iqss-slideshowlist-content' infinite-scroll handler='getNextChunk()'>
-        <div class='col-sm-12'>
-            <section data-ng-repeat="slideshow in slideshows" >
-                <div class="iqss-slideshowlist-slideshow">
-                    <div ng-if='slideshow.isPlacheloderForCreateNew' class='iqss-slideshowlist-slideshow-createNew-container iqss-slideshows-links' ng-click='navigateToCreateNewSlideShow()'>
-                        <div class='iqss-slideshowlist-slideshow-createNew'>
-                            <span class='iqss-slideshowlist-slideshow-createNew-link'>Create new</span>
-                        </div>
-                    </div>
-                    <div ng-if='!slideshow.isPlacheloderForCreateNew'>
-                        <div>
-                            <div class="iqss-slideshowlist-slideshow-title-container" ng-class="{'iqss-slideshowlist-slideshow-title-container-published': slideshow.published, 'iqss-slideshowlist-slideshow-title-container-draft': !slideshow.published}">
-                               <div data-ng-bind="slideshow.name"></div>
-                            </div>
-                        </div>
-
-                        <a href="#!/slideshows/{{slideshow._id}}">
-                           <div class='iqss-slideshowlist-slideshow-preview' data-ng-controller="PlayerController" ng-init="initPreviewFirstSlide(slideshow._id)" ng-click=''>
-                                <div ng-player style="background-color: #ffffff;height:100px;max-height:100%;width:100%;display:inline-block" slides="slides" ng-player-on-hold='true'></div>
-                            </div>
-                        </a>
-
-                        <div class='iqss-slideshowlist-slideshow-linksContainer'>
-                            <a data-ng-href='#!/slideshows/{{slideshow._id}}/edit' class='iqss-slideshowlist-slideshow-editLink'></a>
-                            <a href='#' ng-click="publishById('{{slideshow._id}}')" class='iqss-slideshowlist-slideshow-publishLink'></a>
-                            <a href='#' data-ng-click='remove(slideshow);' class='iqss-slideshowlist-slideshow-deleteLink'></a>
-                            <div class='iqss-slideshowlist-slideshow-delimiter'>
-                            </div>
-                        </div>
-
-                        <div class='iqss-slideshowlist-slideshow-authorName' data-ng-bind="slideshow.user.displayName"></div>
-                        <div class='iqss-slideshowlist-slideshow-lastModified'>Last modified: <span data-ng-bind="slideshow.modified | date:'dd.MM.yyyy'"></span></div>
+        <section data-ng-repeat="slideshow in slideshows" >
+            <div class="iqss-slideshowlist-slideshow">
+                <div ng-if='slideshow.isPlacheloderForCreateNew' class='iqss-slideshowlist-slideshow-createNew-container iqss-slideshows-links' ng-click='navigateToCreateNewSlideShow()'>
+                    <div class='iqss-slideshowlist-slideshow-createNew'>
+                        <span class='iqss-slideshowlist-slideshow-createNew-link'>Create new</span>
                     </div>
                 </div>
-            </section>
-            <div class="iqss-slideshowlist-slideshow-empty">
+                <div ng-if='!slideshow.isPlacheloderForCreateNew'>
+                    <div>
+                        <div class="iqss-slideshowlist-slideshow-title-container" ng-class="{'iqss-slideshowlist-slideshow-title-container-published': slideshow.published, 'iqss-slideshowlist-slideshow-title-container-draft': !slideshow.published}">
+                           <div data-ng-bind="slideshow.name"></div>
+                        </div>
+                    </div>
+
+                    <a href="#!/slideshows/{{slideshow._id}}">
+                       <div class='iqss-slideshowlist-slideshow-preview' data-ng-controller="PlayerController" ng-init="initPreviewFirstSlide(slideshow._id)" ng-click=''>
+                            <div ng-player style="background-color: #ffffff;height:100px;max-height:100%;width:100%;display:inline-block" slides="slides" ng-player-on-hold='true'></div>
+                        </div>
+                    </a>
+
+                    <div class='iqss-slideshowlist-slideshow-linksContainer'>
+                        <a data-ng-href='#!/slideshows/{{slideshow._id}}/edit' class='iqss-slideshowlist-slideshow-editLink'></a>
+                        <a href='#' ng-click="publishById('{{slideshow._id}}')" class='iqss-slideshowlist-slideshow-publishLink'></a>
+                        <a href='#' data-ng-click='remove(slideshow);' class='iqss-slideshowlist-slideshow-deleteLink'></a>
+                        <div class='iqss-slideshowlist-slideshow-delimiter'>
+                        </div>
+                    </div>
+
+                    <div class='iqss-slideshowlist-slideshow-authorName' data-ng-bind="slideshow.user.displayName"></div>
+                    <div class='iqss-slideshowlist-slideshow-lastModified'>Last modified: <span data-ng-bind="slideshow.modified | date:'dd.MM.yyyy'"></span></div>
+                </div>
             </div>
-            <div class="iqss-slideshowlist-slideshow-empty">
-            </div>
-            <div class="iqss-slideshowlist-slideshow-empty">
-            </div>
-            <div class="iqss-slideshowlist-slideshow-empty">
-            </div>
-            <div class="iqss-slideshowlist-slideshow-empty">
-            </div>
+        </section>
+        <div class="iqss-slideshowlist-slideshow-empty">
+        </div>
+        <div class="iqss-slideshowlist-slideshow-empty">
+        </div>
+        <div class="iqss-slideshowlist-slideshow-empty">
+        </div>
+        <div class="iqss-slideshowlist-slideshow-empty">
+        </div>
+        <div class="iqss-slideshowlist-slideshow-empty">
         </div>
     </div>
 </section>

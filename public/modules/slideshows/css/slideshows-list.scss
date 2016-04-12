@@ -10,13 +10,8 @@
 
 .iqss-slideshowlist-content {
     height: 100%;
-}
+    width: 80%;
 
-.iqss-slideshowlist-content * {
-    line-height: $font-size;
-}
-
-.iqss-slideshowlist-content > div {
     padding-top: $slideshow-list-header-content-top-padding;
     max-width: 85%;
     margin: auto;
@@ -25,6 +20,10 @@
     display: flex;
     justify-content: center;
     flex-flow: row wrap;
+}
+
+.iqss-slideshowlist-content * {
+    line-height: $font-size;
 }
 
 .iqss-slideshowlist-slideshow {
