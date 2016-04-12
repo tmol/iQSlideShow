@@ -17,24 +17,6 @@
         messageHandler = require('../services/messaging/messageHandler');
 
     /**
-     * Create a Device
-     */
-    exports.create = function (req, res) {
-        var device = new Device(req.body);
-        device.user = req.user;
-
-        device.save(function (err) {
-            if (err) {
-                return res.status(400).send({
-                    message: errorHandler.getErrorMessage(err)
-                });
-            } else {
-                res.jsonp(device);
-            }
-        });
-    };
-
-    /**
      * Show the current Device
      */
     exports.read = function (req, res) {
@@ -60,10 +42,24 @@
         };
     }
 
-    /**
-     * Update a Device
-     */
-    exports.update = function (req, res) {
+    function ensureUniqueDeviceName(res, device, onDeviceUnique) {
+        Device.findByName(device.name, function (devices) {
+            if (devices.length === 0
+                    || (devices.length === 1 && devices[0]._id.toString() === device._id)) {
+                onDeviceUnique();
+            } else {
+                res.status(400).send({
+                    message: "Device with name '" + device.name + "' already exists."
+                });
+            }
+        }, function (err) {
+            res.status(400).send({
+                message: errorHandler.getErrorMessage(err)
+            });
+        });
+    }
+
+    function executeUpdate(req, res) {
         var device = req.device,
             updatedDevice = req.body,
             slideShowIdToPlay,
@@ -74,7 +70,6 @@
         if (deviceAttributesChanges.deviceJustSetActive() || deviceAttributesChanges.defaultSlideShowChangedInActiveMode()) {
             deviceSetupMessageSlideShowIdToPlay = updatedDevice.defaultSlideShowId;
         } else if (deviceAttributesChanges.deviceJustSetInactive()) {
-            console.log("devise set inactive");
             Config.findOne(function (err, config) {
                 if (err) {
                     throw err;
@@ -84,7 +79,6 @@
         }
 
         device = lodash.extend(device, req.body);
-        console.log(device);
         device.save(function (err) {
             if (err) {
                 return res.status(400).send({
@@ -101,6 +95,15 @@
                 });
                 res.jsonp(device);
             }
+        });
+    }
+
+    exports.update = function (req, res) {
+        var device = req.device,
+            updatedDevice = req.body;
+
+        ensureUniqueDeviceName(res, updatedDevice, function () {
+            executeUpdate(req, res);
         });
     };
 
@@ -157,7 +160,7 @@
 
     exports.deviceWithSlidesByID = function (req, res, next, id) {
         Device.findOne({"deviceId": id}).populate({ //TODO: this dosen't work. I don't understand why!!!!
-            path:'slideAgregation.playList.slideShow',
+            path: 'slideAgregation.playList.slideShow',
             model: 'Slideshow',
             populate: {
                 path: 'user',
@@ -174,13 +177,13 @@
 
             //TODO: had to populate the users in this way because populate on graph dosen't work :(
             var promises = [];
-            device.slideAgregation.playList.forEach(function(item) {
-                 promises.push(new Promise(function (resolve, error) {
-                    item.slideShow.populate('user', 'displayName', function() {
+            device.slideAgregation.playList.forEach(function (item) {
+                promises.push(new Promise(function (resolve, error) {
+                    item.slideShow.populate('user', 'displayName', function () {
                         resolve();
-                    })
-                 }))
-            })
+                    });
+                }));
+            });
             Promise.all(promises).then(function () {
                 req.device = device;
                 next();

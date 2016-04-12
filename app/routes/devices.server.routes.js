@@ -9,8 +9,7 @@
 
         // Devices Routes
         app.route('/devices')
-            .get(users.requiresLogin, devices.list)
-            .post(users.requiresLogin, devices.create);
+            .get(users.requiresLogin, devices.list);
 
         app.route('/devices/names/:nameFilter')
             .get(users.requiresLogin, devices.getFilteredNames)

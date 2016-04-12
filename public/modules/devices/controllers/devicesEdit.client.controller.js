@@ -41,7 +41,7 @@
                 device.$update(function () {
                     ActionResultDialogService.showOkDialog('Save was successful.', $scope);
                 }, function (errorResponse) {
-                    $scope.error = errorResponse.data.message;
+                    ActionResultDialogService.showOkDialog(errorResponse.data.message, $scope);
                 });
             };
 
