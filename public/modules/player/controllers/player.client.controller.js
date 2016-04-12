@@ -204,9 +204,9 @@
                 $scope.$broadcast("moveSlideLeft");
             });
 
-            $scope.$on("slideLoaded", function (event, slide) {
+            $scope.$on("currentSlideChanged", function (event, currentIndex, slideShowId) {
                 var url = $location.$$absUrl.split("/slideshow")[0];
-                $scope.qrConfig.slideUrl = url + "/slideshow#!/deviceInteraction/" + $scope.deviceId + "/" + slide.slideShowId + "/" + slide.slideNumber;
+                $scope.qrConfig.slideUrl = url + "/slideshow#!/deviceInteraction/" + $scope.deviceId + "/" + slideShowId + "/" + (currentIndex + 1);
             });
 
             $scope.$on("$destroy", function () {
@@ -305,6 +305,10 @@
                     auditAction('reload');
                 });
                 messageBroker.onSlideShowClicked(function (message) {
+                    if (!$scope.active)
+                    {
+                        return;
+                    }
                     $scope.$broadcast("displayIndicator", message.content);
                     $timeout(function () {
                         $scope.$broadcast("hideIndicator");
