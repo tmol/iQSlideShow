@@ -12,9 +12,11 @@
             $scope.fromDateStatus = {
                 opened : false
             };
+
             $scope.toDateStatus = {
                 opened : false
             };
+
             $scope.fromDate = new Date();
             $scope.toDate = new Date();
 
@@ -24,6 +26,12 @@
 
             $scope.openPopupToDate = function ($event) {
                 $scope.toDateStatus.opened = true;
+            };
+
+            $scope.addOneDayToDateToDateString = function (date) {
+                var res = new Date(date);
+                res.setDate(date.getDate() + 1);
+                return res.toDateString();
             };
         }]);
 }());
