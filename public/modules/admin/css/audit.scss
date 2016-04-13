@@ -20,16 +20,21 @@
 .iqss-admin-audit-filters-datePicker {
     width: 180px;
     display: flex;
+    align-items: center;
 }
 
 .iqss-admin-audit-filters-datePicker input {
     border: 1px solid $light-grey-color;
 }
 
+.iqss-admin-audit-filters-datePicker-openButton {
+    height: 25px !important;
+    padding: 3px 5px !important;
+}
+
 .iqss-admin-audit-filters-datePicker button {
-    width: 30px;
-    height: 25px;
-    padding: 2px;
+    height: 30px;
+    padding: 5px 10px;
 }
 
 .iqss-admin-audit-downloadLink {

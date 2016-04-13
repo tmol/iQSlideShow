@@ -24,14 +24,14 @@
             <div class='iqss-admin-audit-filters-label'>From date:</div>
             <div class="input-group iqss-admin-audit-filters-datePicker">
                 <input type="text" class="form-control" uib-datepicker-popup="dd/MM/yyyy" ng-model="fromDate" is-open="fromDateStatus.opened" ng-required="true" />
-                <button type="button" class="btn btn-default" ng-click="openPopupFromDate($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+                <button type="button" class="btn btn-default iqss-admin-audit-filters-datePicker-openButton" ng-click="openPopupFromDate($event)"><i class="glyphicon glyphicon-calendar"></i></button>
            </div>
         </div>
         <div class='iqss-admin-audit-filters-column'>
             <div class='iqss-admin-audit-filters-label'>To date:</div>
             <div class="input-group iqss-admin-audit-filters-datePicker">
                 <input type="text" class="form-control" uib-datepicker-popup="dd/MM/yyyy" ng-model="toDate" is-open="toDateStatus.opened" ng-required="true" />
-                <button type="button" class="btn btn-default" ng-click="openPopupToDate($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+                <button type="button" class="btn btn-default iqss-admin-audit-filters-datePicker-openButton" ng-click="openPopupToDate($event)"><i class="glyphicon glyphicon-calendar"></i></button>
            </div>
         </div>
     </div>
