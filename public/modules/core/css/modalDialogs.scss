@@ -38,3 +38,15 @@
     flex-flow: row-reverse;
     margin: 5px 10px;
 }
+
+.iqss-core-okdialog-header {
+    background: url(../../../modules/core/img/success.svg) center center no-repeat;
+    height: 25px;
+    margin: 5px;
+}
+
+.iqss-core-warningDialog-header {
+    background: url(../../../modules/core/img/warning.svg) center center no-repeat;
+    height: 25px;
+    margin: 5px;
+}

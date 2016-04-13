@@ -25,6 +25,10 @@
                 showDialog('okDialog', msg, scope, callback);
             };
 
+            var showWarningDialog = function (msg, scope, callback) {
+                showDialog('warningDialog', msg, scope, callback);
+            };
+
             var showOkCancelDialog = function (confirmationMsg, scope, callback) {
                 showDialog('okCancelDialog', confirmationMsg, scope, function (result) {
                     if (result !== okResult) {
@@ -36,6 +40,7 @@
 
             return {
                 showOkDialog: showOkDialog,
+                showWarningDialog: showWarningDialog,
                 showOkCancelDialog: showOkCancelDialog,
                 cancelResult: 'cancel',
                 okResult: okResult
