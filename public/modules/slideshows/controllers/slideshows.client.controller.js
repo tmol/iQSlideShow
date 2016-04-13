@@ -88,16 +88,22 @@
             // Update existing Slideshow
             $scope.upsert = function () {
                 var slideshow = $scope.slideshow,
-                    currentSlideIndex = $scope.slideshow.draftSlides.indexOf($scope.currentSlide),
+                    currentSlideIndex,
                     handleUpsertSuccess = function (msg) {
                         $scope.error = '';
                         $scope.slideShowChanged = false;
                         showOkDialog(msg, function () {
                             // I don't know why the binding is lost, but this solves it
-                            $scope.setCurrentSlide($scope.slideshow.draftSlides[currentSlideIndex]);
+                            if (currentSlideIndex >= 0) {
+                                $scope.setCurrentSlide($scope.slideshow.draftSlides[currentSlideIndex]);
+                            }
                         });
                     },
                     mandatoryFieldsCheckMsg = checkMandatoryFields();
+
+                if ($scope.currentSlide) {
+                    currentSlideIndex = $scope.slideshow.draftSlides.indexOf($scope.currentSlide);
+                }
 
                 if (mandatoryFieldsCheckMsg && mandatoryFieldsCheckMsg.length > 0) {
                     $scope.error = mandatoryFieldsCheckMsg;
