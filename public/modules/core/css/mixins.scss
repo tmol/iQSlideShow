@@ -56,3 +56,12 @@
       color: $color;
   }
 }
+
+@mixin dialogHeader($iconImageName) {
+    background: url(../../../modules/core/img/#{$iconImageName}.svg) left center no-repeat;
+    padding-left: 30px;
+    height: 25px;
+    margin: 5px;
+    display: flex;
+    align-items: center;
+}

@@ -1,4 +1,5 @@
 @import 'variables.scss';
+@import 'mixins.scss';
 
 .iqss-core-dialog {
     border-radius: 6px;
@@ -40,13 +41,9 @@
 }
 
 .iqss-core-okdialog-header {
-    background: url(../../../modules/core/img/success.svg) center center no-repeat;
-    height: 25px;
-    margin: 5px;
+    @include dialogHeader(success)
 }
 
 .iqss-core-warningDialog-header {
-    background: url(../../../modules/core/img/warning.svg) center center no-repeat;
-    height: 25px;
-    margin: 5px;
+    @include dialogHeader(warning)
 }
