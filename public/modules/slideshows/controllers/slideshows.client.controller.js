@@ -66,7 +66,7 @@
                         if (animationTypesRequiredMsg) {
                             animationTypesRequiredMsg = animationTypesRequiredMsg + ', ';
                         }
-                        animationTypesRequiredMsg = (animationTypesRequiredMsg || '') + "'" + (slideshow.title || '') + "'" + ' (position ' + idx + ')';
+                        animationTypesRequiredMsg = (animationTypesRequiredMsg || '') + (slideshow.title || '') + ' (position ' + idx + ')';
                     }
                 });
                 if (animationTypesRequiredMsg) {

@@ -35,10 +35,15 @@
     padding-left: $header-padding-left;
     padding-right: $header-padding-left;
     white-space: pre-line;
+    color: $error-color;
+    height: $slideshow-edit-errorArea-height;
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
 }
 
 .iqss-slideshowedit-content {
-    padding-top: $page-header-content-padding;
+    padding-top: $page-header-content-padding - $slideshow-edit-errorArea-height;
     padding-left: $header-padding-left;
     padding-right: $header-padding-left;
     margin-bottom: $footer-height + 5px;
