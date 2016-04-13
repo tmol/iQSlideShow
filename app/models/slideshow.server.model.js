@@ -62,5 +62,15 @@
         });
     });
 
+    SlideshowSchema.statics.findByName = function (name, onSuccess, onError) {
+        this.find({name: name}).populate('_id', 'name').exec(function (err, slideShows) {
+            if (err) {
+                onError(err);
+            } else {
+                onSuccess(slideShows);
+            }
+        });
+    }
+
     mongoose.model('Slideshow', SlideshowSchema);
 }());

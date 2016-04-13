@@ -100,14 +100,14 @@
     };
 
     DeviceSchema.statics.findByName = function (deviceName, onSuccess, onError) {
-        this.find({name: deviceName}).populate('displayName').exec(function (err, devices) {
+        this.find({name: deviceName}).populate('_id', 'displayName').exec(function (err, devices) {
             if (err) {
                 onError(err);
             } else {
                 onSuccess(devices);
             }
         });
-    }
+    };
 
     DeviceSchema.statics.findByFilter = function (filter, onSuccess, onError) {
         var select = {},

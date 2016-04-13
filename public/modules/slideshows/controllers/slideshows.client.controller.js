@@ -81,8 +81,8 @@
                 return errMsg;
             };
 
-            var setErrorMessage = function (errorResponse) {
-                $scope.error = errorResponse.data.message;
+            var handleErrorOnUpsert = function (errorResponse) {
+                ActionResultDialogService.showWarningDialog(errorResponse.data.message, $scope);
             };
 
             // Update existing Slideshow
@@ -113,11 +113,11 @@
                 if (slideshow._id) {
                     slideshow.$update(function () {
                         handleUpsertSuccess('Update succeeded.');
-                    }, setErrorMessage);
+                    }, handleErrorOnUpsert);
                 } else {
                     $scope.slideshow.$save(function () {
                         handleUpsertSuccess('Create succeeded.');
-                    }, setErrorMessage);
+                    }, handleErrorOnUpsert);
                 }
             };
 
