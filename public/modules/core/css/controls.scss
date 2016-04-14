@@ -123,7 +123,7 @@ select:focus, select:active, select:hover, select:visited {
 /*
     iqss text box
 */
-input[type='text'], input[type='number'] {
+input[type='text'], input[type='number'], , input[type='password'], input[type='email'] {
     border: 0;
     border-bottom: 1px solid $blue-color;
     color: $blue-color;

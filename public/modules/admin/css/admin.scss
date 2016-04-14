@@ -1,9 +1,9 @@
 @import '../../core/css/variables.scss';
-@import 'mixins.scss';
+@import '../../core/css/mixins.scss';
 
 .iqss-admin-config-attributes {
     width: 60%;
-    @include mainArea;
+    @include standardMainArea;
 }
 
 .iqss-admin-config-attributes-item {
@@ -27,6 +27,6 @@
 
 .iqss-admin-config-saveLink {
     background: url(../../../modules/core/img/save.svg) left center no-repeat;
-    @include subHeaderAction;
+    @include standardSubHeaderAction;
 }
 
