@@ -10,28 +10,33 @@
     display: flex;
 }
 
-.iqss-signup-saveLink {
+.iqss-sign-signInLink {
     background: url(../../../modules/core/img/save.svg) left center no-repeat;
     @include standardSubHeaderAction;
 }
 
-.iqss-signup-content {
+.iqss-sign-signUpLink {
+    background: url(../../../modules/core/img/save.svg) left center no-repeat;
+    @include standardSubHeaderAction;
+}
+
+.iqss-sign-content {
     width: 50%;
     @include standardMainArea;
 }
 
-.iqss-signup-field {
+.iqss-sign-field {
     flex: 1;
     display: flex;
     margin-bottom: 10px;
     align-items: center;
 }
 
-.iqss-signup-field-label {
+.iqss-sign-field-label {
     flex: 1;
 }
 
-.iqss-signup-field-value {
+.iqss-sign-field-value {
     flex: 1;
 }
 
