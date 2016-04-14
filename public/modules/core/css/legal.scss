@@ -1,0 +1,26 @@
+@import 'variables.scss';
+
+
+.iqss-terms a:hover {
+    text-decoration: none;
+}
+
+.iqss-terms-link {
+    margin: 0 10px;
+}
+
+.iqss-terms-copyright {
+    margin-left: 20px;
+}
+
+.iqss-legal-content {
+    border: 1px solid $dark-grey-color;
+    background: white;
+    box-shadow: 2px 2px 3px $grey-color;
+    display: flex;
+    flex-flow: column;
+    padding: 15px;
+    margin: 0 auto;
+    margin-bottom: 40px;
+    width: 90%;
+}
