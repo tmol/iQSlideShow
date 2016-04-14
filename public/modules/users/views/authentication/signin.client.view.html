@@ -1,9 +1,9 @@
-<section class="row" data-ng-controller="AuthenticationController">
+<section data-ng-controller="AuthenticationController">
     <div class='iqss-page-header'>
         <div class='iqss-page-header-container'>
             <div class='iqss-sign-signInLink' ng-click="signin()">Sign in</div>
             <a href="/#!/signup">
-                <div class='iqss-sign-signUpLink'>Sign up</div>
+                <div class='iqss-user-signUpLink'>Sign up</div>
             </a>
         </div>
     </div>
@@ -26,16 +26,16 @@
 		</a>
 	</div>
 	<h3 class="col-md-12 text-center">Or with your account</h3-->
-	<div class="iqss-sign-content">
-        <div class='iqss-sign-field'>
-            <div class='iqss-sign-field-label'>Username:</div>
-            <div class='iqss-sign-field-value'>
+	<div class="iqss-user-content">
+        <div class='iqss-user-field'>
+            <div class='iqss-user-field-label'>Username:</div>
+            <div class='iqss-user-field-value'>
                 <input type="text" id="username" name="username" data-ng-model="credentials.username" placeholder="Username">
             </div>
         </div>
-        <div class='iqss-sign-field'>
-            <div class='iqss-sign-field-label'>Password:</div>
-            <div class='iqss-sign-field-value'>
+        <div class='iqss-user-field'>
+            <div class='iqss-user-field-label'>Password:</div>
+            <div class='iqss-user-field-value'>
                 <input type="password" id="password" name="password" data-ng-model="credentials.password" placeholder="Password">
             </div>
         </div>
