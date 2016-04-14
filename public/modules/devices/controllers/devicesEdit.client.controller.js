@@ -43,7 +43,7 @@
                         initDeviceStatus();
                     });
                 }, function (errorResponse) {
-                    ActionResultDialogService.showOkDialog(errorResponse.data.message, $scope);
+                    ActionResultDialogService.showWarningDialog(errorResponse.data.message, $scope);
                 });
             };
 

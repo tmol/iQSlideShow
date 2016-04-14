@@ -86,13 +86,21 @@
     exports.delete = function (req, res) {
         var slideshow = req.slideshow;
 
-        slideshow.remove(function (err) {
+        Device.update({'slideAgregation.playList.slideShow': slideshow._id},
+                      { $pull: {'slideAgregation.playList': {slideShow: slideshow._id} }}, {multi: true}, function (err, result) {
             if (err) {
                 return res.status(400).send({
                     message: errorHandler.getErrorMessage(err)
                 });
             }
-            res.jsonp(slideshow);
+            slideshow.remove(function (err) {
+                if (err) {
+                    return res.status(400).send({
+                        message: errorHandler.getErrorMessage(err)
+                    });
+                }
+                res.jsonp(slideshow);
+            });
         });
     };
 

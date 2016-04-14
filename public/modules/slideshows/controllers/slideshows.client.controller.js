@@ -40,6 +40,8 @@
                         ActionResultDialogService.showOkDialog('Remove succeeded', $scope, function () {
                             $state.go('listSlideshows');
                         });
+                    }, function (err) {
+                        ActionResultDialogService.showWarningDialog('Remove unsuccessful.', err.data.message, $scope);
                     });
                 });
             };

@@ -1,0 +1,13 @@
+<div class='iqss-core-dialog-container' modal-dialog-positioner>
+    <div class='iqss-core-warningDialog-header'>Error</div>
+    <div class='iqss-core-dialog-error-message'>
+         {{modalDialogMessage}}
+    </div>
+    <div class='iqss-core-dialog-error-details-label'>Error details:</div>
+    <textarea class='iqss-core-dialog-error-details' rows="100">{{errorDetails}}</textarea>
+    <div class='iqss-core-dialog-footer'>
+        <div class='iqss-core-dialog-footer'>
+            <input type="button" class='iqss-button' value="Ok" ng-click="$close('ok')"/>
+        </div>
+    </div>
+</div>

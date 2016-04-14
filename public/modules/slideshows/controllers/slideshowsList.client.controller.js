@@ -23,6 +23,8 @@
                             }
                         }
                         showOkDialog('Remove succeeded');
+                    }, function (err) {
+                        ActionResultDialogService.showErrorDialog('Remove unsuccessful.', err.data.message, $scope);
                     });
                 });
             };
