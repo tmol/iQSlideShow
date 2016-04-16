@@ -4,11 +4,9 @@ angular.module('core').directive('tagAndNameFilter', ['$cacheFactory', function 
     'use strict';
 
     function link(scope, element, attrs) {
-        var setDefaultFilterValuePlaceholder,
-            cachedSettings,
+        var cachedSettings,
             cacheId = 'core.tagAndNameFilter',
             cachedFilterParametersId = cacheId + '.' + scope.searchProvider.cacheId;
-
         scope.cache = $cacheFactory.get(cacheId);
         if (angular.isUndefined(scope.cache)) {
             scope.cache = $cacheFactory(cacheId);
@@ -18,6 +16,10 @@ angular.module('core').directive('tagAndNameFilter', ['$cacheFactory', function 
             scope.filterParameters.nameFilters = _.filter(scope.filterParameters.filterItems, function (filterItem) {
                 return filterItem._id !== 'tag';
             });
+            if (scope.filterParameters.nameFilters.length == 1 && scope.filterParameters.nameFilters[0]._id == 0) {
+                scope.filterParameters.namesAndTagsFilter = scope.filterParameters.nameFilters[0].name;
+                scope.filterParameters.nameFilters = null;
+            }
             scope.filterParameters.nameFilters = _.map(scope.filterParameters.nameFilters, function (nameFilterItem) {
                 return nameFilterItem.name;
             });
@@ -28,6 +30,7 @@ angular.module('core').directive('tagAndNameFilter', ['$cacheFactory', function 
             scope.filterParameters.tagFilters = _.map(scope.filterParameters.tagFilters, function (tagFilterItem) {
                 return tagFilterItem.name.slice(1);
             });
+
             scope.searchProvider.filter(scope.filterParameters);
         };
 
@@ -46,18 +49,11 @@ angular.module('core').directive('tagAndNameFilter', ['$cacheFactory', function 
                 },
                 clear: function () {
                     this.filterItems = [];
-                    setDefaultFilterValuePlaceholder();
                     this.namesAndTagsFilter = '';
                     filter();
                 }
             };
         }
-
-        setDefaultFilterValuePlaceholder = function () {
-            scope.filterValuePlaceholder = 'Search';
-        };
-
-        scope.filterValuePlaceholder = '';
 
         scope.initNamesAndTagsFilter = function (select) {
             select.search = scope.filterParameters.namesAndTagsFilter;
@@ -73,7 +69,7 @@ angular.module('core').directive('tagAndNameFilter', ['$cacheFactory', function 
                     }
                     scope.filterParameters.namesAndTagsFilter = '';
                 } else {
-                    scope.filterParameters.namesAndTagsFilter = select.placeholder;
+                    scope.filterParameters.namesAndTagsFilter = scope.search;
                 }
             } else {
                 if (clickTriggeredTheSelect) {
@@ -81,14 +77,11 @@ angular.module('core').directive('tagAndNameFilter', ['$cacheFactory', function 
                 } else {
                     scope.filterParameters.namesAndTagsFilter = select.search;
                 }
-                select.placeholder = scope.filterParameters.namesAndTagsFilter;
                 select.search = scope.filterParameters.namesAndTagsFilter;
             }
 
-            scope.filterValuePlaceholder = select.search;
             filter();
             if (clickTriggeredTheSelect && !scope.noSummary) {
-                setDefaultFilterValuePlaceholder();
                 scope.filterParameters.namesAndTagsFilter = null;
             }
         };
@@ -99,13 +92,10 @@ angular.module('core').directive('tagAndNameFilter', ['$cacheFactory', function 
             scope.filterParameters.namesAndTagsFilter = select.search;
 
             if (!scope.filterParameters.namesAndTagsFilter || scope.filterParameters.namesAndTagsFilter.length === 0) {
-                setDefaultFilterValuePlaceholder();
                 scope.possibleFilterValues = [];
                 filter();
                 return;
             }
-
-            scope.filterValuePlaceholder = select.search;
 
             var toLowerCase = function (item) {
                 return item.name.toLowerCase();
@@ -118,7 +108,7 @@ angular.module('core').directive('tagAndNameFilter', ['$cacheFactory', function 
 
                 tags = _.map(filterResult.tags, function (tag) { return {_id: 'tag', name: '#' + tag }; });
                 tags = _.sortBy(tags, toLowerCase);
-                scope.possibleFilterValues = scope.possibleFilterValues.concat(tags);
+                scope.possibleFilterValues =[{"_id":0,name:select.search}].concat(scope.possibleFilterValues.concat(tags));
             });
         };
 
