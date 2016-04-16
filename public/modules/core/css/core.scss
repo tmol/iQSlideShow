@@ -3,9 +3,9 @@
 @import 'mixins.scss';
 @import 'navbar.scss';
 
-/*
-    Body styling
-*/
+* {
+    outline-color: transparent;
+}
 .iqss-container-fluid {
     padding-top: $header-height + $page-header-height;
     padding-left: 0px;
@@ -82,6 +82,10 @@ footer hr {
     line-height: 30px;
     margin: 0 10px 0 0;
     vertical-align: middle;
+}
+
+.iqss-validationError {
+    color: red;
 }
 
 .undecorated-link:hover {

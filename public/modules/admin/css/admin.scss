@@ -14,15 +14,16 @@
 }
 
 .iqss-admin-config-attributes-label {
-    flex: 1;
+    flex: 2;
 }
 
 .iqss-admin-config-attributes-value {
     flex: 1;
 }
 
-.iqss-admin-config-attributes-defaultSlideShowSelect {
-    width: 300px;
+.iqss-admin-config-attributes-validationError {
+    flex: 1;
+    margin-left: 10px;
 }
 
 .iqss-admin-config-saveLink {
