@@ -13,20 +13,36 @@
         Async = require('async'),
         NamesAndTagsFilter = require('../services/namesAndTagsFilter');
 
-    /**
-     * Create a Slideshow
-     */
+    function ensureUniqueSlideShowName(res, slideShow, onNameUnique) {
+        Slideshow.findByName(slideShow.name, function (slideShows) {
+            if (slideShows.length === 0
+                    || (slideShow._id && slideShows.length === 1 && slideShows[0]._id.toString() === slideShow._id.toString())) {
+                onNameUnique();
+            } else {
+                res.status(400).send({
+                    message: "Slideshow with name '" + slideShow.name + "' already exists."
+                });
+            }
+        }, function (err) {
+            res.status(400).send({
+                message: err.message
+            });
+        });
+    }
+
     exports.create = function (req, res) {
         var slideshow = new Slideshow(req.body);
         slideshow.user = req.user;
 
-        slideshow.save(function (err) {
-            if (err) {
-                return res.status(400).send({
-                    message: errorHandler.getErrorMessage(err)
-                });
-            }
-            res.jsonp(slideshow);
+        ensureUniqueSlideShowName(res, slideshow, function () {
+            slideshow.save(function (err) {
+                if (err) {
+                    return res.status(400).send({
+                        message: errorHandler.getErrorMessage(err)
+                    });
+                }
+                res.jsonp(slideshow);
+            });
         });
     };
 
@@ -52,13 +68,15 @@
 
         slideshow.published = false;
         slideshow.modified = new Date();
-        slideshow.save(function (err) {
-            if (err) {
-                return res.status(400).send({
-                    message: errorHandler.getErrorMessage(err)
-                });
-            }
-            res.jsonp(slideshow);
+        ensureUniqueSlideShowName(res, slideshow, function () {
+            slideshow.save(function (err) {
+                if (err) {
+                    return res.status(400).send({
+                        message: errorHandler.getErrorMessage(err)
+                    });
+                }
+                res.jsonp(slideshow);
+            });
         });
     };
 
@@ -68,13 +86,21 @@
     exports.delete = function (req, res) {
         var slideshow = req.slideshow;
 
-        slideshow.remove(function (err) {
+        Device.update({'slideAgregation.playList.slideShow': slideshow._id},
+                      { $pull: {'slideAgregation.playList': {slideShow: slideshow._id} }}, {multi: true}, function (err, result) {
             if (err) {
                 return res.status(400).send({
                     message: errorHandler.getErrorMessage(err)
                 });
             }
-            res.jsonp(slideshow);
+            slideshow.remove(function (err) {
+                if (err) {
+                    return res.status(400).send({
+                        message: errorHandler.getErrorMessage(err)
+                    });
+                }
+                res.jsonp(slideshow);
+            });
         });
     };
 

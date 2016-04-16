@@ -182,13 +182,15 @@
 
             handleDeviceSetup = function (message) {
                 timers.resetTimeouts();
-                loadSlidesForDevice($scope.deviceId);
                 $scope.active = message.active;
 
                 if (!$scope.active) {
                     activationDialog.close();
                     activationDialog.show();
+                    $scope.slides = [];
                     return;
+                } else {
+                    loadSlidesForDevice($scope.deviceId);
                 }
                 reportHealth();
                 // leave this the last, there is a bug in IE:
@@ -219,7 +221,15 @@
             });
 
             var setupMessagining = function (deviceId) {
-                var onlinePollingTime = 60 * 1000;
+                var lastAnounceTime = Date.now();
+                var onlinePollingTime = 60 * 10000;
+                var deviceInteractionIsOnline = function () {
+                    var timeDiff = Date.now() - lastAnounceTime;
+                    var timeDiffInSec = timeDiff / 1000;
+                    var timeDiffInMin = timeDiffInSec / 60;
+
+                    return timeDiffInMin < 3;
+                };
                 var putSlideShowOnHold = function () {
                     $scope.slideIsOnHold = true;
                     $scope.$broadcast("putPlayerOnHold");
@@ -238,17 +248,9 @@
 
 
                     auditAction('holdSlideShow');
-                }
+                };
                 messageBroker = new DeviceMessageBroker(deviceId);
                 serverMessageBroker = new ServerMessageBroker();
-                var lastAnounceTime = Date.now();
-                var deviceInteractionIsOnline = function () {
-                    var timeDiff = Date.now() - lastAnounceTime;
-                    var timeDiffInSec = timeDiff / 1000;
-                    var timeDiffInMin = timeDiffInSec / 60;
-
-                    return timeDiffInMin < 3;
-                };
                 messageBroker.onDeviceInteractionIsPresent(function () {
                     lastAnounceTime = Date.now();
                     putSlideShowOnHold();
@@ -288,7 +290,6 @@
                     }
                 });
                 messageBroker.onDeviceSetup(handleDeviceSetup);
-
                 messageBroker.onHoldSlideShow(function () {
                     putSlideShowOnHold();
                 });
@@ -307,8 +308,7 @@
                     auditAction('reload');
                 });
                 messageBroker.onSlideShowClicked(function (message) {
-                    if (!$scope.active)
-                    {
+                    if (!$scope.active) {
                         return;
                     }
                     $scope.$broadcast("displayIndicator", message.content);

@@ -40,6 +40,8 @@
                         ActionResultDialogService.showOkDialog('Remove succeeded', $scope, function () {
                             $state.go('listSlideshows');
                         });
+                    }, function (err) {
+                        ActionResultDialogService.showWarningDialog('Remove unsuccessful.', err.data.message, $scope);
                     });
                 });
             };
@@ -66,7 +68,7 @@
                         if (animationTypesRequiredMsg) {
                             animationTypesRequiredMsg = animationTypesRequiredMsg + ', ';
                         }
-                        animationTypesRequiredMsg = (animationTypesRequiredMsg || '') + "'" + (slideshow.title || '') + "'" + ' (position ' + idx + ')';
+                        animationTypesRequiredMsg = (animationTypesRequiredMsg || '') + (slideshow.title || '') + ' (position ' + idx + ')';
                     }
                 });
                 if (animationTypesRequiredMsg) {
@@ -81,23 +83,29 @@
                 return errMsg;
             };
 
-            var setErrorMessage = function (errorResponse) {
-                $scope.error = errorResponse.data.message;
+            var handleErrorOnUpsert = function (errorResponse) {
+                ActionResultDialogService.showWarningDialog(errorResponse.data.message, $scope);
             };
 
             // Update existing Slideshow
             $scope.upsert = function () {
                 var slideshow = $scope.slideshow,
-                    currentSlideIndex = $scope.slideshow.draftSlides.indexOf($scope.currentSlide),
+                    currentSlideIndex,
                     handleUpsertSuccess = function (msg) {
                         $scope.error = '';
                         $scope.slideShowChanged = false;
                         showOkDialog(msg, function () {
                             // I don't know why the binding is lost, but this solves it
-                            $scope.setCurrentSlide($scope.slideshow.draftSlides[currentSlideIndex]);
+                            if (currentSlideIndex >= 0) {
+                                $scope.setCurrentSlide($scope.slideshow.draftSlides[currentSlideIndex]);
+                            }
                         });
                     },
                     mandatoryFieldsCheckMsg = checkMandatoryFields();
+
+                if ($scope.currentSlide) {
+                    currentSlideIndex = $scope.slideshow.draftSlides.indexOf($scope.currentSlide);
+                }
 
                 if (mandatoryFieldsCheckMsg && mandatoryFieldsCheckMsg.length > 0) {
                     $scope.error = mandatoryFieldsCheckMsg;
@@ -107,11 +115,11 @@
                 if (slideshow._id) {
                     slideshow.$update(function () {
                         handleUpsertSuccess('Update succeeded.');
-                    }, setErrorMessage);
+                    }, handleErrorOnUpsert);
                 } else {
                     $scope.slideshow.$save(function () {
                         handleUpsertSuccess('Create succeeded.');
-                    }, setErrorMessage);
+                    }, handleErrorOnUpsert);
                 }
             };
 
@@ -317,6 +325,8 @@
                         $scope.slideshow.draftSlides = $scope.slideshow.draftSlides || [];
                         $scope.slideshow.draftSlides.push(newSlide);
                         newSlide.dragAndDropId = 'Id' + Math.random();
+                        newSlide.zoomPercent = 100;
+                        newSlide.durationInSeconds = $scope.adminConfig.defaultSlideDuration;
                     }
                     if (newSlideData.slide) {
                         var dragAndDropId = newSlideData.slide._id;
@@ -326,9 +336,6 @@
                         newSlide.dragAndDropId = dragAndDropId;
                         $scope.slideshow.draftSlides.push(newSlide);
                     }
-                    newSlide.resolution = defResolution;
-                    newSlide.zoomPercent = 100;
-                    newSlide.durationInSeconds = $scope.adminConfig.defaultSlideDuration;
                     $scope.setCurrentSlide(newSlide);
                 });
             };

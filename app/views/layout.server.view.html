@@ -67,8 +67,14 @@
 
         <footer ng-show="!interactionMode">
             <hr>
-            <span class='iqss-appVersion'>{{appVersion}}</span>
-            <span class='iqss-terms'>Terms Privacy Copyright © 2016</span>
+            <div  class='iqss-footer-content'>
+                <div class='iqss-appVersion'>{{appVersion}}</div>
+                <div class='iqss-terms'>
+                    <span class='iqss-terms-link'><a href='#!/terms'>Terms of Use</a></span>
+                    <span class='iqss-terms-link'><a href='#!/privacy'>Privacy Policy</a></span>
+                    <span class='iqss-terms-copyright'>Copyright © 2016</span>
+                </div>
+            </div>
         </footer>
 
         <!--Embedding The User Object-->

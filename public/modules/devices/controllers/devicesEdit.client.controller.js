@@ -39,9 +39,11 @@
                     device.active = false;
                 }
                 device.$update(function () {
-                    ActionResultDialogService.showOkDialog('Save was successful.', $scope);
+                    ActionResultDialogService.showOkDialog('Save was successful.', $scope, function () {
+                        initDeviceStatus();
+                    });
                 }, function (errorResponse) {
-                    $scope.error = errorResponse.data.message;
+                    ActionResultDialogService.showWarningDialog(errorResponse.data.message, $scope);
                 });
             };
 
@@ -50,6 +52,10 @@
             $scope.getDeviceStatus = function (device) {
                 return DeviceStatusService.getStatus($scope.device, $scope.adminConfig);
             };
+
+            function initDeviceStatus () {
+                $scope.device.status = DeviceStatusService.getStatus($scope.device, $scope.adminConfig);
+            }
 
             // Find existing Device
             $scope.findOne = function () {
@@ -65,7 +71,7 @@
 
                         dragAndDropItemsArray.moveItemInItemsList(item, newIndex);
                     };
-                    $scope.device.status = DeviceStatusService.getStatus($scope.device, $scope.adminConfig);
+                    initDeviceStatus();
                     _.forEach(playlist, function (item) {
                         item.dragAndDropId = item.slideShow._id;
                     });

@@ -51,8 +51,8 @@
                     var newDevice = new Device({
                         deviceId: deviceId,
                         active: false,
-                        location: 'TBD',
-                        name: 'TBD',
+                        location: 'To be defined',
+                        name: 'New Device',
                         slideAgregation: {
                             agregationMode: "sequential",
                             playList: [{

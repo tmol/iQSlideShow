@@ -1,48 +1,38 @@
 <style>
-    .full button span {
-        background-color: limegreen;
-        border-radius: 32px;
-        color: black;
-    }
-
-    .partially button span {
-        background-color: orange;
-        border-radius: 32px;
-        color: black;
-    }
+  .full button span {
+    background-color: limegreen;
+    border-radius: 32px;
+    color: black;
+  }
+  .partially button span {
+    background-color: orange;
+    border-radius: 32px;
+    color: black;
+  }
 </style>
-<section data-ng-controller="AuditController" style="margin-top: 58px;">
-    <div class="page-header">
-        <h1>Audit</h1>
-    </div>
-    <div class="col-md-12">
-        <div class="col-md-6">
-            <label>From date:
-                <p class="input-group">
-                    <input type="text" class="form-control" datepicker-popup="dd/MM/yyyy" ng-model="fromDate" is-open="fromDateStatus.opened" ng-required="true" />
-                    <span class="input-group-btn">
-                    <button type="button" class="btn btn-default" ng-click="openPopupFromDate($event)"><i class="glyphicon glyphicon-calendar"></i></button>
-                </span>
 
-                </p>
-            </label>
-        </div>
-        <div class="col-md-6">
-            <label>To date:
-                <p class="input-group">
-
-                    <input type="text" class="form-control" datepicker-popup="dd/MM/yyyy" ng-model="toDate" is-open="toDateStatus.opened" ng-required="true" />
-                    <span class="input-group-btn">
-                    <button type="button" class="btn btn-default" ng-click="openPopupToDate($event)"><i class="glyphicon glyphicon-calendar"></i></button>
-                </span>
-
-                </p>
-            </label>
+<section data-ng-controller="AuditController">
+    <div class='iqss-page-header'>
+        <div>
+            <a ng-href="{{downloadUrl}}">
+                <div class='iqss-admin-audit-downloadLink' ng-click="downloadAuditData()">Download</div>
+            </a>
         </div>
     </div>
-    <div class="col-md-12">
-       <a ng-href="/audits/csv?startDate={{fromDate}}&enDate={{toDate}}">
-           <button type="button" id="downloadAuditData" class="btn btn-success" ng-click="downloadAuditData()">Download Audit Data</button>
-        </a>
+    <div class='iqss-admin-audit-filters-container'>
+        <div class='iqss-admin-audit-filters-column'>
+            <div class='iqss-admin-audit-filters-label'>From date:</div>
+            <div class="input-group iqss-admin-audit-filters-datePicker">
+                <input type="text" class="form-control" uib-datepicker-popup="dd/MM/yyyy" ng-model="fromDate" is-open="fromDateStatus.opened" ng-required="true" />
+                <button type="button" class="btn btn-default iqss-admin-audit-filters-datePicker-openButton" ng-click="openPopupFromDate($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+           </div>
+        </div>
+        <div class='iqss-admin-audit-filters-column'>
+            <div class='iqss-admin-audit-filters-label'>To date:</div>
+            <div class="input-group iqss-admin-audit-filters-datePicker">
+                <input type="text" class="form-control" uib-datepicker-popup="dd/MM/yyyy" ng-model="toDate" is-open="toDateStatus.opened" ng-required="true" />
+                <button type="button" class="btn btn-default iqss-admin-audit-filters-datePicker-openButton" ng-click="openPopupToDate($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+           </div>
+        </div>
     </div>
 </section>

@@ -7,12 +7,12 @@
 
             var okResult = 'ok';
 
-            var showDialog = function (templateName, msg, scope, callback) {
+            function showDialog(templateName, msg, scope, dialogCssStyle, callback) {
                 scope.modalDialogMessage = msg;
                 $uibModal.open({
                     animation: false,
                     templateUrl: Path.getViewUrl(templateName, 'core'),
-                    windowClass: 'iqss-core-dialog',
+                    windowClass: dialogCssStyle,
                     scope: scope
                 }).result.then(function (result) {
                     if (callback) {
@@ -21,12 +21,30 @@
                 });
             };
 
+            function showDialogWithDefaultStyle(templateName, msg, scope, callback) {
+                showDialog(templateName, msg, scope, 'iqss-core-dialog', callback);
+            }
+
             var showOkDialog = function (msg, scope, callback) {
-                showDialog('okDialog', msg, scope, callback);
+                showDialogWithDefaultStyle('okDialog', msg, scope, callback);
+            };
+
+            var showWarningDialog = function (msg, scope, callback) {
+                showDialogWithDefaultStyle('warningDialog', msg, scope, callback);
             };
 
             var showOkCancelDialog = function (confirmationMsg, scope, callback) {
-                showDialog('okCancelDialog', confirmationMsg, scope, function (result) {
+                showDialogWithDefaultStyle('okCancelDialog', confirmationMsg, scope, function (result) {
+                    if (result !== okResult) {
+                        return;
+                    }
+                    callback();
+                });
+            };
+
+            var showErrorDialog = function (errorMsg, errorDetails, scope, callback) {
+                scope.errorDetails = errorDetails;
+                showDialog('errorDialog', errorMsg, scope, 'iqss-core-error-dialog', function (result) {
                     if (result !== okResult) {
                         return;
                     }
@@ -36,7 +54,9 @@
 
             return {
                 showOkDialog: showOkDialog,
+                showWarningDialog: showWarningDialog,
                 showOkCancelDialog: showOkCancelDialog,
+                showErrorDialog: showErrorDialog,
                 cancelResult: 'cancel',
                 okResult: okResult
             };

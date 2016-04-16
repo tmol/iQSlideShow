@@ -1,8 +1,50 @@
+@import '../../core/css/mixins.scss';
+
 @media (min-width: 992px) {
 	.nav-users {
 		position: fixed;
 	}
 }
+
+.iqss-page-header-container {
+    display: flex;
+}
+
+.iqss-sign-signInLink {
+    background: url(../../../modules/core/img/save.svg) left center no-repeat;
+    @include standardSubHeaderAction;
+}
+
+.iqss-user-signUpLink {
+    background: url(../../../modules/core/img/save.svg) left center no-repeat;
+    @include standardSubHeaderAction;
+}
+
+.iqss-sign-saveLink {
+    background: url(../../../modules/core/img/save.svg) left center no-repeat;
+    @include standardSubHeaderAction;
+}
+
+.iqss-user-content {
+    width: 50%;
+    @include standardMainArea;
+}
+
+.iqss-user-field {
+    flex: 1;
+    display: flex;
+    margin-bottom: 10px;
+    align-items: center;
+}
+
+.iqss-user-field-label {
+    flex: 1;
+}
+
+.iqss-user-field-value {
+    flex: 1;
+}
+
 .remove-account-container {
 	display: inline-block;
 	position: relative;

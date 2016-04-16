@@ -72,8 +72,10 @@ footer hr {
     vertical-align: middle;
 }
 
-.iqss-terms {
-    float: right;
+.iqss-footer-content {
+    display: flex;
+    flex-flow: row;
+    justify-content: space-between;
     font-weight: normal;
     color: $blue-color;
     font-size: $small-font-size;

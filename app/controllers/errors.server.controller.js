@@ -17,13 +17,24 @@ var getUniqueErrorMessage = function(err) {
 	return output;
 };
 
+function getMongoError (err) {
+    switch (err.code) {
+        case 16837:
+            return err.message;
+            break;
+        default:
+            return 'Something went wrong during database operations.';
+    }
+}
 /**
  * Get the error message from error object
  */
 exports.getErrorMessage = function(err) {
 	var message = '';
 
-	if (err.code) {
+    if (err.name === 'MongoError') {
+        message = getMongoError(err);
+    } else if (err.code) {
 		switch (err.code) {
 			case 11000:
 			case 11001:

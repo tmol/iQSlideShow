@@ -1,4 +1,5 @@
 @import 'variables.scss';
+@import 'mixins.scss';
 
 .iqss-core-dialog {
     border-radius: 6px;
@@ -14,6 +15,22 @@
 .iqss-core-dialog .modal-dialog .modal-content {
     margin-top: 0;
     height: 150px;
+}
+
+.iqss-core-error-dialog {
+    border-radius: 6px;
+}
+
+.iqss-core-error-dialog .modal-dialog {
+    width: 400px;
+    height: 300px;
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+.iqss-core-error-dialog .modal-dialog .modal-content {
+    margin-top: 0;
+    height: 300px;
 }
 
 .iqss-core-dialog-container {
@@ -33,8 +50,33 @@
     justify-content: center;
 }
 
+.iqss-core-dialog-error-message {
+    margin: 10px;
+    font-size: $big-font-size;
+    flex: 1;
+    align-items: center;
+    justify-content: center;
+}
+
+.iqss-core-dialog-error-details-label {
+    margin: 10px;
+}
+
+.iqss-core-dialog-error-details {
+    margin: 10px;
+    flex: 100;
+}
+
 .iqss-core-dialog-footer {
     display: flex;
     flex-flow: row-reverse;
     margin: 5px 10px;
+}
+
+.iqss-core-okdialog-header {
+    @include dialogHeader(success)
+}
+
+.iqss-core-warningDialog-header {
+    @include dialogHeader(warning)
 }

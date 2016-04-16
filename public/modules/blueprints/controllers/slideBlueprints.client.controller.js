@@ -16,7 +16,8 @@
             $scope.errMessage = '';
             $scope.save = function () {
                 $scope.errMessage = '';
-                $scope.bluePrintInstance.slide = [$scope.Slide];
+                $scope.bluePrintInstance.slide = [_.cloneDeep($scope.Slide)];
+                $scope.bluePrintInstance.slide[0].title = $scope.bluePrintInstance.name;
                 $scope.bluePrintInstance.created = Date.now();
                 $scope.bluePrintInstance.$save().then(function () {
                     $scope.$close();

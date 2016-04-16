@@ -47,12 +47,12 @@
             endDate = query.endDate;
 
         if (startDate) {
-            createdQueryExpression.$gte = startDate;
+            createdQueryExpression.$gte = new Date(startDate);
         }
         if (endDate) {
-            createdQueryExpression.$lte = endDate;
+            createdQueryExpression.$lte = new Date(endDate);
         }
-        if (createdQueryExpression.length > 0) {
+        if (startDate || endDate) {
             select.created = createdQueryExpression;
         }
 
