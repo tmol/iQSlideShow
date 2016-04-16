@@ -30,10 +30,11 @@
             };
 
             // todo what happens when error occures?
-            $scope.publishById = function (id) {
+            $scope.publishSlideShow = function (slideShow) {
                 serverMessageBroker
-                    .publishSlideShow(id)
+                    .publishSlideShow(slideShow._id)
                     .then(function () {
+                        slideShow.published = true;
                         showOkDialog('Publish succeeded.');
                     });
             };
