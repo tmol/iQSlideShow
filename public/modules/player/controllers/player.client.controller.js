@@ -123,8 +123,9 @@
                 var modalInstance;
 
                 var show = function () {
+                    var url = $location.$$absUrl.split("/slideshow")[0];
                     $scope.slideActivationQr = {
-                        slideUrl: "/#!/devices/" + $scope.deviceId + "/edit",
+                        slideUrl: url + "/#!/devices/" + $scope.deviceId + "/edit",
                         size: 100,
                         correctionLevel: '',
                         typeNumber: 0,
