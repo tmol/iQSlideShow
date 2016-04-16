@@ -5,7 +5,8 @@ angular.module('admin').directive('locationItem', ['Admin', '$document', '$timeo
     function link(scope, element, attrs) {
         var rememberActualLocationName,
             formatDevicesNamesToCommaSeparatedString,
-            focusOutHanlder;
+            focusOutHanlder,
+            keyPressHandler;
 
         scope.getEditMode = function () {
             return scope.editMode;
@@ -65,7 +66,11 @@ angular.module('admin').directive('locationItem', ['Admin', '$document', '$timeo
 
             return res;
         };
-
+        keyPressHandler = function (event) {
+            if (event.keyCode == 13) {
+                focusOutHanlder();
+            }
+        }
         focusOutHanlder = function (event) {
             var adminService,
                 isThereAtLeastOnDeviceAttachedToLocation,
@@ -115,9 +120,13 @@ angular.module('admin').directive('locationItem', ['Admin', '$document', '$timeo
 
         element.on('focusout', focusOutHanlder);
 
+        element.on('keypress', keyPressHandler);
+
 
         scope.$on("$destroy", function () {
             element.off('focusout', focusOutHanlder);
+            element.off('keyPress', keyPressHanlder);
+
         });
 
         rememberActualLocationName();
