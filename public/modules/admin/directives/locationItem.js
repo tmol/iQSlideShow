@@ -125,7 +125,7 @@ angular.module('admin').directive('locationItem', ['Admin', '$document', '$timeo
 
         scope.$on("$destroy", function () {
             element.off('focusout', focusOutHanlder);
-            element.off('keyPress', keyPressHanlder);
+            element.off('keyPress', keyPressHandler);
 
         });
 
