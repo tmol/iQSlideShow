@@ -8,7 +8,7 @@
         function ($scope, $stateParams, Authentication, Slideshows, $timeout, ServerMessageBroker, Tags, $uibModal, Path, $cacheFactory, $state, ActionResultDialogService, Admin, DragAndDropItemsArray) {
             var serverMessageBroker = new ServerMessageBroker();
 
-            var defResolution = {width: 1920, height: 1080},
+            var defResolution = {height: 1080, width: 1920},
                 dragAndDropItemsArray,
                 lastIndexMovedDuringDragAndDrop;
 
@@ -88,16 +88,18 @@
             };
 
             // Update existing Slideshow
-            $scope.upsert = function () {
+            $scope.upsert = function (onSuccessCallback) {
                 var slideshow = $scope.slideshow,
                     currentSlideIndex,
                     handleUpsertSuccess = function (msg) {
                         $scope.error = '';
-                        $scope.slideShowChanged = false;
                         showOkDialog(msg, function () {
                             // I don't know why the binding is lost, but this solves it
                             if (currentSlideIndex >= 0) {
                                 $scope.setCurrentSlide($scope.slideshow.draftSlides[currentSlideIndex]);
+                            }
+                            if (onSuccessCallback) {
+                                onSuccessCallback();
                             }
                         });
                     },
@@ -140,12 +142,36 @@
                     });
             };
 
+            function slideShowChanged() {
+                var clone = _.cloneDeep($scope.slideshow),
+                    idx;
+                delete clone.nrOfDevicesTheSlideIsAttachedTo;
+                _.forEach(clone.draftSlides, function (draftSlide) {
+                    delete draftSlide.$$hashKey;
+                    delete draftSlide.fireSetTemplateElementEvent;
+                    delete draftSlide.templateUrl;
+                    delete draftSlide.dragAndDropId;
+                });
+                return JSON.stringify(clone) !== $scope.slideshowJson;
+            }
+
             $scope.publish = function () {
-                serverMessageBroker
-                    .publishSlideShow($scope.slideshow._id)
-                    .then(function () {
-                        showOkDialog('Publish succeeded.');
+                var publish = function () {
+                    serverMessageBroker
+                        .publishSlideShow($scope.slideshow._id)
+                        .then(function () {
+                            showOkDialog('Publish succeeded.');
+                        });
+                };
+                if (slideShowChanged()) {
+                    ActionResultDialogService.showOkCancelDialog('The slideshow changed and will be automatically saved before publishing. Do you agree?', $scope, function () {
+                        $scope.upsert(function () {
+                            publish();
+                        });
                     });
+                } else {
+                    publish();
+                }
             };
 
             $scope.findById = function () {
@@ -153,6 +179,7 @@
                     slideshowId: $stateParams.slideshowId
                 }, function (slideshow) {
                     $scope.slideshow  = slideshow;
+                    $scope.slideshowJson = JSON.stringify($scope.slideshow);
                     if ($scope.slideshow.draftSlides.length > 0) {
                         $scope.setCurrentSlide($scope.slideshow.draftSlides[0]);
                         _.forEach($scope.slideshow.draftSlides, function (item) {
