@@ -31,19 +31,8 @@
     @include slideshowsHeaderAction;
 }
 
-.iqss-slideshowedit-error {
-    padding-left: $header-padding-left;
-    padding-right: $header-padding-left;
-    white-space: pre-line;
-    color: $error-color;
-    height: $slideshow-edit-errorArea-height;
-    display: flex;
-    align-items: center;
-    margin-top: 10px;
-}
-
 .iqss-slideshowedit-content {
-    padding-top: $page-header-content-padding - $slideshow-edit-errorArea-height;
+    padding-top: 10px;
     padding-left: $header-padding-left;
     padding-right: $header-padding-left;
     margin-bottom: $footer-height + 5px;
@@ -56,6 +45,51 @@
     height: 100%;
 }
 
+.iqss-slideshowedit-error {
+    padding-left: $header-padding-left;
+    padding-right: $header-padding-left;
+    margin: auto;
+    margin-top: 5px;
+    width: 60%;
+    white-space: pre-line;
+    color: $error-color;
+    display: flex;
+    align-items: center;
+    flex: 2;
+}
+
+.iqss-slideshowedit-attributes {
+    flex: 1;
+    @include border;
+    background: white;
+    height: $slideshow-edit-attributes-height;
+    padding-left: 10px;
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: flex-start;
+    padding: 0 15px;
+    line-height: $slideshow-edit-attributes-height;
+    width: 60%;
+    margin: auto;
+    margin-top: 10px;
+}
+
+.iqss-slideshowedit-attribute {
+    flex: 1;
+    display: flex;
+    height: $slideshow-edit-attributes-height;
+}
+
+.iqss-slideshowedit-name {
+    margin-left: 5px;
+    height: 30px !important;
+}
+
+.iqss-slideshowedit-tags {
+    height: 30px !important;
+    margin: auto 10px;
+}
+
 .iqss-slideshowedit-emptyColumn {
     flex: 0.05;
     background-color: $dark-grey-color;
@@ -63,10 +97,8 @@
 
 .iqss-slideshowedit-slides {
     display: inline-block;
-    flex: 0.4;
     @include border;
     background: white;
-    width: 20%;
 }
 
 .iqss-slideshowedit-data {
@@ -358,7 +390,7 @@
 
 .iqss-slideshowedit-slide-preview {
     padding: 0 $slideshow-edit-slide-indexWidth + $slideshow-edit-slide-leftRightPadding;
-    width: 213px;
+    width: $slideshow-edit-slide-previewWidth;
     height: $slideshow-edit-slide-preview-height;
     display: inline-block;
     overflow: hidden;

@@ -2,7 +2,7 @@
     <div class='iqss-page-header'>
         <div class='iqss-slideshows-header-container'>
             <div class='iqss-slideshows-header-title-container'>
-                <input type="text" data-ng-model="slideshow.name" class='iqss-slideshowedit-header-title' placeholder="Name" required/>
+                <div class="iqss-deviceedit-header-title" ng-bind="slideshow.name"></div>
             </div>
             <div class='iqss-slideshows-header-actions iqss-slideshows-links'>
                 <div class='iqss-slideshowedit-saveLink' ng-click="upsert()">Save</div>
@@ -13,7 +13,21 @@
         </div>
     </div>
     <form data-ng-submit="update()" novalidate class='iqss-slideshowedit-form'>
-        <div class='iqss-slideshowedit-error' data-ng-bind="error">
+        <div class='iqss-slideshowedit-error' data-ng-bind="error" ng-show='error'></div>
+        <div class='iqss-slideshowedit-attributes'>
+            <div class='iqss-slideshowedit-attribute'>
+                <div>Slideshow name</div>
+                <input type="text" class='iqss-slideshowedit-name' data-ng-model="slideshow.name" placeholder="Name" required/>
+            </div>
+            <div class='iqss-slideshowedit-attribute'>
+                <div>Tags</div>
+                <ui-select multiple tagging tagging-label="(custom 'new' tag)" ng-model="slideshow.tags" sortable="true" class='iqss-slideshowedit-tags' title="Choose a tag">
+                    <ui-select-match placeholder="Select tags or enter new...">{{$item}}</ui-select-match>
+                    <ui-select-choices repeat="tag in possibleTags" refresh="refreshTags($select.search)" refresh-delay="0">
+                        {{tag}}
+                    </ui-select-choices>
+                </ui-select>
+            </div>
         </div>
         <div class="iqss-slideshowedit-content">
             <div class="iqss-slideshowedit-slides">
@@ -61,13 +75,6 @@
                                     <input type="text" data-ng-model="currentSlide.title" id="name" placeholder="Name" required/>
                                 </div>
                             </div>
-                            <div class='iqss-form-label'>Tags</div>
-                            <ui-select multiple tagging tagging-label="(custom 'new' tag)" ng-model="slideshow.tags" sortable="true" style="width: 300px;" title="Choose a tag">
-                                <ui-select-match placeholder="Select tags or enter new...">{{$item}}</ui-select-match>
-                                <ui-select-choices repeat="tag in possibleTags" refresh="refreshTags($select.search)" refresh-delay="0">
-                                    {{tag}}
-                                </ui-select-choices>
-                            </ui-select>
                             <div class='iqss-form-label'>Zoom percent ({{currentSlide.zoomPercent}}%)</div>
                             <div ui-slider min=0 max=200 ng-model="currentSlide.zoomPercent"></div>
 
