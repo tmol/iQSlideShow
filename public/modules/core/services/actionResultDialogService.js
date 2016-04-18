@@ -33,12 +33,16 @@
                 showDialogWithDefaultStyle('warningDialog', msg, scope, callback);
             };
 
-            var showOkCancelDialog = function (confirmationMsg, scope, callback) {
+            var showOkCancelDialog = function (confirmationMsg, scope, okCallback, cancelCallback) {
                 showDialogWithDefaultStyle('okCancelDialog', confirmationMsg, scope, function (result) {
                     if (result !== okResult) {
-                        return;
+                        if (cancelCallback) {
+                            cancelCallback();
+                        }
                     }
-                    callback();
+                    if (okCallback) {
+                        okCallback();
+                    }
                 });
             };
 

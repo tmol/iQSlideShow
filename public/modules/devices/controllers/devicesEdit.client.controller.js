@@ -31,6 +31,26 @@
                 });
             };
 
+            function getCleanedUpDeviceJson(device) {
+                var idx;
+
+                var clone = _.cloneDeep($scope.device);
+                _.forEach(clone.slideAgregation.playList, function (playListItem) {
+                    delete playListItem.$$hashKey;
+                    delete playListItem.playerScope;
+                });
+
+                return JSON.stringify(clone);
+            }
+
+            function initDeviceJson () {
+                $scope.deviceJson = getCleanedUpDeviceJson();
+            }
+
+            function deviceChanged() {
+                return getCleanedUpDeviceJson() !== $scope.deviceJson;
+            }
+
             // Update existing Device
             $scope.update = function () {
                 var device = $scope.device;
@@ -41,6 +61,7 @@
                 device.$update(function () {
                     ActionResultDialogService.showOkDialog('Save was successful.', $scope, function () {
                         initDeviceStatus();
+                        initDeviceJson();
                     });
                 }, function (errorResponse) {
                     ActionResultDialogService.showWarningDialog(errorResponse.data.message, $scope);
@@ -75,6 +96,7 @@
                     _.forEach(playlist, function (item) {
                         item.dragAndDropId = item.slideShow._id;
                     });
+                    initDeviceJson();
                 });
             };
 
@@ -145,6 +167,15 @@
                     return;
                 }
                 playlist[entryIndex].currentSlideNr = currentIndex + 1;
+            });
+
+            $scope.$on('$stateChangeStart', function(event) {
+                if (deviceChanged()) {
+                    var answer = confirm("The device was changed. Are you sure you want to leave this page?")
+                    if (!answer) {
+                        event.preventDefault();
+                    }
+                }
             });
 
             $timeout(function () {

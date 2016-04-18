@@ -93,6 +93,7 @@
                     currentSlideIndex,
                     handleUpsertSuccess = function (msg) {
                         $scope.error = '';
+                        initSlideShowJson();
                         showOkDialog(msg, function () {
                             // I don't know why the binding is lost, but this solves it
                             if (currentSlideIndex >= 0) {
@@ -174,12 +175,16 @@
                 }
             };
 
+            function initSlideShowJson () {
+                $scope.slideshowJson = JSON.stringify($scope.slideshow);
+            }
+
             $scope.findById = function () {
                 Slideshows.get({
                     slideshowId: $stateParams.slideshowId
                 }, function (slideshow) {
                     $scope.slideshow  = slideshow;
-                    $scope.slideshowJson = JSON.stringify($scope.slideshow);
+                    initSlideShowJson();
                     if ($scope.slideshow.draftSlides.length > 0) {
                         $scope.setCurrentSlide($scope.slideshow.draftSlides[0]);
                         _.forEach($scope.slideshow.draftSlides, function (item) {
@@ -406,6 +411,15 @@
                     });
                 }
                 $scope.templateElements[name] = value;
+            });
+
+            $scope.$on('$stateChangeStart', function(event) {
+                if (slideShowChanged()) {
+                    var answer = confirm("The slideshow was changed. Are you sure you want to leave this page?")
+                    if (!answer) {
+                        event.preventDefault();
+                    }
+                }
             });
 
             $scope.moveSlideLeft = function () {
