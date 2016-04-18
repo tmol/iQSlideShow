@@ -1,15 +1,16 @@
 /*jslint nomen: true*/
-/*global angular, _*/
+/*global angular, _, confirm*/
 (function () {
     'use strict';
 
     // Devices controller
-    angular.module('devices').controller('DevicesEditController', ['$scope', '$stateParams', 'Authentication', '$state', 'Slideshows', 'Devices', 'Admin', 'DeviceStatusService', '$uibModal', 'Path', 'ActionResultDialogService', '$timeout', 'DragAndDropItemsArray',
-        function ($scope, $stateParams, Authentication, $state, Slideshows, Devices, Admin, DeviceStatusService, $uibModal, Path, ActionResultDialogService, $timeout, DragAndDropItemsArray) {
+    angular.module('devices').controller('DevicesEditController', ['$scope', '$stateParams', 'Authentication', '$state', 'Slideshows', 'Devices', 'Admin', 'DeviceStatusService', '$uibModal', 'Path', 'ActionResultDialogService', '$timeout', 'DragAndDropItemsArray', 'Timers',
+        function ($scope, $stateParams, Authentication, $state, Slideshows, Devices, Admin, DeviceStatusService, $uibModal, Path, ActionResultDialogService, $timeout, DragAndDropItemsArray, Timers) {
             var modalInstance,
                 playlist,
                 lastIndexMovedDuringDragAndDrop,
-                dragAndDropItemsArray;
+                dragAndDropItemsArray,
+                timers = new Timers();
 
             $scope.authentication = Authentication;
             Slideshows.query(function (res) {
@@ -43,12 +44,16 @@
                 return JSON.stringify(clone);
             }
 
-            function initDeviceJson () {
+            function initDeviceJson() {
                 $scope.deviceJson = getCleanedUpDeviceJson();
             }
 
             function deviceChanged() {
                 return getCleanedUpDeviceJson() !== $scope.deviceJson;
+            }
+
+            function initDeviceStatus(device) {
+                $scope.device.status = DeviceStatusService.getStatus(device, $scope.adminConfig);
             }
 
             // Update existing Device
@@ -60,7 +65,7 @@
                 }
                 device.$update(function () {
                     ActionResultDialogService.showOkDialog('Save was successful.', $scope, function () {
-                        initDeviceStatus();
+                        initDeviceStatus(device);
                         initDeviceJson();
                     });
                 }, function (errorResponse) {
@@ -74,12 +79,17 @@
                 return DeviceStatusService.getStatus($scope.device, $scope.adminConfig);
             };
 
-            function initDeviceStatus () {
-                $scope.device.status = DeviceStatusService.getStatus($scope.device, $scope.adminConfig);
+            function refreshStatusPeriodically() {
+                timers.registerInterval('reloadDevicesForStatusUptaes', function () {
+                    Devices.get({
+                        deviceId: $stateParams.deviceId
+                    }, function (device) {
+                        initDeviceStatus(device);
+                    });
+                }, 30 * 1000);
             }
 
-            // Find existing Device
-            $scope.findOne = function () {
+            $scope.find = function () {
                 Devices.get({
                     deviceId: $stateParams.deviceId
                 }, function (result) {
@@ -92,11 +102,12 @@
 
                         dragAndDropItemsArray.moveItemInItemsList(item, newIndex);
                     };
-                    initDeviceStatus();
+                    initDeviceStatus($scope.device);
                     _.forEach(playlist, function (item) {
                         item.dragAndDropId = item.slideShow._id;
                     });
                     initDeviceJson();
+                    refreshStatusPeriodically();
                 });
             };
 
@@ -169,7 +180,7 @@
                 playlist[entryIndex].currentSlideNr = currentIndex + 1;
             });
 
-            $scope.$on('$stateChangeStart', function(event) {
+            $scope.$on('$stateChangeStart', function (event) {
                 if (deviceChanged()) {
                     var answer = confirm("The device was changed. Are you sure you want to leave this page?");
                     if (!answer) {
@@ -178,7 +189,7 @@
                 }
             });
 
-            $scope.$on("slidesLoaded", function(event, slides, slideShowId) {
+            $scope.$on("slidesLoaded", function (event, slides, slideShowId) {
                 var entryIndex = _.findIndex(playlist, function (entry) {
                     return entry.slideShow._id === slideShowId;
                 });
@@ -187,6 +198,10 @@
                     return;
                 }
                 playlist[entryIndex].numberOfSlides = event.targetScope.numberOfSlides;
+            });
+
+            $scope.$on("$destroy", function () {
+                timers.reset();
             });
 
             $timeout(function () {
