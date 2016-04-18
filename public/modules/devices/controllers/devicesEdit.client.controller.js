@@ -171,12 +171,12 @@
 
             $scope.$on('$stateChangeStart', function(event) {
                 if (deviceChanged()) {
-                    var answer = confirm("The device was changed. Are you sure you want to leave this page?")
+                    var answer = confirm("The device was changed. Are you sure you want to leave this page?");
                     if (!answer) {
                         event.preventDefault();
                     }
                 }
-            }
+            });
 
             $scope.$on("slidesLoaded", function(event, slides, slideShowId) {
                 var entryIndex = _.findIndex(playlist, function (entry) {
