@@ -87,6 +87,7 @@
                         }
                     });
                     if ($scope.usePreviewFirstSlide && slides && slides.length) {
+                        $scope.numberOfSlides = $scope.numberOfSlides>slides.length?$scope.numberOfSlides:slides.length;
                         slides = [slides[0]];
                     }
                     $scope.slides = slides;
@@ -104,6 +105,7 @@
                     }
                     $scope.lastModified = result.modified;
                     $scope.title = result.name;
+                    $scope.numberOfSlides = result.slides.length
                     if ($scope.usePreviewFirstSlide && result.slides && result.slides.length) {
                         result.slides = [result.slides[0]];
                     }
@@ -121,8 +123,9 @@
                 var modalInstance;
 
                 var show = function () {
+                    var url = $location.$$absUrl.split("/slideshow")[0];
                     $scope.slideActivationQr = {
-                        slideUrl: "/#!/devices/" + $scope.deviceId + "/edit",
+                        slideUrl: url + "/#!/devices/" + $scope.deviceId + "/edit",
                         size: 100,
                         correctionLevel: '',
                         typeNumber: 0,
@@ -220,13 +223,13 @@
 
             var setupMessagining = function (deviceId) {
                 var lastAnounceTime = Date.now();
-                var onlinePollingTime = 60 * 10000;
-                var deviceInteractionIsOnline = function () {
+                var onlinePollingTime = 60 * 1000; //one minute;
+                var deviceInteractionIsOnline = function (duration) {
                     var timeDiff = Date.now() - lastAnounceTime;
                     var timeDiffInSec = timeDiff / 1000;
                     var timeDiffInMin = timeDiffInSec / 60;
 
-                    return timeDiffInMin < 3;
+                    return timeDiffInMin < duration;
                 };
                 var putSlideShowOnHold = function () {
                     $scope.slideIsOnHold = true;
@@ -234,7 +237,8 @@
 
                     var resetOnHold = function () {
                         timers.registerTimeout('resetOnHold', function () {
-                            if (deviceInteractionIsOnline()) {
+                            var oneMinute = 1;
+                            if (deviceInteractionIsOnline(oneMinute)) {
                                 resetOnHold();
                                 return;
                             }
@@ -279,12 +283,13 @@
 
                     var duration = content.minutesToPlayBeforeGoingBackToDefaultSlideShow;
                     if (duration) {
+                        var durationInMinutes = duration * 60 * 1000;
                         timers.registerTimeout("revertToOriginalSlideShow", function () {
-                            if (deviceInteractionIsOnline()) {
+                            if (deviceInteractionIsOnline(duration)) {
                                 return;
                             }
                             sendHiToServer(); //this should revert the device state
-                        }, duration * 60 * 1000);
+                        }, durationInMinutes);
                     }
                 });
                 messageBroker.onDeviceSetup(handleDeviceSetup);

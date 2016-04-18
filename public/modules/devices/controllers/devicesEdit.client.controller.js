@@ -176,6 +176,17 @@
                         event.preventDefault();
                     }
                 }
+            }
+
+            $scope.$on("slidesLoaded", function(event, slides, slideShowId) {
+                var entryIndex = _.findIndex(playlist, function (entry) {
+                    return entry.slideShow._id === slideShowId;
+                });
+
+                if (entryIndex === -1) {
+                    return;
+                }
+                playlist[entryIndex].numberOfSlides = event.targetScope.numberOfSlides;
             });
 
             $timeout(function () {

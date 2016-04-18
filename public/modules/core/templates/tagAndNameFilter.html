@@ -3,7 +3,7 @@
     <div class='iqss-ui-select'>
         <div>
             <ui-select ng-model="filterParameters.namesAndTagsFilter" sortable="true" title="Select" on-select='filterUpdated($select)' reset-search-input='false'>
-                <ui-select-match placeholder="{{filterValuePlaceholder}}" data-ng-init='initNamesAndTagsFilter($select)'>{{$select.selected}}</ui-select-match>
+                <ui-select-match placeholder="Search" data-ng-init='initNamesAndTagsFilter($select)'>{{$select.selected}}</ui-select-match>
                 <ui-select-choices repeat="filterValue in possibleFilterValues"
                     refresh="refreshPossibleFilterValues($select)"
                     refresh-delay="0">

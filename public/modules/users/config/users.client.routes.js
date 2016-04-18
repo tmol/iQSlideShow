@@ -22,7 +22,7 @@ angular.module('users').config(['$stateProvider',
 			templateUrl: 'modules/users/views/authentication/signup.client.view.html'
 		}).
 		state('signin', {
-			url: '/signin',
+			url: '/signin/:previewsLocation',
 			templateUrl: 'modules/users/views/authentication/signin.client.view.html'
 		}).
 		state('forgot', {

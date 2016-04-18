@@ -5,7 +5,7 @@
     angular.module('admin').controller('LocationController', ['$scope', '$stateParams', '$location', 'Authentication', 'Admin', '$timeout', 'Devices',
         function ($scope, $stateParams, $location, Authentication, Admin, $timeout, Devices) {
             $scope.authentication = Authentication;
-
+            $scope.locations = [];
             $scope.isLocationNameUnique = function (location) {
                 var locationIterated, idx;
                 for (idx = 0; idx < $scope.locations.length; idx = idx + 1) {
