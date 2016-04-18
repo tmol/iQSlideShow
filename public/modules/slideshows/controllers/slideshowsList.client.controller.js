@@ -13,6 +13,8 @@
                 ActionResultDialogService.showOkDialog(msg, $scope);
             };
 
+            $scope.showCreateNewTile = true;
+
             $scope.remove = function (slideshow) {
                 ActionResultDialogService.showOkCancelDialog('Are you sure do you want to remove the slideshow?', $scope, function () {
                     slideshow.$remove(function () {
@@ -71,7 +73,14 @@
                     showOnlyMine: false,
                     pageSize: 12,
                     fullyLoaded: false,
-                    namesAndTagsFilterParameters: {}
+                    namesAndTagsFilterParameters: {},
+                    noFilterApplied: function () {
+                        return this.showOnlyMine === false
+                            && this.namesAndTagsFilterParameters.filterItems.length === 0
+                            && this.namesAndTagsFilterParameters.nameFilters.length === 0
+                            && this.namesAndTagsFilterParameters.tagFilters.length === 0
+                            && this.namesAndTagsFilterParameters.namesAndTagsFilter === '';
+                    }
                 };
             }
 
@@ -102,6 +111,7 @@
                             $scope.$apply();
                         }
                     });
+                    $scope.showCreateNewTile = $scope.filterParameters.noFilterApplied();
                 });
             }
 
