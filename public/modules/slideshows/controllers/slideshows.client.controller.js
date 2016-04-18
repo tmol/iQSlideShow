@@ -145,6 +145,9 @@
             };
 
             function slideShowChanged() {
+                if (!$scope.slideshow) {
+                    return false;
+                }
                 var clone = _.cloneDeep($scope.slideshow),
                     idx;
                 delete clone.nrOfDevicesTheSlideIsAttachedTo;
@@ -154,6 +157,7 @@
                     delete draftSlide.templateUrl;
                     delete draftSlide.dragAndDropId;
                 });
+
                 return JSON.stringify(clone) !== $scope.slideshowJson;
             }
 

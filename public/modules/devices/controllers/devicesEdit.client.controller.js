@@ -32,13 +32,16 @@
                 });
             };
 
-            function getCleanedUpDeviceJson(device) {
+            function getCleanedUpDeviceJson() {
                 var idx;
 
                 var clone = _.cloneDeep($scope.device);
+                delete clone.status;
                 _.forEach(clone.slideAgregation.playList, function (playListItem) {
                     delete playListItem.$$hashKey;
                     delete playListItem.playerScope;
+                    delete playListItem.currentSlideNr;
+                    delete playListItem.numberOfSlides;
                 });
 
                 return JSON.stringify(clone);
@@ -49,6 +52,9 @@
             }
 
             function deviceChanged() {
+                if (!$scope.device) {
+                    return false;
+                }
                 return getCleanedUpDeviceJson() !== $scope.deviceJson;
             }
 
