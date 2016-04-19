@@ -188,9 +188,10 @@
                         _.forEach($scope.slideshow.draftSlides, function (item) {
                             item.dragAndDropId = item._id;
                         });
+                    } else {
+                        $scope.displayPreview = false;
                     }
                     dragAndDropItemsArray = new DragAndDropItemsArray($scope.getDraggableItemsArray());
-
                     $scope.getNrOfDevicesTheSlideIsAttachedTo();
                 });
             };
@@ -435,6 +436,7 @@
                     name: '',
                     slides: []
                 });
+                $scope.displayPreview = false;
             }
         }]);
 }());
