@@ -135,15 +135,6 @@
 
             };
 
-            // todo what happens when error occures?
-            $scope.publishById = function (id) {
-                serverMessageBroker
-                    .publishSlideShow(id)
-                    .then(function () {
-                        showOkDialog('Publish succeeded.');
-                    });
-            };
-
             function slideShowChanged() {
                 if (!$scope.slideshow) {
                     return false;
@@ -166,7 +157,9 @@
                     serverMessageBroker
                         .publishSlideShow($scope.slideshow._id)
                         .then(function () {
-                            showOkDialog('Publish succeeded.');
+                            showOkDialog('Publish succeeded.', function() {
+                                $state.go($state.current, $stateParams, {reload: true, inherit: false});
+                            });
                         });
                 };
                 if (slideShowChanged()) {
