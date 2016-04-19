@@ -95,6 +95,17 @@
 
 .nav > li > a:hover {
     border: none;
+    outline: 0;
+}
+
+.nav > li > a:focus {
+    border: none;
+    outline: 0;
+}
+
+.nav > li > a:active {
+    border: none;
+    outline: 0;
 }
 
 .navbar-inverse .navbar-nav > .open > a, .navbar-inverse .navbar-nav > .open > a:hover, .navbar-inverse .navbar-nav > .open > a:focus {
