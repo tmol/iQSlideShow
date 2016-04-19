@@ -11,7 +11,8 @@
         Promise = require('promise'),
         lodash = require('lodash'),
         Async = require('async'),
-        NamesAndTagsFilter = require('../services/namesAndTagsFilter');
+        NamesAndTagsFilter = require('../services/namesAndTagsFilter'),
+        FindInStringRegex = require('../services/findInStringRegex');
 
     function ensureUniqueSlideShowName(res, slideShow, onNameUnique) {
         Slideshow.findByName(slideShow.name, function (slideShows) {
@@ -148,7 +149,7 @@
 
     exports.filterByName = function (req, res) {
         var searchParam = req.query.nameFilter,
-            filter = {name : { $regex: '^' + searchParam, $options: 'i' }};
+            filter = {name : FindInStringRegex.getFindInTextRegExp(searchParam)};
         Slideshow.find(filter).sort('-created').exec(function (err, slideshowsFound) {
             if (err) {
                 return res.status(400).send({
