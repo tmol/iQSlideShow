@@ -66,7 +66,7 @@
         return object;
     };
 
-    exports.filter = function (req, collection, success, error) {
+    exports.filter = function (req, collection, selectAdjuster, success, error) {
         var nameFilters = req.query.nameFilters,
             tagFilters = req.query.tagFilters,
             namesAndTagsFilter = req.query.namesAndTagsFilter,
@@ -109,6 +109,9 @@
             limit = 0;
         }
 
+        if (selectAdjuster) {
+            select = selectAdjuster(select);
+        }
         collection.find(select).sort('-created').limit(limit).populate('user', 'displayName').exec(function (err, itemsFound) {
             if (err) {
                 error(err);
