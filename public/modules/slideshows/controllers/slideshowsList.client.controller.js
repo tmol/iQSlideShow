@@ -50,6 +50,15 @@
                 $scope.cache = $cacheFactory('slideshows.client.controller');
             }
 
+            $scope.filterSlideShows = function () {
+                delete $scope.filterParameters.lastPageLastItemCreated;
+                delete $scope.filterParameters.fullyLoaded;
+                executeFilter(function (results) {
+                    results.splice(0, 0, { isPlacheloderForCreateNew: true});
+                    $scope.slideshows = results;
+                });
+            };
+
             $scope.searchProvider = {
                 filterEventName: 'filterSlideShows',
                 cacheId: 'slideShowsFilter',
@@ -82,6 +91,8 @@
                             && this.namesAndTagsFilterParameters.namesAndTagsFilter === '';
                     }
                 };
+            } else  {
+                $scope.filterSlideShows();
             }
 
             $scope.$watch('filterParameters.showOnlyMine', function (oldValue, newValue) {
@@ -114,15 +125,6 @@
                     $scope.showCreateNewTile = $scope.filterParameters.noFilterApplied();
                 });
             }
-
-            $scope.filterSlideShows = function (scrolling) {
-                delete $scope.filterParameters.lastPageLastItemCreated;
-                delete $scope.filterParameters.fullyLoaded;
-                executeFilter(function (results) {
-                    results.splice(0, 0, { isPlacheloderForCreateNew: true});
-                    $scope.slideshows = results;
-                });
-            };
 
             $scope.getNextChunk = function () {
                 if ($scope.filterParameters.fullyLoaded) {
