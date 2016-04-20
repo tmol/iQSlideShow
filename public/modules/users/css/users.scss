@@ -1,12 +1,7 @@
 @import '../../core/css/mixins.scss';
+@import '../../core/css/variables.scss';
 
-@media (min-width: 992px) {
-	.nav-users {
-		position: fixed;
-	}
-}
-
-.iqss-page-header-container {
+.iqss-user-page-header-container {
     display: flex;
 }
 
@@ -26,7 +21,8 @@
 }
 
 .iqss-user-content {
-    width: 50%;
+    width: 80%;
+    max-width: 500px;
     @include standardMainArea;
 }
 
@@ -43,6 +39,11 @@
 
 .iqss-user-field-value {
     flex: 1;
+}
+
+.iqss-user-field-value input {
+    width: 100%;
+    max-width: $form-controls-width;
 }
 
 .remove-account-container {

@@ -1,6 +1,6 @@
 <section data-ng-controller="AuthenticationController">
     <div class='iqss-page-header'>
-        <div class='iqss-page-header-container'>
+        <div class='iqss-user-page-header-container'>
             <div class='iqss-sign-signInLink' ng-click="signin()">Sign in</div>
             <a href="/#!/signup">
                 <div class='iqss-user-signUpLink'>Sign up</div>
@@ -36,7 +36,7 @@
         <div class='iqss-user-field'>
             <div class='iqss-user-field-label'>Password:</div>
             <div class='iqss-user-field-value'>
-                <input type="password" id="password" name="password" data-ng-model="credentials.password" placeholder="Password">
+                <input class='iqss-user-field-value-input' type="password" id="password" name="password" data-ng-model="credentials.password" placeholder="Password">
             </div>
         </div>
         <div data-ng-show="error" class="text-center text-danger">
