@@ -4,8 +4,7 @@ angular.module('core').directive('tagAndNameFilter', ['$cacheFactory', function 
     'use strict';
 
     function link(scope, element, attrs) {
-        var setDefaultFilterValuePlaceholder,
-            cachedSettings,
+        var cachedSettings,
             cacheId = 'core.tagAndNameFilter',
             cachedFilterParametersId = cacheId + '.' + scope.searchProvider.cacheId;
 
@@ -46,16 +45,11 @@ angular.module('core').directive('tagAndNameFilter', ['$cacheFactory', function 
                 },
                 clear: function () {
                     this.filterItems = [];
-                    setDefaultFilterValuePlaceholder();
                     this.namesAndTagsFilter = '';
                     filter();
                 }
             };
         }
-
-        setDefaultFilterValuePlaceholder = function () {
-            scope.filterValuePlaceholder = 'Search';
-        };
 
         scope.filterValuePlaceholder = '';
 
@@ -81,14 +75,11 @@ angular.module('core').directive('tagAndNameFilter', ['$cacheFactory', function 
                 } else {
                     scope.filterParameters.namesAndTagsFilter = select.search;
                 }
-                select.placeholder = scope.filterParameters.namesAndTagsFilter;
-                select.search = scope.filterParameters.namesAndTagsFilter;
             }
 
             scope.filterValuePlaceholder = select.search;
             filter();
             if (clickTriggeredTheSelect && !scope.noSummary) {
-                setDefaultFilterValuePlaceholder();
                 scope.filterParameters.namesAndTagsFilter = null;
             }
         };
@@ -99,7 +90,6 @@ angular.module('core').directive('tagAndNameFilter', ['$cacheFactory', function 
             scope.filterParameters.namesAndTagsFilter = select.search;
 
             if (!scope.filterParameters.namesAndTagsFilter || scope.filterParameters.namesAndTagsFilter.length === 0) {
-                setDefaultFilterValuePlaceholder();
                 scope.possibleFilterValues = [];
                 filter();
                 return;

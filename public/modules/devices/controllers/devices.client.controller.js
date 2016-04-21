@@ -99,13 +99,10 @@
             $scope.refreshPossibleSearchedDeviceNamesAndDevices = function (search) {
                 $scope.filterParameters.name = search;
                 if (search.length === 0) {
-                    $scope.nameSearchPlaceholder = 'Select search string...';
                     $scope.possibleSearchedDeviceNames = [];
                     $scope.filterDevices();
                     return;
                 }
-
-                $scope.nameSearchPlaceholder = search;
 
                 Devices.getFilteredNames({
                     nameFilter: search
@@ -115,12 +112,6 @@
                         return name.toLowerCase();
                     });
                 });
-            };
-
-            $scope.nameSearchPlaceholder = 'Select search string...';
-
-            $scope.getSelectPlaceholder = function () {
-                return $scope.nameSearchPlaceholder;
             };
 
             $scope.initNameSearchFilter = function (select) {
@@ -134,7 +125,7 @@
                     $scope.filterParameters.name = select.placeholder;
                 }
                 Devices.query({
-                    name: $scope.filterParameters.names
+                    name: $scope.filterParameters.name
                 }, function (result) {
                     $scope.devices = result;
                 });
@@ -144,7 +135,7 @@
                 filterEventName: 'filterDevices',
                 cacheId: 'devicesFilter',
                 filter: function (filterParameters) {
-                    $scope.filterParameters.names = filterParameters.nameFilters;
+                    $scope.filterParameters.name = filterParameters.namesAndTagsFilter;
                     $scope.filterDevices();
                 },
                 getPossibleFilterValues: function (search, callback) {
