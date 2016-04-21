@@ -6,12 +6,12 @@
 }
 
 .iqss-sign-signInLink {
-    background: url(../../../modules/core/img/save.svg) left center no-repeat;
+    background: url(../../../modules/core/img/login.svg) left center no-repeat;
     @include standardSubHeaderAction;
 }
 
 .iqss-user-signUpLink {
-    background: url(../../../modules/core/img/save.svg) left center no-repeat;
+    background: url(../../../modules/core/img/sign-up.svg) left center no-repeat;
     @include standardSubHeaderAction;
 }
 

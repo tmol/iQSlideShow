@@ -173,7 +173,9 @@
 }
 
 .iqss-slideshowedit-addNewSlide .modal-dialog {
-    width: 500px;
+    width: 80%;
+    max-width: 500px;
+    transform: none !important;
 }
 
 .iqss-slideshowedit-addNewSlide .modal-content {

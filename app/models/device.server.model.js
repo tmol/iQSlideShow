@@ -112,18 +112,7 @@
 
     DeviceSchema.statics.findByFilter = function (filter, onSuccess, onError) {
         var select = {},
-            locationsFilter,
             nameFilter;
-
-        if (filter.locations) {
-            locationsFilter = filter.locations;
-            if (locationsFilter && locationsFilter.length > 0) {
-                if (!(locationsFilter instanceof Array)) {
-                    locationsFilter = [locationsFilter];
-                }
-                select.location = { $in : locationsFilter };
-            }
-        }
 
         if (filter.name) {
             nameFilter = filter.name;
