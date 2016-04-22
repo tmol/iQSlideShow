@@ -4,8 +4,8 @@
     'use strict';
 
     // Slideshows controller
-    angular.module('slideshows').controller('SlideshowsController', ['$scope', '$stateParams', 'Authentication', 'Slideshows', '$timeout', 'ServerMessageBroker', 'Tags', '$uibModal', 'Path', '$cacheFactory', '$state', 'ActionResultDialogService', 'Admin', 'DragAndDropItemsArray',
-        function ($scope, $stateParams, Authentication, Slideshows, $timeout, ServerMessageBroker, Tags, $uibModal, Path, $cacheFactory, $state, ActionResultDialogService, Admin, DragAndDropItemsArray) {
+    angular.module('slideshows').controller('SlideshowsController', ['$scope', '$stateParams', 'Authentication', 'Slideshows', '$timeout', 'ServerMessageBroker', 'Tags', '$uibModal', 'Path', '$cacheFactory', '$state', 'ActionResultDialogService', 'Admin', 'DragAndDropItemsArray', 'animationTypes',
+        function ($scope, $stateParams, Authentication, Slideshows, $timeout, ServerMessageBroker, Tags, $uibModal, Path, $cacheFactory, $state, ActionResultDialogService, Admin, DragAndDropItemsArray, animationTypes) {
             var serverMessageBroker = new ServerMessageBroker();
 
             var defResolution = {height: 1080, width: 1920},
@@ -25,7 +25,7 @@
             $scope.possibleTags = [];
             $scope.playSlideShow = false;
             $scope.viewPlayerId = 'viewPlayer';
-            $scope.animationTypes = ["enter-left", "enter-right", "enter-bottom", "enter-top"];
+            $scope.animationTypes = animationTypes;
             $scope.newSlideData = {};
             $scope.adminConfig = Admin.getConfig();
             $scope.displayPreview = true;
@@ -354,6 +354,7 @@
                         newSlide.dragAndDropId = 'Id' + Math.random();
                         newSlide.zoomPercent = 100;
                         newSlide.durationInSeconds = $scope.adminConfig.defaultSlideDuration;
+                        newSlide.animationType = $scope.adminConfig.defaultAnimationType;
                     }
                     if (newSlideData.slide) {
                         var dragAndDropId = newSlideData.slide._id;

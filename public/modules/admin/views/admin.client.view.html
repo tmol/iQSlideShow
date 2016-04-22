@@ -38,5 +38,12 @@
             </div>
             <div class='iqss-admin-config-attributes-validationError iqss-validationError'><span ng-show='!defaultSlideShowSelected()'>Field is mandatory.</span></div>
         </div>
+        <div class='iqss-admin-config-attributes-item'>
+            <div class='iqss-admin-config-attributes-label'>Default animation type:</div>
+            <div class='iqss-admin-config-attributes-value'>
+                <select ng-options="animationType for animationType in animationTypes" ng-model="config.defaultAnimationType"></select>
+            </div>
+            <div class='iqss-admin-config-attributes-validationError iqss-validationError'><span ng-show='!defaultAnimationTypeSelected()'>Field is mandatory.</span></div>
+        </div>
     </div>
 </section>

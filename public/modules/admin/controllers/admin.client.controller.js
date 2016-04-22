@@ -3,9 +3,10 @@
 (function () {
     'use strict';
 
-    angular.module('admin').controller('AdminController', ['$scope', '$stateParams', '$location', 'Authentication', 'Admin', 'Slideshows', 'ActionResultDialogService',
-        function ($scope, $stateParams, $location, Authentication, Admin, Slideshows, ActionResultDialogService) {
+    angular.module('admin').controller('AdminController', ['$scope', '$stateParams', '$location', 'Authentication', 'Admin', 'Slideshows', 'ActionResultDialogService', 'animationTypes',
+        function ($scope, $stateParams, $location, Authentication, Admin, Slideshows, ActionResultDialogService, animationTypes) {
             $scope.authentication = Authentication;
+            $scope.animationTypes = animationTypes;
 
             $scope.isConfigValid = function () {
                 return $scope.userSelectedSlideShowsPlayTimeInMinutesValid()
@@ -69,6 +70,10 @@
 
             $scope.defaultSlideShowSelected = function () {
                 return !$scope.config || $scope.config.defaultSlideShowId !== null;
+            };
+
+            $scope.defaultAnimationTypeSelected = function () {
+                return !$scope.config || $scope.config.defaultAnimationType !== null;
             };
         }
                                                           ]);

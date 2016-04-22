@@ -28,6 +28,9 @@
                 type: Number,
                 default: 3
             },
+            defaultAnimationType: {
+                type: String
+            },
             created: {
                 type: Date,
                 default: Date.now
