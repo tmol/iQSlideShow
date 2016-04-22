@@ -208,6 +208,7 @@
             if (err) {
                 return res.status(400).send('Canot read templates');
             }
+            lodash.remove(files, function (item) { return item === 'img'} );
             res.jsonp(files);
         });
     };
