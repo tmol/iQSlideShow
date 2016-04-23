@@ -62,21 +62,27 @@ angular.module('users').controller('SettingsController', ['$scope', '$http', '$l
                 Authentication.user = response;
                 ActionResultDialogService.showOkDialog('Update succeeded', $scope);
             }, function(response) {
-                $scope.error = response.data.message;
+                ActionResultDialogService.showErrorDialog('Update unsuccessful', response.data.message, $scope);
             });
 		};
 
 		// Change user password
 		$scope.changeUserPassword = function() {
-			$scope.success = $scope.error = null;
-
-			$http.post('/users/password', $scope.passwordDetails).success(function(response) {
-				// If successful show success message and clear form
-				$scope.success = true;
-				$scope.passwordDetails = null;
-			}).error(function(response) {
-				$scope.error = response.message;
-			});
+            if (!$scope.passwordDetails.currentPassword
+               || !$scope.passwordDetails.newPassword
+               || !$scope.passwordDetails.verifyPassword) {
+                return;
+            }
+            if ($scope.passwordDetails.newPassword !== $scope.passwordDetails.verifyPassword) {
+                ActionResultDialogService.showWarningDialog('New password and verify password do not match.', $scope, function () { return; })
+            } else {
+                $http.post('/users/password', $scope.passwordDetails).success(function(response) {
+                    ActionResultDialogService.showOkDialog('Password change succeeded', $scope);
+                    $scope.passwordDetails = null;
+                }).error(function(response) {
+                    ActionResultDialogService.showErrorDialog('Update unsuccessful', response.message, $scope);
+                });
+            }
 		};
 	}
 ]);
