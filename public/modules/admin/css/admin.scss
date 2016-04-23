@@ -2,19 +2,25 @@
 @import '../../core/css/mixins.scss';
 
 .iqss-admin-config-attributes {
-    width: 60%;
+    width: 80%;
+    max-width: 800px;
+    min-width: 400px;
     @include standardMainArea;
 }
 
-.iqss-admin-config-attributes-item {
+.iqss-admin-config-attributes-container {
+    display: flex;
+    flex-flow: column;
+}
+
+.iqss-admin-config-attributes-display {
     flex: 1;
     display: flex;
-    margin-bottom: 10px;
     align-items: center;
 }
 
 .iqss-admin-config-attributes-label {
-    flex: 2;
+    flex: 1;
 }
 
 .iqss-admin-config-attributes-value {
@@ -24,6 +30,10 @@
 .iqss-admin-config-attributes-validationError {
     flex: 1;
     margin-left: 10px;
+    align-self: flex-end;
+    width: 50%;
+    font-size: $very-small-font-size;
+    height: 15px;
 }
 
 .iqss-admin-config-saveLink {

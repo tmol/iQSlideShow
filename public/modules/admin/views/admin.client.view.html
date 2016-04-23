@@ -3,47 +3,71 @@
         <div class='iqss-admin-config-saveLink' ng-click="update()">Save</div>
     </div>
     <div class='iqss-admin-config-attributes'>
-        <div class='iqss-admin-config-attributes-item'>
-            <div class='iqss-admin-config-attributes-label'>User selected slideshows play time (minutes):</div>
-            <div class='iqss-admin-config-attributes-value'>
-                <input type="number" data-ng-model="config.userSelectedSlideShowsPlayTimeInMinutes" placeholder="User selected slide shows play time in minutes" required>
+        <div class='iqss-admin-config-attributes-container'>
+            <div class='iqss-admin-config-attributes-display'>
+                <div class='iqss-admin-config-attributes-label'>User selected slideshows play time (minutes):</div>
+                <div class='iqss-admin-config-attributes-value'>
+                    <input type="number" data-ng-model="config.userSelectedSlideShowsPlayTimeInMinutes" placeholder="Play time in minutes" required>
+                </div>
             </div>
-            <div class='iqss-admin-config-attributes-validationError iqss-validationError'><span ng-show='!userSelectedSlideShowsPlayTimeInMinutesValid()'>Value must be an integer bigger than 0.</span></div>
+            <div class='iqss-admin-config-attributes-validationError iqss-validationError'>
+                <span ng-show='!userSelectedSlideShowsPlayTimeInMinutesValid()'>Value must be an integer bigger than 0.</span>
+            </div>
         </div>
-        <div class='iqss-admin-config-attributes-item'>
-            <div class='iqss-admin-config-attributes-label'>Number of minutes after last health report to consider device unheathy:</div>
-            <div class='iqss-admin-config-attributes-value'>
-                <input type="number" data-ng-model="config.nrOfMinutesAfterLastHealthReportToConsiderDeviceUnheathy" placeholder="Number of minutes after last health report to consider device unheathy" required>
+        <div class='iqss-admin-config-attributes-container'>
+            <div class='iqss-admin-config-attributes-display'>
+                <div class='iqss-admin-config-attributes-label'>Number of minutes after last health report to consider device unheathy:</div>
+                <div class='iqss-admin-config-attributes-value'>
+                    <input type="number" data-ng-model="config.nrOfMinutesAfterLastHealthReportToConsiderDeviceUnheathy" placeholder="Number of minutes after last health report to consider device unheathy" required>
+                </div>
             </div>
-            <div class='iqss-admin-config-attributes-validationError iqss-validationError'><span ng-show='!nrOfMinutesAfterLastHealthReportToConsiderDeviceUnheathyValid()'>Value must be an integer bigger than 0.</span></div>
+            <div class='iqss-admin-config-attributes-validationError iqss-validationError'>
+                <span ng-show='!nrOfMinutesAfterLastHealthReportToConsiderDeviceUnheathyValid()'>Value must be an integer bigger than 0.</span>
+            </div>
         </div>
-        <div class='iqss-admin-config-attributes-item'>
-            <div class='iqss-admin-config-attributes-label'>Number of tags to be displayed on autocomplete recommendation:</div>
-            <div class='iqss-admin-config-attributes-value'>
-                <input type="number" data-ng-model="config.sizeOfAutocompleteListForTags" placeholder="Number of tags to be displayed on autocomplete recommendation" required>
+        <div class='iqss-admin-config-attributes-container'>
+            <div class='iqss-admin-config-attributes-display'>
+                <div class='iqss-admin-config-attributes-label'>Number of tags to be displayed on autocomplete recommendation:</div>
+                <div class='iqss-admin-config-attributes-value'>
+                    <input type="number" data-ng-model="config.sizeOfAutocompleteListForTags" placeholder="Number of tags to be displayed on autocomplete recommendation" required>
+                </div>
             </div>
-            <div class='iqss-admin-config-attributes-validationError iqss-validationError'><span ng-show='!sizeOfAutocompleteListForTagsValid()'>Value must be an integer bigger than 0.</span></div>
+            <div class='iqss-admin-config-attributes-validationError iqss-validationError'>
+                <span ng-show='!sizeOfAutocompleteListForTagsValid()'>Value must be an integer bigger than 0.</span>
+            </div>
         </div>
-        <div class='iqss-admin-config-attributes-item'>
-            <div class='iqss-admin-config-attributes-label'>Default slide duration (seconds):</div>
-            <div class='iqss-admin-config-attributes-value'>
-                <input type="number" data-ng-model="config.defaultSlideDuration" placeholder="Default slide duration" required>
+        <div class='iqss-admin-config-attributes-container'>
+            <div class='iqss-admin-config-attributes-display'>
+                <div class='iqss-admin-config-attributes-label'>Default slide duration (seconds):</div>
+                <div class='iqss-admin-config-attributes-value'>
+                    <input type="number" data-ng-model="config.defaultSlideDuration" placeholder="Default slide duration" required>
+                </div>
             </div>
-            <div class='iqss-admin-config-attributes-validationError iqss-validationError'><span ng-show='!defaultSlideDurationValid()'>Value must be an integer bigger than 0.</span></div>
+            <div class='iqss-admin-config-attributes-validationError iqss-validationError'>
+                <span ng-show='!defaultSlideDurationValid()'>Value must be an integer bigger than 0.</span>
+            </div>
         </div>
-        <div class='iqss-admin-config-attributes-item'>
-            <div class='iqss-admin-config-attributes-label'>Default player slideshow:</div>
-            <div class='iqss-admin-config-attributes-value'>
-                <select ng-model="config.defaultSlideShowId" ng-options="slideshow._id as slideshow.name for slideshow in slideshows"></select>
+        <div class='iqss-admin-config-attributes-container'>
+            <div class='iqss-admin-config-attributes-display'>
+                <div class='iqss-admin-config-attributes-label'>Default player slideshow:</div>
+                <div class='iqss-admin-config-attributes-value'>
+                    <select ng-model="config.defaultSlideShowId" ng-options="slideshow._id as slideshow.name for slideshow in slideshows"></select>
+                </div>
             </div>
-            <div class='iqss-admin-config-attributes-validationError iqss-validationError'><span ng-show='!defaultSlideShowSelected()'>Field is mandatory.</span></div>
+            <div class='iqss-admin-config-attributes-validationError iqss-validationError'>
+                <span ng-show='!defaultSlideShowSelected()'>Field is mandatory.</span>
+            </div>
         </div>
-        <div class='iqss-admin-config-attributes-item'>
-            <div class='iqss-admin-config-attributes-label'>Default animation type:</div>
-            <div class='iqss-admin-config-attributes-value'>
-                <select ng-options="animationType for animationType in animationTypes" ng-model="config.defaultAnimationType"></select>
+        <div class='iqss-admin-config-attributes-container'>
+            <div class='iqss-admin-config-attributes-display'>
+                <div class='iqss-admin-config-attributes-label'>Default animation type:</div>
+                <div class='iqss-admin-config-attributes-value'>
+                    <select ng-options="animationType for animationType in animationTypes" ng-model="config.defaultAnimationType"></select>
+                </div>
             </div>
-            <div class='iqss-admin-config-attributes-validationError iqss-validationError'><span ng-show='!defaultAnimationTypeSelected()'>Field is mandatory.</span></div>
+            <div class='iqss-admin-config-attributes-validationError iqss-validationError'>
+                <span ng-show='!defaultAnimationTypeSelected()'>Field is mandatory.</span>
+            </div>
         </div>
     </div>
 </section>
