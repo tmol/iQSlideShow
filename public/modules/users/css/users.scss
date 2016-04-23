@@ -26,11 +26,23 @@
     @include standardMainArea;
 }
 
+.iqss-user-field-container {
+    display: flex;
+    flex-flow: column;
+}
+
 .iqss-user-field {
     flex: 1;
     display: flex;
-    margin-bottom: 10px;
     align-items: center;
+}
+
+.iqss-user-field-validationError {
+    flex: 1;
+    align-self: flex-end;
+    width: 50%;
+    font-size: $very-small-font-size;
+    height: 15px;
 }
 
 .iqss-user-field-label {

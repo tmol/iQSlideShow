@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('users').controller('SettingsController', ['$scope', '$http', '$location', 'Users', 'Authentication',
-	function($scope, $http, $location, Users, Authentication) {
+angular.module('users').controller('SettingsController', ['$scope', '$http', '$location', 'Users', 'Authentication', 'ActionResultDialogService',
+	function($scope, $http, $location, Users, Authentication, ActionResultDialogService) {
 		$scope.user = Authentication.user;
 
 		// If user is not signed in then redirect back home
@@ -38,21 +38,32 @@ angular.module('users').controller('SettingsController', ['$scope', '$http', '$l
 			});
 		};
 
-		// Update a user profile
-		$scope.updateUserProfile = function(isValid) {
-			if (isValid) {
-				$scope.success = $scope.error = null;
-				var user = new Users($scope.user);
+        $scope.isEmailValid = function () {
+            var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+            return $scope.user.email && re.test($scope.user.email);
+        }
 
-				user.$update(function(response) {
-					$scope.success = true;
-					Authentication.user = response;
-				}, function(response) {
-					$scope.error = response.data.message;
-				});
-			} else {
-				$scope.submitted = true;
-			}
+        $scope.profileDataValid = function () {
+            return $scope.user.firstName
+               && $scope.user.lastName
+               && $scope.user.username
+               && $scope.isEmailValid();
+        }
+
+		// Update a user profile
+		$scope.updateUserProfile = function() {
+            if (!$scope.profileDataValid()) {
+                return;
+            }
+            var user = new Users($scope.user);
+
+            user.$update(function(response) {
+                $scope.success = true;
+                Authentication.user = response;
+                ActionResultDialogService.showOkDialog('Update succeeded', $scope);
+            }, function(response) {
+                $scope.error = response.data.message;
+            });
 		};
 
 		// Change user password
