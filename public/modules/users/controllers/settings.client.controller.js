@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('users').controller('SettingsController', ['$scope', '$http', '$location', 'Users', 'Authentication', 'ActionResultDialogService',
-	function($scope, $http, $location, Users, Authentication, ActionResultDialogService) {
+angular.module('users').controller('SettingsController', ['$scope', '$http', '$location', 'Users', 'Authentication', 'ActionResultDialogService', 'EmailValidator',
+	function($scope, $http, $location, Users, Authentication, ActionResultDialogService, EmailValidator) {
 		$scope.user = Authentication.user;
 
 		// If user is not signed in then redirect back home
@@ -38,16 +38,11 @@ angular.module('users').controller('SettingsController', ['$scope', '$http', '$l
 			});
 		};
 
-        $scope.isEmailValid = function () {
-            var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-            return $scope.user.email && re.test($scope.user.email);
-        }
-
         $scope.profileDataValid = function () {
             return $scope.user.firstName
                && $scope.user.lastName
                && $scope.user.username
-               && $scope.isEmailValid();
+               && EmailValidator.validate($scope.user.email);
         }
 
 		// Update a user profile

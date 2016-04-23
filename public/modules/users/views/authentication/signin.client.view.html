@@ -27,20 +27,27 @@
 	</div>
 	<h3 class="col-md-12 text-center">Or with your account</h3-->
 	<div class="iqss-user-content">
-        <div class='iqss-user-field'>
-            <div class='iqss-user-field-label'>Username:</div>
-            <div class='iqss-user-field-value'>
-                <input type="text" id="username" name="username" data-ng-model="credentials.username" placeholder="Username">
+        <div class='iqss-user-field-container'>
+            <div class='iqss-user-field'>
+                <div class='iqss-user-field-label'>Username:</div>
+                <div class='iqss-user-field-value'>
+                    <input type="text" id="username" name="username" data-ng-model="credentials.username" placeholder="Username">
+                </div>
+            </div>
+            <div class='iqss-user-field-validationError iqss-validationError'>
+                <span ng-show='credentials && !credentials.username'>Username is required.</span>
             </div>
         </div>
-        <div class='iqss-user-field'>
-            <div class='iqss-user-field-label'>Password:</div>
-            <div class='iqss-user-field-value'>
-                <input class='iqss-user-field-value-input' type="password" id="password" name="password" data-ng-model="credentials.password" placeholder="Password">
+        <div class='iqss-user-field-container'>
+            <div class='iqss-user-field'>
+                <div class='iqss-user-field-label'>Password:</div>
+                <div class='iqss-user-field-value'>
+                    <input class='iqss-user-field-value-input' type="password" id="password" name="password" data-ng-model="credentials.password" placeholder="Password">
+                </div>
             </div>
-        </div>
-        <div data-ng-show="error" class="text-center text-danger">
-            <strong data-ng-bind="error"></strong>
+            <div class='iqss-user-field-validationError iqss-validationError'>
+                <span ng-show='credentials && !credentials.password'>Password is required.</span>
+            </div>
         </div>
     </div>
 </section>
