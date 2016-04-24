@@ -22,6 +22,9 @@ function getMongoError (err) {
         case 16837:
             return err.message;
             break;
+        case 11000:
+            return 'duplicate';
+            break;
         default:
             return 'Something went wrong during database operations.';
     }

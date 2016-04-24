@@ -30,37 +30,38 @@
             </div>
         </div>
         <div class="iqss-slideshowedit-content">
-            <div class="iqss-slideshowedit-slides">
-                <div class='iqss-slideshowedit-slides-addNew-container'>
-                    <div class="iqss-slideshowedit-slides-addNew" ng-click='addNewSlide()'>Add slide</div>
-                </div>
+            <div class="iqss-slideshowedit-slides-scroller" slideshow-slides-height-setter top='180' footer-height='30' slideshow='slideshow'>
+                <div class="iqss-slideshowedit-slides">
+                    <div class='iqss-slideshowedit-slides-addNew-container'>
+                        <div class="iqss-slideshowedit-slides-addNew" ng-click='addNewSlide()'>Add slide</div>
+                    </div>
 
-                <!-- SLIDE LIST PREVIEW start-->
+                    <!-- SLIDE LIST PREVIEW start-->
 
-                <div ng-class="{'iqss-slideshowedit-slide-hidden':slide.hidden}" data-ng-repeat="slide in slideshow.draftSlides" ng-click="setCurrentSlide(slide)" drag-and-drop drag-and-drop-header-height='115' drag-and-drop-footer-height='30' drag-and-drop-move-event-name="'slideDragged'" drag-and-drop-mode="'verticalOnly'" dragAndDropId='{{slide.dragAndDropId}}'>
-                    <div ng-class="['iqss-slideshowedit-slide-container', {'iqss-slideshowedit-slide-container-moveTop': slide.moveStatus === 'movePrev', 'iqss-slideshowedit-slide-container-moveBottom': slide.moveStatus === 'moveNext', 'iqss-slideshowedit-slide-container-moveCenterFromTop': slide.moveStatus === 'moveCenterFromPrev', 'iqss-slideshowedit-slide-container-moveCenterFromBottom': slide.moveStatus === 'moveCenterFromNext'}, {'iqss-slideshowedit-slide-container-dragging': slide.moveStatus === 'drag', 'iqss-slideshowedit-slide-current':isCurrentSlide(slide)}]" drag-and-drop-receiver get-draggable-items-array='getDraggableItemsArray()' element-dragged-event-name="'slideDragged'" dragAndDropId='{{slide.dragAndDropId}}'>
-                        <div class='iqss-slideshowedit-slide-actions'>
-                            <span ng-class="{'iqss-slideshowedit-slide-actions-index': true, 'iqss-slideshowedit-slide-actions-index-selected': isCurrentSlide(slide)}">{{$index + 1}}</span>
-                            <span>
-                                <input id='{{slide._id}}' ng-true-value="true" ng-false-value="false" ng-model-options="{allowInvalid: true}" type="checkbox" data-ng-model="slide.hidden">
-                                <label for='{{slide._id}}'>
-                                    <span ng-if='!slide.hidden' style='background: url(../../../modules/core/img/hide-slide.svg) left bottom no-repeat;vertical-align: middle;height: 15px;'></span>
-                            <span ng-if='slide.hidden' style='background: url(../../../modules/core/img/view-slide.svg) left bottom no-repeat;vertical-align: middle;;height: 15px;'></span>
-                            </label>
-                            </span>
-                            <span class='iqss-slideshowedit-slide-actions-title'>{{slide.title}}</span>
-                            <span class='iqss-slideshowedit-slide-actions-saveToBlueprints' ng-click="saveSlideToBlueprints(slide)"></span>
-                            <span class='iqss-slideshowedit-slide-actions-delete' ng-click='removeSlide(slide)'></span>
-                        </div>
-                        <div class='iqss-slideshowedit-slide-preview'>
-                            <div ng-slide-view reference-slide="slide">
+                    <div ng-class="{'iqss-slideshowedit-slide-hidden':slide.hidden}" data-ng-repeat="slide in slideshow.draftSlides" ng-click="setCurrentSlide(slide)" drag-and-drop drag-and-drop-header-height='115' drag-and-drop-footer-height='30' drag-and-drop-move-event-name="'slideDragged'" drag-and-drop-mode="'verticalOnly'" dragAndDropId='{{slide.dragAndDropId}}'>
+                        <div ng-class="['iqss-slideshowedit-slide-container', {'iqss-slideshowedit-slide-container-moveTop': slide.moveStatus === 'movePrev', 'iqss-slideshowedit-slide-container-moveBottom': slide.moveStatus === 'moveNext', 'iqss-slideshowedit-slide-container-moveCenterFromTop': slide.moveStatus === 'moveCenterFromPrev', 'iqss-slideshowedit-slide-container-moveCenterFromBottom': slide.moveStatus === 'moveCenterFromNext'}, {'iqss-slideshowedit-slide-container-dragging': slide.moveStatus === 'drag', 'iqss-slideshowedit-slide-current':isCurrentSlide(slide)}]" drag-and-drop-receiver get-draggable-items-array='getDraggableItemsArray()' element-dragged-event-name="'slideDragged'" dragAndDropId='{{slide.dragAndDropId}}'>
+                            <div class='iqss-slideshowedit-slide-actions'>
+                                <span ng-class="{'iqss-slideshowedit-slide-actions-index': true, 'iqss-slideshowedit-slide-actions-index-selected': isCurrentSlide(slide)}">{{$index + 1}}</span>
+                                <span>
+                                    <input id='{{slide._id}}' ng-true-value="true" ng-false-value="false" ng-model-options="{allowInvalid: true}" type="checkbox" data-ng-model="slide.hidden">
+                                    <label for='{{slide._id}}'>
+                                        <span ng-if='!slide.hidden' style='background: url(../../../modules/core/img/hide-slide.svg) left bottom no-repeat;vertical-align: middle;height: 15px;'></span>
+                                <span ng-if='slide.hidden' style='background: url(../../../modules/core/img/view-slide.svg) left bottom no-repeat;vertical-align: middle;;height: 15px;'></span>
+                                </label>
+                                </span>
+                                <span class='iqss-slideshowedit-slide-actions-title'>{{slide.title}}</span>
+                                <span class='iqss-slideshowedit-slide-actions-saveToBlueprints' ng-click="saveSlideToBlueprints(slide)"></span>
+                                <span class='iqss-slideshowedit-slide-actions-delete' ng-click='removeSlide(slide)'></span>
+                            </div>
+                            <div class='iqss-slideshowedit-slide-preview'>
+                                <div ng-slide-view reference-slide="slide">
+                                </div>
                             </div>
                         </div>
                     </div>
+                    <!-- SLIDE LIST PREVIEW end-->
                 </div>
-                <!-- SLIDE LIST PREVIEW end-->
             </div>
-
             <div class="iqss-slideshowedit-emptyColumn">&nbsp;</div>
 
             <div class="iqss-slideshowedit-data">

@@ -28,6 +28,9 @@ angular.module('users').controller('AuthenticationController', ['$scope', '$http
 				// And redirect to the index page
 				$location.path('/');
 			}).error(function(response) {
+                if (response.message === 'duplicate') {
+                    response.message = 'Username already exists.';
+                }
                 ActionResultDialogService.showWarningDialog(response.message, $scope);
 			});
 		};

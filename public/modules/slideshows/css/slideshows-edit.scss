@@ -95,6 +95,10 @@
     background-color: $dark-grey-color;
 }
 
+.iqss-slideshowedit-slides-scroller {
+    overflow: hidden;
+}
+
 .iqss-slideshowedit-slides {
     display: inline-block;
     @include border;
