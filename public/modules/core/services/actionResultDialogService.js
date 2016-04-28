@@ -39,8 +39,7 @@
                         if (cancelCallback) {
                             cancelCallback();
                         }
-                    }
-                    if (okCallback) {
+                    } else if (okCallback) {
                         okCallback();
                     }
                 });

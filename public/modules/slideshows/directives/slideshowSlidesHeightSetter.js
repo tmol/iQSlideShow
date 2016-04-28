@@ -23,7 +23,6 @@ angular.module('slideshows').directive('slideshowSlidesHeightSetter', ['$window'
                     $rootScope.$apply();
                 }
                 element.css('overflow-Y', overflowY);
-                console.log('New scroll div height: ' + newHeight, ', slides div height: ' + slidesDivHeight, ' overflowY: ' + overflowY);
             });
         };
 
