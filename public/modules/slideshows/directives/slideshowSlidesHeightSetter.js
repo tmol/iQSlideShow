@@ -7,56 +7,49 @@ angular.module('slideshows').directive('slideshowSlidesHeightSetter', ['$window'
         var window = angular.element($window);
         var top = attrs.top;
         var footerHeight = attrs.footerHeight;
+        var me = this;
 
         var update = function () {
-            var newHeight = window.height() - top - footerHeight,
-                overflowY = 'hidden',
-                slidesDivHeight = element.children().first().height();
-            element.height(newHeight);
-            if (slidesDivHeight > newHeight) {
-                overflowY = 'scroll';
-            }
-            element.css('overflow-Y', overflowY);
-            console.log('New scroll div height: ' + newHeight, ', slides div height: ' + slidesDivHeight, ' overflowY: ' + overflowY);
+            $timeout.cancel(lastTimeout);
+            lastTimeout = $timeout(function () {
+                var newHeight = window.height() - top - footerHeight,
+                    overflowY = 'hidden',
+                    slidesDivHeight = element.children().first().height();
+                element.height(newHeight);
+                if (slidesDivHeight > newHeight) {
+                    overflowY = 'scroll';
+                }
+                if (!$rootScope.$$phase) {
+                    $rootScope.$apply();
+                }
+                element.css('overflow-Y', overflowY);
+                console.log('New scroll div height: ' + newHeight, ', slides div height: ' + slidesDivHeight, ' overflowY: ' + overflowY);
+            });
         };
 
         var lastTimeout;
         var onResize = function () {
-            $timeout.cancel(lastTimeout);
-            lastTimeout = $timeout(function () {
-                update();
-                if (!$rootScope.$$phase) {
-                    $rootScope.$apply();
-                }
-            }, 10);
-
+            update();
         };
 
         window.on('resize', onResize);
 
-        $timeout(function () {
-            update();
-        });
+        update();
 
         scope.$on('$destroy', function () {
             window.off('resize', onResize);
         });
 
-        scope.$watch('slideshow().draftSlides.length', function () {
-            $timeout(function () {
-                update();
-                $timeout(function () {
-                    if (!$rootScope.$$phase) {
-                        $rootScope.$apply();
-                    }
-                });
-            });
+        scope.$watch('slidesHeightSetterStrategy().getSlides().length', function () {
+            update();
+            scope.slidesHeightSetterStrategy().reselectCurrentSlideToFixChormeHeightCalculationBug();
         });
     }
 
     return {
         link: link,
         scope: {
+            slidesHeightSetterStrategy: '&',
             slideshow: '&'
         }
     };

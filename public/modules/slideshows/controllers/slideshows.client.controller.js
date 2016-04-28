@@ -250,6 +250,19 @@
                 updateTemplate();
             };
 
+            $scope.slidesHeightSetterStrategy = {
+                getSlides: function() {
+                    return $scope.slideshow.draftSlides;
+                },
+                reselectCurrentSlideToFixChormeHeightCalculationBug: function () {
+                    var currentSlide = $scope.currentSlide;
+                    $scope.setCurrentSlide(null);
+                    $timeout(function () {
+                        $scope.setCurrentSlide(currentSlide)
+                    }, 200);
+                }
+            }
+
             $scope.getDraggableItemsArray = function () {
                 return {
                     items: $scope.slideshow.draftSlides,
