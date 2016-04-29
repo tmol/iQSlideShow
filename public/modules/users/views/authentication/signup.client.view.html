@@ -31,55 +31,55 @@
             <div class='iqss-user-field'>
                 <div class='iqss-user-field-label'>First Name:</div>
                 <div class='iqss-user-field-value'>
-                    <input type="text" required id="firstName" name="firstName" data-ng-model="credentials.firstName" placeholder="First Name">
+                    <input type="text" required id="firstName" name="firstName" data-ng-model="credentials.firstName" placeholder="First Name" ng-change='firstNameChanged = true'>
                 </div>
             </div>
             <div class='iqss-user-field-validationError iqss-validationError'>
-                <span ng-show='credentials && !credentials.firstName'>Firat name is required.</span>
+                <span ng-show='signUpFieldValidationRequired(firstNameChanged, credentials.firstName)'>First name is required.</span>
             </div>
         </div>
         <div class='iqss-user-field-container'>
             <div class='iqss-user-field'>
                 <div class='iqss-user-field-label'>Last Name:</div>
                 <div class='iqss-user-field-value'>
-                    <input type="text" id="lastName" name="lastName" data-ng-model="credentials.lastName" placeholder="Last Name">
+                    <input type="text" id="lastName" name="lastName" data-ng-model="credentials.lastName" placeholder="Last Name" ng-change='lastNameChanged = true'>
                 </div>
             </div>
             <div class='iqss-user-field-validationError iqss-validationError'>
-                <span ng-show='credentials && !credentials.lastName'>Last name is required.</span>
+                <span ng-show='signUpFieldValidationRequired(lastNameChanged, credentials.lastName)'>Last name is required.</span>
             </div>
         </div>
         <div class='iqss-user-field-container'>
             <div class='iqss-user-field'>
                 <div class='iqss-user-field-label'>Email:</div>
                 <div class='iqss-user-field-value'>
-                    <input type="email" id="email" name="email" data-ng-model="credentials.email" placeholder="Email">
+                    <input type="email" id="email" name="email" data-ng-model="credentials.email" placeholder="Email" ng-change='emailChanged = true'>
                 </div>
             </div>
             <div class='iqss-user-field-validationError iqss-validationError'>
-                <span ng-show='credentials && !emailValidator.validate(credentials.email)'>Email is required and should be valid.</span>
+                <span ng-show='(signUpTriggered || emailChanged) && !emailValidator.validate(credentials.email)'>Email is required and should be valid.</span>
             </div>
         </div>
         <div class='iqss-user-field-container'>
             <div class='iqss-user-field'>
                 <div class='iqss-user-field-label'>Username:</div>
                 <div class='iqss-user-field-value'>
-                    <input type="text" id="username" name="username" data-ng-model="credentials.username" placeholder="Username">
+                    <input type="text" id="username" name="username" data-ng-model="credentials.username" placeholder="Username" ng-change='usernameChanged = true'>
                 </div>
             </div>
             <div class='iqss-user-field-validationError iqss-validationError'>
-                <span ng-show='credentials && !credentials.username'>Username is required.</span>
+                <span ng-show='signUpFieldValidationRequired(usernameChanged, credentials.username)'>Username is required.</span>
             </div>
         </div>
         <div class='iqss-user-field-container'>
             <div class='iqss-user-field'>
                 <div class='iqss-user-field-label'>Password:</div>
                 <div class='iqss-user-field-value'>
-                    <input type="password" id="password" name="password" data-ng-model="credentials.password" placeholder="Password">
+                    <input type="password" id="password" name="password" data-ng-model="credentials.password" placeholder="Password" ng-change='passwordChanged = true'>
                 </div>
             </div>
             <div class='iqss-user-field-validationError iqss-validationError'>
-                <span ng-show='credentials && !credentials.password'>Password is required.</span>
+                <span ng-show='signUpFieldValidationRequired(passwordChanged, credentials.password)'>Password is required.</span>
             </div>
         </div>
         <div data-ng-show="error" class="text-center text-danger">

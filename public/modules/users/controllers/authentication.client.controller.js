@@ -4,11 +4,14 @@ angular.module('users').controller('AuthenticationController', ['$scope', '$http
 	function($scope, $http, $location, Authentication, $stateParams, base64, ActionResultDialogService, EmailValidator) {
 		$scope.authentication = Authentication;
         $scope.emailValidator = EmailValidator;
+        $scope.signInTriggered = false;
+        $scope.signUpTriggered = false;
 
 		// If user is signed in then redirect back home
 		if ($scope.authentication.user) $location.path('/');
 
 		$scope.signup = function() {
+            $scope.signUpTriggered = true;
             if (!$scope.credentials) {
                 $scope.credentials = {};
                 return;
@@ -36,6 +39,7 @@ angular.module('users').controller('AuthenticationController', ['$scope', '$http
 		};
 
 		$scope.signin = function() {
+            $scope.signInTriggered = true;
             if (!$scope.credentials) {
                 $scope.credentials = {};
                 return;
@@ -59,5 +63,17 @@ angular.module('users').controller('AuthenticationController', ['$scope', '$http
                 ActionResultDialogService.showWarningDialog(response.message, $scope);
 			});
 		};
+
+        $scope.fieldValidationRequired = function (uiActionTriggered, fieldChanged, fieldValue) {
+            return (uiActionTriggered || fieldChanged) && !fieldValue;
+        }
+
+        $scope.signInFieldValidationRequired = function (fieldChanged, fieldValue) {
+            return $scope.fieldValidationRequired($scope.signInTriggered, fieldChanged, fieldValue);
+        }
+
+        $scope.signUpFieldValidationRequired = function (fieldChanged, fieldValue) {
+            return $scope.fieldValidationRequired($scope.signUpTriggered, fieldChanged, fieldValue);
+        }
 	}
 ]);
