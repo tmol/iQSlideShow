@@ -7,7 +7,8 @@
                 link: function postLink(scope, element, attrs) {
                     if (scope.referenceSlide
                             && scope.referenceSlide.fireSetTemplateElementEvent
-                            && element.attr("type") !== "script") {
+                            && element.attr("type") !== "script"
+                            && element.attr("hiddenPart") !== "true") {
                         scope.$emit("setTemplateElement", attrs.member, {
                             type: attrs.type || 'text',
                             label: attrs.label || attrs.member
