@@ -160,6 +160,7 @@
     align-items: center;
     height: $font-size + 20;
     padding: $slideshow-edit-slide-leftRightPadding $slideshow-edit-slide-leftRightPadding;
+    width: $slideshow-edit-slide-previewWidth + 2;
 }
 
 .iqss-slideshowedit-slides-addNew {

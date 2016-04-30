@@ -64,7 +64,7 @@
             </div>
             <div class="iqss-slideshowedit-emptyColumn">&nbsp;</div>
 
-            <div class="iqss-slideshowedit-data">
+            <div class="iqss-slideshowedit-data" ng-show='atLeastOneSlideAdded()'>
                 <uib-tabset>
 
                     <!--SLIDE INFO START-->
@@ -125,7 +125,7 @@
 
             <div class="iqss-slideshowedit-emptyColumn">&nbsp;</div>
 
-            <div class="iqss-slideshowedit-preview">
+            <div class="iqss-slideshowedit-preview" ng-show='atLeastOneSlideAdded()'>
 
                 <div dynamic-resizer dynamic-resizer-height-width-ratio="0.5625">
                     <div ng-if="displayPreview" ng-slide-view reference-slide="currentSlide"1>

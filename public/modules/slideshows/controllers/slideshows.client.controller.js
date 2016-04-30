@@ -404,6 +404,10 @@
                 $scope.$broadcast(messageToBroadcast, $scope.viewPlayerId);
             };
 
+            $scope.atLeastOneSlideAdded = function () {
+                return $scope.slideshow && $scope.slideshow.draftSlides && $scope.slideshow.draftSlides.length > 0;
+            }
+
             $scope.$on("$destroy", function () {
                 if ($scope.cache) {
                     $scope.cache.put('slideshows.client.controller.filterParameters', $scope.filterParameters);
