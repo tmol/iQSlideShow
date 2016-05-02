@@ -7,7 +7,6 @@
     angular.module('devices').controller('DevicesEditController', ['$scope', '$stateParams', 'Authentication', '$state', 'Slideshows', 'Devices', 'Admin', 'DeviceStatusService', '$uibModal', 'Path', 'ActionResultDialogService', '$timeout', 'DragAndDropItemsArray', 'Timers',
         function ($scope, $stateParams, Authentication, $state, Slideshows, Devices, Admin, DeviceStatusService, $uibModal, Path, ActionResultDialogService, $timeout, DragAndDropItemsArray, Timers) {
             var modalInstance,
-                playlist,
                 lastIndexMovedDuringDragAndDrop,
                 dragAndDropItemsArray,
                 timers = new Timers();
@@ -58,8 +57,29 @@
                 return getCleanedUpDeviceJson() !== $scope.deviceJson;
             }
 
-            function initDeviceStatus(device) {
-                $scope.device.status = DeviceStatusService.getStatus(device, $scope.adminConfig);
+            function initDeviceStatus() {
+                $scope.device.status = DeviceStatusService.getStatus($scope.device, $scope.adminConfig);
+            }
+
+            function initDragAndDropIds() {
+                _.forEach($scope.getPlaylist(), function (item) {
+                    item.dragAndDropId = item.slideShow._id;
+                });
+            }
+
+            function initAfterLoadingDevice() {
+                var playlist = $scope.getPlaylist();
+
+                dragAndDropItemsArray = new DragAndDropItemsArray($scope.getDraggableItemsArray());
+                playlist.moveGivenPlacesSlideShowInPlaylist = function (item, placesToMove) {
+                    var index = playlist.indexOf(item),
+                        newIndex = index + placesToMove;
+
+                    dragAndDropItemsArray.moveItemInItemsList(item, newIndex);
+                };
+                initDeviceStatus();
+                initDragAndDropIds();
+                initDeviceJson();
             }
 
             // Update existing Device
@@ -70,12 +90,14 @@
                     device.active = false;
                 }
                 device.$update(function () {
-                    ActionResultDialogService.showOkDialog('Save was successful.', $scope, function () {
-                        initDeviceStatus(device);
-                        initDeviceJson();
-                    });
+                    initAfterLoadingDevice();
+                    ActionResultDialogService.showOkDialog('Save was successful.', $scope);
                 }, function (errorResponse) {
-                    ActionResultDialogService.showWarningDialog(errorResponse.data.message, $scope);
+                    var errMsg = 'Error ocurred during update.';
+                    if (errorResponse && errorResponse.data && errorResponse.data.message) {
+                        errMsg = errorResponse.data.message;
+                    }
+                    ActionResultDialogService.showWarningDialog(errMsg, $scope);
                 });
             };
 
@@ -90,7 +112,7 @@
                     Devices.get({
                         deviceId: $stateParams.deviceId
                     }, function (device) {
-                        initDeviceStatus(device);
+                        initDeviceStatus();
                     });
                 }, 30 * 1000);
             }
@@ -100,21 +122,13 @@
                     deviceId: $stateParams.deviceId
                 }, function (result) {
                     $scope.device = result;
-                    playlist = $scope.device.slideAgregation.playList;
-                    dragAndDropItemsArray = new DragAndDropItemsArray($scope.getDraggableItemsArray());
-                    playlist.moveGivenPlacesSlideShowInPlaylist = function (item, placesToMove) {
-                        var index = playlist.indexOf(item),
-                            newIndex = index + placesToMove;
-
-                        dragAndDropItemsArray.moveItemInItemsList(item, newIndex);
-                    };
-                    initDeviceStatus($scope.device);
-                    _.forEach(playlist, function (item) {
-                        item.dragAndDropId = item.slideShow._id;
-                    });
-                    initDeviceJson();
+                    initAfterLoadingDevice();
                     refreshStatusPeriodically();
                 });
+            };
+
+            $scope.getPlaylist = function () {
+                return $scope.device.slideAgregation.playList;
             };
 
             $scope.cancel = function () {
@@ -135,7 +149,7 @@
                     }
 
                     _.forEach(selectedSlideShows, function (selectedSlideShow) {
-                        playlist.push({
+                        $scope.getPlaylist().push({
                             slideShow : selectedSlideShow,
                             dragAndDropId: selectedSlideShow._id
                         });
@@ -144,8 +158,8 @@
             };
 
             $scope.removeSlideshow = function (slideShow) {
-                var index = playlist.indexOf(slideShow);
-                playlist.splice(index, 1);
+                var index = $scope.getPlaylist().indexOf(slideShow);
+                $scope.getPlaylist().splice(index, 1);
             };
 
             $scope.navigateToEdit = function (slideshowId) {
@@ -153,16 +167,16 @@
             };
 
             $scope.moveSlideShowLeft = function (playListEntry) {
-                playlist.moveGivenPlacesSlideShowInPlaylist(playListEntry, -1);
+                $scope.getPlaylist().moveGivenPlacesSlideShowInPlaylist(playListEntry, -1);
             };
 
             $scope.moveSlideShowRight = function (playListEntry) {
-                playlist.moveGivenPlacesSlideShowInPlaylist(playListEntry, 1);
+                $scope.getPlaylist().moveGivenPlacesSlideShowInPlaylist(playListEntry, 1);
             };
 
             $scope.getDraggableItemsArray = function () {
                 return {
-                    items: playlist,
+                    items: $scope.getPlaylist(),
                     dragAndDropItemsArray: dragAndDropItemsArray,
                     lastIndexMovedDuringDragAndDrop: lastIndexMovedDuringDragAndDrop,
                     itemsChanged: function () {
@@ -176,9 +190,10 @@
             };
 
             $scope.$on('currentSlideChanged', function (event, currentIndex, slideShowId) {
-                var entryIndex = _.findIndex(playlist, function (entry) {
-                    return entry.slideShow._id === slideShowId;
-                });
+                var playlist = $scope.getPlaylist(),
+                    entryIndex = _.findIndex(playlist, function (entry) {
+                        return entry.slideShow._id === slideShowId;
+                    });
 
                 if (entryIndex === -1) {
                     return;
@@ -196,9 +211,10 @@
             });
 
             $scope.$on("slidesLoaded", function (event, slides, slideShowId) {
-                var entryIndex = _.findIndex(playlist, function (entry) {
-                    return entry.slideShow._id === slideShowId;
-                });
+                var playlist = $scope.getPlaylist(),
+                    entryIndex = _.findIndex(playlist, function (entry) {
+                        return entry.slideShow._id === slideShowId;
+                    });
 
                 if (entryIndex === -1) {
                     return;

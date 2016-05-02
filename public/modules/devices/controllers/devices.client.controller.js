@@ -4,8 +4,8 @@
     'use strict';
 
     // Devices controller
-    angular.module('devices').controller('DevicesController', ['$scope', '$state', 'Authentication', 'Slideshows', 'Devices', 'ServerMessageBroker', 'Admin', 'Timers', '$cacheFactory', 'DeviceStatusService',
-        function ($scope, $state, Authentication, Slideshows, Devices, ServerMessageBroker, Admin, Timers, $cacheFactory, DeviceStatusService) {
+    angular.module('devices').controller('DevicesController', ['$scope', '$state', 'Authentication', 'Slideshows', 'Devices', 'ServerMessageBroker', 'Admin', 'Timers', '$cacheFactory', 'DeviceStatusService', '$uibModal',
+        function ($scope, $state, Authentication, Slideshows, Devices, ServerMessageBroker, Admin, Timers, $cacheFactory, DeviceStatusService, $uibModal) {
             var modalInstance,
                 timers = new Timers(),
                 messageBroker = new ServerMessageBroker();
@@ -44,14 +44,14 @@
 
             $scope.getDeviceStatus = function (device) {
                 return DeviceStatusService.getStatus(device, $scope.adminConfig);
-            }
+            };
 
             $scope.cancel = function () {
                 $state.go('listDevices');
             };
 
             messageBroker.onNewDeviceSaidHi(function (message) {
-                modalInstance = $modal.open({
+                modalInstance = $uibModal.open({
                     animation: false,
                     templateUrl: 'receivedDeviceEventPopup.html',
                     windowClass: 'waitingForActivationDialog',
@@ -143,14 +143,14 @@
                         nameFilter: search
                     }, function (filteredNames) {
                         var uniqueDevicesName = _.uniq(filteredNames);
-                        callback({names:uniqueDevicesName});
+                        callback({names: uniqueDevicesName});
                     });
                 }
             };
 
             $scope.editDevice = function (device) {
-                $state.go('editDevice',{deviceId:device.deviceId});
-            }
+                $state.go('editDevice', {deviceId: device.deviceId});
+            };
 
             $scope.$on("filterDevices", function () {
                 $scope.filterDevices();
