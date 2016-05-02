@@ -8,44 +8,44 @@
             <div class='iqss-user-field'>
                 <div class='iqss-user-field-label'>First Name:</div>
                 <div class='iqss-user-field-value'>
-                    <input type="text" id="firstName" name="firstName" data-ng-model="user.firstName" placeholder="First Name">
+                    <input type="text" id="firstName" name="firstName" data-ng-model="profile.firstName" placeholder="First Name">
                 </div>
             </div>
             <div class='iqss-user-field-validationError iqss-validationError'>
-                <span ng-show='!user.firstName'>First name is required.</span>
+                <span ng-show='!profile.firstName'>First name is required.</span>
             </div>
         </div>
         <div class='iqss-user-field-container'>
             <div class='iqss-user-field'>
                 <div class='iqss-user-field-label'>Last Name:</div>
                 <div class='iqss-user-field-value'>
-                    <input type="text" id="lastName" name="lastName" data-ng-model="user.lastName" placeholder="Last Name">
+                    <input type="text" id="lastName" name="lastName" data-ng-model="profile.lastName" placeholder="Last Name">
                 </div>
             </div>
             <div class='iqss-user-field-validationError iqss-validationError'>
-                <span ng-show='!user.lastName'>Last name is required.</span>
+                <span ng-show='!profile.lastName'>Last name is required.</span>
             </div>
         </div>
         <div class='iqss-user-field-container'>
             <div class='iqss-user-field'>
                 <div class='iqss-user-field-label'>Email:</div>
                 <div class='iqss-user-field-value'>
-                    <input type="email" id="email" name="email" data-ng-model="user.email" placeholder="Email">
+                    <input type="email" id="email" name="email" data-ng-model="profile.email" placeholder="Email">
                 </div>
             </div>
             <div class='iqss-user-field-validationError iqss-validationError'>
-                <span ng-show='!isEmailValid()'>A valid email is required.</span>
+                <span ng-show='!isProfileEmailValid()'>A valid email is required.</span>
             </div>
         </div>
         <div class='iqss-user-field-container'>
             <div class='iqss-user-field'>
                 <div class='iqss-user-field-label'>Username:</div>
                 <div class='iqss-user-field-value'>
-                    <input type="text" id="username" name="username" data-ng-model="user.username" placeholder="Username">
+                    <input type="text" id="username" name="username" data-ng-model="profile.username" placeholder="Username">
                 </div>
             </div>
             <div class='iqss-user-field-validationError iqss-validationError'>
-                <span ng-show='!user.username'>User name is required.</span>
+                <span ng-show='!profile.username'>User name is required.</span>
             </div>
         </div>
         <div data-ng-show="error" class="text-center text-danger">

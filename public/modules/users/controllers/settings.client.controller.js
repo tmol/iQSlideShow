@@ -3,6 +3,10 @@
 angular.module('users').controller('SettingsController', ['$scope', '$http', '$location', 'Users', 'Authentication', 'ActionResultDialogService', 'EmailValidator',
 	function($scope, $http, $location, Users, Authentication, ActionResultDialogService, EmailValidator) {
 		$scope.user = Authentication.user;
+        $scope.profile = { firstName: $scope.user.firstName,
+            lastName: $scope.user.lastName,
+            username: $scope.user.username,
+            email: $scope.user.email };
 
 		// If user is not signed in then redirect back home
 		if (!$scope.user) $location.path('/');
@@ -38,11 +42,15 @@ angular.module('users').controller('SettingsController', ['$scope', '$http', '$l
 			});
 		};
 
+        $scope.isProfileEmailValid = function () {
+            return EmailValidator.validate($scope.profile.email);
+        }
+
         $scope.profileDataValid = function () {
-            return $scope.user.firstName
-               && $scope.user.lastName
-               && $scope.user.username
-               && EmailValidator.validate($scope.user.email);
+            return $scope.profile.firstName
+               && $scope.profile.lastName
+               && $scope.profile.username
+               && $scope.isProfileEmailValid();
         }
 
 		// Update a user profile
@@ -50,6 +58,12 @@ angular.module('users').controller('SettingsController', ['$scope', '$http', '$l
             if (!$scope.profileDataValid()) {
                 return;
             }
+
+            $scope.user.firstName = $scope.profile.firstName;
+            $scope.user.lastName = $scope.profile.lastName;
+            $scope.user.username = $scope.profile.username;
+            $scope.user.email = $scope.profile.email;
+
             var user = new Users($scope.user);
 
             user.$update(function(response) {
@@ -57,7 +71,11 @@ angular.module('users').controller('SettingsController', ['$scope', '$http', '$l
                 Authentication.user = response;
                 ActionResultDialogService.showOkDialog('Update succeeded', $scope);
             }, function(response) {
-                ActionResultDialogService.showErrorDialog('Update unsuccessful', response.data.message, $scope);
+                var errMsg = 'Unknown error occured';
+                if (response && response.data && response.data.message) {
+                    errMsg = response.data.message;
+                }
+                ActionResultDialogService.showErrorDialog('Update unsuccessful', errMsg, $scope);
             });
 		};
 
