@@ -19,15 +19,17 @@
                     var templatePath;
                     var oldContent;
                     var update = function (content) {
+                        if (element.attr("type") === "script" && element.attr("url") && !scope.isEdit) {
+                            scope.$emit("getTemplatePath", function (templatePath) {
+                                ScriptInjector.inject(templatePath + element.attr("url"), element.attr("tag") || element.attr("url"));
+                                return;
+                            });
+                        }
+
                         if (oldContent === content) {
                             return;
                         }
                         oldContent = content;
-                        if (element.attr("type") === "script" && element.attr("url") && !scope.isEdit) {
-                            scope.$emit("getTemplatePath", function (templatePath) {
-                                ScriptInjector.inject(templatePath + element.attr("url"), element.attr("tag") || element.attr("url"));
-                            });
-                        }
 
                         if (element[0].tagName === "IMG") {
                             element[0].src = content || 'modules/slideshows/css/img/default.jpg';
