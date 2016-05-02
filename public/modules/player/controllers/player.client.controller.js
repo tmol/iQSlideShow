@@ -87,7 +87,7 @@
                         }
                     });
                     if ($scope.usePreviewFirstSlide && slides && slides.length) {
-                        $scope.numberOfSlides = $scope.numberOfSlides>slides.length?$scope.numberOfSlides:slides.length;
+                        $scope.numberOfSlides = $scope.numberOfSlides > slides.length ? $scope.numberOfSlides : slides.length;
                         slides = [slides[0]];
                     }
                     $scope.slides = slides;
@@ -105,7 +105,7 @@
                     }
                     $scope.lastModified = result.modified;
                     $scope.title = result.name;
-                    $scope.numberOfSlides = result.slides.length
+                    $scope.numberOfSlides = result.slides.length;
                     if ($scope.usePreviewFirstSlide && result.slides && result.slides.length) {
                         result.slides = [result.slides[0]];
                     }
