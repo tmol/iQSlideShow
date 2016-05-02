@@ -6,7 +6,7 @@
             var indicator = "<svg style='width:0px;height:0px;opacity:0.8;position: absolute;margin-left:0px;margin-top:0px;display:none;z-index:1000; transform: translate(-50%,-50%)'><circle cx='50%' cy='50%' r='46%' stroke='red' fill='red' fill-opacity='0.0' stroke-width='4%'></circle></svg>";
 
             var template = '<div class="slideshow-placeholder" style="width:{{resolution.width}}px;height:{{resolution.height}}px;transform:{{transform}}" touch-start="onSlideClicked($event)" ng-show="slideReady">';
-            template += "<div style='top: 50%; position: absolute; left: 50%;  transform: translate(-50%,-50%);zoom:{{zoomPercent}}%'>";
+            template += "<div style='top: 50%; position: absolute; left: 50%;  transform: translate(-50%,-50%) scale({{zoomPercent/100}})'>";
             template += "<div ng-class=\"{'iqss-hidden':!slideLoaded}\" ng-include='templateUrl' onload='templateLoaded()' class='ng-slide-view'></div>";
             template += "<div ng-show='!slideLoaded' style='top: 50%; position: absolute; left: 50%;  transform: translate(-50%,-50%);z-index:100' >LOADING...</div>";
             template += "</div>";
