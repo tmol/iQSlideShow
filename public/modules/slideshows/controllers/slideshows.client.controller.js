@@ -1,5 +1,5 @@
 /*jslint nomen: true, vars: true*/
-/*global angular, alert, _*/
+/*global angular, alert, _, confirm*/
 (function () {
     'use strict';
 
@@ -88,6 +88,10 @@
                 ActionResultDialogService.showWarningDialog(errorResponse.data.message, $scope);
             };
 
+            function initSlideShowJson() {
+                $scope.slideshowJson = JSON.stringify($scope.slideshow);
+            }
+
             // Update existing Slideshow
             $scope.upsert = function (onSuccessCallback) {
                 var slideshow = $scope.slideshow,
@@ -157,7 +161,7 @@
                     serverMessageBroker
                         .publishSlideShow($scope.slideshow._id)
                         .then(function () {
-                            showOkDialog('Publish succeeded.', function() {
+                            showOkDialog('Publish succeeded.', function () {
                                 $state.go($state.current, $stateParams, {reload: true, inherit: false});
                             });
                         });
@@ -172,10 +176,6 @@
                     publish();
                 }
             };
-
-            function initSlideShowJson () {
-                $scope.slideshowJson = JSON.stringify($scope.slideshow);
-            }
 
             $scope.findById = function () {
                 Slideshows.get({
@@ -220,7 +220,7 @@
 
             var updateTemplate = function () {
                 $scope.currentSlide.templateUrl = 'modules/slideshows/slideTemplates/' + ($scope.currentSlide.templateName || 'default') + '/slide.html';
-                $scope.displayPreview = false
+                $scope.displayPreview = false;
                 if (!$scope.$$phase) {
                     $scope.$apply();
                 }
@@ -251,17 +251,17 @@
             };
 
             $scope.slidesHeightSetterStrategy = {
-                getSlides: function() {
+                getSlides: function () {
                     return $scope.slideshow.draftSlides;
                 },
                 reselectCurrentSlideToFixChormeHeightCalculationBug: function () {
                     var currentSlide = $scope.currentSlide;
                     $scope.setCurrentSlide(null);
                     $timeout(function () {
-                        $scope.setCurrentSlide(currentSlide)
+                        $scope.setCurrentSlide(currentSlide);
                     }, 200);
                 }
-            }
+            };
 
             $scope.getDraggableItemsArray = function () {
                 return {
@@ -406,7 +406,7 @@
 
             $scope.atLeastOneSlideAdded = function () {
                 return $scope.slideshow && $scope.slideshow.draftSlides && $scope.slideshow.draftSlides.length > 0;
-            }
+            };
 
             $scope.$on("$destroy", function () {
                 if ($scope.cache) {
@@ -426,9 +426,9 @@
                 $scope.templateElements[name] = value;
             });
 
-            $scope.$on('$stateChangeStart', function(event) {
+            $scope.$on('$stateChangeStart', function (event) {
                 if (slideShowChanged()) {
-                    var answer = confirm("The slideshow was changed. Are you sure you want to leave this page?")
+                    var answer = confirm("The slideshow was changed. Are you sure you want to leave this page?");
                     if (!answer) {
                         event.preventDefault();
                     }
