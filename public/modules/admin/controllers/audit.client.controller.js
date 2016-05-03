@@ -17,8 +17,8 @@
                     warningMessage = "Please specify a valid 'To date'.";
                 } else if ($scope.fromDate > currentDate) {
                     warningMessage = "'From date' is bigger than the current date.";
-                } else if ($scope.fromDate >= $scope.toDate) {
-                    warningMessage = "'From date' is equal or bigger than 'To date'.";
+                } else if ($scope.fromDate > $scope.toDate) {
+                    warningMessage = "'From date' bigger than 'To date'.";
                 }
 
                 if (warningMessage) {

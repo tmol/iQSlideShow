@@ -4,7 +4,8 @@
     'use strict';
 
     var lodash = require('lodash'),
-        Promise = require('promise');
+        Promise = require('promise'),
+        FindInStringRegex = require('../services/findInStringRegex');
 
     var mapItemToTags = function (item) {
         return item.tags;
@@ -20,22 +21,22 @@
             promise,
             filterResult = { names: [], tags: [] },
             namesAndTagsFilter = req.query.namesAndTagsFilter,
-            tagsRegExp = '.*' + namesAndTagsFilter + '.*';
+            tagsRegExp = FindInStringRegex.getFindInTextRegExp(namesAndTagsFilter);
 
         if (namesAndTagsFilter !== null && namesAndTagsFilter.length > 0) {
-            select = {name : { $regex: '^' + namesAndTagsFilter, $options: 'i' }};
+            select = {name : tagsRegExp};
             promise = preparePromiseForFilter(select, req, function (itemsFound) {
                 filterResult.names =  lodash.map(lodash.uniq(itemsFound), mapItemToFilteredName);
             });
             promises.push(promise);
 
-            select = {tags : { $elemMatch: {$regex: tagsRegExp, $options: 'i' }}};
+            select = {tags : { $elemMatch: {$regex: '.*' + namesAndTagsFilter + '.*', $options: 'i' }}};
             promise = preparePromiseForFilter(select, req, function (itemsFound) {
                 filterResult.tags = lodash.map(itemsFound, mapItemToTags);
                 filterResult.tags = lodash.flatten(filterResult.tags);
                 filterResult.tags = lodash.uniq(filterResult.tags);
                 filterResult.tags = lodash.filter(filterResult.tags, function (tag) {
-                    return tag.match(new RegExp(tagsRegExp, 'i'));
+                    return tag.match(tagsRegExp);
                 });
             });
             promises.push(promise);
@@ -65,7 +66,7 @@
         return object;
     };
 
-    exports.filter = function (req, collection, success, error) {
+    exports.filter = function (req, collection, selectAdjuster, success, error) {
         var nameFilters = req.query.nameFilters,
             tagFilters = req.query.tagFilters,
             namesAndTagsFilter = req.query.namesAndTagsFilter,
@@ -78,8 +79,8 @@
 
         if (namesAndTagsFilter && namesAndTagsFilter.length > 0) {
             select = { $or: [
-                {name : { $regex: '^' + namesAndTagsFilter, $options: 'i' }},
-                {tags : { $elemMatch: {$regex: '.*' + namesAndTagsFilter + '.*', $options: 'i' }}}
+                {name : FindInStringRegex.getFindInTextRegExp(namesAndTagsFilter)},
+                {tags : { $elemMatch: new RegExp('.*' + namesAndTagsFilter + '.*', 'i')}}
             ]
                 };
         }
@@ -108,6 +109,9 @@
             limit = 0;
         }
 
+        if (selectAdjuster) {
+            select = selectAdjuster(select);
+        }
         collection.find(select).sort('-created').limit(limit).populate('user', 'displayName').exec(function (err, itemsFound) {
             if (err) {
                 error(err);

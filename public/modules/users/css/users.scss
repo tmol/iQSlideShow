@@ -1,40 +1,48 @@
 @import '../../core/css/mixins.scss';
+@import '../../core/css/variables.scss';
 
-@media (min-width: 992px) {
-	.nav-users {
-		position: fixed;
-	}
-}
-
-.iqss-page-header-container {
+.iqss-user-page-header-container {
     display: flex;
 }
 
 .iqss-sign-signInLink {
-    background: url(../../../modules/core/img/save.svg) left center no-repeat;
+    background: url(../../../modules/core/img/login.svg) left center no-repeat;
     @include standardSubHeaderAction;
 }
 
 .iqss-user-signUpLink {
-    background: url(../../../modules/core/img/save.svg) left center no-repeat;
+    background: url(../../../modules/core/img/sign-up.svg) left center no-repeat;
     @include standardSubHeaderAction;
 }
 
-.iqss-sign-saveLink {
+.iqss-user-saveLink {
     background: url(../../../modules/core/img/save.svg) left center no-repeat;
     @include standardSubHeaderAction;
 }
 
 .iqss-user-content {
-    width: 50%;
+    width: 80%;
+    max-width: 500px;
     @include standardMainArea;
+}
+
+.iqss-user-field-container {
+    display: flex;
+    flex-flow: column;
 }
 
 .iqss-user-field {
     flex: 1;
     display: flex;
-    margin-bottom: 10px;
     align-items: center;
+}
+
+.iqss-user-field-validationError {
+    flex: 1;
+    align-self: flex-end;
+    width: 50%;
+    font-size: $very-small-font-size;
+    height: 15px;
 }
 
 .iqss-user-field-label {
@@ -43,6 +51,11 @@
 
 .iqss-user-field-value {
     flex: 1;
+}
+
+.iqss-user-field-value input {
+    width: 100%;
+    max-width: $form-controls-width;
 }
 
 .remove-account-container {

@@ -4,12 +4,12 @@
     angular.module('core').factory("ScriptInjector", function ($timeout, $http, $rootScope) {
         var scriptCollection = {};
         var loadedScripts = {};
-        $rootScope.$on("whenScriptLoaded", function(e, url, callback) {
+        $rootScope.$on("whenScriptLoaded", function (e, url, callback) {
             if (loadedScripts[url]) {
                 callback();
             } else {
                 $rootScope.$on("scriptLoaded", function (event, scriptUrl, scriptTag) {
-                    if (scriptTag == url) {
+                    if (scriptTag === url) {
                         callback();
                     }
                 });

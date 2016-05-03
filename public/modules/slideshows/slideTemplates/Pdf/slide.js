@@ -1,6 +1,6 @@
 /*global PDFJS, jQuery, _*/
 /*jslint nomen: true, vars: true*/
-function PowerPointScript($scope, $q, $timeout) {
+function PdfScript($scope, $q, $timeout) {
     'use strict';
 
     /*temporary testing*/
@@ -108,7 +108,7 @@ function PowerPointScript($scope, $q, $timeout) {
             return;
         }
 
-        PDFJS.workerSrc = '/modules/slideshows/slideTemplates/PowerPointOnline/pdf.worker.js';
+        PDFJS.workerSrc = '/modules/slideshows/slideTemplates/Pdf/pdf.worker.js';
         if (!content.url) {
             return;
         }
@@ -120,7 +120,7 @@ function PowerPointScript($scope, $q, $timeout) {
     };
 
     function pdfScriptLoaded() {
-        return _.includes($scope.loadedScripts, 'modules/slideshows/slideTemplates/PowerPointOnline/pdf.js');
+        return _.includes($scope.loadedScripts, 'modules/slideshows/slideTemplates/Pdf/pdf.js');
     }
 
     if (pdfScriptLoaded()) {
@@ -133,7 +133,7 @@ function PowerPointScript($scope, $q, $timeout) {
         });
     }
 
-    function executeExpansion (callback) {
+    function executeExpansion(callback) {
         var idx;
         var expandedSlidesSpecificContents = [];
         for (idx = 1; idx <= pdfDoc.numPages; idx = idx + 1) {
@@ -144,11 +144,11 @@ function PowerPointScript($scope, $q, $timeout) {
     }
 
     return {
-        preview: function(callback, rootElement) {
+        preview: function (callback, rootElement) {
             if (pdfDoc) {
                 initPage(rootElement, callback);
                 return;
-            };
+            }
             $scope.$watch('pdfDocLoaded', function (newVal, oldVal) {
                 if (!newVal) {
                     return;

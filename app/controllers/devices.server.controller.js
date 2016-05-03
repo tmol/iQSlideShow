@@ -125,14 +125,11 @@
     };
 
     var getNameFilterExpression = function (nameFilter) {
-        return { $regex: '^' + nameFilter, $options: 'i' };
+        var regex = new RegExp('.*' + nameFilter + '.*', 'i');
+        return { $regex: regex };
     };
 
     exports.list = function (req, res) {
-        var select = {},
-            locationsFilter,
-            nameFilter;
-
         Device.findByFilter(req.query, function (devices) {
             res.jsonp(devices);
         }, function (err) {
@@ -251,7 +248,6 @@
 
     exports.getFilteredNames = function (req, res,  next) {
         res.jsonp(req.filteredNames);
-        next();
     };
 
     exports.hasAuthorization = function (req, res, next) {

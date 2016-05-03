@@ -1,14 +1,14 @@
 /*jslint nomen: true, vars: true*/
-/*global angular, alert, _*/
+/*global angular, alert, _, confirm*/
 (function () {
     'use strict';
 
     // Slideshows controller
-    angular.module('slideshows').controller('SlideshowsController', ['$scope', '$stateParams', 'Authentication', 'Slideshows', '$timeout', 'ServerMessageBroker', 'Tags', '$uibModal', 'Path', '$cacheFactory', '$state', 'ActionResultDialogService', 'Admin', 'DragAndDropItemsArray',
-        function ($scope, $stateParams, Authentication, Slideshows, $timeout, ServerMessageBroker, Tags, $uibModal, Path, $cacheFactory, $state, ActionResultDialogService, Admin, DragAndDropItemsArray) {
+    angular.module('slideshows').controller('SlideshowsController', ['$scope', '$stateParams', 'Authentication', 'Slideshows', '$timeout', 'ServerMessageBroker', 'Tags', '$uibModal', 'Path', '$cacheFactory', '$state', 'ActionResultDialogService', 'Admin', 'DragAndDropItemsArray', 'animationTypes',
+        function ($scope, $stateParams, Authentication, Slideshows, $timeout, ServerMessageBroker, Tags, $uibModal, Path, $cacheFactory, $state, ActionResultDialogService, Admin, DragAndDropItemsArray, animationTypes) {
             var serverMessageBroker = new ServerMessageBroker();
 
-            var defResolution = {width: 1920, height: 1080},
+            var defResolution = {height: 1080, width: 1920},
                 dragAndDropItemsArray,
                 lastIndexMovedDuringDragAndDrop;
 
@@ -25,7 +25,7 @@
             $scope.possibleTags = [];
             $scope.playSlideShow = false;
             $scope.viewPlayerId = 'viewPlayer';
-            $scope.animationTypes = ["enter-left", "enter-right", "enter-bottom", "enter-top"];
+            $scope.animationTypes = animationTypes;
             $scope.newSlideData = {};
             $scope.adminConfig = Admin.getConfig();
             $scope.displayPreview = true;
@@ -88,17 +88,24 @@
                 ActionResultDialogService.showWarningDialog(errorResponse.data.message, $scope);
             };
 
+            function initSlideShowJson() {
+                $scope.slideshowJson = JSON.stringify($scope.slideshow);
+            }
+
             // Update existing Slideshow
-            $scope.upsert = function () {
+            $scope.upsert = function (onSuccessCallback) {
                 var slideshow = $scope.slideshow,
                     currentSlideIndex,
                     handleUpsertSuccess = function (msg) {
                         $scope.error = '';
-                        $scope.slideShowChanged = false;
+                        initSlideShowJson();
                         showOkDialog(msg, function () {
                             // I don't know why the binding is lost, but this solves it
                             if (currentSlideIndex >= 0) {
                                 $scope.setCurrentSlide($scope.slideshow.draftSlides[currentSlideIndex]);
+                            }
+                            if (onSuccessCallback) {
+                                onSuccessCallback();
                             }
                         });
                     },
@@ -132,21 +139,42 @@
 
             };
 
-            // todo what happens when error occures?
-            $scope.publishById = function (id) {
-                serverMessageBroker
-                    .publishSlideShow(id)
-                    .then(function () {
-                        showOkDialog('Publish succeeded.');
-                    });
-            };
+            function slideShowChanged() {
+                if (!$scope.slideshow) {
+                    return false;
+                }
+                var clone = _.cloneDeep($scope.slideshow),
+                    idx;
+                delete clone.nrOfDevicesTheSlideIsAttachedTo;
+                _.forEach(clone.draftSlides, function (draftSlide) {
+                    delete draftSlide.$$hashKey;
+                    delete draftSlide.fireSetTemplateElementEvent;
+                    delete draftSlide.templateUrl;
+                    delete draftSlide.dragAndDropId;
+                });
+
+                return JSON.stringify(clone) !== $scope.slideshowJson;
+            }
 
             $scope.publish = function () {
-                serverMessageBroker
-                    .publishSlideShow($scope.slideshow._id)
-                    .then(function () {
-                        showOkDialog('Publish succeeded.');
+                var publish = function () {
+                    serverMessageBroker
+                        .publishSlideShow($scope.slideshow._id)
+                        .then(function () {
+                            showOkDialog('Publish succeeded.', function () {
+                                $state.go($state.current, $stateParams, {reload: true, inherit: false});
+                            });
+                        });
+                };
+                if (slideShowChanged()) {
+                    ActionResultDialogService.showOkCancelDialog('The slideshow changed and will be automatically saved before publishing. Do you agree?', $scope, function () {
+                        $scope.upsert(function () {
+                            publish();
+                        });
                     });
+                } else {
+                    publish();
+                }
             };
 
             $scope.findById = function () {
@@ -154,14 +182,16 @@
                     slideshowId: $stateParams.slideshowId
                 }, function (slideshow) {
                     $scope.slideshow  = slideshow;
+                    initSlideShowJson();
                     if ($scope.slideshow.draftSlides.length > 0) {
                         $scope.setCurrentSlide($scope.slideshow.draftSlides[0]);
                         _.forEach($scope.slideshow.draftSlides, function (item) {
                             item.dragAndDropId = item._id;
                         });
+                    } else {
+                        $scope.displayPreview = false;
                     }
                     dragAndDropItemsArray = new DragAndDropItemsArray($scope.getDraggableItemsArray());
-
                     $scope.getNrOfDevicesTheSlideIsAttachedTo();
                 });
             };
@@ -190,7 +220,7 @@
 
             var updateTemplate = function () {
                 $scope.currentSlide.templateUrl = 'modules/slideshows/slideTemplates/' + ($scope.currentSlide.templateName || 'default') + '/slide.html';
-                $scope.displayPreview = false
+                $scope.displayPreview = false;
                 if (!$scope.$$phase) {
                     $scope.$apply();
                 }
@@ -218,6 +248,19 @@
                 slide.resolution = defResolution; //todo: remove this later
                 $scope.currentSlide.fireSetTemplateElementEvent = true;
                 updateTemplate();
+            };
+
+            $scope.slidesHeightSetterStrategy = {
+                getSlides: function () {
+                    return $scope.slideshow.draftSlides;
+                },
+                reselectCurrentSlideToFixChormeHeightCalculationBug: function () {
+                    var currentSlide = $scope.currentSlide;
+                    $scope.setCurrentSlide(null);
+                    $timeout(function () {
+                        $scope.setCurrentSlide(currentSlide);
+                    }, 200);
+                }
             };
 
             $scope.getDraggableItemsArray = function () {
@@ -324,6 +367,7 @@
                         newSlide.dragAndDropId = 'Id' + Math.random();
                         newSlide.zoomPercent = 100;
                         newSlide.durationInSeconds = $scope.adminConfig.defaultSlideDuration;
+                        newSlide.animationType = $scope.adminConfig.defaultAnimationType;
                     }
                     if (newSlideData.slide) {
                         var dragAndDropId = newSlideData.slide._id;
@@ -360,6 +404,10 @@
                 $scope.$broadcast(messageToBroadcast, $scope.viewPlayerId);
             };
 
+            $scope.atLeastOneSlideAdded = function () {
+                return $scope.slideshow && $scope.slideshow.draftSlides && $scope.slideshow.draftSlides.length > 0;
+            };
+
             $scope.$on("$destroy", function () {
                 if ($scope.cache) {
                     $scope.cache.put('slideshows.client.controller.filterParameters', $scope.filterParameters);
@@ -376,6 +424,15 @@
                     });
                 }
                 $scope.templateElements[name] = value;
+            });
+
+            $scope.$on('$stateChangeStart', function (event) {
+                if (slideShowChanged()) {
+                    var answer = confirm("The slideshow was changed. Are you sure you want to leave this page?");
+                    if (!answer) {
+                        event.preventDefault();
+                    }
+                }
             });
 
             $scope.moveSlideLeft = function () {
@@ -397,6 +454,7 @@
                     name: '',
                     slides: []
                 });
+                $scope.displayPreview = false;
             }
         }]);
 }());

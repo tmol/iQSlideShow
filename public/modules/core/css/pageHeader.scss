@@ -34,15 +34,6 @@
     @include positionInCenterInResponsiveContainer;
 }
 
-@media (max-width: $bootstrap-xs-breakpoint) {
-    .iqss-page-header > div {
-        position: absolute;
-        top: 0;
-        left: 200px;
-        min-width: 365px;
-    }
-}
-
 .iqss-page-header > section {
     height: $page-header-height;
     line-height: $page-header-height;

@@ -8,6 +8,7 @@
      */
     var mongoose = require('mongoose'),
         Schema = mongoose.Schema,
+        FindInStringRegex = require('../services/findInStringRegex'),
         messagingEngineFactory = require('../services/messaging/messagingEngineFactory'),
         playListFactory = require('../services/playlisting/playListFactory'),
         messagingEngine = messagingEngineFactory.init(),
@@ -111,24 +112,13 @@
 
     DeviceSchema.statics.findByFilter = function (filter, onSuccess, onError) {
         var select = {},
-            locationsFilter,
             nameFilter;
-
-        if (filter.locations) {
-            locationsFilter = filter.locations;
-            if (locationsFilter && locationsFilter.length > 0) {
-                if (!(locationsFilter instanceof Array)) {
-                    locationsFilter = [locationsFilter];
-                }
-                select.location = { $in : locationsFilter };
-            }
-        }
 
         if (filter.name) {
             nameFilter = filter.name;
             if (nameFilter && nameFilter.length > 0) {
                 var getNameFilterExpression = function (nameFilter) {
-                    return { $regex: '^' + nameFilter, $options: 'i' };
+                    return FindInStringRegex.getFindInTextRegExp(nameFilter);
                 };
                 select.name =  getNameFilterExpression(nameFilter);
             }

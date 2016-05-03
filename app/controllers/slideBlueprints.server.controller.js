@@ -115,7 +115,7 @@
     };
 
     exports.getSlideByFilter = function (req, res) {
-        NamesAndTagsFilter.filter(req, SlideBlueprint, function (filterResult) {
+        NamesAndTagsFilter.filter(req, SlideBlueprint, null, function (filterResult) {
             res.jsonp(filterResult);
         }, function (error) {
             console.log(error);

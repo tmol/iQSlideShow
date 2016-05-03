@@ -11,7 +11,8 @@
         Promise = require('promise'),
         lodash = require('lodash'),
         Async = require('async'),
-        NamesAndTagsFilter = require('../services/namesAndTagsFilter');
+        NamesAndTagsFilter = require('../services/namesAndTagsFilter'),
+        FindInStringRegex = require('../services/findInStringRegex');
 
     function ensureUniqueSlideShowName(res, slideShow, onNameUnique) {
         Slideshow.findByName(slideShow.name, function (slideShows) {
@@ -88,28 +89,31 @@
 
         Device.update({'slideAgregation.playList.slideShow': slideshow._id},
                       { $pull: {'slideAgregation.playList': {slideShow: slideshow._id} }}, {multi: true}, function (err, result) {
-            if (err) {
-                return res.status(400).send({
-                    message: errorHandler.getErrorMessage(err)
-                });
-            }
-            slideshow.remove(function (err) {
                 if (err) {
                     return res.status(400).send({
                         message: errorHandler.getErrorMessage(err)
                     });
                 }
-                res.jsonp(slideshow);
+                slideshow.remove(function (err) {
+                    if (err) {
+                        return res.status(400).send({
+                            message: errorHandler.getErrorMessage(err)
+                        });
+                    }
+                    res.jsonp(slideshow);
+                });
             });
-        });
     };
 
-    var preparePromiseForFilter = function (select, req, actionOnFind) {
+    function processShowOnlyMineFilter(req, select) {
         var showOnlyMine = req.query.showOnlyMine;
-
         if (showOnlyMine !== null && showOnlyMine === 'true') {
             select.user = req.user._id;
         }
+    }
+
+    var preparePromiseForFilter = function (select, req, actionOnFind) {
+        processShowOnlyMineFilter(req, select);
         var promise = new Promise(function (resolve, reject) {
             Slideshow.find(select).sort('-created').populate('user', 'displayName').exec(function (err, slideshowsFound) {
                 if (err) {
@@ -137,7 +141,10 @@
     };
 
     exports.list = function (req, res) {
-        NamesAndTagsFilter.filter(req, Slideshow, function (filterResult) {
+        NamesAndTagsFilter.filter(req, Slideshow, function (select) {
+            processShowOnlyMineFilter(req, select);
+            return select;
+        }, function (filterResult) {
             res.jsonp(filterResult);
         }, function (error) {
             return res.status(400).send({
@@ -148,7 +155,7 @@
 
     exports.filterByName = function (req, res) {
         var searchParam = req.query.nameFilter,
-            filter = {name : { $regex: '^' + searchParam, $options: 'i' }};
+            filter = {name : FindInStringRegex.getFindInTextRegExp(searchParam)};
         Slideshow.find(filter).sort('-created').exec(function (err, slideshowsFound) {
             if (err) {
                 return res.status(400).send({
@@ -201,6 +208,7 @@
             if (err) {
                 return res.status(400).send('Canot read templates');
             }
+            lodash.remove(files, function (item) { return item === 'img'} );
             res.jsonp(files);
         });
     };

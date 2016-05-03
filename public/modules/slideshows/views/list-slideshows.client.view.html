@@ -10,8 +10,8 @@
     </div>
     <div class='iqss-slideshowlist-content' infinite-scroll handler='getNextChunk()'>
         <section data-ng-repeat="slideshow in slideshows" >
-            <div class="iqss-slideshowlist-slideshow">
-                <div ng-if='slideshow.isPlacheloderForCreateNew' class='iqss-slideshowlist-slideshow-createNew-container iqss-slideshows-links' ng-click='navigateToCreateNewSlideShow()'>
+            <div class="iqss-slideshowlist-slideshow" ng-if='!slideshow.isPlacheloderForCreateNew || showCreateNewTile'>
+                <div ng-if='slideshow.isPlacheloderForCreateNew' class='iqss-slideshowlist-slideshow-createNew-container iqss-slideshows-links' ng-click='navigateToCreateNewSlideShow()' ng-show='showCreateNewTile'>
                     <div class='iqss-slideshowlist-slideshow-createNew'>
                         <span class='iqss-slideshowlist-slideshow-createNew-link'>Create new</span>
                     </div>

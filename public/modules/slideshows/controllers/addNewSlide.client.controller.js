@@ -49,7 +49,8 @@
                 search = _.toLower(search);
 
                 var filterResult = _.filter($scope.templates, function (aTemplate) {
-                    return _.startsWith(_.toLower(aTemplate), search);
+                    var regExp = new RegExp('.*' + search + '.*', 'i');
+                    return regExp.test(_.toLower(aTemplate));
                 });
 
                 return filterResult;

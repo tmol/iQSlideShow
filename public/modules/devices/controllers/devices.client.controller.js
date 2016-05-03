@@ -4,8 +4,8 @@
     'use strict';
 
     // Devices controller
-    angular.module('devices').controller('DevicesController', ['$scope', '$state', 'Authentication', 'Slideshows', 'Devices', 'ServerMessageBroker', 'Admin', 'Timers', '$cacheFactory', 'DeviceStatusService',
-        function ($scope, $state, Authentication, Slideshows, Devices, ServerMessageBroker, Admin, Timers, $cacheFactory, DeviceStatusService) {
+    angular.module('devices').controller('DevicesController', ['$scope', '$state', 'Authentication', 'Slideshows', 'Devices', 'ServerMessageBroker', 'Admin', 'Timers', '$cacheFactory', 'DeviceStatusService', '$uibModal',
+        function ($scope, $state, Authentication, Slideshows, Devices, ServerMessageBroker, Admin, Timers, $cacheFactory, DeviceStatusService, $uibModal) {
             var modalInstance,
                 timers = new Timers(),
                 messageBroker = new ServerMessageBroker();
@@ -44,14 +44,14 @@
 
             $scope.getDeviceStatus = function (device) {
                 return DeviceStatusService.getStatus(device, $scope.adminConfig);
-            }
+            };
 
             $scope.cancel = function () {
                 $state.go('listDevices');
             };
 
             messageBroker.onNewDeviceSaidHi(function (message) {
-                modalInstance = $modal.open({
+                modalInstance = $uibModal.open({
                     animation: false,
                     templateUrl: 'receivedDeviceEventPopup.html',
                     windowClass: 'waitingForActivationDialog',
@@ -99,13 +99,10 @@
             $scope.refreshPossibleSearchedDeviceNamesAndDevices = function (search) {
                 $scope.filterParameters.name = search;
                 if (search.length === 0) {
-                    $scope.nameSearchPlaceholder = 'Select search string...';
                     $scope.possibleSearchedDeviceNames = [];
                     $scope.filterDevices();
                     return;
                 }
-
-                $scope.nameSearchPlaceholder = search;
 
                 Devices.getFilteredNames({
                     nameFilter: search
@@ -115,12 +112,6 @@
                         return name.toLowerCase();
                     });
                 });
-            };
-
-            $scope.nameSearchPlaceholder = 'Select search string...';
-
-            $scope.getSelectPlaceholder = function () {
-                return $scope.nameSearchPlaceholder;
             };
 
             $scope.initNameSearchFilter = function (select) {
@@ -134,7 +125,7 @@
                     $scope.filterParameters.name = select.placeholder;
                 }
                 Devices.query({
-                    name: $scope.filterParameters.names
+                    name: $scope.filterParameters.name
                 }, function (result) {
                     $scope.devices = result;
                 });
@@ -144,7 +135,7 @@
                 filterEventName: 'filterDevices',
                 cacheId: 'devicesFilter',
                 filter: function (filterParameters) {
-                    $scope.filterParameters.names = filterParameters.nameFilters;
+                    $scope.filterParameters.name = filterParameters.namesAndTagsFilter;
                     $scope.filterDevices();
                 },
                 getPossibleFilterValues: function (search, callback) {
@@ -152,14 +143,14 @@
                         nameFilter: search
                     }, function (filteredNames) {
                         var uniqueDevicesName = _.uniq(filteredNames);
-                        callback({names:uniqueDevicesName});
+                        callback({names: uniqueDevicesName});
                     });
                 }
             };
 
             $scope.editDevice = function (device) {
-                $state.go('editDevice',{deviceId:device.deviceId});
-            }
+                $state.go('editDevice', {deviceId: device.deviceId});
+            };
 
             $scope.$on("filterDevices", function () {
                 $scope.filterDevices();

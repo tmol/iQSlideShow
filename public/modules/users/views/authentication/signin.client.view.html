@@ -1,6 +1,6 @@
 <section data-ng-controller="AuthenticationController">
     <div class='iqss-page-header'>
-        <div class='iqss-page-header-container'>
+        <div class='iqss-user-page-header-container'>
             <div class='iqss-sign-signInLink' ng-click="signin()">Sign in</div>
             <a href="/#!/signup">
                 <div class='iqss-user-signUpLink'>Sign up</div>
@@ -27,20 +27,27 @@
 	</div>
 	<h3 class="col-md-12 text-center">Or with your account</h3-->
 	<div class="iqss-user-content">
-        <div class='iqss-user-field'>
-            <div class='iqss-user-field-label'>Username:</div>
-            <div class='iqss-user-field-value'>
-                <input type="text" id="username" name="username" data-ng-model="credentials.username" placeholder="Username">
+        <div class='iqss-user-field-container'>
+            <div class='iqss-user-field'>
+                <div class='iqss-user-field-label'>Username:</div>
+                <div class='iqss-user-field-value'>
+                    <input type="text" id="username" name="username" data-ng-model="credentials.username" placeholder="Username" ng-change='usernameChanged = true'>
+                </div>
+            </div>
+            <div class='iqss-user-field-validationError iqss-validationError'>
+                <span ng-show='signInFieldValidationRequired(usernameChanged, credentials.username)'>Username is required.</span>
             </div>
         </div>
-        <div class='iqss-user-field'>
-            <div class='iqss-user-field-label'>Password:</div>
-            <div class='iqss-user-field-value'>
-                <input type="password" id="password" name="password" data-ng-model="credentials.password" placeholder="Password">
+        <div class='iqss-user-field-container'>
+            <div class='iqss-user-field'>
+                <div class='iqss-user-field-label'>Password:</div>
+                <div class='iqss-user-field-value'>
+                    <input class='iqss-user-field-value-input' type="password" id="password" name="password" data-ng-model="credentials.password" placeholder="Password" ng-change='passwordChanged = true'>
+                </div>
             </div>
-        </div>
-        <div data-ng-show="error" class="text-center text-danger">
-            <strong data-ng-bind="error"></strong>
+            <div class='iqss-user-field-validationError iqss-validationError'>
+                <span ng-show='signInFieldValidationRequired(passwordChanged, credentials.password)'>Password is required.</span>
+            </div>
         </div>
     </div>
 </section>

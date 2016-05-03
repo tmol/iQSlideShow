@@ -1,6 +1,6 @@
 function iQuestEvent($scope, $http) {
-    var loadSpeakerImage = function(url) {
-        var canvas = document.getElementById('speakerImage');
+    var loadSpeakerImage = function(url, rootElement) {
+        var canvas = rootElement ? rootElement.find('#speakerImage')[0] : document.getElementById('speakerImage');
         var ctx = canvas.getContext('2d');
         var img = document.createElement('IMG');
         img.onload = function() {
@@ -16,8 +16,8 @@ function iQuestEvent($scope, $http) {
         img.src = url;
     }
 
-    var loadEventsPicture = function(url) {
-        var canvas = document.getElementById('eventsPicture');
+    var loadEventsPicture = function(url, rootElement) {
+        var canvas = rootElement ? rootElement.find('#eventsPicture')[0] : document.getElementById('eventsPicture');
         var ctx = canvas.getContext('2d');
         var img = document.createElement('IMG');
         img.onload = function() {
@@ -50,7 +50,7 @@ function iQuestEvent($scope, $http) {
             maxFontPixels: 60
         });
     }
-    var applyTemplate = function(callback) {
+    var applyTemplate = function(callback, rootElement) {
         var slide = $scope.referenceSlide || {};
 
         if (!slide.content) {
@@ -61,13 +61,13 @@ function iQuestEvent($scope, $http) {
             applyTextFill();
         });
         $scope.$on("slide.content.speakerImageUrl", function() {
-            loadSpeakerImage(slide.content.speakerImageUrl);
+            loadSpeakerImage(slide.content.speakerImageUrl, rootElement);
         });
         $scope.$on("slide.content.pictureUrl", function() {
-            loadEventsPicture(slide.content.pictureUrl);
+            loadEventsPicture(slide.content.pictureUrl, rootElement);
         });
-        loadSpeakerImage(slide.content.speakerImageUrl);
-        loadEventsPicture(slide.content.pictureUrl);
+        loadSpeakerImage(slide.content.speakerImageUrl, rootElement);
+        loadEventsPicture(slide.content.pictureUrl, rootElement);
 
 
         $scope.$emit("whenScriptLoaded", "jquery.textfill.js", applyTextFill);
@@ -76,8 +76,8 @@ function iQuestEvent($scope, $http) {
 
 
     return {
-        preview: function(callback, rootElement) {
-            applyTemplate(callback);
+        preview: function(callback, element) {
+            applyTemplate(callback, element);
         },
         expand: function(callback) {
             applyTemplate(callback);

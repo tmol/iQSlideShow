@@ -7,6 +7,7 @@
     var mongoose = require('mongoose');
     var Tag = mongoose.model("Tag");
     var Config = mongoose.model("Config");
+    var FindInStringRegex = require('../services/findInStringRegex');
 
     exports.tags = function (req, res) {
         res.jsonp(req.tags);
@@ -44,7 +45,8 @@
                 limit = admin.sizeOfAutocompleteListForTags;
             }
             console.log("Limit2 : " + limit);
-            Tag.find({value: {$regex: new RegExp("^" + tag)}}).sort({value: 1}).limit(limit).exec(function (err, tags) {
+
+            Tag.find({value: FindInStringRegex.getFindInTextRegExp(tag)}).sort({value: 1}).limit(limit).exec(function (err, tags) {
                 if (err) {
                     return next(err);
                 }
