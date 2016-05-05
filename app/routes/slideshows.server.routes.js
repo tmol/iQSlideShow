@@ -11,13 +11,13 @@ module.exports = function (app) {
         .post(users.requiresLogin, slideshows.create);
 
 	app.route('/slideshows/filter')
-		.get(users.requiresLogin, slideshows.list);
+		.get(slideshows.list);
 
 	app.route('/slideshows/filterByName')
-		.get(users.requiresLogin, slideshows.filterByName);
+		.get(slideshows.filterByName);
 
 	app.route('/slideshows/filteredNamesAndTags')
-		.get(users.requiresLogin, slideshows.getFilteredNamesAndTags);
+		.get(slideshows.getFilteredNamesAndTags);
 
 	app.route('/slideshows/:slideshowId')
 		.get(slideshows.read)
