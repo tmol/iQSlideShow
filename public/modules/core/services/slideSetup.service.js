@@ -19,7 +19,7 @@
                     expandedSlidesContents.forEach(function (expandedContent) {
                         var newslide = JSON.parse(JSON.stringify(slide));
                         delete newslide.setupFinishedPromise;
-                        newslide.content = _.merge(newslide.content, expandedContent);
+                        newslide.content = _.extend(newslide.content, expandedContent);
                         expandedSlides.push(newslide);
                     });
                     slide.expandedSlides = expandedSlides;

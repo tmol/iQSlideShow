@@ -134,6 +134,12 @@
                         scope.loadedScripts.push(scriptUrl);
                     });
 
+                    scope.$on("scriptCached", function (event, scriptUrl) {
+                        if (scope.loadedScripts.indexOf(scriptUrl) == -1) {
+                            scope.loadedScripts.push(scriptUrl);
+                        }
+                    });
+
                     scope.$on("$destroy", function () {
                         $(window).off("resize", update);
                     });

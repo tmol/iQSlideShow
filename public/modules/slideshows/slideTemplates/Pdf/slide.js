@@ -8,11 +8,12 @@ function PdfScript($scope, $q, $timeout) {
     var content = $scope.referenceSlide.content || {},
         url = '/pdfProxy/' + encodeURIComponent(content.url),
         pageRendering = false,
-        pageNr = 1,
         pageNrPending = null,
         canvas,
         ctx,
         pdfDoc;
+
+    $scope.referenceSlide.pageNr = 1;
 
     if (content.pdfDoc) {
         pdfDoc = content.pdfDoc;
@@ -68,22 +69,22 @@ function PdfScript($scope, $q, $timeout) {
     * Displays previous page.
     */
     $scope.onPrevPage = function () {
-        if (pageNr <= 1) {
+        if ($scope.referenceSlide.pageNr <= 1) {
             return;
         }
-        pageNr = pageNr - 1;
-        queueRenderPage(pageNr);
+        $scope.referenceSlide.pageNr = $scope.referenceSlide.pageNr - 1;
+        queueRenderPage($scope.referenceSlide.pageNr);
     };
 
     /**
     * Displays next page.
     */
     $scope.onNextPage = function () {
-        if (pageNr >= pdfDoc.numPages) {
+        if ($scope.referenceSlide.pageNr >= pdfDoc.numPages) {
             return;
         }
-        pageNr = pageNr + 1;
-        queueRenderPage(pageNr);
+        $scope.referenceSlide.pageNr = $scope.referenceSlide.pageNr + 1;
+        queueRenderPage($scope.referenceSlide.pageNr);
     };
 
     function applyScopeIfNotPhase() {
@@ -95,7 +96,7 @@ function PdfScript($scope, $q, $timeout) {
     function initPage(rootElement, callback) {
         canvas = jQuery(rootElement).find('#the-canvas')[0];
         ctx = canvas.getContext('2d');
-        renderPage(pageNr, function () {
+        renderPage($scope.referenceSlide.pageNr, function () {
             applyScopeIfNotPhase();
             if (callback) {
                 callback();
@@ -112,10 +113,12 @@ function PdfScript($scope, $q, $timeout) {
         if (!content.url) {
             return;
         }
+
         PDFJS.getDocument(url).then(function (pdfDoc_) {
             pdfDoc = pdfDoc_;
             $scope.pdfDocLoaded = true;
             applyScopeIfNotPhase();
+            $scope.referenceSlide.numPages = pdfDoc.numPages;
         });
     };
 
@@ -126,6 +129,12 @@ function PdfScript($scope, $q, $timeout) {
     if (pdfScriptLoaded()) {
         ensurePdfIsLoaded();
     } else {
+        $scope.$watch("loadedScripts.length", function (event, loadedScripts) {
+            if (pdfScriptLoaded()) {
+                ensurePdfIsLoaded();
+            }
+        });
+
         $scope.$watch("loadedScripts.length", function (event, loadedScripts) {
             if (pdfScriptLoaded()) {
                 ensurePdfIsLoaded();
@@ -159,7 +168,7 @@ function PdfScript($scope, $q, $timeout) {
 
         expand: function (callback, rootElement) {
             if (content.isExpanded) {
-                pageNr = content.pageNr;
+                $scope.referenceSlide.pageNr = content.pageNr;
                 $timeout(function () {
                     initPage(rootElement, function () {
                         callback(null);
