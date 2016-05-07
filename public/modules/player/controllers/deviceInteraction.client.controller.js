@@ -52,7 +52,11 @@
             $scope.selectSlideShow = function (slideShow) {
                 slideShowSelected = true;
                 $scope.previewSlideshowId = slideShow._id;
-                $scope.playerContext.playerScope.switchSlideShow(slideShow._id);
+                $scope.playerContext.playerScope.switchSlideShow(slideShow._id, function () {
+                    slideShow.loadedWithError = false;
+                }, function () {
+                    slideShow.loadedWithError = true;
+                });
                 messageBroker.sendSwitchSlide(slideShow._id, slideShow.name);
             }
             $scope.$on("slideShowClicked", function(event, position) {

@@ -27,7 +27,8 @@
             <section class="iqss-device-interaction-content-slide" data-ng-repeat="slideshow in slideshows" ng-click="selectSlideShow(slideshow)"
                      ng-class="{'iqss-device-interaction-content-slide-selected':slideshow._id == previewSlideshowId}">
                 <div class="iqss-device-interaction-slide-view">
-                    <div class='iqss-device-interaction-slideshow-preview' data-ng-controller="PlayerController" ng-init="initPreviewFirstSlide(slideshow._id)" ng-click=''>
+                    <div class="iqss-device-interaction-slideshow-preview iqss-device-interaction-slideshow-error" ng-show="slideshow.loadedWithError">ERROR ON LOADING</div>
+                    <div ng-show="!slideshow.loadedWithError" class='iqss-device-interaction-slideshow-preview' data-ng-controller="PlayerController" ng-init="initPreviewFirstSlide(slideshow._id)" ng-click=''>
                         <div ng-player style="background-color: #ffffff;height:100px;max-height:100%;width:100%;display:inline-block" slides="slides" ng-player-on-hold='true' ng-player-ignore-messages = "false"></div>
                     </div>
                 </div>
