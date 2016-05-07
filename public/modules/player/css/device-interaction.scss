@@ -135,11 +135,16 @@
 }
 
 .iqss-device-interaction-content-slide {
-    height: 110px;
+    height: 124px;
     padding: 11px;
-    margin-top: 12px;
     border-top: 1px solid #A9A9A9;
     width: 100%;
+    padding-bottom: 37px;
+}
+
+.iqss-device-interaction-content-slide-selected {
+    border: 1px solid #FAA61A;
+    background-color: #655A56;
 }
 
 .iqss-device-interaction-slide-view {
@@ -168,7 +173,7 @@
     height: 43px;
     line-height: 43px;
     font-size: 16px;
-    margin-top: -30px;
+    margin-top: -42px;
     padding-left: 10px;
 }
 
@@ -248,3 +253,10 @@
     border: 1px solid $dark-grey-color;
     overflow: hidden;
 }
+.iqss-device-interaction-slideshow-error {
+    line-height: 100%;
+    text-align: center;
+    padding-top: 25%;
+    color: white;
+}
+

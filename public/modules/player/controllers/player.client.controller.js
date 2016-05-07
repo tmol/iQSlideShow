@@ -96,9 +96,11 @@
                 //$scope.$broadcast("goToSlideNumber", 0);
             };
 
-            var updateSildes = function (callback) {
+            var updateSildes = function (callback, onSuccess, onError) {
                 Slides.get({slideId : $scope.slideShowId}, function (result) {
-
+                    if (onSuccess) {
+                        onSuccess(result);
+                    }
                     $scope.$emit("slideShowLoaded", result);
                     if (result.user) {
                         $scope.nameOfAuthor = result.user.displayName;
@@ -116,7 +118,7 @@
                     if (callback) {
                         callback(result);
                     }
-                });
+                }, onError);
             };
 
             var activationDialog = (function () {
@@ -153,7 +155,7 @@
                 };
             }());
 
-            $scope.switchSlideShow = function (slideShowIdToPlay) {
+            $scope.switchSlideShow = function (slideShowIdToPlay, onSuccess, onError) {
                 timers.resetTimeouts();
                 $scope.slideShowId = slideShowIdToPlay;
                 activationDialog.close();
@@ -162,7 +164,7 @@
                         $scope.$broadcast("goToSlideNumber", 0);
                     }
                 };
-                updateSildes(displayFirstSlideForPreview);
+                updateSildes(displayFirstSlideForPreview, onSuccess, onError);
             };
 
             var loadSlidesForDevice = function (deviceId) {
