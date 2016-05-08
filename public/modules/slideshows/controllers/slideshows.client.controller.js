@@ -151,6 +151,8 @@
                     delete draftSlide.fireSetTemplateElementEvent;
                     delete draftSlide.templateUrl;
                     delete draftSlide.dragAndDropId;
+                    delete draftSlide.pageNr;
+                    delete draftSlide.numPages;
                 });
 
                 return JSON.stringify(clone) !== $scope.slideshowJson;
