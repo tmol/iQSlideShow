@@ -7,7 +7,7 @@ module.exports = function (app) {
 
 	// Slideshows Routes
 	app.route('/slideshows')
-		.get(slideshows.list)
+		.get(users.requiresLogin, slideshows.list)
         .post(users.requiresLogin, slideshows.create);
 
 	app.route('/slideshows/filter')
@@ -19,7 +19,7 @@ module.exports = function (app) {
 	app.route('/slideshows/filteredNamesAndTags')
 		.get(users.requiresLogin, slideshows.getFilteredNamesAndTags);
 
-	app.route('/slideshows/:slideshowId')
+    app.route('/slideshows/:slideshowId')
 		.get(slideshows.read)
 		.put(users.requiresLogin, slideshows.hasAuthorization, slideshows.update)
 		.delete(users.requiresLogin, slideshows.hasAuthorization, slideshows.delete);
