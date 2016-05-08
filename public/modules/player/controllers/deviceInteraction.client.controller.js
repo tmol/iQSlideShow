@@ -2,8 +2,8 @@
 /*global angular, ApplicationConfiguration, _*/
 (function() {
     'use strict';
-    angular.module('player').controller('DeviceInteractionController', ['$scope', '$stateParams', 'Slides', 'Slideshows', 'DeviceMessageBroker', 'Timers',
-        function($scope, $stateParams, Slides, Slideshows, DeviceMessageBroker, Timers) {
+    angular.module('player').controller('DeviceInteractionController', ['$scope', '$stateParams', 'Slides', 'DeviceInteractionService', 'DeviceMessageBroker', 'Timers',
+        function($scope, $stateParams, Slides, DeviceInteractionService, DeviceMessageBroker, Timers) {
 
             $scope.playerContext = {};
             var slideShowSelected = false;
@@ -43,11 +43,11 @@
                 $scope.playerContext.playerScope.$broadcast(messageToBroadcast, $scope.viewPlayerId);
             };
             $scope.numberOfSlidehsows = 0;
-            Slideshows.filter({
+            DeviceInteractionService.getSlideShowsByFilter({
                 pageSize: 1000
             }, function(result) {
-                $scope.slideshows = result;
-                $scope.numberOfSlidehsows = result.length;
+                $scope.slideshows = result.data;
+                $scope.numberOfSlidehsows = result.data.length;
             });
             $scope.selectSlideShow = function (slideShow) {
                 slideShowSelected = true;
