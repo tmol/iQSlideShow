@@ -92,7 +92,7 @@
                     messagingEngine.publishToServerChannel({
                         action: 'newDeviceSaidHi',
                         content: {
-                            objectId: newDevice.id
+                            objectId: newDevice.deviceId
                         }
                     });
                     ifVersionOkSendDeviceSetupOtherwiseReloadMessage(newDevice);

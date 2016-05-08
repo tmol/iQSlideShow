@@ -61,8 +61,8 @@
                         deviceEvent: function () {
                             return {
                                 title: 'New device available',
-                                description: 'A new device with id ' + message.deviceId + ' is available. You can activate it by clicking on the Edit button from below.',
-                                deviceId: message.deviceId,
+                                description: "A new device with id " + message.content.objectId + " is available. You can activate it by clicking on the 'Edit Device' button from below.",
+                                deviceId: message.content.objectId,
                                 deviceObjectId: message.content.objectId
                             };
                         }
