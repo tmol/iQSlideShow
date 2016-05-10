@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('core').controller('HeaderController', ['$scope', '$window', 'Authentication', 'Menus', '$state',
-	function($scope, $window, Authentication, Menus, $state) {
+angular.module('core').controller('HeaderController', ['$scope', '$window', 'Authentication', 'Menus', '$state', '$rootScope',
+	function($scope, $window, Authentication, Menus, $state, $rootScope) {
 		$scope.authentication = Authentication;
 		$scope.isCollapsed = false;
 		$scope.menu = Menus.getMenu('topbar');
@@ -19,6 +19,10 @@ angular.module('core').controller('HeaderController', ['$scope', '$window', 'Aut
         $scope.isStateSelected = function (link) {
             return $state.current.url === "/" + link;
         };
+
+        $scope.applyFilterForDeviceInteraction = function () {
+            $rootScope.$broadcast("FilterSpecified", $scope.slideShowFilter);
+        }
 
 		// Collapsing the menu after navigation
 		$scope.$on('$stateChangeSuccess', function() {

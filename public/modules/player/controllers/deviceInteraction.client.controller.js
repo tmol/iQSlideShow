@@ -43,12 +43,20 @@
                 $scope.playerContext.playerScope.$broadcast(messageToBroadcast, $scope.viewPlayerId);
             };
             $scope.numberOfSlidehsows = 0;
-            DeviceInteractionService.getSlideShowsByFilter({
-                pageSize: 1000
-            }, function(result) {
-                $scope.slideshows = result.data;
-                $scope.numberOfSlidehsows = result.data.length;
-            });
+            $scope.nameFilter = "";
+            var applyFilter = function () {
+                $scope.$emit("ShowLoaderIndicator");
+                DeviceInteractionService.getSlideShowsByFilter({
+                    pageSize: 1000,
+                    namesAndTagsFilter: $scope.nameFilter
+                }, function(result) {
+                    $scope.$emit("HideLoaderIndicator");
+                    $scope.slideshows = result.data;
+                    $scope.numberOfSlidehsows = result.data.length;
+                });
+            };
+            applyFilter();
+
             $scope.selectSlideShow = function (slideShow) {
                 slideShowSelected = true;
                 $scope.previewSlideshowId = slideShow._id;
@@ -83,6 +91,10 @@
                 $scope.author = slideInfo.author;
                 $scope.currentPreviewSlideIndex = slideIndex + 1;
                 messageBroker.sendGotoSlideNumber(slideIndex);
+            });
+            $scope.$on("FilterSpecified", function (event, filter) {
+                $scope.nameFilter = filter;
+                applyFilter();
             });
             $scope.$on("$destroy", function() {
                 $scope.playerContext = null;
