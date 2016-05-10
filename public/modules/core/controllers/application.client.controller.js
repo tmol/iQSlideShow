@@ -18,6 +18,14 @@ angular.module('core').controller('ApplicationController', ['$scope', 'Authentic
                 $rootScope.$broadcast('leftArrowPressed');
         };
 
+        $scope.$on("ShowLoaderIndicator", function () {
+            $scope.loaderIndicatorVisible = true;
+        });
+
+        $scope.$on("HideLoaderIndicator", function () {
+            $scope.loaderIndicatorVisible = false;
+        });
+
         $scope.swipeLeft = function(){
             $rootScope.$broadcast('rightArrowPressed');
         };

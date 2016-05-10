@@ -49,6 +49,7 @@
 </head>
 
 <body style="width:100%;height:100%" class="ng-cloak" data-ng-controller="ApplicationController" >
+    <div ng-show="loaderIndicatorVisible" class="iqss-loader-indicator"></div>
     <div tabindex="0" style="width:100%;height:100%" ng-class="{'player':playerMode}" data-ng-keydown="keyDown($event)"
          ng-swipe-left = "swipeLeft()"
          ng-swipe-right = "swipeRight()"
