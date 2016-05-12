@@ -86,6 +86,10 @@
             $scope.update = function () {
                 var device = $scope.device;
 
+                if ($scope.getPlaylist().length === 0) {
+                    ActionResultDialogService.showWarningDialog('Please select at least one slideshow.', $scope, function() { return });
+                    return;
+                }
                 if (!device.active) {
                     device.active = false;
                 }
