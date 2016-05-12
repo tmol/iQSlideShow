@@ -364,7 +364,6 @@
                             templateName: newSlideData.templateName,
                             content: {}
                         };
-                        $scope.slideshow.draftSlides = $scope.slideshow.draftSlides || [];
                         $scope.slideshow.draftSlides.push(newSlide);
                         newSlide.dragAndDropId = 'Id' + Math.random();
                         newSlide.zoomPercent = 100;
@@ -454,7 +453,8 @@
             } else {
                 $scope.slideshow = new Slideshows({
                     name: '',
-                    slides: []
+                    slides: [],
+                    draftSlides: []
                 });
                 $scope.displayPreview = false;
             }
