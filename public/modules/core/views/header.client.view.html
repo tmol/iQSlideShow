@@ -6,7 +6,12 @@
 			<span class="icon-bar"></span>
 			<span class="icon-bar"></span>
 		</button>
-		<a href="/#!/" class="navbar-brand iqss-navbar-brand">iQSlideShow</a>
+		<a ng-show="!isInteractionMode()" href="/#!/" class="navbar-brand iqss-navbar-brand">iQSlideShow</a>
+        <form ng-submit="applyFilterForDeviceInteraction()">
+            <input ng-show="isInteractionMode()" class="iqss-device-interaction-search" type="text" placeholder="iQSlideShow" ng-model="slideShowFilter"/>
+            <input type="submit" ng-show="isInteractionMode()" class="iqss-device-interaction-search-indicator" value=""/>
+        </form>
+
 	</div>
 	<nav ng-if="!isInteractionMode()" class="navbar-collapse iqss-navbar-collapse" ng-class="{'collapse':!isCollapsed}" role="navigation">
 	    <div class="col-sm-8 .col-sm-offset-2 iqss-navbar-nav-menu-container">

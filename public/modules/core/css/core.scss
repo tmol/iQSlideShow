@@ -141,3 +141,19 @@ footer hr {
     border-right-color: transparent !important;
     border-top-color: transparent !important;
 }
+
+.iqss-loader-indicator {
+    background-image: url(/modules/core/img/loaders/loader.gif);
+    height: 100%;
+    width: 100%;
+    background-repeat: no-repeat;
+    background-position: 50% 50%;
+    background-size: 40%;
+    right: 0px;
+    top: 0px;
+    background-color: white;
+    border: none;
+    position: fixed;
+    z-index: 100;
+    opacity: 0.7;
+}
