@@ -24,6 +24,7 @@
             $scope.remove = function (device) {
                 ActionResultDialogService.showOkCancelDialog('Are you sure do you want to remove the device?', $scope, function () {
                     $scope.device.$remove(function () {
+                        $scope.device = null;
                         ActionResultDialogService.showOkDialog('Remove was successful.', $scope, function () {
                             $state.go('listDevices');
                         });

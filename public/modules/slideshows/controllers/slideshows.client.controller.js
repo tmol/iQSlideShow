@@ -38,6 +38,7 @@
             $scope.remove = function (slideshow) {
                 ActionResultDialogService.showOkCancelDialog('Are you sure do you want to remove the slideshow?', $scope, function () {
                     $scope.slideshow.$remove(function () {
+                        $scope.slideshow = null;
                         ActionResultDialogService.showOkDialog('Remove succeeded', $scope, function () {
                             $state.go('listSlideshows');
                         });
