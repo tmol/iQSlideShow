@@ -36,14 +36,19 @@
 
             // Remove existing Slideshow
             $scope.remove = function (slideshow) {
+                if ($scope.waitingForServerSideProcessingAndThenForResultDialog) {
+                    return;
+                }
                 ActionResultDialogService.showOkCancelDialog('Are you sure do you want to remove the slideshow?', $scope, function () {
+                    $scope.waitingForServerSideProcessingAndThenForResultDialog = true;
                     $scope.slideshow.$remove(function () {
                         $scope.slideshow = null;
                         ActionResultDialogService.showOkDialog('Remove succeeded', $scope, function () {
+                            $scope.waitingForServerSideProcessingAndThenForResultDialog = false;
                             $state.go('listSlideshows');
                         });
                     }, function (err) {
-                        ActionResultDialogService.showWarningDialog('Remove unsuccessful.', err.data.message, $scope);
+                        ActionResultDialogService.showErrorDialog('Remove unsuccessful.', err.data.message, $scope, function () { $scope.waitingForServerSideProcessingAndThenForResultDialog = false; });
                     });
                 });
             };
@@ -86,7 +91,9 @@
             };
 
             var handleErrorOnUpsert = function (errorResponse) {
-                ActionResultDialogService.showWarningDialog(errorResponse.data.message, $scope);
+                ActionResultDialogService.showWarningDialog(errorResponse.data.message, $scope, function() {
+                    $scope.waitingForServerSideProcessingAndThenForResultDialog = false;
+                });
             };
 
             function initSlideShowJson() {
@@ -95,6 +102,9 @@
 
             // Update existing Slideshow
             $scope.upsert = function (onSuccessCallback) {
+                if ($scope.waitingForServerSideProcessingAndThenForResultDialog) {
+                    return;
+                }
                 var slideshow = $scope.slideshow,
                     currentSlideIndex,
                     handleUpsertSuccess = function (msg) {
@@ -108,6 +118,7 @@
                             if (onSuccessCallback) {
                                 onSuccessCallback();
                             }
+                            $scope.waitingForServerSideProcessingAndThenForResultDialog = false;
                         });
                     },
                     mandatoryFieldsCheckMsg = checkMandatoryFields();
@@ -121,6 +132,7 @@
                     return;
                 }
 
+                $scope.waitingForServerSideProcessingAndThenForResultDialog = true;
                 if (slideshow._id) {
                     slideshow.$update(function () {
                         handleUpsertSuccess('Update succeeded.');
@@ -160,22 +172,28 @@
             }
 
             $scope.publish = function () {
+                if ($scope.waitingForServerSideProcessingAndThenForResultDialog) {
+                    return;
+                }
                 var publish = function () {
                     serverMessageBroker
                         .publishSlideShow($scope.slideshow._id)
                         .then(function () {
                             showOkDialog('Publish succeeded.', function () {
+                                $scope.waitingForServerSideProcessingAndThenForResultDialog = false;
                                 $state.go($state.current, $stateParams, {reload: true, inherit: false});
                             });
                         });
                 };
                 if (slideShowChanged()) {
                     ActionResultDialogService.showOkCancelDialog('The slideshow changed and will be automatically saved before publishing. Do you agree?', $scope, function () {
+                        $scope.waitingForServerSideProcessingAndThenForResultDialog = true;
                         $scope.upsert(function () {
                             publish();
                         });
                     });
                 } else {
+                    $scope.waitingForServerSideProcessingAndThenForResultDialog = true;
                     publish();
                 }
             };
@@ -434,6 +452,9 @@
                     if (!answer) {
                         event.preventDefault();
                     }
+                }
+                if ($scope.waitingForServerSideProcessingAndThenForResultDialog) {
+                    event.preventDefault();
                 }
             });
 

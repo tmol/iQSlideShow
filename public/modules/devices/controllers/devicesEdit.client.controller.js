@@ -22,13 +22,21 @@
 
             // Remove existing Device
             $scope.remove = function (device) {
+                if ($scope.waitingForServerSideProcessingAndThenForResultDialog) {
+                    return;
+                }
                 ActionResultDialogService.showOkCancelDialog('Are you sure do you want to remove the device?', $scope, function () {
+                    $scope.waitingForServerSideProcessingAndThenForResultDialog = true;
                     $scope.device.$remove(function () {
                         $scope.device = null;
                         ActionResultDialogService.showOkDialog('Remove was successful.', $scope, function () {
+                            $scope.waitingForServerSideProcessingAndThenForResultDialog = false;
                             $state.go('listDevices');
                         });
-                    });
+                    }, function (err) {
+                        ActionResultDialogService.showErrorDialog('Remove unsuccessful.', err.data.message, $scope, function () { $scope.waitingForServerSideProcessingAndThenForResultDialog = false; });
+                    }
+                                         );
                 });
             };
 
@@ -85,24 +93,32 @@
 
             // Update existing Device
             $scope.update = function () {
+                if ($scope.waitingForServerSideProcessingAndThenForResultDialog) {
+                    return;
+                }
                 var device = $scope.device;
 
                 if ($scope.getPlaylist().length === 0) {
-                    ActionResultDialogService.showWarningDialog('Please select at least one slideshow.', $scope, function() { return });
+                    ActionResultDialogService.showWarningDialog('Please select at least one slideshow.', $scope, function () { return; });
                     return;
                 }
                 if (!device.active) {
                     device.active = false;
                 }
+                $scope.waitingForServerSideProcessingAndThenForResultDialog = true;
                 device.$update(function () {
                     initAfterLoadingDevice();
-                    ActionResultDialogService.showOkDialog('Save was successful.', $scope);
+                    ActionResultDialogService.showOkDialog('Save was successful.', $scope, function () {
+                        $scope.waitingForServerSideProcessingAndThenForResultDialog = false;
+                    });
                 }, function (errorResponse) {
                     var errMsg = 'Error ocurred during update.';
                     if (errorResponse && errorResponse.data && errorResponse.data.message) {
                         errMsg = errorResponse.data.message;
                     }
-                    ActionResultDialogService.showWarningDialog(errMsg, $scope);
+                    ActionResultDialogService.showWarningDialog(errMsg, $scope, function () {
+                        $scope.waitingForServerSideProcessingAndThenForResultDialog = false;
+                    });
                 });
             };
 
@@ -212,6 +228,9 @@
                     if (!answer) {
                         event.preventDefault();
                     }
+                }
+                if ($scope.waitingForServerSideProcessingAndThenForResultDialog) {
+                    event.preventDefault();
                 }
             });
 
