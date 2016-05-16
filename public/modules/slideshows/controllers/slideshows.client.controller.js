@@ -187,8 +187,8 @@
                 };
                 if (slideShowChanged()) {
                     ActionResultDialogService.showOkCancelDialog('The slideshow changed and will be automatically saved before publishing. Do you agree?', $scope, function () {
-                        $scope.waitingForServerSideProcessingAndThenForResultDialog = true;
                         $scope.upsert(function () {
+                            $scope.waitingForServerSideProcessingAndThenForResultDialog = true;
                             publish();
                         });
                     });
