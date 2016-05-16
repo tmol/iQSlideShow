@@ -43,12 +43,13 @@
                     $scope.waitingForServerSideProcessingAndThenForResultDialog = true;
                     $scope.slideshow.$remove(function () {
                         $scope.slideshow = null;
+                        $scope.waitingForServerSideProcessingAndThenForResultDialog = false;
                         ActionResultDialogService.showOkDialog('Remove succeeded', $scope, function () {
-                            $scope.waitingForServerSideProcessingAndThenForResultDialog = false;
                             $state.go('listSlideshows');
                         });
                     }, function (err) {
-                        ActionResultDialogService.showErrorDialog('Remove unsuccessful.', err.data.message, $scope, function () { $scope.waitingForServerSideProcessingAndThenForResultDialog = false; });
+                        $scope.waitingForServerSideProcessingAndThenForResultDialog = false;
+                        ActionResultDialogService.showErrorDialog('Remove unsuccessful.', err.data.message, $scope);
                     });
                 });
             };
@@ -91,9 +92,8 @@
             };
 
             var handleErrorOnUpsert = function (errorResponse) {
-                ActionResultDialogService.showWarningDialog(errorResponse.data.message, $scope, function() {
-                    $scope.waitingForServerSideProcessingAndThenForResultDialog = false;
-                });
+                $scope.waitingForServerSideProcessingAndThenForResultDialog = false;
+                ActionResultDialogService.showWarningDialog(errorResponse.data.message, $scope);
             };
 
             function initSlideShowJson() {
@@ -110,6 +110,7 @@
                     handleUpsertSuccess = function (msg) {
                         $scope.error = '';
                         initSlideShowJson();
+                        $scope.waitingForServerSideProcessingAndThenForResultDialog = false;
                         showOkDialog(msg, function () {
                             // I don't know why the binding is lost, but this solves it
                             if (currentSlideIndex >= 0) {
@@ -118,7 +119,6 @@
                             if (onSuccessCallback) {
                                 onSuccessCallback();
                             }
-                            $scope.waitingForServerSideProcessingAndThenForResultDialog = false;
                         });
                     },
                     mandatoryFieldsCheckMsg = checkMandatoryFields();
@@ -179,8 +179,8 @@
                     serverMessageBroker
                         .publishSlideShow($scope.slideshow._id)
                         .then(function () {
+                            $scope.waitingForServerSideProcessingAndThenForResultDialog = false;
                             showOkDialog('Publish succeeded.', function () {
-                                $scope.waitingForServerSideProcessingAndThenForResultDialog = false;
                                 $state.go($state.current, $stateParams, {reload: true, inherit: false});
                             });
                         });

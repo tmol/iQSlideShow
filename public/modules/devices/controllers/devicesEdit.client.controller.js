@@ -29,12 +29,13 @@
                     $scope.waitingForServerSideProcessingAndThenForResultDialog = true;
                     $scope.device.$remove(function () {
                         $scope.device = null;
+                        $scope.waitingForServerSideProcessingAndThenForResultDialog = false;
                         ActionResultDialogService.showOkDialog('Remove was successful.', $scope, function () {
-                            $scope.waitingForServerSideProcessingAndThenForResultDialog = false;
                             $state.go('listDevices');
                         });
                     }, function (err) {
-                        ActionResultDialogService.showErrorDialog('Remove unsuccessful.', err.data.message, $scope, function () { $scope.waitingForServerSideProcessingAndThenForResultDialog = false; });
+                        $scope.waitingForServerSideProcessingAndThenForResultDialog = false;
+                        ActionResultDialogService.showErrorDialog('Remove unsuccessful.', err.data.message, $scope);
                     }
                                          );
                 });
@@ -108,17 +109,15 @@
                 $scope.waitingForServerSideProcessingAndThenForResultDialog = true;
                 device.$update(function () {
                     initAfterLoadingDevice();
-                    ActionResultDialogService.showOkDialog('Save was successful.', $scope, function () {
-                        $scope.waitingForServerSideProcessingAndThenForResultDialog = false;
-                    });
+                    $scope.waitingForServerSideProcessingAndThenForResultDialog = false;
+                    ActionResultDialogService.showOkDialog('Save was successful.', $scope);
                 }, function (errorResponse) {
                     var errMsg = 'Error ocurred during update.';
                     if (errorResponse && errorResponse.data && errorResponse.data.message) {
                         errMsg = errorResponse.data.message;
                     }
-                    ActionResultDialogService.showWarningDialog(errMsg, $scope, function () {
-                        $scope.waitingForServerSideProcessingAndThenForResultDialog = false;
-                    });
+                    $scope.waitingForServerSideProcessingAndThenForResultDialog = false;
+                    ActionResultDialogService.showWarningDialog(errMsg, $scope);
                 });
             };
 

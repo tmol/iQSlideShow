@@ -21,9 +21,8 @@
                 if ($scope.isConfigValid()) {
                     $scope.waitingForServerSideProcessingAndThenForResultDialog = true;
                     config.$updateConfig(function () {
-                        ActionResultDialogService.showOkDialog('Update succeeded', $scope, function () {
-                            $scope.waitingForServerSideProcessingAndThenForResultDialog = false;
-                        });
+                        $scope.waitingForServerSideProcessingAndThenForResultDialog = false;
+                        ActionResultDialogService.showOkDialog('Update succeeded', $scope);
                     }, function (errorResponse) {
                         $scope.error = errorResponse.data.message;
                         $scope.waitingForServerSideProcessingAndThenForResultDialog = false;
