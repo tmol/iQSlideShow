@@ -17,11 +17,6 @@
             <stringProp name="Argument.value">slide_${__Random(1,100)}</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
-          <elementProp name="searchWords" elementType="Argument">
-            <stringProp name="Argument.name">searchWords</stringProp>
-            <stringProp name="Argument.value">t,te,tes,test</stringProp>
-            <stringProp name="Argument.metadata">=</stringProp>
-          </elementProp>
           <elementProp name="selectedBlueprint" elementType="Argument">
             <stringProp name="Argument.name">selectedBlueprint</stringProp>
             <stringProp name="Argument.value">test+andreea+blueprint</stringProp>
@@ -62,15 +57,6 @@
       <stringProp name="TestPlan.user_define_classpath"></stringProp>
     </TestPlan>
     <hashTree>
-      <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager" enabled="true">
-        <collectionProp name="HeaderManager.headers">
-          <elementProp name="" elementType="Header">
-            <stringProp name="Header.name">Content-Type</stringProp>
-            <stringProp name="Header.value">application/json</stringProp>
-          </elementProp>
-        </collectionProp>
-      </HeaderManager>
-      <hashTree/>
       <ConfigTestElement guiclass="HttpDefaultsGui" testclass="ConfigTestElement" testname="HTTP Request Defaults" enabled="true">
         <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
           <collectionProp name="Arguments.arguments"/>
@@ -84,23 +70,6 @@
         <stringProp name="HTTPSampler.path"></stringProp>
         <stringProp name="HTTPSampler.concurrentPool">4</stringProp>
       </ConfigTestElement>
-      <hashTree/>
-      <CookieManager guiclass="CookiePanel" testclass="CookieManager" testname="HTTP Cookie Manager" enabled="true">
-        <collectionProp name="CookieManager.cookies"/>
-        <boolProp name="CookieManager.clearEachIteration">false</boolProp>
-        <stringProp name="CookieManager.policy">default</stringProp>
-      </CookieManager>
-      <hashTree/>
-      <CSVDataSet guiclass="TestBeanGUI" testclass="CSVDataSet" testname="Slideshow Users credentials" enabled="true">
-        <stringProp name="delimiter">,</stringProp>
-        <stringProp name="fileEncoding"></stringProp>
-        <stringProp name="filename">D:\_IQSS\Performance\JMeter\LoginData.csv</stringProp>
-        <boolProp name="quotedData">false</boolProp>
-        <boolProp name="recycle">true</boolProp>
-        <stringProp name="shareMode">shareMode.all</stringProp>
-        <boolProp name="stopThread">false</boolProp>
-        <stringProp name="variableNames">user,pass</stringProp>
-      </CSVDataSet>
       <hashTree/>
       <ResultCollector guiclass="TableVisualizer" testclass="ResultCollector" testname="View Results in Table" enabled="true">
         <boolProp name="ResultCollector.error_logging">false</boolProp>
@@ -251,8 +220,34 @@
         <stringProp name="ThreadGroup.delay">0</stringProp>
       </ThreadGroup>
       <hashTree>
+        <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager" enabled="true">
+          <collectionProp name="HeaderManager.headers">
+            <elementProp name="" elementType="Header">
+              <stringProp name="Header.name">Content-Type</stringProp>
+              <stringProp name="Header.value">application/json</stringProp>
+            </elementProp>
+          </collectionProp>
+        </HeaderManager>
+        <hashTree/>
+        <CookieManager guiclass="CookiePanel" testclass="CookieManager" testname="HTTP Cookie Manager" enabled="true">
+          <collectionProp name="CookieManager.cookies"/>
+          <boolProp name="CookieManager.clearEachIteration">false</boolProp>
+          <stringProp name="CookieManager.policy">default</stringProp>
+        </CookieManager>
+        <hashTree/>
         <GenericController guiclass="LogicControllerGui" testclass="GenericController" testname="Login" enabled="true"/>
         <hashTree>
+          <CSVDataSet guiclass="TestBeanGUI" testclass="CSVDataSet" testname="Slideshow Users credentials" enabled="true">
+            <stringProp name="delimiter">,</stringProp>
+            <stringProp name="fileEncoding"></stringProp>
+            <stringProp name="filename">D:\_Git\IQss\Tests\LoginData.csv</stringProp>
+            <boolProp name="quotedData">false</boolProp>
+            <boolProp name="recycle">true</boolProp>
+            <stringProp name="shareMode">shareMode.all</stringProp>
+            <boolProp name="stopThread">false</boolProp>
+            <stringProp name="variableNames">user,pass</stringProp>
+          </CSVDataSet>
+          <hashTree/>
           <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Login Request" enabled="true">
             <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
             <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
@@ -280,6 +275,9 @@
             <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
           </HTTPSamplerProxy>
           <hashTree/>
+        </hashTree>
+        <GenericController guiclass="LogicControllerGui" testclass="GenericController" testname="Redirect to home page" enabled="true"/>
+        <hashTree>
           <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="GetConfiguration" enabled="true">
             <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
               <collectionProp name="Arguments.arguments"/>
@@ -302,7 +300,29 @@
           <hashTree/>
           <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="GetSlideshows" enabled="true">
             <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
-              <collectionProp name="Arguments.arguments"/>
+              <collectionProp name="Arguments.arguments">
+                <elementProp name="namesAndTagsFilter" elementType="HTTPArgument">
+                  <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                  <stringProp name="Argument.value"></stringProp>
+                  <stringProp name="Argument.metadata">=</stringProp>
+                  <boolProp name="HTTPArgument.use_equals">true</boolProp>
+                  <stringProp name="Argument.name">namesAndTagsFilter</stringProp>
+                </elementProp>
+                <elementProp name="pageSize" elementType="HTTPArgument">
+                  <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                  <stringProp name="Argument.value">12</stringProp>
+                  <stringProp name="Argument.metadata">=</stringProp>
+                  <boolProp name="HTTPArgument.use_equals">true</boolProp>
+                  <stringProp name="Argument.name">pageSize</stringProp>
+                </elementProp>
+                <elementProp name="showOnlyMine" elementType="HTTPArgument">
+                  <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                  <stringProp name="Argument.value">false</stringProp>
+                  <stringProp name="Argument.metadata">=</stringProp>
+                  <boolProp name="HTTPArgument.use_equals">true</boolProp>
+                  <stringProp name="Argument.name">showOnlyMine</stringProp>
+                </elementProp>
+              </collectionProp>
             </elementProp>
             <stringProp name="HTTPSampler.domain"></stringProp>
             <stringProp name="HTTPSampler.port"></stringProp>
@@ -310,7 +330,7 @@
             <stringProp name="HTTPSampler.response_timeout"></stringProp>
             <stringProp name="HTTPSampler.protocol"></stringProp>
             <stringProp name="HTTPSampler.contentEncoding"></stringProp>
-            <stringProp name="HTTPSampler.path">/slideshows/filter?namesAndTagsFilter=&amp;pageSize=12&amp;showOnlyMine=false</stringProp>
+            <stringProp name="HTTPSampler.path">/slideshows/filter?</stringProp>
             <stringProp name="HTTPSampler.method">GET</stringProp>
             <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
             <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
@@ -335,25 +355,6 @@
               <stringProp name="VARIABLE"></stringProp>
               <stringProp name="SUBJECT">BODY</stringProp>
             </com.atlantbh.jmeter.plugins.jsonutils.jsonpathextractor.JSONPathExtractor>
-            <hashTree/>
-            <BeanShellPostProcessor guiclass="TestBeanGUI" testclass="BeanShellPostProcessor" testname="Extract Unique GoogleIDs" enabled="true">
-              <boolProp name="resetInterpreter">false</boolProp>
-              <stringProp name="parameters"></stringProp>
-              <stringProp name="filename"></stringProp>
-              <stringProp name="script">int matches = Integer.parseInt(vars.get(&quot;GoogleIDs_matchNr&quot;));
-Set IDs = new HashSet();
-for (int i = 1; i &lt;= matches; i++) {
-	IDs.add(vars.get(&quot;GoogleIDs_&quot; + i));
-	vars.remove(&quot;GoogleIDs_&quot; + i);
-}
-
-int counter = 1;
-for (String ID : IDs) {
-	vars.put(&quot;GoogleID_&quot; + counter, ID);
-	counter++;
-}
-</stringProp>
-            </BeanShellPostProcessor>
             <hashTree/>
           </hashTree>
           <ForeachController guiclass="ForeachControlPanel" testclass="ForeachController" testname="ForEach Slideshow ID" enabled="true">
@@ -384,40 +385,66 @@ for (String ID : IDs) {
             </HTTPSamplerProxy>
             <hashTree/>
           </hashTree>
-          <ForeachController guiclass="ForeachControlPanel" testclass="ForeachController" testname="ForEach GoogleSlideShow" enabled="true">
-            <stringProp name="ForeachController.inputVal">GoogleID</stringProp>
-            <stringProp name="ForeachController.returnVal">path</stringProp>
-            <boolProp name="ForeachController.useSeparator">true</boolProp>
-            <stringProp name="ForeachController.startIndex">0</stringProp>
-          </ForeachController>
+          <IfController guiclass="IfControllerPanel" testclass="IfController" testname="If there are Google slides" enabled="true">
+            <stringProp name="IfController.condition">&quot;${GoogleIDs}&quot;!=&quot;NOT_FOUND&quot;</stringProp>
+            <boolProp name="IfController.evaluateAll">false</boolProp>
+          </IfController>
           <hashTree>
-            <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="GetProxy" enabled="true">
-              <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
-              <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
-                <collectionProp name="Arguments.arguments">
-                  <elementProp name="" elementType="HTTPArgument">
-                    <boolProp name="HTTPArgument.always_encode">false</boolProp>
-                    <stringProp name="Argument.value">{&quot;hostname&quot;:&quot;docs.google.com&quot;,&quot;method&quot;:&quot;GET&quot;,&quot;protocol&quot;:&quot;https:&quot;,&quot;path&quot;:&quot;/presentation/d/${path}/pub&quot;}</stringProp>
-                    <stringProp name="Argument.metadata">=</stringProp>
-                  </elementProp>
-                </collectionProp>
-              </elementProp>
-              <stringProp name="HTTPSampler.domain"></stringProp>
-              <stringProp name="HTTPSampler.port"></stringProp>
-              <stringProp name="HTTPSampler.connect_timeout"></stringProp>
-              <stringProp name="HTTPSampler.response_timeout"></stringProp>
-              <stringProp name="HTTPSampler.protocol"></stringProp>
-              <stringProp name="HTTPSampler.contentEncoding"></stringProp>
-              <stringProp name="HTTPSampler.path">/proxy</stringProp>
-              <stringProp name="HTTPSampler.method">POST</stringProp>
-              <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
-              <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
-              <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
-              <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
-              <boolProp name="HTTPSampler.monitor">false</boolProp>
-              <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
-            </HTTPSamplerProxy>
+            <BeanShellPostProcessor guiclass="TestBeanGUI" testclass="BeanShellPostProcessor" testname="Extract Unique GoogleIDs" enabled="true">
+              <boolProp name="resetInterpreter">false</boolProp>
+              <stringProp name="parameters"></stringProp>
+              <stringProp name="filename"></stringProp>
+              <stringProp name="script">int matches = Integer.parseInt(vars.get(&quot;GoogleIDs_matchNr&quot;));
+Set IDs = new HashSet();
+for (int i = 1; i &lt;= matches; i++) {
+	IDs.add(vars.get(&quot;GoogleIDs_&quot; + i));
+	vars.remove(&quot;GoogleIDs_&quot; + i);
+}
+
+int counter = 1;
+for (String ID : IDs) {
+	vars.put(&quot;GoogleID_&quot; + counter, ID);
+	counter++;
+}
+
+</stringProp>
+            </BeanShellPostProcessor>
             <hashTree/>
+            <ForeachController guiclass="ForeachControlPanel" testclass="ForeachController" testname="ForEach GoogleSlideShow" enabled="true">
+              <stringProp name="ForeachController.inputVal">GoogleID</stringProp>
+              <stringProp name="ForeachController.returnVal">path</stringProp>
+              <boolProp name="ForeachController.useSeparator">true</boolProp>
+              <stringProp name="ForeachController.startIndex">0</stringProp>
+            </ForeachController>
+            <hashTree>
+              <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="GetProxy" enabled="true">
+                <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+                <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+                  <collectionProp name="Arguments.arguments">
+                    <elementProp name="" elementType="HTTPArgument">
+                      <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                      <stringProp name="Argument.value">{&quot;hostname&quot;:&quot;docs.google.com&quot;,&quot;method&quot;:&quot;GET&quot;,&quot;protocol&quot;:&quot;https:&quot;,&quot;path&quot;:&quot;/presentation/d/${path}/pub&quot;}</stringProp>
+                      <stringProp name="Argument.metadata">=</stringProp>
+                    </elementProp>
+                  </collectionProp>
+                </elementProp>
+                <stringProp name="HTTPSampler.domain"></stringProp>
+                <stringProp name="HTTPSampler.port"></stringProp>
+                <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+                <stringProp name="HTTPSampler.response_timeout"></stringProp>
+                <stringProp name="HTTPSampler.protocol"></stringProp>
+                <stringProp name="HTTPSampler.contentEncoding"></stringProp>
+                <stringProp name="HTTPSampler.path">/proxy</stringProp>
+                <stringProp name="HTTPSampler.method">POST</stringProp>
+                <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+                <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+                <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+                <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+                <boolProp name="HTTPSampler.monitor">false</boolProp>
+                <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+              </HTTPSamplerProxy>
+              <hashTree/>
+            </hashTree>
           </hashTree>
           <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="GetTags" enabled="true">
             <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
@@ -442,6 +469,24 @@ for (String ID : IDs) {
         </hashTree>
         <GenericController guiclass="LogicControllerGui" testclass="GenericController" testname="Add Slide" enabled="true"/>
         <hashTree>
+          <BeanShellPostProcessor guiclass="TestBeanGUI" testclass="BeanShellPostProcessor" testname="Get search input" enabled="true">
+            <boolProp name="resetInterpreter">false</boolProp>
+            <stringProp name="parameters"></stringProp>
+            <stringProp name="filename"></stringProp>
+            <stringProp name="script">String searchWords = vars.get(&quot;searchWord&quot;);
+String[] word = searchWords.split(&quot;&quot;);
+String search = new String();
+
+int j = 1;
+for (int i = 0; i &lt; word.length; i++) {
+	search = search.concat(word[i]);
+	vars.put(&quot;word_&quot; + j, search);
+	j++;
+}
+
+vars.remove(&quot;searchWord&quot;);</stringProp>
+          </BeanShellPostProcessor>
+          <hashTree/>
           <LoopController guiclass="LoopControlPanel" testclass="LoopController" testname="Access Repository for 7 times" enabled="true">
             <boolProp name="LoopController.continue_forever">true</boolProp>
             <stringProp name="LoopController.loops">7</stringProp>
@@ -488,21 +533,6 @@ for (String ID : IDs) {
             </HTTPSamplerProxy>
             <hashTree/>
           </hashTree>
-          <BeanShellPostProcessor guiclass="TestBeanGUI" testclass="BeanShellPostProcessor" testname="GetBlueprintSearchWords" enabled="true">
-            <stringProp name="filename"></stringProp>
-            <stringProp name="parameters"></stringProp>
-            <boolProp name="resetInterpreter">false</boolProp>
-            <stringProp name="script">String searchWords = vars.get(&quot;searchWords&quot;);
-String[] word = searchWords.split(&quot;,&quot;);
-int j = 0;
-for (int i = 0; i &lt; word.length; i++) {
-	j++;
-	String varname = &quot;word_&quot; + j;
-	vars.put(varname, word[i]);
-}
-</stringProp>
-          </BeanShellPostProcessor>
-          <hashTree/>
           <LoopController guiclass="LoopControlPanel" testclass="LoopController" testname="Select Blueprints twice" enabled="true">
             <boolProp name="LoopController.continue_forever">true</boolProp>
             <stringProp name="LoopController.loops">2</stringProp>
@@ -510,7 +540,7 @@ for (int i = 0; i &lt; word.length; i++) {
           <hashTree>
             <ForeachController guiclass="ForeachControlPanel" testclass="ForeachController" testname="ForEach Controller" enabled="true">
               <stringProp name="ForeachController.inputVal">word</stringProp>
-              <stringProp name="ForeachController.returnVal">searchWord</stringProp>
+              <stringProp name="ForeachController.returnVal">searchw</stringProp>
               <boolProp name="ForeachController.useSeparator">true</boolProp>
               <stringProp name="ForeachController.startIndex">0</stringProp>
               <stringProp name="ForeachController.endIndex">4</stringProp>
@@ -526,7 +556,7 @@ for (int i = 0; i &lt; word.length; i++) {
                 <stringProp name="HTTPSampler.response_timeout"></stringProp>
                 <stringProp name="HTTPSampler.protocol"></stringProp>
                 <stringProp name="HTTPSampler.contentEncoding"></stringProp>
-                <stringProp name="HTTPSampler.path">/slideBlueprints/filteredNamesAndTags?namesAndTagsFilter=${searchWord}</stringProp>
+                <stringProp name="HTTPSampler.path">/slideBlueprints/filteredNamesAndTags?namesAndTagsFilter=${searchw}</stringProp>
                 <stringProp name="HTTPSampler.method">GET</stringProp>
                 <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
                 <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
@@ -571,7 +601,7 @@ for (int i = 0; i &lt; word.length; i++) {
                 <stringProp name="HTTPSampler.response_timeout"></stringProp>
                 <stringProp name="HTTPSampler.protocol"></stringProp>
                 <stringProp name="HTTPSampler.contentEncoding"></stringProp>
-                <stringProp name="HTTPSampler.path">/slideBlueprints/slidesByFilter?nameFilters=${selectedBlueprint}t&amp;namesAndTagsFilter=</stringProp>
+                <stringProp name="HTTPSampler.path">/slideBlueprints/slidesByFilter?nameFilters=${selectedBlueprint}&amp;namesAndTagsFilter=</stringProp>
                 <stringProp name="HTTPSampler.method">GET</stringProp>
                 <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
                 <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
@@ -584,8 +614,26 @@ for (int i = 0; i &lt; word.length; i++) {
             </hashTree>
           </hashTree>
         </hashTree>
-        <GenericController guiclass="LogicControllerGui" testclass="GenericController" testname="Save Blueprint" enabled="true"/>
+        <GenericController guiclass="LogicControllerGui" testclass="GenericController" testname="Save Blueprint" enabled="false"/>
         <hashTree>
+          <BeanShellPostProcessor guiclass="TestBeanGUI" testclass="BeanShellPostProcessor" testname="Get tag search input" enabled="true">
+            <boolProp name="resetInterpreter">false</boolProp>
+            <stringProp name="parameters"></stringProp>
+            <stringProp name="filename"></stringProp>
+            <stringProp name="script">String searchWords = vars.get(&quot;tag&quot;);
+String[] word = searchWords.split(&quot;&quot;);
+String tag = new String();
+
+int j = 1;
+for (int i = 0; i &lt; word.length; i++) {
+	tag = tag.concat(word[i]);
+	vars.put(&quot;tag_&quot; + j, tag);
+	j++;
+}
+
+vars.remove(&quot;searchWord&quot;);</stringProp>
+          </BeanShellPostProcessor>
+          <hashTree/>
           <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="GetBlueprints" enabled="true">
             <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
               <collectionProp name="Arguments.arguments"/>
@@ -627,8 +675,8 @@ for (int i = 0; i &lt; word.length; i++) {
           </HTTPSamplerProxy>
           <hashTree/>
           <ForeachController guiclass="ForeachControlPanel" testclass="ForeachController" testname="ForEach Controller" enabled="true">
-            <stringProp name="ForeachController.inputVal">word</stringProp>
-            <stringProp name="ForeachController.returnVal">searchWord</stringProp>
+            <stringProp name="ForeachController.inputVal">tag</stringProp>
+            <stringProp name="ForeachController.returnVal">searcht</stringProp>
             <boolProp name="ForeachController.useSeparator">true</boolProp>
             <stringProp name="ForeachController.startIndex">0</stringProp>
             <stringProp name="ForeachController.endIndex">4</stringProp>
@@ -644,7 +692,7 @@ for (int i = 0; i &lt; word.length; i++) {
               <stringProp name="HTTPSampler.response_timeout"></stringProp>
               <stringProp name="HTTPSampler.protocol"></stringProp>
               <stringProp name="HTTPSampler.contentEncoding"></stringProp>
-              <stringProp name="HTTPSampler.path">/tags/${searchWord}</stringProp>
+              <stringProp name="HTTPSampler.path">/tags/${searcht}</stringProp>
               <stringProp name="HTTPSampler.method">GET</stringProp>
               <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
               <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
@@ -708,7 +756,7 @@ for (int i = 0; i &lt; word.length; i++) {
           </HTTPSamplerProxy>
           <hashTree/>
         </hashTree>
-        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="CreateSlideshow" enabled="true">
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="CreateSlideshow" enabled="false">
           <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
           <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
             <collectionProp name="Arguments.arguments">
@@ -768,7 +816,7 @@ for (int i = 0; i &lt; word.length; i++) {
           </com.atlantbh.jmeter.plugins.jsonutils.jsonpathextractor.JSONPathExtractor>
           <hashTree/>
         </hashTree>
-        <GenericController guiclass="LogicControllerGui" testclass="GenericController" testname="Publish Slideshow" enabled="true"/>
+        <GenericController guiclass="LogicControllerGui" testclass="GenericController" testname="Publish Slideshow" enabled="false"/>
         <hashTree>
           <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Publish" enabled="true">
             <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
@@ -885,7 +933,7 @@ for (int i = 0; i &lt; word.length; i++) {
           </HTTPSamplerProxy>
           <hashTree/>
         </hashTree>
-        <GenericController guiclass="LogicControllerGui" testclass="GenericController" testname="Access Slideshow Preview" enabled="true"/>
+        <GenericController guiclass="LogicControllerGui" testclass="GenericController" testname="Access Slideshow Preview" enabled="false"/>
         <hashTree>
           <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="GetConfiguration" enabled="true">
             <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
@@ -955,7 +1003,7 @@ for (int i = 0; i &lt; word.length; i++) {
           </HTTPSamplerProxy>
           <hashTree/>
         </hashTree>
-        <GenericController guiclass="LogicControllerGui" testclass="GenericController" testname="Push Slideshow on Devices" enabled="true"/>
+        <GenericController guiclass="LogicControllerGui" testclass="GenericController" testname="Push Slideshow on Devices" enabled="false"/>
         <hashTree>
           <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="GetSlideshowDevices" enabled="true">
             <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
@@ -987,7 +1035,7 @@ for (int i = 0; i &lt; word.length; i++) {
             <stringProp name="HTTPSampler.response_timeout"></stringProp>
             <stringProp name="HTTPSampler.protocol"></stringProp>
             <stringProp name="HTTPSampler.contentEncoding"></stringProp>
-            <stringProp name="HTTPSampler.path">/slideshowDevices/${newSlideshowId</stringProp>
+            <stringProp name="HTTPSampler.path">/slideshowDevices/${newSlideshowId}</stringProp>
             <stringProp name="HTTPSampler.method">GET</stringProp>
             <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
             <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
