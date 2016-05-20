@@ -1,7 +1,7 @@
 /*global angular*/
 (function (ng) {
     'use strict';
-    angular.module('core').directive('infiniteScroll', ['$timeout', '$document',function (timeout, $document) {
+    angular.module('core').directive('infiniteScroll', ['$timeout', '$document', function (timeout, $document) {
 
         function link(scope, element, attr) {
             var lengthThreshold = attr.scrollThreshold || 50,
@@ -34,7 +34,7 @@
             });
         }
 
-        return{
+        return {
             link: link,
             scope: {
                 scrollThreshold: '=',
