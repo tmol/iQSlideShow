@@ -3,7 +3,7 @@
 
 .iqss-device-interaction-navbar {
     @media (orientation: landscape) {
-        display: none;
+        width: 100%;
     }
 }
 .iqss-device-interaction {
@@ -13,7 +13,7 @@
         padding-right: 0px;
     }
     @media (orientation: landscape) {
-        padding-top: 0px;
+        padding-top: 70px;
         padding-left: 0px;
         padding-right: 0px;
     }
