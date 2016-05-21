@@ -88,7 +88,8 @@
                             && this.namesAndTagsFilterParameters.filterItems.length === 0
                             && this.namesAndTagsFilterParameters.nameFilters.length === 0
                             && this.namesAndTagsFilterParameters.tagFilters.length === 0
-                            && this.namesAndTagsFilterParameters.namesAndTagsFilter === '';
+                            && (this.namesAndTagsFilterParameters.namesAndTagsFilter === ''
+                                || !this.namesAndTagsFilterParameters.namesAndTagsFilter);
                     }
                 };
             } else  {
