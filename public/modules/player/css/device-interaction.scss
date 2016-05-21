@@ -85,7 +85,7 @@
 }
 
 .iqss-device-interaction-content-player-actions-center {
-    flex: 0 0 167px;
+    flex: 0 0 200px;
     align-self: center;
     @media (orientation: landscape) {
         height: 100%;
@@ -225,11 +225,13 @@
 
 .iqss-device-interaction-content-player-actions-center-previous {
     background: url(../../../modules/core/img/previous.svg) right center no-repeat;
-    width: 15px;
-    height: 15px;
     vertical-align: middle;
     cursor: pointer;
     display: inline-block;
+    width: 50px;
+    height: 30px;
+    background-size: 8px 14px;
+    background-position: 50% 50%;
 }
 
 .iqss-device-interaction-content-player-actions-center-next {
@@ -239,11 +241,13 @@
     vertical-align: middle;
     cursor: pointer;
     display: inline-block;
+    width: 50px;
+    height: 30px;
+    background-size: 8px 14px;
+    background-position: 50% 50%;
 }
 
 .iqss-device-interaction-content-player-actions-center-slideInfo {
-    margin-left: 20px;
-    margin-right: 10px;
     display: inline-block;
 }
 
