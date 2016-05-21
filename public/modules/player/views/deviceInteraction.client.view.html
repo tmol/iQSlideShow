@@ -5,13 +5,13 @@
             <div class='iqss-device-interaction-content-player' data-ng-controller="PlayerController" ng-init="initDevicePreview(deviceId, playerContext)" >
                 <div ng-player slides="slides" ng-player-on-hold='true' style="height:100%"></div>
             </div>
-            <div class='iqss-device-interaction-content-player-actions'>
+            <div class='iqss-device-interaction-content-player-actions' ng-show="currentPreviewSlideIndex">
                 <div ng-if='!playSlideShow' class='iqss-device-interaction-content-player-container-play' ng-click='togglePlay()'></div>
                 <div ng-if='playSlideShow' class='iqss-device-interaction-content-player-container-pause' ng-click='togglePlay()'></div>
                 <div class='iqss-device-interaction-content-player-actions-center'>
-                    <div ng-click='moveSlideLeft()' class='iqss-device-interaction-content-player-actions-center-previous'></div>
+                    <div ng-click='moveSlideLeft()' class='iqss-device-interaction-content-player-actions-center-previous' ng-class="{'iqss-control-disabled':currentPreviewSlideIndex==1}"></div>
                     <div class='iqss-device-interaction-content-player-actions-center-slideInfo'>Slide {{currentPreviewSlideIndex}} of {{numberOfSlides}}</div>
-                    <div ng-click='moveSlideRight()' class='iqss-device-interaction-content-player-actions-center-next'></div>
+                    <div ng-click='moveSlideRight()' class='iqss-device-interaction-content-player-actions-center-next' ng-class="{'iqss-control-disabled':currentPreviewSlideIndex==numberOfSlides}"></div>
                 </div>
             </div>
             <div class="iqss-device-interaction-separator iqss-device-interaction-hide-landscape"></div>
