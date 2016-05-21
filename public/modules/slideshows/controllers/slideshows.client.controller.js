@@ -100,6 +100,9 @@
                 $scope.slideshowJson = JSON.stringify($scope.slideshow);
             }
 
+            $scope.isNewSlideShow = function () {
+                return !$scope.slideshow._id;
+            }
             // Update existing Slideshow
             $scope.upsert = function (onSuccessCallback) {
                 if ($scope.waitingForServerSideProcessingAndThenForResultDialog) {
@@ -133,7 +136,7 @@
                 }
 
                 $scope.waitingForServerSideProcessingAndThenForResultDialog = true;
-                if (slideshow._id) {
+                if (!$scope.isNewSlideShow()) {
                     slideshow.$update(function () {
                         handleUpsertSuccess('Update succeeded.');
                     }, handleErrorOnUpsert);
@@ -448,7 +451,12 @@
 
             $scope.$on('$stateChangeStart', function (event) {
                 if (slideShowChanged()) {
-                    var answer = confirm("The slideshow was changed. Are you sure you want to leave this page?");
+                    var msg = "The slideshow was changed. Are you sure you want to leave this page?";
+                    if ($scope.isNewSlideShow()) {
+                        msg = "The new slideshow was not saved. Are you sure you want to leave this page?";
+                    }
+                    var answer = confirm(msg);
+
                     if (!answer) {
                         event.preventDefault();
                     }
