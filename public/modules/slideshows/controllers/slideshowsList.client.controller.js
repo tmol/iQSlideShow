@@ -80,7 +80,7 @@
             if (angular.isUndefined($scope.filterParameters)) {
                 $scope.filterParameters = {
                     showOnlyMine: false,
-                    pageSize: 12,
+                    pageSize: 20,
                     fullyLoaded: false,
                     namesAndTagsFilterParameters: {},
                     noFilterApplied: function () {

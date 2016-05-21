@@ -18,7 +18,9 @@
             }
 
             $document.bind('scroll', function () {
-                var remaining = body.scrollHeight - (body.clientHeight + body.scrollTop);
+                var scrollHeight = Math.max(this.documentElement.scrollHeight, body.scrollHeight), // the first for Firefox, second for Chrome, couldn't find something common
+                    scrollTop = Math.max(this.documentElement.scrollTop, body.scrollTop), // same as above
+                    remaining = scrollHeight - (body.clientHeight + scrollTop);
 
                 if (remaining < lengthThreshold && (remaining - lastRemaining) < 0) {
 
