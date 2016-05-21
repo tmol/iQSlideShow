@@ -58,6 +58,7 @@
             applyFilter();
 
             $scope.selectSlideShow = function (slideShow) {
+                $scope.playSlideShow = false;
                 slideShowSelected = true;
                 $scope.previewSlideshowId = slideShow._id;
                 $scope.playerContext.playerScope.switchSlideShow(slideShow._id, function () {
