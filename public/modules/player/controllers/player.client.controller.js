@@ -294,7 +294,13 @@
                         }, durationInMinutes);
                     }
                 });
-                messageBroker.onDeviceSetup(handleDeviceSetup);
+                messageBroker.onDeviceSetup(function (message) {
+                    if ($scope.slideIsOnHold) {
+                        return;
+                    }
+                    handleDeviceSetup(message);
+                });
+
                 messageBroker.onHoldSlideShow(function () {
                     putSlideShowOnHold();
                 });
