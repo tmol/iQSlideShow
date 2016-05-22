@@ -13,10 +13,12 @@
                 return $state.usePreview || $state.current.name === "preview";
             };
 
+            $scope.showDraftSlides = false;
+
             if ($scope.isPreview()) {
                 $scope.active = true;
+                $scope.showDraftSlides = true;
             }
-            $scope.showDraftSlides = false;
 
             var timers = new Timers();
             var handleDeviceSetup = null;
