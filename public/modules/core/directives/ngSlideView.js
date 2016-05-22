@@ -16,7 +16,8 @@
                     slideWidth: "=",
                     slideHeight: "=",
                     referenceSlide: "=",
-                    isPlaying: "="
+                    isPlaying: "=",
+                    emitSlideLoadedEvent: "="
                 },
                 template: template,
                 link: function (scope, element, attrs) {
@@ -45,6 +46,9 @@
                             $rootScope.$apply();
                         }
                         scope.slideReady = true;
+                        if (scope.emitSlideLoadedEvent === true) {
+                            scope.$emit("slideLoadedInSlideView");
+                        }
                     };
 
                     var lastTimeout;

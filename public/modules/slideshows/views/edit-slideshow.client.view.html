@@ -127,8 +127,8 @@
             <div class="iqss-slideshowedit-emptyColumn">&nbsp;</div>
 
             <div class="iqss-slideshowedit-preview" ng-show='atLeastOneSlideAdded()'>
-                <div dynamic-resizer dynamic-resizer-height-width-ratio="0.5625" style="min-height:450px">
-                    <div ng-if="displayPreview" ng-slide-view reference-slide="currentSlide"1>
+                <div dynamic-resizer dynamic-resizer-height-width-ratio="0.5625" dynamic-resizer-init-event='slideLoadedInSlideView'>
+                    <div ng-if="displayPreview" ng-slide-view reference-slide="currentSlide" emit-slide-loaded-event='true'>
                     </div>
                 </div>
                 <div class="iqss-slideshowedit-preview-footer">

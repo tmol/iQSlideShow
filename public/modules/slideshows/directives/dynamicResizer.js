@@ -4,8 +4,9 @@ angular.module('slideshows').directive('dynamicResizer', ['$window', '$timeout',
     'use strict';
 
     function link(scope, element, attrs) {
-        var window = angular.element($window);
-        var heightWidthRatio = attrs.dynamicResizerHeightWidthRatio;
+        var window = angular.element($window),
+            heightWidthRatio = attrs.dynamicResizerHeightWidthRatio,
+            initEvent = attrs.dynamicResizerInitEvent;
 
         var update = function () {
             var elementWidth = element.width();
@@ -26,9 +27,15 @@ angular.module('slideshows').directive('dynamicResizer', ['$window', '$timeout',
 
         window.on('resize', onResize);
 
-        $timeout(function () {
-            update();
-        });
+        if (initEvent) {
+            scope.$on(initEvent, function () {
+                onResize();
+            });
+        } else {
+            $timeout(function () {
+                update();
+            });
+        }
 
         scope.$on('$destroy', function () {
             window.off('resize', onResize);
