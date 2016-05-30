@@ -2,6 +2,6 @@
 
     'use strict';
 
-    exports.version = '0.32';
+    exports.version = '0.33';
 
 })(typeof exports === 'undefined' ? this : exports);
