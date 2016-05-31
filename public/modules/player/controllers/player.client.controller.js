@@ -94,8 +94,9 @@
                     }
                     $scope.slides = slides;
                     $scope.$emit("slidesLoaded", slides, slideShowId);
+                    $scope.$broadcast("slidesLoaded");
+                    $scope.slidesLoaded = true;
                 });
-                //$scope.$broadcast("goToSlideNumber", 0);
             };
 
             var updateSildes = function (callback, onSuccess, onError) {
