@@ -94,6 +94,9 @@ function PdfScript($scope, $q, $timeout) {
     }
 
     function initPage(rootElement, callback) {
+        if (!pdfDoc) {
+            return;
+        }
         canvas = jQuery(rootElement).find('#the-canvas')[0];
         ctx = canvas.getContext('2d');
         renderPage($scope.referenceSlide.pageNr, function () {
@@ -111,6 +114,7 @@ function PdfScript($scope, $q, $timeout) {
 
         PDFJS.workerSrc = '/modules/slideshows/slideTemplates/Pdf/pdf.worker.js';
         if (!content.url) {
+            $scope.pdfDocLoaded = true;
             return;
         }
 
@@ -143,6 +147,10 @@ function PdfScript($scope, $q, $timeout) {
     }
 
     function executeExpansion(callback) {
+        if (!pdfDoc) {
+            callback([]);
+            return;
+        }
         var idx;
         var expandedSlidesSpecificContents = [];
         for (idx = 1; idx <= pdfDoc.numPages; idx = idx + 1) {
