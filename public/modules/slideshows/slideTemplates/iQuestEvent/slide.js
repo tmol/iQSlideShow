@@ -72,8 +72,8 @@ function iQuestEvent($scope, $http) {
         preview: function(callback, element) {
             applyTemplate(callback, element);
         },
-        expand: function(callback) {
-            applyTemplate(callback);
+        expand: function(callback, element) {
+            applyTemplate(callback, element);
         }
     };
 };
