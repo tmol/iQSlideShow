@@ -82,7 +82,7 @@
                             <div ui-slider min=0 max=200 ng-model="currentSlide.zoomPercent"></div>
 
                             <div class='iqss-form-label'>Details URL</div>
-                            <input type="text" data-ng-model="currentSlide.detailsUrl" id="detailsUrl" placeholder="detailsUrl" required>
+                            <input type="text" data-ng-model="currentSlide.detailsUrl" id="detailsUrl" placeholder="detailsUrl">
 
                             <div>
                                 <input id='{{slide._id}}InTab' ng-true-value="true" ng-false-value="false" ng-model-options="{allowInvalid: true}" type="checkbox" data-ng-model="currentSlide.hidden">
@@ -127,16 +127,14 @@
             <div class="iqss-slideshowedit-emptyColumn">&nbsp;</div>
 
             <div class="iqss-slideshowedit-preview" ng-show='atLeastOneSlideAdded()'>
-
-                <div dynamic-resizer dynamic-resizer-height-width-ratio="0.5625">
-                    <div ng-if="displayPreview" ng-slide-view reference-slide="currentSlide"1>
+                <div dynamic-resizer dynamic-resizer-height-width-ratio="0.5625" dynamic-resizer-init-event='slideLoadedInSlideView'>
+                    <div ng-if="displayPreview" ng-slide-view reference-slide="currentSlide" emit-slide-loaded-event='true'>
                     </div>
                 </div>
                 <div class="iqss-slideshowedit-preview-footer">
                     <div class="iqss-slideshowedit-preview-footer-emptyLeft"></div>
                     <div class="iqss-slideshowedit-preview-footer-title">{{currentSlide.title}}</div>
                     <div class="iqss-slideshowedit-preview-footer-fullScreen-container">
-                        <div class="iqss-slideshowedit-preview-footer-fullScreen" ng-click='fullScreenSlidePreview()'></div>
                     </div>
                 </div>
             </div>

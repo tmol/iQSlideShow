@@ -21,24 +21,23 @@ function iQuestEvent($scope, $http) {
         var ctx = canvas.getContext('2d');
         var img = document.createElement('IMG');
         img.onload = function() {
-
             ctx.save();
             ctx.beginPath();
 
-            ctx.moveTo(canvas.clientWidth, 153);
-            ctx.lineTo(0, canvas.clientHeight);
-            ctx.lineTo(canvas.clientWidth, canvas.clientHeight);
-            ctx.lineTo(canvas.clientWidth, 153);
+            ctx.moveTo(canvas.width, 153);
+            ctx.lineTo(0, canvas.height);
+            ctx.lineTo(canvas.width, canvas.height);
+            ctx.lineTo(canvas.width, 153);
             ctx.closePath();
 
             ctx.clip();
 
             //TODO: apply zoom to fit here;
-            ctx.drawImage(img, 0, 0, canvas.clientWidth, canvas.clientHeight);
+            ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
 
             ctx.fillStyle = "rgba(255, 255, 255, 0.5)";
             ctx.beginPath();
-            ctx.fillRect(0, 0, canvas.clientWidth, canvas.clientHeight);
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
             ctx.fill();
             ctx.restore();
         }
@@ -59,12 +58,6 @@ function iQuestEvent($scope, $http) {
         }
         $scope.$on("slide.content.description", function() {
             applyTextFill();
-        });
-        $scope.$on("slide.content.speakerImageUrl", function() {
-            loadSpeakerImage(slide.content.speakerImageUrl, rootElement);
-        });
-        $scope.$on("slide.content.pictureUrl", function() {
-            loadEventsPicture(slide.content.pictureUrl, rootElement);
         });
         loadSpeakerImage(slide.content.speakerImageUrl, rootElement);
         loadEventsPicture(slide.content.pictureUrl, rootElement);

@@ -103,6 +103,9 @@
     height: 30px;
 }
 
+.iqss-slideshowview-content-player-actions-empty {
+    flex: 100 100 auto;
+}
 
 .iqss-slideshowview-content-player-actions-center {
     flex: 0 0 auto;
@@ -115,12 +118,13 @@
 
 .iqss-slideshowview-content-player-actions-maximize {
     flex: 1 1 15px;
-    background: url(../../../modules/core/img/fullscreen.svg) right center no-repeat;
+    background: url(../../../modules/core/img/fullscreen.svg) left center no-repeat;
     margin-right: 15px;
     height: 15px;
     width: 15px;
     margin-bottom: auto;
     margin-top: auto;
+    margin-right: 15px;
     cursor: pointer;
 }
 

@@ -36,13 +36,20 @@
 
             // Remove existing Slideshow
             $scope.remove = function (slideshow) {
+                if ($scope.waitingForServerSideProcessingAndThenForResultDialog) {
+                    return;
+                }
                 ActionResultDialogService.showOkCancelDialog('Are you sure do you want to remove the slideshow?', $scope, function () {
+                    $scope.waitingForServerSideProcessingAndThenForResultDialog = true;
                     $scope.slideshow.$remove(function () {
+                        $scope.slideshow = null;
+                        $scope.waitingForServerSideProcessingAndThenForResultDialog = false;
                         ActionResultDialogService.showOkDialog('Remove succeeded', $scope, function () {
                             $state.go('listSlideshows');
                         });
                     }, function (err) {
-                        ActionResultDialogService.showWarningDialog('Remove unsuccessful.', err.data.message, $scope);
+                        $scope.waitingForServerSideProcessingAndThenForResultDialog = false;
+                        ActionResultDialogService.showErrorDialog('Remove unsuccessful.', err.data.message, $scope);
                     });
                 });
             };
@@ -85,6 +92,7 @@
             };
 
             var handleErrorOnUpsert = function (errorResponse) {
+                $scope.waitingForServerSideProcessingAndThenForResultDialog = false;
                 ActionResultDialogService.showWarningDialog(errorResponse.data.message, $scope);
             };
 
@@ -92,13 +100,20 @@
                 $scope.slideshowJson = JSON.stringify($scope.slideshow);
             }
 
+            $scope.isNewSlideShow = function () {
+                return !$scope.slideshow._id;
+            }
             // Update existing Slideshow
             $scope.upsert = function (onSuccessCallback) {
+                if ($scope.waitingForServerSideProcessingAndThenForResultDialog) {
+                    return;
+                }
                 var slideshow = $scope.slideshow,
                     currentSlideIndex,
                     handleUpsertSuccess = function (msg) {
                         $scope.error = '';
                         initSlideShowJson();
+                        $scope.waitingForServerSideProcessingAndThenForResultDialog = false;
                         showOkDialog(msg, function () {
                             // I don't know why the binding is lost, but this solves it
                             if (currentSlideIndex >= 0) {
@@ -120,7 +135,8 @@
                     return;
                 }
 
-                if (slideshow._id) {
+                $scope.waitingForServerSideProcessingAndThenForResultDialog = true;
+                if (!$scope.isNewSlideShow()) {
                     slideshow.$update(function () {
                         handleUpsertSuccess('Update succeeded.');
                     }, handleErrorOnUpsert);
@@ -159,10 +175,14 @@
             }
 
             $scope.publish = function () {
+                if ($scope.waitingForServerSideProcessingAndThenForResultDialog) {
+                    return;
+                }
                 var publish = function () {
                     serverMessageBroker
                         .publishSlideShow($scope.slideshow._id)
                         .then(function () {
+                            $scope.waitingForServerSideProcessingAndThenForResultDialog = false;
                             showOkDialog('Publish succeeded.', function () {
                                 $state.go($state.current, $stateParams, {reload: true, inherit: false});
                             });
@@ -171,10 +191,12 @@
                 if (slideShowChanged()) {
                     ActionResultDialogService.showOkCancelDialog('The slideshow changed and will be automatically saved before publishing. Do you agree?', $scope, function () {
                         $scope.upsert(function () {
+                            $scope.waitingForServerSideProcessingAndThenForResultDialog = true;
                             publish();
                         });
                     });
                 } else {
+                    $scope.waitingForServerSideProcessingAndThenForResultDialog = true;
                     publish();
                 }
             };
@@ -364,7 +386,6 @@
                             templateName: newSlideData.templateName,
                             content: {}
                         };
-                        $scope.slideshow.draftSlides = $scope.slideshow.draftSlides || [];
                         $scope.slideshow.draftSlides.push(newSlide);
                         newSlide.dragAndDropId = 'Id' + Math.random();
                         newSlide.zoomPercent = 100;
@@ -430,10 +451,18 @@
 
             $scope.$on('$stateChangeStart', function (event) {
                 if (slideShowChanged()) {
-                    var answer = confirm("The slideshow was changed. Are you sure you want to leave this page?");
+                    var msg = "The slideshow was changed. Are you sure you want to leave this page?";
+                    if ($scope.isNewSlideShow()) {
+                        msg = "The new slideshow was not saved. Are you sure you want to leave this page?";
+                    }
+                    var answer = confirm(msg);
+
                     if (!answer) {
                         event.preventDefault();
                     }
+                }
+                if ($scope.waitingForServerSideProcessingAndThenForResultDialog) {
+                    event.preventDefault();
                 }
             });
 
@@ -454,7 +483,8 @@
             } else {
                 $scope.slideshow = new Slideshows({
                     name: '',
-                    slides: []
+                    slides: [],
+                    draftSlides: []
                 });
                 $scope.displayPreview = false;
             }

@@ -2,6 +2,7 @@
 function GoogleSlideShowScript($scope, $http) {
     'use strict';
 
+    $scope.topMargin = '0px';
     var loadSlides = function (slideShowId, onSuccess, onError) {
         $http({
             url: "/proxy",

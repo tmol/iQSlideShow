@@ -82,8 +82,6 @@
                         advanceSlide(slide.durationInSeconds * 1000);
                     };
 
-
-
                     scope.$watch("slides", function () {
                         timers.resetTimeouts();
                         slideNumber = -1;
@@ -143,6 +141,12 @@
                                 return;
                             }
                              emitCurrentSlideChanged(slide);
+                        });
+
+                        scope.$on("slidesLoaded", function (e, slideIndex) {
+                            slideNumber = -1;
+                            scope.slidesLoaded = true;
+                            loadNextSlide();
                         });
                     }
 

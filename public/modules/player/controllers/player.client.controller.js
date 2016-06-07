@@ -13,10 +13,12 @@
                 return $state.usePreview || $state.current.name === "preview";
             };
 
+            $scope.showDraftSlides = false;
+
             if ($scope.isPreview()) {
                 $scope.active = true;
+                $scope.showDraftSlides = true;
             }
-            $scope.showDraftSlides = false;
 
             var timers = new Timers();
             var handleDeviceSetup = null;
@@ -92,8 +94,9 @@
                     }
                     $scope.slides = slides;
                     $scope.$emit("slidesLoaded", slides, slideShowId);
+                    $scope.$broadcast("slidesLoaded");
+                    $scope.slidesLoaded = true;
                 });
-                //$scope.$broadcast("goToSlideNumber", 0);
             };
 
             var updateSildes = function (callback, onSuccess, onError) {
@@ -294,7 +297,13 @@
                         }, durationInMinutes);
                     }
                 });
-                messageBroker.onDeviceSetup(handleDeviceSetup);
+                messageBroker.onDeviceSetup(function (message) {
+                    if ($scope.slideIsOnHold) {
+                        return;
+                    }
+                    handleDeviceSetup(message);
+                });
+
                 messageBroker.onHoldSlideShow(function () {
                     putSlideShowOnHold();
                 });

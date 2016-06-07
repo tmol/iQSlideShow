@@ -19,10 +19,13 @@
             $scope.update = function () {
                 var config = $scope.config;
                 if ($scope.isConfigValid()) {
+                    $scope.waitingForServerSideProcessingAndThenForResultDialog = true;
                     config.$updateConfig(function () {
+                        $scope.waitingForServerSideProcessingAndThenForResultDialog = false;
                         ActionResultDialogService.showOkDialog('Update succeeded', $scope);
                     }, function (errorResponse) {
                         $scope.error = errorResponse.data.message;
+                        $scope.waitingForServerSideProcessingAndThenForResultDialog = false;
                     });
                 } else {
                     ActionResultDialogService.showWarningDialog('Please correct the validation errors.', $scope);
@@ -75,6 +78,12 @@
             $scope.defaultAnimationTypeSelected = function () {
                 return !$scope.config || $scope.config.defaultAnimationType !== null;
             };
+
+            $scope.$on('$stateChangeStart', function (event) {
+                if ($scope.waitingForServerSideProcessingAndThenForResultDialog) {
+                    event.preventDefault();
+                }
+            });
         }
                                                           ]);
 

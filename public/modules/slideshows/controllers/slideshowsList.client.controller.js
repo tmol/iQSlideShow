@@ -80,7 +80,7 @@
             if (angular.isUndefined($scope.filterParameters)) {
                 $scope.filterParameters = {
                     showOnlyMine: false,
-                    pageSize: 12,
+                    pageSize: 20,
                     fullyLoaded: false,
                     namesAndTagsFilterParameters: {},
                     noFilterApplied: function () {
@@ -88,7 +88,8 @@
                             && this.namesAndTagsFilterParameters.filterItems.length === 0
                             && this.namesAndTagsFilterParameters.nameFilters.length === 0
                             && this.namesAndTagsFilterParameters.tagFilters.length === 0
-                            && this.namesAndTagsFilterParameters.namesAndTagsFilter === '';
+                            && (this.namesAndTagsFilterParameters.namesAndTagsFilter === ''
+                                || !this.namesAndTagsFilterParameters.namesAndTagsFilter);
                     }
                 };
             } else  {

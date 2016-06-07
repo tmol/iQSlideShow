@@ -16,7 +16,8 @@
                     slideWidth: "=",
                     slideHeight: "=",
                     referenceSlide: "=",
-                    isPlaying: "="
+                    isPlaying: "=",
+                    emitSlideLoadedEvent: "="
                 },
                 template: template,
                 link: function (scope, element, attrs) {
@@ -28,6 +29,9 @@
                     scope.slideReady = false;
                     var positionScale = {sx : 0, sy : 0, scale: 0};
                     var applyUpdate = function () {
+                        if (scope.emitSlideLoadedEvent === true) {
+                            scope.$emit("slideLoadedInSlideView");
+                        }
                         if (!scope.referenceSlide) {
                             return;
                         }
