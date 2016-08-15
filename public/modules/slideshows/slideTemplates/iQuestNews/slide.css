@@ -1,25 +1,184 @@
-.template-iQuestNews .title {
-  color: yellow;
-  font-size: 24px;
-  font-weight: normal;
-  line-height: 1.25;
-  margin: 30px 0 0 0; }
+.iQuestNews1-template {
+    display: flex;
+    align-items: stretch;
+    flex-flow: column;
+    width: 1920px;
+    height: 1080px;
+}
 
-.template-iQuestNews .personImage {
-  max-width: 49px;
-  max-height: 80px; }
+.iQuestNews1-template-top-image {
+    flex: 43.75;
+    background: url('https://upload.wikimedia.org/wikipedia/commons/6/6c/S._H._Kress_and_Co._Building_(St._Petersburg,_Florida).jpg');
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    display: flex;
+    flex-flow: column;
+}
 
-.template-iQuestNews .author {
-  display: inline-block;
-  vertical-align: bottom;
-  color: #333;
-  font-family: Arial, sans-serif;
-  font-size: 14px;
-  line-height: 1.42857142857143; }
+.iQuestNews1-template-top-image-top-space {
+    flex: 44;
+}
 
-.template-iQuestNews .slide-content {
-  color: #333;
-  font-family: Arial, sans-serif;
-  font-size: 14px;
-  line-height: 1.42857142857143;
-  max-width: 547px; }
+.iQuestNews1-template-top-image-content {
+    flex: 44;
+    background-color: rgba(0, 149, 213, 0.5);
+    display: flex;
+}
+
+.iQuestNews1-template-top-image-content-left {
+    flex: 5.5;
+}
+
+.iQuestNews1-template-top-image-content-titles {
+    flex: 89;
+    display: flex;
+    flex-flow: column;
+}
+
+.iQuestNews1-template-top-image-content-titles-top {
+    flex: 21;
+}
+
+.iQuestNews1-template-top-image-content-titles-mainTitle {
+    flex: 39;
+    color: white;
+    font-family: Segoe UI, sans-serif;
+    /*font-size: 7.6vh;*/
+    font-size: 12vh;
+    font-weight: 600;
+}
+
+.iQuestNews1-template-top-image-content-titles-mainTitle-space-bottom {
+    flex: 11;
+}
+
+.iQuestNews1-template-top-image-content-titles-subTitle {
+    flex: 21;
+    color: white;
+    font-family: Segoe UI, sans-serif;
+    letter-spacing: 2px;
+    /*font-size: 4.2vh;*/
+    font-size: 7vh;
+    font-weight: 500;
+}
+
+.iQuestNews1-template-top-image-content-titles-space-bottom {
+    flex: 8;
+}
+
+.iQuestNews1-template-top-image-content-right {
+    flex: 5.5;
+}
+
+
+.iQuestNews1-template-top-image-bottom-space {
+    flex: 12;
+}
+
+
+.iQuestNews1-template-space-below-top-image {
+    flex: 9.72;
+}
+
+.iQuestNews1-template-content {
+    flex: 29.86;
+    display: flex;
+}
+
+.iQuestNews1-template-content-space-column {
+    flex: 5.5;
+}
+
+.iQuestNews1-template-content-textAndSource {
+    flex: 66;
+    display: flex;
+    flex-flow: column;
+}
+
+.iQuestNews1-template-content-textAndSource-text {
+    flex: 80;
+    color: #444444;
+    font-family: Segoe UI, sans-serif;
+    /*font-size: 2.7vh;*/
+    font-size: 4vh;
+    font-weight: 400;
+}
+
+.iQuestNews1-template-content-textAndSource-space {
+    flex: 13;
+}
+
+a {
+    text-decoration: none;
+    margin-left: 4px;
+    color: #0095D6;
+}
+
+.iQuestNews1-template-content-textAndSource-source {
+    flex: 7;
+    color: #444444;
+    font-family: Segoe UI, sans-serif;
+    /*font-size: 2.7vh;*/
+    font-size: 4vh;
+    font-weight: 400;
+}
+
+.iQuestNews1-template-content-dateAndQRCode {
+    flex: 23;
+    display: flex;
+    flex-flow: column;
+}
+
+.iQuestNews1-template-content-dateAndQRCode-dateLabel {
+    flex: 7.5;
+    color: #444444;
+    font-family: Segoe UI, sans-serif;
+    /*font-size: 2.7vh;*/
+    font-size: 4vh;
+    font-weight: 400;
+}
+
+.iQuestNews1-template-content-dateAndQRCode-month {
+    flex: 18;
+    color: #0095D6;
+    font-family: Segoe UI, sans-serif;
+    /*font-size: 6.48vh;*/
+    font-size: 9vh;
+    font-weight: 500;
+    letter-spacing: 4px;
+}
+
+.iQuestNews1-template-content-dateAndQRCode-year {
+    flex: 7.5;
+    color: #444444;
+    font-family: Segoe UI, sans-serif;
+    /*font-size: 2.7vh;*/
+    font-size: 4vh;
+    font-weight: 500;
+}
+
+.iQuestNews1-template-content-dateAndQRCode-space {
+    flex: 40;
+}
+
+.iQuestNews1-template-content-dateAndQRCode-logo {
+    flex: 27;
+    display: flex;
+}
+
+.iQuestNews1-template-content-dateAndQRCode-logo-space {
+    flex: 3;
+    flex-grow: 3;
+}
+
+.iQuestNews1-template-content-dateAndQRCode-logo-imageContainer {
+    flex: 1;
+}
+
+.iQuestNews1-template-content-dateAndQRCode-logo-imageContainer-image {
+    height:7vh;
+}
+
+.iQuestNews1-template-bottom-space{
+    flex: 9.77;
+}
