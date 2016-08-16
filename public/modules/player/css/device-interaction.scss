@@ -3,6 +3,9 @@
 
 .iqss-device-interaction-navbar {
     @media (orientation: landscape) {
+        display: none;
+    }
+    @media (orientation: portait) {
         width: 100%;
     }
 }
@@ -300,7 +303,7 @@ input[type=text].iqss-device-interaction-search {
     width: 89px;
     background-repeat: no-repeat;
     background-position: 50% 50%;
-    background-size: 40%;
+    background-size: 20%;
     position: absolute;
     right: 0px;
     top: 0px;

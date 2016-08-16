@@ -48,7 +48,7 @@
                 $scope.$emit("ShowLoaderIndicator");
                 DeviceInteractionService.getSlideShowsByFilter({
                     pageSize: 1000,
-                    namesAndTagsFilter: $scope.nameFilter
+                    namesAndTagsFilter: $scope.slideShowFilter
                 }, function(result) {
                     $scope.$emit("HideLoaderIndicator");
                     $scope.slideshows = result.data;
