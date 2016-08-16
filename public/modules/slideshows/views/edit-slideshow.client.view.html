@@ -54,7 +54,7 @@
                                     <span class='iqss-slideshowedit-slide-actions-delete' ng-click='removeSlide(slide)'></span>
                                 </div>
                                 <div class='iqss-slideshowedit-slide-preview'>
-                                    <div ng-slide-view reference-slide="slide">
+                                    <div ng-slide-view reference-slide="slide" class="ng-slide-view-container">
                                     </div>
                                 </div>
                             </div>
@@ -128,7 +128,7 @@
 
             <div class="iqss-slideshowedit-preview" ng-show='atLeastOneSlideAdded()'>
                 <div dynamic-resizer dynamic-resizer-height-width-ratio="0.5625" dynamic-resizer-init-event='slideLoadedInSlideView'>
-                    <div ng-if="displayPreview" ng-slide-view reference-slide="currentSlide" emit-slide-loaded-event='true'>
+                    <div ng-if="displayPreview" ng-slide-view reference-slide="currentSlide" emit-slide-loaded-event='true' class="ng-slide-view-container">
                     </div>
                 </div>
                 <div class="iqss-slideshowedit-preview-footer">
