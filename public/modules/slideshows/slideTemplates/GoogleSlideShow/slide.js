@@ -20,6 +20,7 @@ function GoogleSlideShowScript($scope, $http) {
                 result = result.map(function (item, i) {
                     var escapedSlide = null;
                     eval("escapedSlide='" + item + "';");
+
                     return {
                         content: escapedSlide,
                         isExpanded: true
@@ -48,6 +49,20 @@ function GoogleSlideShowScript($scope, $http) {
             }, function (error) {
                 callback(null);
             });
+        } ,
+        onUpdate: function(callback, element) {
+
+            var svgElement = element.find("svg")[0];
+            if (!svgElement) {
+                callback();
+                return;
+            }
+            var viewBox = svgElement.getAttribute("viewBox");
+            if (svgElement.viewBox && svgElement.viewBox.baseVal) {
+                $(svgElement).parent().css("width", svgElement.viewBox.baseVal.width + "px");
+                $(svgElement).parent().css("height", svgElement.viewBox.baseVal.height + "px");
+            }
+            callback();
         }
     };
 }

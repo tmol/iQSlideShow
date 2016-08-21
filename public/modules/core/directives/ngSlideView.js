@@ -1,13 +1,14 @@
 /*global angular, $*/
 (function () {
     'use strict';
-    angular.module('core').directive('ngSlideView', ['$timeout', 'resolutions', '$rootScope', 'SlideSetup',
-        function ($timeout, resolutions, $rootScope, SlideSetup) {
+    angular.module('core').directive('ngSlideView', ['resolutions', '$rootScope', 'SlideSetup', 'resizeSenzor', '$timeout',
+        function (resolutions, $rootScope, SlideSetup, resizeSenzor, $timeout) {
             var indicator = "<svg style='width:0px;height:0px;opacity:0.8;position: absolute;margin-left:0px;margin-top:0px;display:none;z-index:1000; transform: translate(-50%,-50%)'><circle cx='50%' cy='50%' r='46%' stroke='red' fill='red' fill-opacity='0.0' stroke-width='4%'></circle></svg>";
 
-            var template = '<div style="width:100%;height:100%;position:relative;display: flex;justify-content: center;align-items: center;"><div class="slideshow-placeholder" style="position:absolute;width:{{resolution.width}}px;height:{{resolution.height}}px;transform:scale({{zoom}});position:relative;display: flex;justify-content: center;align-items: center;" touch-start="onSlideClicked($event)" ng-show="slideReady">';
-            template += "<div style='transform:scale({{zoomPercent/100}})'>";
-            template += "<div ng-class=\"{'iqss-hidden':!slideLoaded}\" ng-include='templateUrl' onload='templateLoaded()' class='ng-slide-view'></div>";
+
+            var template = '<div class="slide-content-container" style="width:100%;height:100%;position:relative;display: flex;justify-content: center;align-items: center;"><div class="slideshow-placeholder" style="position:absolute;width:{{resolution.width}}px;height:{{resolution.height}}px;display:flex;justify-content: center;align-items: center;" touch-start="onSlideClicked($event)" ng-show="slideReady">';
+            template += "<div class='toBeScaled' style='position:absolute;display:inline-block;'>";
+            template += "<div ng-class=\"{'iqss-hidden':!slideLoaded}\" ng-include='templateUrl' onload='templateLoaded()' class='ng-slide-view' style='transform:scale({{zoomPercent/100}})'></div>";
             template += "<div ng-show='!slideLoaded' style='top: 50%; position: absolute; left: 50%;  transform: translate(-50%,-50%);z-index:100' >LOADING...</div>";
             template += "</div>";
             template += '</div></div>';
@@ -27,8 +28,30 @@
                     scope.indicatorVisible = false;
                     scope.indicatorSize = 0;
                     scope.slideReady = false;
-                    var positionScale = {sx : 0, sy : 0, scale: 0};
-                    var applyUpdate = function () {
+                    var appliedScale = 1;
+                    var getSizeMeasurementContainer = function () {
+                        var container = $("#measurementContainer");
+                        if (container.length) {
+                            return container;
+                        }
+                        return $("body").append(measurementContainer);
+                    }
+
+                    var zoomContentToElement = function () {
+                        var elementToScale = element.find(".toBeScaled");
+                        var parent = elementToScale.parent();
+
+                        if (elementToScale.width()==0 || elementToScale.height() == 0)  {
+                            return;
+                        }
+
+                        var sx = parent.width() / elementToScale.width();
+                        var sy = parent.height() / elementToScale.height();
+                        var scale = Math.min(sx, sy);
+                        elementToScale.css("transform", "scale(" + scale + ")");
+                    }
+
+                    var scaleElementToResolution = function () {
                         if (scope.emitSlideLoadedEvent === true) {
                             scope.$emit("slideLoadedInSlideView");
                         }
@@ -37,31 +60,32 @@
                         }
                         scope.resolution = scope.referenceSlide.resolution || resolutions[0];
                         scope.zoomPercent = scope.referenceSlide.zoomPercent || 100;
-
-                        positionScale.sx = element.parent().width() / scope.resolution.width;
-                        positionScale.sy = element.parent().height() / scope.resolution.height;
-                        positionScale.scale = Math.min(positionScale.sx, positionScale.sy);
                         scope.indicatorSize = Math.max(scope.resolution.width, scope.resolution.height) * 10 / 100;
-                        scope.zoom = positionScale.scale;
-                        if (!$rootScope.$$phase) {
-                            $rootScope.$apply();
-                        }
+
+                        var sx = element.parent().width() / scope.resolution.width;
+                        var sy = element.parent().height() / scope.resolution.height;
+                        var appliedScale = Math.min(sx, sy);
+                        element.find(".slideshow-placeholder").css("transform", "scale(" + appliedScale + ")");
+                        zoomContentToElement();
                         scope.slideReady = true;
                     };
 
                     var lastTimeout;
                     var update = function () {
-                        $timeout.cancel(lastTimeout);
+                        window.clearTimeout(lastTimeout);
                         if (scope.slideConfiguration && scope.slideConfiguration.onUpdate) {
                             scope.slideConfiguration.onUpdate(function () {
-                                lastTimeout = $timeout(applyUpdate, 10);
-                            });
+                                lastTimeout = window.setTimeout(scaleElementToResolution, 10);
+                            }, element.find(".ng-slide-view").children().first());
                             return;
                         }
 
-                        lastTimeout = $timeout(applyUpdate, 10);
-
+                        lastTimeout = window.setTimeout(scaleElementToResolution, 10);
                     };
+
+                    var contentResizeSenzorDestroy = resizeSenzor(element.find(".toBeScaled")[0], update);
+                    var parentResizeSenzorDestroy = resizeSenzor(element.find(".slide-content-container")[0], update);
+
                     scope.onSlideClicked = function (event) {
                         var pageX = 0;
                         var pageY = 0;
@@ -78,12 +102,13 @@
                         var y = pageY - target.offset().top;
 
 
-                        var percentX = x * 100 / (scope.resolution.width * positionScale.scale);
-                        var percentY = y * 100 / (scope.resolution.height * positionScale.scale);
+                        var percentX = x * 100 / (scope.resolution.width * appliedScale);
+                        var percentY = y * 100 / (scope.resolution.height * appliedScale);
 
 
                         $rootScope.$broadcast("slideShowClicked", {percentX : percentX, percentY : percentY});
                     };
+
                     scope.$watch("referenceSlide", function (newValue, oldValue) {
                         SlideSetup.setup(scope, element);
                     });
@@ -110,7 +135,7 @@
                     });
 
                     scope.$on("displayIndicator", function (event, position) {
-                        $timeout(function () {
+                        window.setTimeout(function () {
                             var indicatorElement = $(indicator);
                             indicatorElement.css({
                                 "margin-left" : ((scope.resolution.width * position.percentX) / 100) + "px",
@@ -119,7 +144,7 @@
                             });
                             element.find('.slideshow-placeholder').append(indicatorElement);
                             indicatorElement.animate({width: scope.indicatorSize + "px", height: scope.indicatorSize + "px"}, 1000, "easeInOutElastic", function () {
-                                $timeout(function () {
+                                window.setTimeout(function () {
                                     indicatorElement.animate({width: "0px", height: "0px"}, 3000, "easeInOutElastic", function () {
                                         indicatorElement.remove();
                                     });
@@ -128,9 +153,6 @@
                             });
                         }, 10);
                     });
-
-                    // TODO update only once per resize
-                    $(window).on("resize", update);
 
                     scope.$on("scriptLoaded", function (event, scriptUrl) {
                         scope.loadedScripts.push(scriptUrl);
@@ -143,7 +165,8 @@
                     });
 
                     scope.$on("$destroy", function () {
-                        $(window).off("resize", update);
+                        contentResizeSenzorDestroy();
+                        parentResizeSenzorDestroy();
                     });
 
                     scope.templateLoaded = function () {
@@ -157,8 +180,7 @@
                             if (scope.referenceSlide.setupFinishedPromise) {
                                 scope.referenceSlide.setupFinishedPromise.resolve();
                             }
-
-                            update();
+                           $timeout(update,20);
                         });
                     };
                 }
