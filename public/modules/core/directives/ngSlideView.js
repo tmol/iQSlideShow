@@ -6,8 +6,8 @@
             var indicator = "<svg style='width:0px;height:0px;opacity:0.8;position: absolute;margin-left:0px;margin-top:0px;display:none;z-index:1000; transform: translate(-50%,-50%)'><circle cx='50%' cy='50%' r='46%' stroke='red' fill='red' fill-opacity='0.0' stroke-width='4%'></circle></svg>";
 
 
-            var template = '<div class="slide-content-container" style="width:100%;height:100%;position:relative;display: flex;justify-content: center;align-items: center;"><div class="slideshow-placeholder" style="position:absolute;width:{{resolution.width}}px;height:{{resolution.height}}px;display:flex;justify-content: center;align-items: center;" touch-start="onSlideClicked($event)" ng-show="slideReady">';
-            template += "<div class='toBeScaled' style='position:absolute;display:inline-block;'>";
+            var template = '<div class="slide-content-container" style="width:100%;height:100%;"><div class="slideshow-placeholder" style="position:absolute;width:{{resolution.width}}px;height:{{resolution.height}}px;transform-origin: 0px 0px 0;left:50%;top:50%;" touch-start="onSlideClicked($event)" ng-show="slideReady">';
+            template += "<div class='toBeScaled' style='position:absolute;display:inline-block;transform-origin: 0px 0px 0;left:50%;top:50%;'>";
             template += "<div ng-class=\"{'iqss-hidden':!slideLoaded}\" ng-include='templateUrl' onload='templateLoaded()' class='ng-slide-view' style='transform:scale({{zoomPercent/100}})'></div>";
             template += "<div ng-show='!slideLoaded' style='top: 50%; position: absolute; left: 50%;  transform: translate(-50%,-50%);z-index:100' >LOADING...</div>";
             template += "</div>";
@@ -48,7 +48,8 @@
                         var sx = parent.width() / elementToScale.width();
                         var sy = parent.height() / elementToScale.height();
                         var scale = Math.min(sx, sy);
-                        elementToScale.css("transform", "scale(" + scale + ")");
+
+                        elementToScale.css("transform", "scale(" + scale + ") translate(-50%, -50%)");
                     }
 
                     var scaleElementToResolution = function () {
@@ -65,7 +66,8 @@
                         var sx = element.parent().width() / scope.resolution.width;
                         var sy = element.parent().height() / scope.resolution.height;
                         var appliedScale = Math.min(sx, sy);
-                        element.find(".slideshow-placeholder").css("transform", "scale(" + appliedScale + ")");
+
+                        element.find(".slideshow-placeholder").css("transform", "scale(" + appliedScale + ") translate(-50%, -50%)");
                         zoomContentToElement();
                         scope.slideReady = true;
                     };
