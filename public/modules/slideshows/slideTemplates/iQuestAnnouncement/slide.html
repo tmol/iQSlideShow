@@ -1,0 +1,309 @@
+<style>
+    body {
+        margin: 0;
+    }
+
+    .container {
+        padding: 0px;
+    }
+
+    .iQuestAnnouncement-template {
+        display: flex;
+        align-items: stretch;
+        width: 100%;
+        height: 100%;
+    }
+
+    .iQuestAnnouncement-canvas {
+        position: absolute;
+        z-index: -1;
+    }
+
+    .iQuestAnnouncement-template-left {
+        flex: 5.4;
+    }
+
+    .iQuestAnnouncement-template-content {
+        flex: 65;
+        min-width: 65%;
+        display: flex;
+        flex-flow: column;
+    }
+
+    .iQuestAnnouncement-template-content-top {
+        flex: 12;
+    }
+
+    .iQuestAnnouncement-template-content-mainTitle {
+        flex: 7;
+        color: #444444;
+        font-family: Segoe UI, sans-serif;
+        font-size: 7.5vh;
+        font-weight: 600;
+    }
+
+    .iQuestAnnouncement-template-content-mainTitle-text {
+        white-space: nowrap;
+    }
+
+    .iQuestAnnouncement-template-content-narrowerContent {
+        flex: 81;
+        display: flex;
+    }
+
+    .iQuestAnnouncement-template-content-narrowerContent-content {
+        flex: 80;
+        display: flex;
+        align-items: stretch;
+        flex-flow: column;
+        min-width: 80%;
+    }
+
+    .iQuestAnnouncement-template-content-narrowerContent-content-bigSpace {
+        flex: 17;
+        /*min-height: 10%;*/
+    }
+
+    .iQuestAnnouncement-template-content-narrowerContent-content-label {
+        flex: 4;
+        color: #444444;
+        font-family: Segoe UI, sans-serif;
+        font-size: 2.8vh;
+        font-weight: 400;
+    }
+
+    .iQuestAnnouncement-template-content-narrowerContent-content-smallSpace {
+        flex: 1;
+    }
+
+    .iQuestAnnouncement-template-content-narrowerContent-content-audience {
+        flex: 11;
+        min-height: 11%;
+        color: #0095d6;
+        font-family: Segoe UI, sans-serif;
+        font-size: 4vh;
+        font-weight: 600;
+        letter-spacing: 2px;
+    }
+
+    .iQuestAnnouncement-template-content-narrowerContent-content-audience-text {
+        white-space: nowrap;
+    }
+
+    .iQuestAnnouncement-template-content-narrowerContent-content-space {
+        flex: 6;
+    }
+
+    .iQuestAnnouncement-template-content-narrowerContent-content-announcement {
+        flex: 18;
+        min-height: 18%;
+        color: #444444;
+        font-family: Segoe UI, sans-serif;
+        font-size: 3.3vh;
+        font-weight: 400;
+    }
+
+    .iQuestAnnouncement-template-content-narrowerContent-content-announcement-text {
+        /*white-space: nowrap;*/
+    }
+
+    .iQuestAnnouncement-template-content-narrowerContent-content-responsible {
+        flex: 5;
+        min-height: 5%;
+        color: #0095d6;
+        font-family: Segoe UI, sans-serif;
+        font-size: 4vh;
+        font-weight: 600;
+        letter-spacing: 2px;
+    }
+
+    .iQuestAnnouncement-template-content-narrowerContent-content-responsible-text {
+        white-space: nowrap;
+    }
+
+    .iQuestAnnouncement-template-content-narrowerContent-content-jobDescription {
+        flex: 4.5;
+        min-height: 4.5%;
+        color: #444444;
+        font-family: Segoe UI, sans-serif;
+        font-size: 3vh;
+        font-weight: 400;
+    }
+
+    .iQuestAnnouncement-template-content-narrowerContent-content-jobDescription-text {
+        white-space: nowrap;
+    }
+
+    .iQuestAnnouncement-template-content-narrowerContent-content-contactEmailAddress {
+        flex: 3.5;
+        color: #444444;
+        font-family: Segoe UI, sans-serif;
+        font-size: 3vh;
+        font-weight: 400;
+    }
+
+    .iQuestAnnouncement-template-content-narrowerContent-content-bottomSpace {
+        flex: 22;
+        /*min-height: 10%;*/
+    }
+
+    .iQuestAnnouncement-template-content-narrowerContent-rightSpace {
+        flex: 20;
+    }
+
+    .iQuestAnnouncement-template-right {
+        flex: 29.6;
+    }
+
+</style>
+
+<canvas id='backgroundCanvas' class='iQuestAnnouncement-canvas'></canvas>
+
+<div class="iQuestAnnouncement-template">
+    <div class="iQuestAnnouncement-template-left"></div>
+    <div class="iQuestAnnouncement-template-content">
+        <div class="iQuestAnnouncement-template-content-top"></div>
+        <div class="iQuestAnnouncement-template-content-mainTitle">
+            <span class='iQuestAnnouncement-template-content-mainTitle-text' slide-part member="mainTitle" label="Main Title">NEW SAFETY MEASURE</span>
+        </div>
+        <div class='iQuestAnnouncement-template-content-narrowerContent'>
+            <div class='iQuestAnnouncement-template-content-narrowerContent-content'>
+                <div class='iQuestAnnouncement-template-content-narrowerContent-content-bigSpace'></div>
+                <div class='iQuestAnnouncement-template-content-narrowerContent-content-label'>For:</div>
+                <div class='iQuestAnnouncement-template-content-narrowerContent-content-smallSpace'></div>
+                <div class='iQuestAnnouncement-template-content-narrowerContent-content-audience'>
+                    <span class='iQuestAnnouncement-template-content-narrowerContent-content-audience-text' slide-part member="mainTitle" label="Main Title">ALL ROMANIAN IQUEST COLLEAUGES</span>
+                </div>
+                <div class='iQuestAnnouncement-template-content-narrowerContent-content-space'></div>
+                <div class='iQuestAnnouncement-template-content-narrowerContent-content-announcement'>
+                    <span class='iQuestAnnouncement-template-content-narrowerContent-content-announcement-text'>
+                    Starting June 15, 2016, all darts game stations will be uninstalled from all iQuest locations as  safety measure.
+                    </span>
+                </div>
+                <div class='iQuestAnnouncement-template-content-narrowerContent-content-space'></div>
+                <div class='iQuestAnnouncement-template-content-narrowerContent-content-label'>Responsible:</div>
+                <div class='iQuestAnnouncement-template-content-narrowerContent-content-responsible'>
+                    <span class='iQuestAnnouncement-template-content-narrowerContent-content-responsible-text'>
+                    RADU CRISAN</span>
+                </div>
+                <div class='iQuestAnnouncement-template-content-narrowerContent-content-jobDescription'>
+                    <span class='iQuestAnnouncement-template-content-narrowerContent-content-jobDescription-text'>
+                    Occupational, Healthy and Health Specialist
+                    </span>
+                </div>
+                <div class='iQuestAnnouncement-template-content-narrowerContent-content-space'></div>
+                <div class="iQuestAnnouncement-template-content-narrowerContent-content-contactEmailAddress">Contact:<a id='contactEmailAddress' href="http://www.iquestgroup.com"><span slide-part member="contactEmailAddress" label="ContactEmailAddress">email.address@domain.com</span></a></div>
+                <div class='iQuestAnnouncement-template-content-narrowerContent-content-bottomSpace'></div>
+            </div>
+            <div class='iQuestAnnouncement-template-content-narrowerContent-rightSpace'></div>
+        </div>
+    </div>
+    <div class="iQuestAnnouncement-template-right"></div>
+</div>
+
+<script type="text/javascript" src="http://localhost:3000/lib/jquery/dist/jquery.js?version=0.38"></script>
+
+<script>
+    function heightAdjuster() {
+        var originalFontSize = {};
+
+        function adjust(elemClass) {
+            var fontstep = 2,
+                element = jQuery(elemClass),
+                parent = element.parent();
+
+            if (!originalFontSize[elemClass]) {
+                originalFontSize[elemClass] = element.css('font-size');
+            }
+            if (element.height() > parent.height()
+                || element.width() > parent.width()) {
+                var fontSize = element.css('font-size');
+                fontSize = fontSize.substring(0, fontSize.length - 2) - fontstep + 'px';
+                element.css('font-size', fontSize);
+                adjust(elemClass);
+            }
+        }
+
+        function adjustStartingFomOriginalSize(elemClass) {
+            if (originalFontSize[elemClass]) {
+                var element = jQuery(elemClass);
+                element.css('font-size', originalFontSize[elemClass]);
+            }
+
+            adjust(elemClass);
+        }
+
+        return {
+            adjust: adjust,
+            adjustStartingFomOriginalSize: adjustStartingFomOriginalSize
+        }
+    }
+
+    function adjustAllTexts() {
+        adjuster.adjustStartingFomOriginalSize('.iQuestAnnouncement-template-content-mainTitle-text');
+        adjuster.adjustStartingFomOriginalSize('.iQuestAnnouncement-template-content-narrowerContent-content-audience-text');
+        adjuster.adjustStartingFomOriginalSize('.iQuestAnnouncement-template-content-narrowerContent-content-announcement-text');
+        adjuster.adjustStartingFomOriginalSize('.iQuestAnnouncement-template-content-narrowerContent-content-responsible-text');
+        adjuster.adjustStartingFomOriginalSize('.iQuestAnnouncement-template-content-narrowerContent-content-jobDescription-text');
+    }
+
+    var adjuster = heightAdjuster(),
+        canvas = document.getElementById('backgroundCanvas'),
+        ctx = canvas.getContext('2d');
+
+    function onResize() {
+        var width =  window.innerWidth,
+            height = window.innerHeight;
+
+        ctx.canvas.width  = window.innerWidth;
+        ctx.canvas.height = window.innerHeight;
+
+        ctx.fillStyle = 'white';
+        ctx.drawImage(imgBackground, 0, 0, width, height);
+
+		var rightUpperXPercent = 0.973,
+			leftLowerXPercent = 0.64,
+			leanPercentageOnX = 0.10;
+
+        ctx.beginPath();
+        ctx.moveTo(0, 0);
+        ctx.lineTo(width * (leftLowerXPercent + leanPercentageOnX), 0);
+        ctx.lineTo(width * leftLowerXPercent, height);
+        ctx.lineTo(0, height);
+        ctx.closePath();
+        ctx.fill();
+
+        ctx.beginPath();
+        ctx.moveTo(width * rightUpperXPercent, 0);
+        ctx.lineTo(width, 0);
+        ctx.lineTo(width, height);
+        ctx.lineTo(width * (rightUpperXPercent - leanPercentageOnX), height);
+        ctx.closePath();
+        ctx.fill();
+
+        adjustAllTexts();
+    }
+
+    if (canvas.getContext)
+    {
+        var imgBackground = new Image();
+
+        imgBackground.onload = function() {
+            onResize();
+        };
+        imgBackground.src = 'http://www.partage-images.net/IMG/jpg/DSC_00422009-01-22.jpg';
+    }
+
+    window.addEventListener("resize", onResize);
+
+    jQuery(document).ready(function() {
+        setTimeout(function() {
+            adjustAllTexts();
+        }, 100);
+    });
+//--><!]]>
+</script>
+
+
+
+
