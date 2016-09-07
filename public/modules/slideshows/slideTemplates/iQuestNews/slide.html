@@ -1,7 +1,33 @@
-<div class="template-iQuestNews">
-    <div slide-part class="title" member="title" label="Title"></div>
-    <img slide-part class="personImage" member="personImage" label="Person image URL"></img>
-    <span class="author">Author:</span>
-    <div slide-part class="author" member="author" label="Author name"></div>
-    <div slide-part class="slide-content" member="content" label="Content" type="html"></div>
+<div class="news-template ng-scope">
+    <div class="news-header">
+        <img slide-part class="news-background" member="topImageLink" label="Top Image Link" />
+
+        <div class="news-title-line">
+            <div slide-part class="news-title" member="mainTitle" label="Title"></div>
+            <div slide-part class="news-subtitle" member="subTitle" label="Subtitle"></div>
+        </div>
+    </div>
+
+    <div class="news-body">
+        <div class="news-content">
+            <div slide-part class="news-text" type="html" member="text" label="Text"></div>
+            
+            <div class="news-source">
+                Source:
+
+                <a slide-part member="sourceLink"  label="Source Link"></a>
+            </div>
+        </div>
+
+        <div class="news-date">
+            <div class="news-date-label">Date:</div>
+            <div slide-part class="news-date-month" member="month" label="Month"></div>
+            <div slide-part class="news-date-year" member="year" label="Year"></div>
+        </div>
+
+        <div class="news-qr-logo">
+            <img class="news-qr-code" src="/modules/slideshows/slideTemplates/iQuestNews/qr.png" />
+            <img class="news-logo" src="/modules/slideshows/slideTemplates/iQuestNews/logo.png" />
+        </div>
+    </div>
 </div>
