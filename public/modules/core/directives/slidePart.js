@@ -35,6 +35,20 @@
                             element[0].src = content || 'modules/slideshows/css/img/default.jpg';
                             return;
                         }
+
+                        if (element[0].tagName === "A") {
+                            var url = content || "";
+
+                            if (url && !/^https?:\/\//.test(url)) {
+                                url = 'http://' + url;
+                            }
+
+                            element[0].href = url;
+                            element[0].textContent = url.replace(/^https?:\/\//, "");
+
+                            return;
+                        }
+                        
                         if (content) {
                             var text = content;
                             if (element.attr("encoded") === "true") {
