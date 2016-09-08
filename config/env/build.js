@@ -35,7 +35,8 @@
                         'public/lib/angular-ui-grid/ui-grid.min.js',
                         'public/lib/lodash/dist/lodash.min.js',
                         'public/lib/angular-ui-slider/src/slider.js',
-                        'public/lib/jquery-ui/ui/minified/jquery-ui.min.js'
+                        'public/lib/jquery-ui/ui/minified/jquery-ui.min.js',
+                        'public/lib/jquery-textfill/source/jquery.textfill.min.js'
                     ],
                     playerCss: [
                         'public/lib/bootstrap/dist/css/bootstrap.min.css',
@@ -65,7 +66,8 @@
                         'public/lib/angular-ui-grid/ui-grid.min.js',
                         'public/lib/lodash/dist/lodash.min.js',
                         'public/lib/angular-ui-slider/src/slider.js',
-                        'public/lib/jquery-ui/ui/minified/jquery-ui.min.js'
+                        'public/lib/jquery-ui/ui/minified/jquery-ui.min.js',
+                        'public/lib/jquery-textfill/source/jquery.textfill.min.js'
                     ],
                 },
                 adminCss: [

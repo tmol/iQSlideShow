@@ -44,7 +44,8 @@
                         'public/lib/angular-ui-grid/ui-grid.js',
                         'public/lib/lodash/lodash.js',
                         'public/lib/angular-ui-slider/src/slider.js',
-                        'public/lib/jquery-ui/ui/jquery-ui.js'
+                        'public/lib/jquery-ui/ui/jquery-ui.js',
+                        'public/lib/jquery-textfill/source/jquery.textfill.min.js'
                     ]
                 },
                 css: [
