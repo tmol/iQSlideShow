@@ -37,16 +37,21 @@
                         }
 
                         if (element[0].tagName === "A") {
-                            var url = content || "";
+                            if (content && content.length !== 0) {
+                                var href = content;
 
-                            if (url && !/^https?:\/\//.test(url)) {
-                                url = 'http://' + url;
+                                // Checking for @ is fine for our purposes; there is no point in validating the email address.
+                                if (content.indexOf('@') !== -1) {
+                                    href = "mailto:" + content;
+                                } else if (!/^https?:\/\//.test(content)) {
+                                    href = 'http://' + content;
+                                }
+
+                                element[0].href = href;
+                                element[0].textContent = content.replace(/^https?:\/\//, "");
+
+                                return;
                             }
-
-                            element[0].href = url;
-                            element[0].textContent = url.replace(/^https?:\/\//, "");
-
-                            return;
                         }
                         
                         if (content) {
