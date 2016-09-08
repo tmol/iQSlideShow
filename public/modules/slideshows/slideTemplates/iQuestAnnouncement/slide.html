@@ -1,0 +1,36 @@
+<div class="announcement-template ng-scope">
+    <div class="announcement-picture-container">
+        <img slide-part class="announcement-picture" member="picture" label="Picture URL" />
+        
+        <div class="announcement-picture-cut-left"></div>
+        <div class="announcement-picture-cut-right"></div>
+    </div>
+
+    <div slide-part class="announcement-title" member="title" label="Title"></div>
+
+    <div class="announcement-body">
+        <div class="announcement-audience">
+            <div class="announcement-audience-label">For:</div>
+            <div slide-part class="announcement-audience-text" member="audience" label="Audience"></div>
+        </div>
+
+        <div slide-part class="announcement-content" type="html" member="cotent" label="Content"></div>
+
+        <div class="announcement-responsible">
+            <div class="announcement-responsible-label">Responsible:</div>
+            <div slide-part class="announcement-responsible-name" member="responsibleName" label="Responsible Name"></div>
+            <div slide-part class="announcement-responsible-desc" member="responsibleDesc" label="Responsible Job Description"></div>
+            
+            <div class="announcement-responsible-contact">
+                Contact:
+
+                <a slide-part class="announcement-responsible-contact-email" member="responsibleEmail" label="Responsible Email"></a>
+            </div>
+        </div>
+    </div>
+
+    <div class="announcement-qr-logo">
+        <img class="announcement-qr-code" src="/modules/slideshows/slideTemplates/iQuestannouncement/qr.png" />
+        <img class="announcement-logo" src="/modules/slideshows/slideTemplates/iQuestannouncement/logo.png" />
+    </div>
+</div>
