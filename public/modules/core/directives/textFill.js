@@ -5,7 +5,7 @@
     // min-font-size attribute = minimum font size in pixels
     // max-font-size attribute = maximum font size in pixels
     // Directive must be used on the parent of an element with the .text-fill class
-    angular.module('core').directive('textFill', function ($timeout) {
+    angular.module('core').directive('textFill', ["$timeout", function ($timeout) {
             return {
                 link: function postLink(scope, element, attrs) {
                     if ($(element).find('.text-fill').length === 0) {
@@ -36,5 +36,5 @@
                     $timeout(applyTextFill, 100);
                 }
             };
-        });
+        }]);
 }());
