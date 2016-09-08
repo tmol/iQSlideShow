@@ -7,26 +7,34 @@
     </div>
 
     <div text-fill min-font-size="15" max-font-size="80" class="announcement-title" member="title">
-        <div slide-part class="text-fill" member="title" label="Title"></div>
+        <div slide-part class="text-fill" member="title" label="Title">Title</div>
     </div>
 
     <div class="announcement-body">
         <div class="announcement-audience">
             <div class="announcement-audience-label">For:</div>
-            <div slide-part class="announcement-audience-text" member="audience" label="Audience"></div>
+            <div slide-part class="announcement-audience-text" member="audience" label="Audience">Audience</div>
         </div>
 
-        <div slide-part class="announcement-content" type="html" member="cotent" label="Content"></div>
+        <div slide-part class="announcement-content" type="html" member="cotent" label="Content">
+            <p>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut dignissim mi nec tristique fermentum.
+                Nullam porta fermentum velit, nec ultricies lectus elementum a. Class aptent taciti sociosqu ad
+                litora torquent per conubia nostra, per inceptos himenaeos.
+            </p>
+        </div>
 
         <div class="announcement-responsible">
             <div class="announcement-responsible-label">Responsible:</div>
-            <div slide-part class="announcement-responsible-name" member="responsibleName" label="Responsible Name"></div>
-            <div slide-part class="announcement-responsible-desc" member="responsibleDesc" label="Responsible Job Description"></div>
+            <div slide-part class="announcement-responsible-name" member="responsibleName" label="Responsible Name">Responsible</div>
+            <div slide-part class="announcement-responsible-desc" member="responsibleDesc" label="Responsible Job Description">Job Description</div>
             
             <div class="announcement-responsible-contact">
                 Contact:
 
-                <a slide-part class="announcement-responsible-contact-email" member="responsibleEmail" label="Responsible Email"></a>
+                <a slide-part class="announcement-responsible-contact-email" member="responsibleEmail" label="Responsible Email" href="mailto:person@example.com">
+                    person@example.com
+                </a>
             </div>
         </div>
     </div>
