@@ -1,0 +1,51 @@
+<div class="campaign-template ng-scope">
+    <div class="campaign-picture-container">
+        <img slide-part class="campaign-picture" member="picture" label="Picture URL" />
+        
+        <div class="campaign-picture-cut-left"></div>
+        <div class="campaign-picture-cut-right"></div>
+    </div>
+
+    <div slide-part class="campaign-title" member="campaignTitle" label="Campaign Title">Campaign Title</div>
+
+    <div class="campaign-body">
+        <div class="campaign-content">
+            <div slide-part class="campaign-text" type="html" member="text" label="Text">
+                <p>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut dignissim mi nec tristique fermentum.
+                    Nullam porta fermentum velit, nec ultricies lectus elementum a. Class aptent taciti sociosqu ad
+                    litora torquent per conubia nostra, per inceptos himenaeos. Vestibulum nec maximus lorem.
+                    Fusce varius sit amet nulla id fermentum. Sed gravida ante at diam egestas, quis hendrerit lectus ornare.
+                </p>
+            </div>
+        </div>
+
+        <div class="campaign-details">
+            <div class="campaign-date">
+                <div class="campaign-date-label">When:</div>
+                <div slide-part class="campaign-date-day" member="day" label="Day">Day</div>
+                <div slide-part class="campaign-date-month" member="month" label="Month">Month</div>
+                <div slide-part class="campaign-date-year" member="year" label="Year">Year</div>
+            </div>
+
+            <div class="campaign-location">
+                <div class="campaign-location-label">Where:</div>
+                <div slide-part class="campaign-location-city" member="city" label="City">City</div>
+                <div slide-part class="campaign-location-details" member="location" label="Location">Location</div>
+            </div>
+        </div>
+            
+        <div class="campaign-contact">
+            Contact:
+
+            <a slide-part class="campaign-contact-email" member="contactEmail" label="Contact Email" href="mailto:person@example.com">
+                person@example.com
+            </a>
+        </div>
+    </div>
+
+    <div class="campaign-qr-logo">
+        <img class="campaign-qr-code" src="/modules/slideshows/slideTemplates/img/qr.png" />
+        <img class="campaign-logo" src="/modules/slideshows/slideTemplates/img/logo.png" />
+    </div>
+</div>

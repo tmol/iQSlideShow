@@ -1,0 +1,164 @@
+$slide-width: 1920px;
+$slide-height: 1080px;
+$picture-cut-offset: 5px;
+
+.campaign-template {
+    width: $slide-width;
+    height: $slide-height;
+    position: relative;
+    padding-top: 125px;
+    padding-left: 105px;
+    color: #444;
+    font-family: 'Segoe UI', sans-serif;
+
+    // The picture is "cut" by the two divs on the left and the right.
+    // Using the clip-path feature would have been a better solution,
+    // but browser support for it is very limited.
+    .campaign-picture-container {
+        .campaign-picture {
+            top: 0;
+            left: 0;
+            width: $slide-width;
+            height: $slide-height;
+            position: absolute;
+            z-index: -2;
+        }
+
+        .campaign-picture-cut-left {
+            top: -$picture-cut-offset;
+            right: 600px;
+            width: 10000px;
+            height: $slide-height + $picture-cut-offset * 2;
+            background: #fff;
+            position: absolute;
+            z-index: -1;
+            transform: skewX(-10deg);
+        }
+
+        .campaign-picture-cut-right {
+            top: -$picture-cut-offset;
+            left: 1770px;
+            width: 10000px;
+            height: $slide-height + $picture-cut-offset * 2;
+            background: #fff;
+            position: absolute;
+            z-index: -1;
+            transform: skewX(-10deg);
+        }
+    }
+
+    .campaign-title {
+        width: 1260px;
+        height: 90px;
+        font-size: 80px;
+        font-weight: 500;
+        line-height: 85px;
+        text-transform: uppercase;
+        color: #0095d6;
+    }
+
+    .campaign-body {
+        width: 1080px;
+        margin-top: 105px;
+        
+        a {
+            color: #0095d6 !important;
+            text-decoration: none;
+        }
+        
+        .campaign-content {
+            height: 325px;
+            font-size: 36px;
+            font-weight: 200;
+
+            p {
+                margin-bottom: 25px;
+
+                &:last-child {
+                    margin-bottom: 0;
+                }
+            }
+        }
+
+        .campaign-details {
+            margin-top: 50px;
+
+            &:after {
+                display: table;
+                content: "";
+                clear: both;
+            }
+
+            .campaign-date {
+                width: 340px;
+                float: left;
+
+                .campaign-date-label {
+                    font-size: 30px;
+                }
+
+                .campaign-date-day {
+                    font-size: 108px;
+                    font-weight: 500;
+                    color: #0095d6;
+                    line-height: 115px;
+                }
+
+                .campaign-date-month, .campaign-date-year {
+                    font-size: 30px;
+                    font-weight: 500;
+                }
+            }
+
+            .campaign-location {
+                width: 640px;
+                float: right;
+
+                .campaign-location-label {
+                    font-size: 30px;
+                }
+
+                .campaign-location-city {
+                    font-size: 108px;
+                    font-weight: 500;
+                    color: #0095d6;
+                    line-height: 115px;
+                    text-transform: uppercase;
+                }
+
+                .campaign-location-details {
+                    width: 425px;
+                    font-size: 30px;
+                    font-weight: 500;
+                }
+            }
+        }
+
+        .campaign-contact {
+            margin-top: 35px;
+            font-size: 30px;
+            font-weight: 200;
+            line-height: 35px;
+        }
+    }
+
+    .campaign-qr-logo {
+        right: 15px;
+        bottom: 15px;
+        width: 140px;
+        position: absolute;
+
+        .campaign-qr-code {
+            display: block;
+            width: 100px;
+            height: 100px;
+            margin: 20px;
+        }
+
+        .campaign-logo {
+            display: block;
+            width: 125px;
+            margin-left: 7px;
+        }
+    }
+}
