@@ -1,146 +1,149 @@
-.template-iQuestEvents {
+.container {
+  padding: 0; }
+
+.event-template {
   width: 1920px;
   height: 1080px;
-  text-align: left; }
-  .template-iQuestEvents * {
-    line-height: normal; }
-  .template-iQuestEvents .iQuestEvents-left-side {
-    background-image: url("[RELATIVE-PATH]/leftSide.png");
-    background-size: 94px 100%;
-    background-repeat: no-repeat;
-    width: 94px;
-    height: 100%;
+  position: relative;
+  padding-top: 85px;
+  padding-left: 105px;
+  color: #444;
+  font-family: 'Segoe UI', sans-serif; }
+  .event-template .event-picture-container .event-picture {
+    top: 0;
+    left: 0;
+    width: 1920px;
+    height: 1080px;
+    position: absolute;
+    z-index: -2; }
+  .event-template .event-picture-container .event-picture-cut-left {
+    top: -5px;
+    right: 600px;
+    width: 10000px;
+    height: 1090px;
+    background: #fff;
+    position: absolute;
+    z-index: -1;
+    transform: skewX(-10deg); }
+  .event-template .event-picture-container .event-picture-cut-right {
+    top: -5px;
+    left: 1770px;
+    width: 10000px;
+    height: 1090px;
+    background: #fff;
+    position: absolute;
+    z-index: -1;
+    transform: skewX(-10deg); }
+  .event-template .event-header {
+    width: 1260px;
+    font-weight: 500;
+    text-transform: uppercase; }
+    .event-template .event-header .event-name {
+      height: 90px;
+      font-size: 80px;
+      line-height: 85px; }
+    .event-template .event-header .event-theme {
+      height: 50px;
+      font-size: 45px;
+      line-height: 45px;
+      color: #0095d6; }
+  .event-template .event-highlights {
+    margin-top: 60px; }
+    .event-template .event-highlights:after {
+      display: table;
+      content: "";
+      clear: both; }
+    .event-template .event-highlights .event-highlight {
+      width: 390px;
+      float: left; }
+      .event-template .event-highlights .event-highlight:after {
+        display: table;
+        content: "";
+        clear: both; }
+      .event-template .event-highlights .event-highlight .event-highlight-no {
+        max-width: 120px;
+        font-size: 65px;
+        font-weight: 500;
+        line-height: 75px;
+        float: left; }
+      .event-template .event-highlights .event-highlight .event-highlight-desc {
+        width: 270px;
+        margin-top: 5px;
+        margin-left: 10px;
+        font-size: 30px;
+        line-height: 35px;
+        float: left; }
+  .event-template .event-body {
+    width: 1080px;
+    margin-top: 80px; }
+    .event-template .event-body a {
+      color: #0095d6;
+      text-decoration: none; }
+    .event-template .event-body .event-content {
+      height: 145px;
+      font-size: 27px;
+      font-weight: 200;
+      line-height: 35px; }
+    .event-template .event-body .event-details {
+      margin-top: 15px; }
+      .event-template .event-body .event-details:after {
+        display: table;
+        content: "";
+        clear: both; }
+      .event-template .event-body .event-details .event-date {
+        width: 340px;
+        float: left; }
+        .event-template .event-body .event-details .event-date .event-date-label {
+          font-size: 30px; }
+        .event-template .event-body .event-details .event-date .event-date-day {
+          font-size: 108px;
+          font-weight: 500;
+          color: #0095d6;
+          line-height: 115px; }
+        .event-template .event-body .event-details .event-date .event-date-month, .event-template .event-body .event-details .event-date .event-date-year {
+          font-size: 30px;
+          font-weight: 500; }
+      .event-template .event-body .event-details .event-location {
+        width: 640px;
+        float: right; }
+        .event-template .event-body .event-details .event-location .event-location-label {
+          font-size: 30px; }
+        .event-template .event-body .event-details .event-location .event-location-city {
+          font-size: 108px;
+          font-weight: 500;
+          color: #0095d6;
+          line-height: 115px;
+          text-transform: uppercase; }
+        .event-template .event-body .event-details .event-location .event-location-details {
+          width: 425px;
+          font-size: 30px;
+          font-weight: 500; }
+    .event-template .event-body .event-audience {
+      margin-top: 15px; }
+      .event-template .event-body .event-audience .event-audience-label {
+        font-size: 30px; }
+      .event-template .event-body .event-audience .event-audience-text {
+        color: #0095d6;
+        font-size: 45px;
+        font-weight: 500;
+        line-height: 55px;
+        text-transform: uppercase; }
+      .event-template .event-body .event-audience .event-audience-contact {
+        margin-top: 10px;
+        font-size: 30px;
+        font-weight: 200;
+        line-height: 35px; }
+  .event-template .event-qr-logo {
+    right: 15px;
+    bottom: 15px;
+    width: 140px;
     position: absolute; }
-  .template-iQuestEvents .iQuestEvents-bottom-side {
-    background-image: url("[RELATIVE-PATH]/bottomSide.png");
-    background-size: 100% 100%;
-    background-repeat: no-repeat;
-    width: 70%;
-    height: 386px;
-    position: absolute;
-    bottom: 0px;
-    right: 0px; }
-  .template-iQuestEvents .iQuestEvents-logo {
-    position: absolute;
-    left: 1488px;
-    top: 0px;
-    height: 99px;
-    width: 359px;
-    background-color: #B0D6CE;
-    font-size: 86px;
-    line-height: 99px;
-    padding-left: 30px;
-    vertical-align: middle;
-    padding-top: 9px;
-    color: white; }
-  .template-iQuestEvents .iQuestEvents-title {
-    position: absolute;
-    left: 160px;
-    top: 99px;
-    height: 120px;
-    width: 1690px;
-    background-color: #C3E1C2;
-    font-size: 86px;
-    line-height: 99px;
-    padding-left: 30px;
-    vertical-align: middle;
-    padding-top: 9px;
-    color: white; }
-  .template-iQuestEvents .iQuestEvents-speaker {
-    position: absolute;
-    left: 160px;
-    top: 219px;
-    height: 181px;
-    width: 1690px;
-    background-color: #DFEEB8;
-    font-size: 86px;
-    line-height: 99px;
-    padding-left: 0px;
-    vertical-align: middle;
-    padding-top: 9px;
-    color: white; }
-  .template-iQuestEvents .iQuestEvents-speaker-picture {
-    display: inline-block;
-    position: absolute; }
-  .template-iQuestEvents .iQuestEvents-speaker-name {
-    height: 100%;
-    display: inline-block;
-    position: absolute;
-    margin-left: 202px;
-    line-height: 150px;
-    vertical-align: middle; }
-  .template-iQuestEvents .iQuestEvents-date {
-    position: absolute;
-    left: 160px;
-    top: 432px;
-    height: 179px;
-    width: 462px;
-    background-color: #FAC4B0;
-    font-size: 86px;
-    line-height: 99px;
-    padding-left: 30px;
-    vertical-align: middle;
-    padding-top: 9px;
-    color: white; }
-    .template-iQuestEvents .iQuestEvents-date .iQuestEvents-date-day {
-      position: absolute; }
-    .template-iQuestEvents .iQuestEvents-date .iQuestEvents-date-month-year {
-      position: absolute;
-      font-size: 42px;
-      bottom: 15px;
-      height: 42px;
-      line-height: 42px; }
-  .template-iQuestEvents .iQuestEvents-hour-location {
-    position: absolute;
-    left: 160px;
-    top: 612px;
-    height: 179px;
-    width: 462px;
-    background-color: #FDDFAD;
-    font-size: 86px;
-    line-height: 99px;
-    padding-left: 30px;
-    vertical-align: middle;
-    padding-top: 9px;
-    color: white; }
-    .template-iQuestEvents .iQuestEvents-hour-location .iQuestEvents-hour {
-      position: absolute; }
-    .template-iQuestEvents .iQuestEvents-hour-location .iQuestEvents-location {
-      position: absolute;
-      font-size: 42px;
-      bottom: 15px;
-      height: 42px;
-      line-height: 42px; }
-  .template-iQuestEvents .iQuestEvents-description {
-    position: absolute;
-    left: 705px;
-    top: 432px;
-    height: 358px;
-    width: 777px;
-    background-color: #DFEEB8;
-    font-size: 86px;
-    line-height: 99px;
-    padding-left: 30px;
-    vertical-align: middle;
-    padding-top: 9px;
-    color: white; }
-    .template-iQuestEvents .iQuestEvents-description .iQuestEvents-description-text {
-      position: absolute; }
-  .template-iQuestEvents .iQuestEvents-contact {
-    position: absolute;
-    left: 160px;
-    bottom: 0px;
-    height: 146px;
-    width: 1145px;
-    background-color: #FAC4B0;
-    font-size: 86px;
-    line-height: 99px;
-    padding-left: 30px;
-    vertical-align: middle;
-    padding-top: 9px;
-    color: white; }
-    .template-iQuestEvents .iQuestEvents-contact .iQuestEvents-contact-text {
-      position: absolute; }
-  .template-iQuestEvents .iQuestEvents-picture {
-    position: absolute;
-    right: 0px; }
+    .event-template .event-qr-logo .event-qr-code {
+      display: block;
+      width: 100px;
+      height: 100px;
+      margin: 20px; }
+    .event-template .event-qr-logo .event-logo {
+      display: block;
+      width: 125px;
+      margin-left: 7px; }
