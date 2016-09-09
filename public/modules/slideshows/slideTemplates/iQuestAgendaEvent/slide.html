@@ -1,0 +1,77 @@
+<div class="event-template ng-scope">
+    <div class="event-picture-container">
+        <img slide-part class="event-picture" member="picture" label="Picture URL" />
+        
+        <div class="event-picture-cut-left"></div>
+        <div class="event-picture-cut-right"></div>
+    </div>
+
+    <div class="event-header">
+        <div slide-part class="event-name" member="eventName" label="Event Name">Event Name</div>
+        <div slide-part class="event-theme" member="eventTheme" label="Event Theme">Event Theme</div>
+    </div>
+
+    <div class="event-agenda">
+        <div class="event-agenda-label">Agenda:</div>
+
+        <div class="event-agenda-item">
+            <div slide-part class="event-agenda-item-hours" member="firstAgendaName" label="First Agenda Hours">First Agenda Hours</div>
+            <div slide-part class="event-agenda-item-desc" member="firstAgendaTitle" label="First Agenda Descriptin">First Agenda Descriptin</div>
+        </div>
+        
+        <div class="event-agenda-item">
+            <div slide-part class="event-agenda-item-hours" member="secondAgendaName" label="Second Agenda Hours">Second Agenda Hours</div>
+            <div slide-part class="event-agenda-item-desc" member="secondAgendaTitle" label="Second Agenda Descriptin">Second Agenda Descriptin</div>
+        </div>
+        
+        <div class="event-agenda-item">
+            <div slide-part class="event-agenda-item-hours" member="thirdAgendaName" label="Third Agenda Hours">Third Agenda Hours</div>
+            <div slide-part class="event-agenda-item-desc" member="thirdAgendaTitle" label="Third Agenda Descriptin">Third Agenda Descriptin</div>
+        </div>
+    </div>
+
+    <div class="event-body">
+        <div class="event-content">
+            <div slide-part class="event-text" type="html" member="text" label="Text">
+                <p>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut dignissim mi nec tristique fermentum.
+                    Nullam porta fermentum velit, nec ultricies lectus elementum a. Class aptent taciti sociosqu ad
+                    litora torquent per conubia nostra, per inceptos himenaeos. Vestibulum nec maximus lorem.
+                    Fusce varius sit amet nulla id fermentum. Sed gravida ante at diam egestas, quis hendrerit lectus ornare.
+                </p>
+            </div>
+        </div>
+
+        <div class="event-details">
+            <div class="event-date">
+                <div class="event-date-label">When:</div>
+                <div slide-part class="event-date-day" member="day" label="Day">Day</div>
+                <div slide-part class="event-date-month" member="month" label="Month">Month</div>
+                <div slide-part class="event-date-year" member="year" label="Year">Year</div>
+            </div>
+
+            <div class="event-location">
+                <div class="event-location-label">Where:</div>
+                <div slide-part class="event-location-city" member="city" label="City">City</div>
+                <div slide-part class="event-location-details" member="location" label="Location">Location</div>
+            </div>
+        </div>
+
+        <div class="event-audience">
+            <div class="event-audience-label">For:</div>
+            <div slide-part class="event-audience-text" member="audience" label="Audience">Audience</div>
+            
+            <div slide-part class="event-audience-contact" type="html" member="contact" label="Contact Info">
+                <p>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                    <a href="mailto:person@example.com">person@example.com</a>
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <div class="event-qr-logo">
+        <img class="event-qr-code" src="/modules/slideshows/slideTemplates/img/qr.png" />
+        <img class="event-logo" src="/modules/slideshows/slideTemplates/img/logo.png" />
+    </div>
+</div>
