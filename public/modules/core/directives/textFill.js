@@ -33,7 +33,7 @@
                     }
                 });
 
-                $timeout(applyTextFill, 100);
+                $timeout(applyTextFill, 100, false);
             }
         };
     }]);
