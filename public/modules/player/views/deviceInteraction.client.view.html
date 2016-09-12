@@ -8,6 +8,7 @@
             <div class='iqss-device-interaction-content-player-actions' ng-show="currentPreviewSlideIndex">
                 <div ng-if='!playSlideShow' class='iqss-device-interaction-content-player-container-play' ng-click='togglePlay()'></div>
                 <div ng-if='playSlideShow' class='iqss-device-interaction-content-player-container-pause' ng-click='togglePlay()'></div>
+                <a ng-if='detailsUrl' class='iqss-device-interaction-content-player-container-details' href='{{ detailsUrl }}' target='_blank'>Details</a>
                 <div class='iqss-device-interaction-content-player-actions-center'>
                     <div ng-click='moveSlideLeft()' class='iqss-device-interaction-content-player-actions-center-previous' ng-class="{'iqss-control-disabled':currentPreviewSlideIndex==1}"></div>
                     <div class='iqss-device-interaction-content-player-actions-center-slideInfo'>Slide {{currentPreviewSlideIndex}} of {{numberOfSlides}}</div>

@@ -31,7 +31,8 @@
                         var slideInfo = {
                             slideShowName : slide.slideShowName,
                             author : slide.author,
-                            publishedOnDate : new Date(slide.publishedOnDate)
+                            publishedOnDate : new Date(slide.publishedOnDate),
+                            detailsUrl: slide.detailsUrl
                         }
                         scope.$emit("currentSlideChanged", scope.currentIndex, slide.slideShowId, slideInfo);
                     };

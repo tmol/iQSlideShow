@@ -90,6 +90,7 @@
                 $scope.title = slideInfo.slideShowName;
                 $scope.publishedOnDate = slideInfo.publishedOnDate;
                 $scope.author = slideInfo.author;
+                $scope.detailsUrl = slideInfo.detailsUrl;
                 $scope.currentPreviewSlideIndex = slideIndex + 1;
                 messageBroker.sendGotoSlideNumber(slideIndex);
             });
