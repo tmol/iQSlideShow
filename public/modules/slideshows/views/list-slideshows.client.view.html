@@ -23,10 +23,8 @@
                         </div>
                     </div>
 
-                    <a href="#!/slideshows/{{slideshow._id}}">
-                       <div class='iqss-slideshowlist-slideshow-preview' data-ng-controller="PlayerController" ng-init="initPreviewFirstSlide(slideshow._id)" ng-click=''>
-                            <div ng-player style="background-color: #ffffff;height:100px;max-height:100%;width:100%;display:inline-block" slides="slides" ng-player-on-hold='true'></div>
-                        </div>
+                    <a class='iqss-slideshowlist-slideshow-preview' href="#!/slideshows/{{slideshow._id}}" data-ng-controller="PlayerController" ng-init="initPreviewFirstSlide(slideshow._id)">
+                        <div ng-player style="background-color: #ffffff;height:100px;max-height:100%;width:100%;display:inline-block" slides="slides" ng-player-on-hold='true'></div>
                     </a>
 
                     <div class='iqss-slideshowlist-slideshow-linksContainer'>
