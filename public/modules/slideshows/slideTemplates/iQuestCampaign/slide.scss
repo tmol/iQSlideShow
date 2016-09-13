@@ -149,17 +149,20 @@ $picture-cut-offset: 5px;
         width: 140px;
         position: absolute;
 
-        .campaign-qr-code {
+        .campaign-qr {
             display: block;
             width: 100px;
             height: 100px;
-            margin: 20px;
+            margin: 20px auto;
         }
 
         .campaign-logo {
             display: block;
             width: 125px;
-            margin-left: 7px;
+            height: 31px;
+            margin: 0 auto;
+            background-image: url('[RELATIVE-PATH]/logo.png');
+            background-size: cover;
         }
     }
 }
