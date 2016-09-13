@@ -11,9 +11,12 @@
             template += "<div ng-class=\"{'iqss-hidden':!slideLoaded}\" ng-include='templateUrl' onload='templateLoaded()' class='ng-slide-view' style='transform:scale({{zoomPercent/100}})'></div>";
             template += "<div ng-show='!slideLoaded' style='top: 50%; position: absolute; left: 50%;  transform: translate(-50%,-50%);z-index:100' >LOADING...</div>";
             template += "</div>";
-            template += '</div></div>';
+            template += '</div>';
+            template += '<qr-device-interaction ng-if="!slideHasQrCode" qr-config="qrConfig" style="position: fixed;right: 10px;bottom: 10px;"></qr-device-interaction>';
+            template += '</div>';
             return {
                 scope: {
+                    qrConfig: '=',
                     slideWidth: "=",
                     slideHeight: "=",
                     referenceSlide: "=",
@@ -28,6 +31,7 @@
                     scope.indicatorVisible = false;
                     scope.indicatorSize = 0;
                     scope.slideReady = false;
+                    scope.slideHasQrCode = false;
                     var appliedScale = 1;
                     var getSizeMeasurementContainer = function () {
                         var container = $("#measurementContainer");
@@ -72,9 +76,16 @@
                         scope.slideReady = true;
                     };
 
+                    var detectSlideQrCode = function () {
+                        scope.slideHasQrCode = element.find('.ng-slide-view qr-device-interaction').length === 1;
+                    };
+
                     var lastTimeout;
                     var update = function () {
                         window.clearTimeout(lastTimeout);
+
+                        detectSlideQrCode();
+
                         if (scope.slideConfiguration && scope.slideConfiguration.onUpdate) {
                             scope.slideConfiguration.onUpdate(function () {
                                 lastTimeout = window.setTimeout(scaleElementToResolution, 10);
@@ -154,6 +165,15 @@
 
                             });
                         }, 10);
+                    });
+
+                    scope.$on("currentSlideChanged", function (event, currentSlideIndex) {
+                        if (scope.referenceSlide.index !== currentSlideIndex) {
+                            // This will hide the player QR code.
+                            scope.slideHasQrCode = true;
+                        } else {
+                            detectSlideQrCode();
+                        }
                     });
 
                     scope.$on("scriptLoaded", function (event, scriptUrl) {

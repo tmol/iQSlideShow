@@ -6,16 +6,22 @@
         function (Timers, CssInjector, JsInjector) {
             var i = 0;
 
+            var template = '';
+            template += '<div ng-repeat="slide in slides() track by $index" ng-show="$index==currentIndex"';
+            template += '     class="{{slide.animationType}} slideShow" style="width:100%;height:100%;position:relative;display:block;overflow:hidden"';
+            template += '     ng-slide-view is-playing="true" reference-slide="slide" qr-config="qrConfig">';
+            template += '</div>';
+
             return {
                 scope: {
                     slides: '&',
+                    qrConfig: '=',
                     ngPlayerOnHold: '&',
                     ngPlayerIgnoreMessages: "&",
                     slideShowId: '='
                 },
                 transclude: true,
-                template: '<div ng-repeat="slide in slides() track by $index" ng-show="$index==currentIndex" class="{{slide.animationType}} slideShow" style="width:100%;height:100%;position:relative;display:block;overflow:hidden" ng-slide-view is-playing="true" reference-slide="slide">'
-                    + '</div>',
+                template: template,
                 link: function (scope, element, attrs) {
                     var slideNumber = -1;
                     var timers = new Timers();
@@ -35,6 +41,7 @@
                             detailsUrl: slide.detailsUrl
                         }
                         scope.$emit("currentSlideChanged", scope.currentIndex, slide.slideShowId, slideInfo);
+                        scope.$broadcast("currentSlideChanged", scope.currentIndex, slide.slideShowId, slideInfo);
                     };
 
                     var loadSlide = function (slideIndex) {
