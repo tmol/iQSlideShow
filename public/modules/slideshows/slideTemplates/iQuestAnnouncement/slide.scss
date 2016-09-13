@@ -1,10 +1,11 @@
-$slide-width: 1920px;
-$slide-height: 1080px;
+// The offset is required to ensure that the picture does not appear
+// above and below the slide due to the skew of the divs that cover
+// it to simulate the 10 degree crop.
 $picture-cut-offset: 5px;
 
 .announcement-template {
-    width: $slide-width;
-    height: $slide-height;
+    width: 1920px;
+    height: 1080px;
     position: relative;
     padding-top: 135px;
     padding-left: 105px;
@@ -18,8 +19,8 @@ $picture-cut-offset: 5px;
         .announcement-picture {
             top: 0;
             left: 0;
-            width: $slide-width;
-            height: $slide-height;
+            width: 1920px;
+            height: 1080px;
             position: absolute;
             z-index: -2;
         }
@@ -28,7 +29,7 @@ $picture-cut-offset: 5px;
             top: -$picture-cut-offset;
             right: 600px;
             width: 10000px;
-            height: $slide-height + $picture-cut-offset * 2;
+            height: 1080px + $picture-cut-offset * 2;
             background: #fff;
             position: absolute;
             z-index: -1;
@@ -39,7 +40,7 @@ $picture-cut-offset: 5px;
             top: -$picture-cut-offset;
             left: 1770px;
             width: 10000px;
-            height: $slide-height + $picture-cut-offset * 2;
+            height: 1080px + $picture-cut-offset * 2;
             background: #fff;
             position: absolute;
             z-index: -1;
