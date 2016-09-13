@@ -29,7 +29,7 @@
 
                 scope.$on('updateSlideContentPart', function (event, content, member, slidePartId) {
                     if (member === attrs.member) {
-                        applyTextFill();
+                        $timeout(applyTextFill, 100, false);
                     }
                 });
 
