@@ -105,17 +105,20 @@
         width: 140px;
         position: absolute;
 
-        .news-qr-code {
+        .news-qr {
             display: block;
             width: 100px;
             height: 100px;
-            margin: 20px;
+            margin: 20px auto;
         }
 
         .news-logo {
             display: block;
             width: 125px;
-            margin-left: 7px;
+            height: 31px;
+            margin: 0 auto;
+            background-image: url('[RELATIVE-PATH]/logo.png');
+            background-size: cover;
         }
     }
 }
