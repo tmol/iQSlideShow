@@ -6,9 +6,9 @@
             </div>
             <div class='iqss-slideshows-header-actions iqss-slideshows-links'>
                 <div class='iqss-slideshowedit-saveLink' ng-click="upsert()">Save</div>
-                <div ng-click="preview()" ng-class="{'iqss-slideshowedit-previewLink':true}">Preview</div>
+                <div ng-if='!isNewSlideShow()' ng-click="preview()" ng-class="{'iqss-slideshowedit-previewLink':true}">Preview</div>
                 <div ng-click="publish()" class='iqss-slideshows-slideshow-publishLink'>Publish</div>
-                <div ng-click='remove();' class='iqss-slideshows-slideshow-deleteLink'>Remove</div>
+                <div ng-if='!isNewSlideShow()' ng-click='remove();' class='iqss-slideshows-slideshow-deleteLink'>Remove</div>
             </div>
         </div>
     </div>
