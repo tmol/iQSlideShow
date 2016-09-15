@@ -421,6 +421,10 @@
     padding: $slideshow-edit-slide-data-tab-padding;
     display: flex;
     flex-flow: column;
+
+    input {
+        width: 100%;
+    }
 }
 
 .iqss-slideshowedit-data .ui-select-container {
