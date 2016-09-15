@@ -44,7 +44,7 @@
             };
             $scope.numberOfSlidehsows = 0;
             $scope.nameFilter = "";
-            var applyFilter = function () {
+            var applyFilterInternal = function () {
                 $scope.$emit("ShowLoaderIndicator");
                 DeviceInteractionService.getSlideShowsByFilter({
                     pageSize: 1000,
@@ -55,7 +55,7 @@
                     $scope.numberOfSlidehsows = result.data.length;
                 });
             };
-            applyFilter();
+            applyFilterInternal();
 
             $scope.selectSlideShow = function (slideShow) {
                 $scope.playSlideShow = false;
@@ -68,6 +68,19 @@
                 });
                 messageBroker.sendSwitchSlide(slideShow._id, slideShow.name);
             }
+
+            $scope.applyFilter = function () {
+                if ($scope.slideShowFilter) {
+                    applyFilterInternal();
+                }
+
+                $scope.displayFilter = false;
+            };
+
+            $scope.enableFilter = function () {
+                $scope.displayFilter = true;
+            };
+
             $scope.$on("slideShowClicked", function(event, position) {
                 messageBroker.sendSlideShowClicked(position);
             })
@@ -97,10 +110,6 @@
                 $scope.detailsUrl = slideInfo.detailsUrl;
                 $scope.currentPreviewSlideIndex = slideIndex + 1;
                 messageBroker.sendGotoSlideNumber(slideIndex);
-            });
-            $scope.$on("FilterSpecified", function (event, filter) {
-                $scope.nameFilter = filter;
-                applyFilter();
             });
             $scope.$on("$destroy", function() {
                 $scope.playerContext = null;

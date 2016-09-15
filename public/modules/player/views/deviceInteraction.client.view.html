@@ -28,11 +28,11 @@
                 <section ng-show="slideShowFilter">{{slideShowFilter}}</section>
                 <section ng-show="!slideShowFilter">All slideshows ({{numberOfSlidehsows}})</section>
 
-                <form ng-show="displayFilter" ng-submit="applyFilterForDeviceInteraction()">
-                    <input class="iqss-device-interaction-search" type="text" ng-model="slideShowFilter"/>
+                <form ng-show="displayFilter" ng-submit="applyFilter()">
+                    <input class="iqss-device-interaction-search" type="text" ng-blur="applyFilter()" ng-model="slideShowFilter" focus-on="displayFilter"/>
                     <input type="submit" ng-show="isInteractionMode()" class="iqss-device-interaction-search-indicator" value=""/>
                 </form>
-                <div ng-show="!displayFilter" class="iqss-device-interaction-search-indicator" ng-click="displayFilter=true"></div>
+                <div ng-show="!displayFilter" class="iqss-device-interaction-search-indicator" ng-click="enableFilter()"></div>
             </div>
             <section class="iqss-device-interaction-content-slide" data-ng-repeat="slideshow in slideshows" ng-click="selectSlideShow(slideshow)"
                      ng-class="{'iqss-device-interaction-content-slide-selected':slideshow._id == previewSlideshowId}">
