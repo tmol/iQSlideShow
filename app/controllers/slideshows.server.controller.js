@@ -89,8 +89,8 @@
 
         Device.find({
             $and: [
-                { 'slideAgregation.playList.slideShow': slideshow._id },
-                { 'slideAgregation.playList.slideShow.1': { $exists: false } }
+                { 'slideAgregation.playList': { $size: 1 } },
+                { 'slideAgregation.playList.slideShow': slideshow._id }
             ]},
             function (err, devices) {
                 if (err) {
