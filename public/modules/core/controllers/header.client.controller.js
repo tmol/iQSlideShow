@@ -16,8 +16,14 @@ angular.module('core').controller('HeaderController', ['$scope', '$window', 'Aut
             }
         });
 
-        $scope.isStateSelected = function (link) {
-            return $state.current.url === "/" + link;
+        $scope.isItemSelected = function (item) {
+			var currentUrl = $state.current.url.substring(1); // Remove leading slash.
+
+			if (item.link === currentUrl) {
+				return true;
+			} else {
+				return _.some(item.items, { link: currentUrl });
+			}
         };
 
 		// Collapsing the menu after navigation
