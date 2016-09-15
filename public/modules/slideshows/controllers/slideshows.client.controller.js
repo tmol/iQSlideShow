@@ -4,8 +4,8 @@
     'use strict';
 
     // Slideshows controller
-    angular.module('slideshows').controller('SlideshowsController', ['$scope', '$stateParams', 'Authentication', 'Slideshows', '$timeout', 'ServerMessageBroker', 'Tags', '$uibModal', 'Path', '$cacheFactory', '$state', 'ActionResultDialogService', 'Admin', 'DragAndDropItemsArray', 'animationTypes', '$location',
-        function ($scope, $stateParams, Authentication, Slideshows, $timeout, ServerMessageBroker, Tags, $uibModal, Path, $cacheFactory, $state, ActionResultDialogService, Admin, DragAndDropItemsArray, animationTypes, $location) {
+    angular.module('slideshows').controller('SlideshowsController', ['$scope', '$stateParams', 'Authentication', 'Slideshows', '$timeout', 'ServerMessageBroker', 'Tags', '$uibModal', 'Path', '$cacheFactory', '$state', 'ActionResultDialogService', 'Admin', 'DragAndDropItemsArray', 'animationTypes',
+        function ($scope, $stateParams, Authentication, Slideshows, $timeout, ServerMessageBroker, Tags, $uibModal, Path, $cacheFactory, $state, ActionResultDialogService, Admin, DragAndDropItemsArray, animationTypes) {
             var serverMessageBroker = new ServerMessageBroker();
 
             var defResolution = {height: 1080, width: 1920},
@@ -146,8 +146,7 @@
                 } else {
                     $scope.slideshow.$save(function (slideshow) {
                         handleUpsertSuccess('Create succeeded.', function () {
-                            $location.path("/slideshows/" + slideshow._id + "/edit");
-                            $location.replace();
+                            $state.go($state.current, { slideshowId: slideshow._id }, {reload: false, inherit: false});
                         });
                     }, handleErrorOnUpsert);
                 }
@@ -194,7 +193,14 @@
                             });
                         });
                 };
-                if (slideShowChanged()) {
+                if ($scope.isNewSlideShow()) {
+                    ActionResultDialogService.showOkCancelDialog('The slideshow will be automatically saved before publishing. Do you agree?', $scope, function () {
+                        $scope.upsert(function () {
+                            $scope.waitingForServerSideProcessingAndThenForResultDialog = true;
+                            publish();
+                        });
+                    });
+                } else if (slideShowChanged()) {
                     ActionResultDialogService.showOkCancelDialog('The slideshow changed and will be automatically saved before publishing. Do you agree?', $scope, function () {
                         $scope.upsert(function () {
                             $scope.waitingForServerSideProcessingAndThenForResultDialog = true;
