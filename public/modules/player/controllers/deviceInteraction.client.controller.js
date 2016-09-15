@@ -82,6 +82,10 @@
                 }
                 $scope.playerContext.playerScope.$broadcast("goToSlideNumber", slideNumber);
                 $scope.numberOfSlides = slides.length;
+                var slideShow = _.find($scope.slideshows, { _id: slideShowId });
+                if (slideShow) {
+                    slideShow.slides = slides;
+                }
             });
             $scope.$on("currentSlideChanged", function(event, slideIndex, slideShowId, slideInfo) {
                 if (event.targetScope.$parent != $scope.playerContext.playerScope) {
