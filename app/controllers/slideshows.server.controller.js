@@ -87,22 +87,52 @@
     exports.delete = function (req, res) {
         var slideshow = req.slideshow;
 
-        Device.update({'slideAgregation.playList.slideShow': slideshow._id},
-                      { $pull: {'slideAgregation.playList': {slideShow: slideshow._id} }}, {multi: true}, function (err, result) {
+        Device.find({
+            $and: [
+                { 'slideAgregation.playList.slideShow': slideshow._id },
+                { 'slideAgregation.playList.slideShow.1': { $exists: false } }
+            ]},
+            function (err, devices) {
                 if (err) {
                     return res.status(400).send({
                         message: errorHandler.getErrorMessage(err)
                     });
                 }
-                slideshow.remove(function (err) {
-                    if (err) {
-                        return res.status(400).send({
-                            message: errorHandler.getErrorMessage(err)
+
+                if (devices.length !== 0) {
+                    var errorMessage = 'The slideshow cannot be deleted because it is the only slideshow for the ';
+                    
+                    if (devices.length === 1) {
+                        errorMessage += 'device ' + devices[0].name + '.';
+                    } else {
+                        errorMessage += 'devices: ' + lodash.map(devices, 'name').join(', ') + '.';
+                    }
+
+                    return res.status(400).send({ message: errorMessage });
+                }
+
+                Device.update(
+                    { 'slideAgregation.playList.slideShow': slideshow._id },
+                    { $pull: { 'slideAgregation.playList': { slideShow: slideshow._id } } },
+                    { multi: true },
+                    function (err, result) {
+                        if (err) {
+                            return res.status(400).send({
+                                message: errorHandler.getErrorMessage(err)
+                            });
+                        }
+                        slideshow.remove(function (err) {
+                            if (err) {
+                                return res.status(400).send({
+                                    message: errorHandler.getErrorMessage(err)
+                                });
+                            }
+                            res.jsonp(slideshow);
                         });
                     }
-                    res.jsonp(slideshow);
-                });
-            });
+                );
+            }
+        );
     };
 
     function processShowOnlyMineFilter(req, select) {
