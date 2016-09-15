@@ -36,7 +36,7 @@
     }
 }
 
-.iqss-navbar-nav-menu-container li a {
+.iqss-navbar-nav-menu-container .iqss-navbar-nav > li > a {
     @include verticalAlignTextMiddle;
     padding-left: 0;
     padding-right: 40px;
