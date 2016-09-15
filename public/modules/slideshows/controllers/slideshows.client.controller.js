@@ -4,8 +4,8 @@
     'use strict';
 
     // Slideshows controller
-    angular.module('slideshows').controller('SlideshowsController', ['$scope', '$stateParams', 'Authentication', 'Slideshows', '$timeout', 'ServerMessageBroker', 'Tags', '$uibModal', 'Path', '$cacheFactory', '$state', 'ActionResultDialogService', 'Admin', 'DragAndDropItemsArray', 'animationTypes',
-        function ($scope, $stateParams, Authentication, Slideshows, $timeout, ServerMessageBroker, Tags, $uibModal, Path, $cacheFactory, $state, ActionResultDialogService, Admin, DragAndDropItemsArray, animationTypes) {
+    angular.module('slideshows').controller('SlideshowsController', ['$scope', '$stateParams', 'Authentication', 'Slideshows', '$timeout', 'ServerMessageBroker', 'Tags', '$uibModal', 'Path', '$cacheFactory', '$state', 'ActionResultDialogService', 'Admin', 'DragAndDropItemsArray', 'animationTypes', '$location',
+        function ($scope, $stateParams, Authentication, Slideshows, $timeout, ServerMessageBroker, Tags, $uibModal, Path, $cacheFactory, $state, ActionResultDialogService, Admin, DragAndDropItemsArray, animationTypes, $location) {
             var serverMessageBroker = new ServerMessageBroker();
 
             var defResolution = {height: 1080, width: 1920},
@@ -110,7 +110,7 @@
                 }
                 var slideshow = $scope.slideshow,
                     currentSlideIndex,
-                    handleUpsertSuccess = function (msg) {
+                    handleUpsertSuccess = function (msg, okCallback) {
                         $scope.error = '';
                         initSlideShowJson();
                         $scope.waitingForServerSideProcessingAndThenForResultDialog = false;
@@ -118,6 +118,9 @@
                             // I don't know why the binding is lost, but this solves it
                             if (currentSlideIndex >= 0) {
                                 $scope.setCurrentSlide($scope.slideshow.draftSlides[currentSlideIndex]);
+                            }
+                            if (okCallback) {
+                                okCallback();
                             }
                             if (onSuccessCallback) {
                                 onSuccessCallback();
@@ -141,8 +144,11 @@
                         handleUpsertSuccess('Update succeeded.');
                     }, handleErrorOnUpsert);
                 } else {
-                    $scope.slideshow.$save(function () {
-                        handleUpsertSuccess('Create succeeded.');
+                    $scope.slideshow.$save(function (slideshow) {
+                        handleUpsertSuccess('Create succeeded.', function () {
+                            $location.path("/slideshows/" + slideshow._id + "/edit");
+                            $location.replace();
+                        });
                     }, handleErrorOnUpsert);
                 }
             };
