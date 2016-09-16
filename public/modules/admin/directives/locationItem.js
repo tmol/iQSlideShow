@@ -102,6 +102,8 @@ angular.module('admin').directive('locationItem', ['Admin', '$document', '$timeo
 
             if (!scope.isLocationNameUnique({location: scope.location})) {
                 ActionResultDialogService.showOkDialog('The location name must be unique!', scope);
+                scope.location.name = scope.locationNameOriginalValue;
+                scope.ensureReadOnlyMode();
                 return;
             }
 
@@ -133,8 +135,7 @@ angular.module('admin').directive('locationItem', ['Admin', '$document', '$timeo
                         scope.ensureReadOnlyMode();
                     });
                 }
-            }
-                                     );
+            });
         };
 
         element.on('focusout', focusOutHanlder);
