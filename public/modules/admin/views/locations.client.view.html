@@ -1,8 +1,11 @@
-<section data-ng-controller="LocationController" data-ng-init="getLocations()" style="margin-top: 58px;">
-    <div class="col-md-12">
-        <button type="button" id="addLocation" class="btn btn-success" ng-click="addLocation()" ng-disabled="isAnyLocationEdited">Add</button>
-        <div>&nbsp;</div>
-        <div location-item ng-repeat='location in locations' location='location' editMode='true' is-Location-Name-Unique='isLocationNameUnique(location)' edit-Enabled='editEnabled()'>
+<section data-ng-controller="LocationController" data-ng-init="getLocations()">
+    <div class="iqss-page-header">
+        <div>
+            <div class="iqss-admin-locations-add" ng-click="addLocation()" ng-disabled="isAnyLocationEdited">Add location</div>
         </div>
+    </div>
+    
+    <div class="iqss-admin-locations-container">
+        <div location-item ng-repeat="location in locations" location="location" editMode='true' is-Location-Name-Unique='isLocationNameUnique(location)' edit-Enabled='editEnabled()'></div>
     </div>
 </section>

@@ -2,6 +2,12 @@
 /*jslint nomen: true, es5: true */
 angular.module('admin').directive('locationItem', ['Admin', '$document', '$timeout', 'Devices', 'ActionResultDialogService', function (Admin, $document, $timeout, Devices, ActionResultDialogService) {
     'use strict';
+
+    var template = '';
+    template += '<span class="location-item-name" ng-show="!editMode" ng-click="editLocation()">{{location.name}}</span>';
+    template += '<input class="location-item-edit" type="text" placeholder="New location" ng-show="editMode" ng-model="location.name" focus-on="editMode" select-on="editMode" />';
+    template += '<span class="location-item-delete" ng-click="deleteLocation()">delete</span>';
+
     function link(scope, element, attrs) {
         var rememberActualLocationName,
             formatDevicesNamesToCommaSeparatedString,
@@ -16,7 +22,7 @@ angular.module('admin').directive('locationItem', ['Admin', '$document', '$timeo
             scope.locationNameOriginalValue = scope.location.name;
         };
 
-        scope.onClickReadOnlyArea = function () {
+        scope.editLocation = function () {
             if (!scope.editEnabled()) {
                 return;
             }
@@ -37,7 +43,7 @@ angular.module('admin').directive('locationItem', ['Admin', '$document', '$timeo
             }
         };
 
-        scope.delete = function () {
+        scope.deleteLocation = function () {
             if (scope.editMode === true) {
                 scope.ensureReadOnlyMode();
             }
@@ -77,17 +83,30 @@ angular.module('admin').directive('locationItem', ['Admin', '$document', '$timeo
                 msg,
                 confirmationResult;
 
+            if (scope.editMode !== true) {
+                return;
+            }
+
+            if (!scope.location.name) {
+                if (scope.locationNameOriginalValue) {
+                    scope.location.name = scope.locationNameOriginalValue;
+
+                    ActionResultDialogService.showOkDialog('The location must have a name!', scope);
+                } else {
+                    scope.$root.$broadcast('locationAddCanceled', scope.location);
+                }
+
+                scope.ensureReadOnlyMode();
+                return;
+            }
+
             if (!scope.isLocationNameUnique({location: scope.location})) {
-                ActionResultDialogService.showOkDialog('Location name must ne unique!', scope);
+                ActionResultDialogService.showOkDialog('The location name must be unique!', scope);
                 return;
             }
 
             if (scope.locationNameOriginalValue === scope.location.name) {
                 scope.ensureReadOnlyMode();
-                return;
-            }
-
-            if (scope.editMode !== true) {
                 return;
             }
 
@@ -143,7 +162,7 @@ angular.module('admin').directive('locationItem', ['Admin', '$document', '$timeo
         restrict: 'A',
         link: link,
         transclude: true,
-        templateUrl: 'modules/admin/templates/locationItem.html',
+        template: template,
         scope: {
             location: '=',
             isLocationNameUnique: '&',

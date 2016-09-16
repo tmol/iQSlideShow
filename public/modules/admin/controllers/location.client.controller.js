@@ -24,7 +24,7 @@
             };
 
             $scope.addLocation = function () {
-                $scope.locations.push({name: 'New location'});
+                $scope.locations.push({});
             };
 
             $scope.isAnyLocationEdited = false;
@@ -51,9 +51,17 @@
                 });
             });
 
+            $scope.$on('locationAddCanceled', function (event, location) {
+                var index = $scope.locations.indexOf(location);
+
+                if (index != -1) {
+                    $scope.locations.splice(index, 1);
+                }
+            });
+
             $scope.editEnabled = function () {
                 return !$scope.isAnyLocationEdited;
             };
         }
-                                                          ]);
+    ]);
 }());
