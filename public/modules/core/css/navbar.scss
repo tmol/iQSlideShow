@@ -114,8 +114,20 @@
     color: $blue-color;
 }
 
-.navbar-nav .dropdown-menu.iqss-navbar-dropdown-menu {
-    margin-top: 5px;
+.navbar-nav .open .dropdown-menu {
+    &.iqss-navbar-dropdown-menu {
+        left: -20%;
+        position: absolute;
+        background: #fff;
+        margin-top: 5px;
+        border: 1px solid #ccc;
+        border: 1px solid rgba(0, 0, 0, 0.15);
+
+        > li > a {
+            color: #333;
+            padding: 3px 20px;
+        }
+    }
 }
 
 .nav > li > a:hover {
