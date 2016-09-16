@@ -19,8 +19,13 @@
 
 .slideShow {
     position: absolute !important;
+    visibility: hidden;
     top: 0;
     left: 0;
+
+    &.loaded {
+        visibility: visible;
+    }
 
     &.ng-hide {
         display: block !important;

@@ -7,7 +7,7 @@
             var i = 0;
 
             var template = '';
-            template += '<div ng-repeat="slide in slides() track by $index" ng-show="$index==currentIndex"';
+            template += '<div ng-repeat="slide in slides() track by $index" ng-show="$index==currentIndex" ng-class="{loaded: slidesLoaded}"';
             template += '     class="{{slide.animationType}} slideShow" style="width:100%;height:100%;position:relative;display:block;overflow:hidden"';
             template += '     ng-slide-view is-playing="true" reference-slide="slide" qr-config="qrConfig">';
             template += '</div>';
