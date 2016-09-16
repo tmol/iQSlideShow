@@ -13,6 +13,9 @@
     box-sizing: content-box;
     box-shadow: 0 2px 4px $dark-grey-color;
     color: $very-dark-grey-color;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
 }
 
 .iqss-page-header > hr {
@@ -28,10 +31,6 @@
 
 .iqss-page-header div div {
     float: left;
-}
-
-.iqss-page-header > div {
-    @include positionInCenterInResponsiveContainer;
 }
 
 .iqss-page-header > section {
