@@ -58,28 +58,18 @@ angular.module('core').directive('tagAndNameFilter', ['$cacheFactory', function 
         };
 
         scope.filterUpdated = function (select) {
-            var clickTriggeredTheSelect = select.clickTriggeredSelect === true;
-
             if (!scope.noSummary) {
-                if (clickTriggeredTheSelect) {
-                    if (!_.includes(scope.filterParameters.filterItems, scope.filterParameters.namesAndTagsFilter)) {
-                        scope.filterParameters.filterItems.push(scope.filterParameters.namesAndTagsFilter);
-                    }
-                    scope.filterParameters.namesAndTagsFilter = '';
-                } else {
-                    scope.filterParameters.namesAndTagsFilter = select.search;
+                if (!_.includes(scope.filterParameters.filterItems, scope.filterParameters.namesAndTagsFilter)) {
+                    scope.filterParameters.filterItems.push(scope.filterParameters.namesAndTagsFilter);
                 }
+                scope.filterParameters.namesAndTagsFilter = '';
             } else {
-                if (clickTriggeredTheSelect) {
-                    scope.filterParameters.namesAndTagsFilter = scope.filterParameters.namesAndTagsFilter.name;
-                } else {
-                    scope.filterParameters.namesAndTagsFilter = select.search;
-                }
+                scope.filterParameters.namesAndTagsFilter = scope.filterParameters.namesAndTagsFilter.name;
             }
 
             scope.filterValuePlaceholder = select.search;
             filter();
-            if (clickTriggeredTheSelect && !scope.noSummary) {
+            if (!scope.noSummary) {
                 scope.filterParameters.namesAndTagsFilter = null;
             }
         };
