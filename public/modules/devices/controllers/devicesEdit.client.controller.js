@@ -132,6 +132,7 @@
                     Devices.get({
                         deviceId: $stateParams.deviceId
                     }, function (device) {
+                        $scope.device = device;
                         initDeviceStatus();
                     });
                 }, 30 * 1000);
