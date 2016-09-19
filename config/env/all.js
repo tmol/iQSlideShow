@@ -40,7 +40,7 @@
                         'public/lib/qrcode/lib/qrcode.js',
                         'public/lib/angular-qr/src/angular-qr.js',
                         'public/lib/pubnub/pubnub.min.js',
-                        'public/lib/ui-select/dist/select.js',
+                        'public/lib/angular-ui-select/dist/select.js',
                         'public/lib/angular-ui-grid/ui-grid.js',
                         'public/lib/lodash/lodash.js',
                         'public/lib/angular-ui-slider/src/slider.js',
@@ -51,7 +51,7 @@
                 css: [
                     'public/lib/font-awesome/css/font-awesome.css',
                     'public/lib/textAngular/dist/textAngular.css',
-                    'public/lib/ui-select/dist/select.css',
+                    'public/lib/angular-ui-select/dist/select.css',
                     'public/lib/angular-ui-grid/ui-grid.css',
                     'public/css/*.css'
                 ],
