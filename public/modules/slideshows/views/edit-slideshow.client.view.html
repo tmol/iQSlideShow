@@ -16,11 +16,11 @@
         <div class='iqss-slideshowedit-error' data-ng-bind="error" ng-show='error'></div>
         <div class='iqss-slideshowedit-attributes'>
             <div class='iqss-slideshowedit-attribute'>
-                <div>Slideshow name</div>
+                <div class="iqss-slideshowedit-name-label">Slideshow name:</div>
                 <input type="text" class='iqss-slideshowedit-name' data-ng-model="slideshow.name" placeholder="Name" required/>
             </div>
             <div class='iqss-slideshowedit-attribute'>
-                <div>Tags</div>
+                <div class="iqss-slideshowedit-tags-label">Tags: </div>
                 <ui-select multiple tagging tagging-label="(custom 'new' tag)" ng-model="slideshow.tags" sortable="true" class='iqss-slideshowedit-tags' title="Choose a tag">
                     <ui-select-match placeholder="Select tags or enter new...">{{$item}}</ui-select-match>
                     <ui-select-choices repeat="tag in possibleTags" refresh="refreshTags($select.search)" refresh-delay="0">

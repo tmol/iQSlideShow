@@ -63,31 +63,45 @@
     @include border;
     background: white;
     height: $slideshow-edit-attributes-height;
-    padding-left: 10px;
     display: flex;
-    flex-wrap: nowrap;
-    align-items: flex-start;
-    padding: 0 15px;
     line-height: $slideshow-edit-attributes-height;
-    width: 60%;
-    margin: auto;
-    margin-top: 10px;
+    margin: 10px 15px 0 15px;
+
+    @media (min-width: 1200px) {
+        width: 60%;
+        margin-left: auto;
+        margin-right: auto;
+    }
 }
 
 .iqss-slideshowedit-attribute {
     flex: 1;
     display: flex;
+    padding-left: 15px;
+    align-items: center;
     height: $slideshow-edit-attributes-height;
+
+    &:last-child {
+        padding-right: 15px;
+    }
+}
+
+.iqss-slideshowedit-name-label {
+    margin-right: 10px;
 }
 
 .iqss-slideshowedit-name {
-    margin-left: 5px;
+    flex: 1;
+    align-self: flex-start;
     height: 30px !important;
+}
+
+.iqss-slideshowedit-tags-label {
+    margin-right: 10px;
 }
 
 .iqss-slideshowedit-tags {
     height: 30px !important;
-    margin: auto 10px;
 }
 
 .iqss-slideshowedit-emptyColumn {
