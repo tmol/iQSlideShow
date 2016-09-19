@@ -132,8 +132,8 @@
                     Devices.get({
                         deviceId: $stateParams.deviceId
                     }, function (device) {
-                        $scope.device = device;
-                        initDeviceStatus();
+                        $scope.device.status = DeviceStatusService.getStatus(device, $scope.adminConfig);
+                        $scope.device.lastHealthReport = device.lastHealthReport;
                     });
                 }, 30 * 1000);
             }
