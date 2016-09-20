@@ -79,7 +79,8 @@
     height: $slideshow-list-slideshow-preview-height;
     width: 100%;
     display:inline-block;
-    border: 1px solid $dark-grey-color;
+    border-top: 1px solid $dark-grey-color;
+    border-bottom: 1px solid $dark-grey-color;
     overflow: hidden;
 }
 
