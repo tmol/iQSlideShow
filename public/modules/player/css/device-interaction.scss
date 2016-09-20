@@ -225,7 +225,9 @@
 }
 
 .iqss-device-interaction-content-player-container-details {
+    background: url(../../../modules/core/img/open-new-tab.svg) left center no-repeat;
     flex: 1 1 25px;
+    background-size: 20px 20px;
     line-height: 44px;
     cursor: pointer;
     margin-left: 15px;
