@@ -12,7 +12,7 @@
             template += "<div ng-show='!slideLoaded' style='top: 50%; position: absolute; left: 50%;  transform: translate(-50%,-50%);z-index:100' >LOADING...</div>";
             template += "</div>";
             template += '</div>';
-            template += '<qr-device-interaction ng-if="!slideHasQrCode" qr-config="qrConfig" style="position: fixed;right: 10px;bottom: 10px;"></qr-device-interaction>';
+            template += '<div qr-device-interaction ng-if="!slideHasQrCode" qr-config="qrConfig" style="position: fixed;right: 10px;bottom: 10px;"></div>';
             template += '</div>';
             return {
                 scope: {
@@ -77,7 +77,7 @@
                     };
 
                     var detectSlideQrCode = function () {
-                        scope.slideHasQrCode = element.find('.ng-slide-view qr-device-interaction').length === 1;
+                        scope.slideHasQrCode = element.find('.ng-slide-view').find('qr-device-interaction, [qr-device-interaction]').length === 1;
                     };
 
                     var lastTimeout;

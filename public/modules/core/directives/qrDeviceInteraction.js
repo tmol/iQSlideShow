@@ -11,7 +11,7 @@
         template += '</a>';
 
         return {
-            restrict: 'E',
+            restrict: 'AE',
             template: template,
         };
     });
