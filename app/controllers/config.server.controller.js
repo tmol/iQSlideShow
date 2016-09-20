@@ -15,7 +15,8 @@
             if (config === null) {
                 config = new Config({
                     userSelectedSlideShowsPlayTimeInMinutes: 1,
-                    defaultSlideShowId: null
+                    defaultSlideShowId: null,
+                    defaultAnimationType : "enter-left"
                 });
                 config.user = req.user;
 
