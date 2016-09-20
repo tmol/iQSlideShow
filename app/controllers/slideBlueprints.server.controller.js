@@ -60,6 +60,11 @@
     exports.storeByName = function (req, res) {
         var slide = req.slide;
         slide = lodash.extend(slide, req.body);
+        if (!slide.name) {
+            return res.status(400).send({
+                message: 'Please enter a name for the blueprint.'
+            });
+        }
         SlideBlueprint.findOne({"name": req.body.name}).exec(function (err, slide) {
             if (err) {
                 return res.status(400).send({
