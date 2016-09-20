@@ -127,24 +127,20 @@
                 return DeviceStatusService.getStatus($scope.device, $scope.adminConfig);
             };
 
-            function refreshStatusPeriodically() {
-                timers.registerInterval('reloadDevicesForStatusUptaes', function () {
-                    Devices.get({
-                        deviceId: $stateParams.deviceId
-                    }, function (device) {
-                        $scope.device.status = DeviceStatusService.getStatus(device, $scope.adminConfig);
-                        $scope.device.lastHealthReport = device.lastHealthReport;
-                    });
-                }, 30 * 1000);
-            }
-
             $scope.find = function () {
                 Devices.get({
                     deviceId: $stateParams.deviceId
                 }, function (result) {
                     $scope.device = result;
                     initAfterLoadingDevice();
-                    refreshStatusPeriodically();
+                    timers.registerInterval('reloadDevicesForStatusUpdates', function () {
+                        Devices.get({
+                            deviceId: $stateParams.deviceId
+                        }, function (device) {
+                            $scope.device.status = DeviceStatusService.getStatus(device, $scope.adminConfig);
+                            $scope.device.lastHealthReport = device.lastHealthReport;
+                        });
+                    }, 30 * 1000);
                 });
             };
 
