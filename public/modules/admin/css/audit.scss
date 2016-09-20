@@ -41,6 +41,10 @@
     padding: 5px 10px;
 }
 
+.iqss-admin-audit-filters-datePicker .uib-close {
+    display: none;
+}
+
 .iqss-admin-audit-downloadLink {
     background: url(../../../modules/core/img/statistics.svg) left center no-repeat;
     @include standardSubHeaderAction;
