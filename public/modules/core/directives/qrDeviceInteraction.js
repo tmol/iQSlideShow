@@ -2,7 +2,7 @@
 (function () {
     'use strict';
 
-    angular.module('core').directive('qrDeviceInteraction', ["$location", function ($location) {
+    angular.module('core').directive('qrDeviceInteraction', function () {
         var template = '';
         template += '<a href="{{qrConfig.slideUrl}}" target="_blank">';
         template += '    <qr text="qrConfig.slideUrl" type-number="qrConfig.typeNumber" correction-level="qrConfig.correctionLevel"';
@@ -14,5 +14,5 @@
             restrict: 'E',
             template: template,
         };
-    }]);
+    });
 }());
