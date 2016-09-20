@@ -312,6 +312,14 @@
     color: $very-dark-grey-color;
 }
 
+.iqss-slideshowedit-slide {
+    background-color: #FFFFFF;
+}
+
+.iqss-slideshowedit-slide-dragging {
+    z-index: 1;
+}
+
 .iqss-slideshowedit-slide-hidden {
     background-color: #EEEEEE;
     opacity: 0.5;
