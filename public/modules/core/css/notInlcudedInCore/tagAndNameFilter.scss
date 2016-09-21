@@ -50,7 +50,6 @@ $search-box-placeholder-font-size: 15px;
 }
 
 .iqss-ui-select * {
-    background-color: white;
     border-radius: 0;
     border: 0;
     line-height: 35px;
@@ -75,6 +74,7 @@ $search-box-placeholder-font-size: 15px;
 
 .iqss-ui-select li > div {
     clear: both;
+    width: 100%;
 }
 
 .iqss-ui-select .btn-default:hover, .btn-default:focus {
@@ -97,6 +97,14 @@ $search-box-placeholder-font-size: 15px;
 
 .iqss-ui-select .ui-select-bootstrap .ui-select-choices-row.active>a {
     background-color: white;
+}
+
+.iqss-ui-select .ui-select-bootstrap .ui-select-choices-row.active>span {
+    background-color: white;
+
+    &:hover {
+        background-color: #f5f5f5;
+    }
 }
 
 .iqss-ui-select ul {

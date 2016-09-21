@@ -1,0 +1,49 @@
+<div class="project-template ng-scope">
+    <div class="project-picture-container">
+        <img slide-part class="project-picture" member="picture" label="Picture URL" />
+
+        <div class="project-picture-cut-left"></div>
+        <div class="project-picture-cut-right"></div>
+    </div>
+
+    <div slide-part class="project-name" member="projectName" label="Project Name">Project Name</div>
+
+    <div class="project-body">
+        <div slide-part class="project-type" member="projectType" label="Project Type">Project Type</div>
+
+        <div class="project-timeframe-label">Timeframe:</div>
+        <div slide-part class="project-timeframe" member="projectTimeframe" label="Timeframe">Month Year</div>
+
+        <div class="project-content">
+            <div slide-part class="project-description" type="html" member="projectDesc" label="Description">
+                <p>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut dignissim mi nec tristique fermentum.
+                    Nullam porta fermentum velit, nec ultricies lectus elementum ad.
+                </p>
+            </div>
+        </div>
+
+        <div class="project-team-label">Team:</div>
+        <div slide-part class="project-team" member="projectTeam" label="Team">Team members</div>
+
+        <div class="project-techologies-label">Used Technologies:</div>
+        <div slide-part class="project-techologies" member="projectTechnologies" label="Technologies">Project technologies</div>
+
+        <div class="project-manager-label">Project Manager:</div>
+        <div slide-part class="project-manager" member="projectManager" label="Project Manager">Project Manager</div>
+
+        <div class="project-contact">
+            Contact:
+
+            <a slide-part class="project-contact-email" member="contactEmail" label="Contact Email" href="mailto:person@example.com">
+                person@example.com
+            </a>
+        </div>
+    </div>
+
+    <div class="project-qr-logo">
+        <div qr-device-interaction class="project-qr" qr-config="qrConfig"></div>
+
+        <div class="project-logo"></div>
+    </div>
+</div>

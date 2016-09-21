@@ -1,4 +1,4 @@
-<div ng-player style="background-color: #ffffff;height:100%;width:100%;display:inline-block" slides="slides" indicator-position = "indicatorPosition" indicator-visible="indicatorVisible" ng-visible='slidesLoaded'>
+<div ng-player style="background-color: #ffffff;height:100%;width:100%;display:inline-block" qr-config="qrConfig" slides="slides" indicator-position = "indicatorPosition" indicator-visible="indicatorVisible" ng-visible='slidesLoaded'>
 
 </div>
 
@@ -8,12 +8,4 @@
       bottom: 10px;">
         PlayerID : {{deviceId}} <div ng-show="slideIsOnHold" style="font-weight:bold">Interactive mode</div>
     </div>
-    <a target="_blank" href = "{{qrConfig.slideUrl}}">
-        <div style="position: fixed;
-          right: 10px;
-          bottom: 10px;
-          background-color: red;">
-        <qr text="qrConfig.slideUrl" type-number="qrConfig.typeNumber" correction-level="qrConfig.correctionLevel" size="qrConfig.size" input-mode="qrConfig.inputMode" image="qrConfig.image"></qr>
-        </div>
-    </a>
 </div>

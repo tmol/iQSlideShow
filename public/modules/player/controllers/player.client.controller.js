@@ -111,8 +111,12 @@
                     $scope.lastModified = result.modified;
                     $scope.title = result.name;
                     $scope.numberOfSlides = result.slides.length;
-                    if ($scope.usePreviewFirstSlide && result.slides && result.slides.length) {
-                        result.slides = [result.slides[0]];
+                    if ($scope.usePreviewFirstSlide) {
+                        if (result.slides && result.slides.length) {
+                            result.slides = [result.slides[0]];
+                        } else if (result.draftSlides && result.draftSlides.length) {
+                            result.slides = [result.draftSlides[0]];
+                        }
                     }
                     if ($scope.showDraftSlides) {
                         result.slides = result.draftSlides;

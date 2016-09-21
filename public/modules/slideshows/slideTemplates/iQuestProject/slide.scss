@@ -1,0 +1,163 @@
+// The offset is required to ensure that the picture does not appear
+// above and below the slide due to the skew of the divs that cover
+// it to simulate the 10 degree crop.
+$picture-cut-offset: 5px;
+
+.project-template {
+    width: 1920px;
+    height: 1080px;
+    position: relative;
+    padding-top: 125px;
+    padding-left: 105px;
+    color: #444;
+    font-family: 'Segoe UI', sans-serif;
+
+    // The picture is "cut" by the two divs on the left and the right.
+    // Using the clip-path feature would have been a better solution,
+    // but browser support for it is very limited.
+    .project-picture-container {
+        .project-picture {
+            top: 0;
+            left: 0;
+            width: 1920px;
+            height: 1080px;
+            position: absolute;
+            z-index: -2;
+        }
+
+        .project-picture-cut-left {
+            top: -$picture-cut-offset;
+            right: 600px;
+            width: 10000px;
+            height: 1080px + $picture-cut-offset * 2;
+            background: #fff;
+            position: absolute;
+            z-index: -1;
+            transform: skewX(-10deg);
+        }
+
+        .project-picture-cut-right {
+            top: -$picture-cut-offset;
+            left: 1770px;
+            width: 10000px;
+            height: 1080px + $picture-cut-offset * 2;
+            background: #fff;
+            position: absolute;
+            z-index: -1;
+            transform: skewX(-10deg);
+        }
+    }
+
+    .project-name {
+        width: 1260px;
+        height: 90px;
+        font-size: 80px;
+        font-weight: 500;
+        line-height: 85px;
+        text-transform: uppercase;
+        color: #0095d6;
+    }
+
+    .project-body {
+        width: 1080px;
+
+        a {
+            color: #0095d6 !important;
+            text-decoration: none;
+        }
+
+        .project-type {
+            font-size: 45px;
+            font-weight: 500;
+            color: #0095d6;
+        }
+
+        .project-timeframe-label {
+            font-size: 30px;
+        }
+
+        .project-timeframe {
+            color: #0095d6;
+            font-size: 45px;
+            font-weight: 500;
+            letter-spacing: 3px;
+        }
+
+        .project-content {
+            margin-top: 20px;
+            height: 105px;
+            font-size: 30px;
+            font-weight: 200;
+
+            p {
+                margin-bottom: 25px;
+
+                &:last-child {
+                    margin-bottom: 0;
+                }
+            }
+        }
+
+        .project-team-label {
+            margin-top: 30px;
+            font-size: 30px;
+        }
+
+        .project-team {
+            font-size: 30px;
+            font-weight: 500;
+        }
+
+        .project-techologies-label {
+            margin-top: 10px;
+            font-size: 30px;
+        }
+
+        .project-techologies {
+            font-size: 30px;
+            font-weight: 500;
+        }
+
+        .project-manager-label {
+            margin-top: 20px;
+            font-size: 30px;
+        }
+
+        .project-manager {
+            color: #0095d6;
+            font-size: 45px;
+            font-weight: 500;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+        }
+
+        .project-contact {
+            font-size: 30px;
+            font-weight: 200;
+            line-height: 35px;
+        }
+    }
+
+    .project-qr-logo {
+        right: 15px;
+        bottom: 15px;
+        width: 140px;
+        position: absolute;
+
+        .project-qr {
+            display: block;
+            width: 100px;
+            height: 100px;
+            margin: 20px auto;
+        }
+
+        .project-logo {
+            display: block;
+            width: 125px;
+            height: 31px;
+            margin: 0 auto;
+            background-image: url('[RELATIVE-PATH]/logo.png');
+            background-size: cover;
+        }
+    }
+}

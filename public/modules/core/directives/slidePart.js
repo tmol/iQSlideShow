@@ -35,6 +35,25 @@
                             element[0].src = content || 'modules/slideshows/css/img/default.jpg';
                             return;
                         }
+
+                        if (element[0].tagName === "A") {
+                            if (content && content.length !== 0) {
+                                var href = content;
+
+                                // Checking for @ is fine for our purposes; there is no point in validating the email address.
+                                if (content.indexOf('@') !== -1) {
+                                    href = "mailto:" + content;
+                                } else if (!/^https?:\/\//.test(content)) {
+                                    href = 'http://' + content;
+                                }
+
+                                element[0].href = href;
+                                element[0].textContent = content.replace(/^https?:\/\//, "");
+
+                                return;
+                            }
+                        }
+
                         if (content) {
                             var text = content;
                             if (element.attr("encoded") === "true") {

@@ -110,7 +110,7 @@
                 }
                 var slideshow = $scope.slideshow,
                     currentSlideIndex,
-                    handleUpsertSuccess = function (msg) {
+                    handleUpsertSuccess = function (msg, okCallback) {
                         $scope.error = '';
                         initSlideShowJson();
                         $scope.waitingForServerSideProcessingAndThenForResultDialog = false;
@@ -118,6 +118,9 @@
                             // I don't know why the binding is lost, but this solves it
                             if (currentSlideIndex >= 0) {
                                 $scope.setCurrentSlide($scope.slideshow.draftSlides[currentSlideIndex]);
+                            }
+                            if (okCallback) {
+                                okCallback();
                             }
                             if (onSuccessCallback) {
                                 onSuccessCallback();
@@ -141,8 +144,10 @@
                         handleUpsertSuccess('Update succeeded.');
                     }, handleErrorOnUpsert);
                 } else {
-                    $scope.slideshow.$save(function () {
-                        handleUpsertSuccess('Create succeeded.');
+                    $scope.slideshow.$save(function (slideshow) {
+                        handleUpsertSuccess('Create succeeded.', function () {
+                            $state.go($state.current, { slideshowId: slideshow._id }, {reload: false, inherit: false});
+                        });
                     }, handleErrorOnUpsert);
                 }
             };
@@ -188,7 +193,14 @@
                             });
                         });
                 };
-                if (slideShowChanged()) {
+                if ($scope.isNewSlideShow()) {
+                    ActionResultDialogService.showOkCancelDialog('The slideshow will be automatically saved before publishing. Do you agree?', $scope, function () {
+                        $scope.upsert(function () {
+                            $scope.waitingForServerSideProcessingAndThenForResultDialog = true;
+                            publish();
+                        });
+                    });
+                } else if (slideShowChanged()) {
                     ActionResultDialogService.showOkCancelDialog('The slideshow changed and will be automatically saved before publishing. Do you agree?', $scope, function () {
                         $scope.upsert(function () {
                             $scope.waitingForServerSideProcessingAndThenForResultDialog = true;

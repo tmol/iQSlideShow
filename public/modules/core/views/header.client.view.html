@@ -6,17 +6,12 @@
 			<span class="icon-bar"></span>
 			<span class="icon-bar"></span>
 		</button>
-		<a ng-show="!isInteractionMode()" href="/#!/" class="navbar-brand iqss-navbar-brand">iQSlideShow</a>
-        <form ng-submit="applyFilterForDeviceInteraction()">
-            <input ng-show="isInteractionMode()" class="iqss-device-interaction-search" type="text" placeholder="iQSlideShow" ng-model="slideShowFilter"/>
-            <input type="submit" ng-show="isInteractionMode()" class="iqss-device-interaction-search-indicator" value=""/>
-        </form>
-
+		<a href="/#!/" class="navbar-brand iqss-navbar-brand">iQSlideShow</a>
 	</div>
 	<nav ng-if="!isInteractionMode()" class="navbar-collapse iqss-navbar-collapse" ng-class="{'collapse':!isCollapsed}" role="navigation">
 	    <div class="col-sm-8 .col-sm-offset-2 iqss-navbar-nav-menu-container">
             <ul class="nav navbar-nav iqss-navbar-nav" data-ng-if="menu.shouldRender(authentication.user);">
-                <li data-ng-repeat="item in menu.items | orderBy: 'position'" data-ng-if="item.shouldRender(authentication.user);" ng-switch="item.menuItemType" ui-route="{{item.uiRoute}}" class="{{item.menuItemClass}}" dropdown="item.menuItemType === 'dropdown'" url='{{item.link}}' ng-class="{'iqss-navbar-activeNav': isStateSelected(item.link)}">
+                <li data-ng-repeat="item in menu.items | orderBy: 'position'" data-ng-if="item.shouldRender(authentication.user);" ng-switch="item.menuItemType" ui-route="{{item.uiRoute}}" class="{{item.menuItemClass}}" dropdown="item.menuItemType === 'dropdown'" url='{{item.link}}' ng-class="{'iqss-navbar-activeNav': isItemSelected(item)}">
                     <a href="#" ng-switch-when="dropdown" class="dropdown-toggle" data-toggle="dropdown"
                         style='display:inline-block;white-space: nowrap;overflow:visible;'>
                         <div data-ng-bind="item.title" style='display:inline'></div>

@@ -4,7 +4,9 @@
     'use strict';
 
     var lodash = require('lodash'),
+        mongoose = require('mongoose'),
         Promise = require('promise'),
+        Config = mongoose.model('Config'),
         FindInStringRegex = require('../services/findInStringRegex');
 
     var mapItemToTags = function (item) {
@@ -43,7 +45,18 @@
         }
 
         Promise.all(promises).then(function () {
-            success(filterResult);
+            Config.findOne(function (err, config) {
+                if (err) {
+                    error(err);
+                    return;
+                }
+                if (config !== null) {
+                    // This is not ideal; all the results will be loaded and filtered in memory.
+                    filterResult.names = lodash.take(filterResult.names, config.sizeOfAutocompleteListForTags);
+                    filterResult.tags = lodash.take(filterResult.tags, config.sizeOfAutocompleteListForTags);
+                }
+                success(filterResult);
+            });
         }, function (error) {
             error(error);
         });

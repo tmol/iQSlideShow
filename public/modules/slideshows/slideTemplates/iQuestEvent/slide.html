@@ -1,27 +1,76 @@
-<section slide-part type="script" url="jquery.textfill.js"></section>
-<div class="template-iQuestEvents">
-    <div class="iQuestEvents-left-side"></div>
-    <div slide-part member="logo" label="Logo" class="iQuestEvents-logo ">Logo</div>
-    <div slide-part member="title" label="Title" class="iQuestEvents-title">TITLE</div>
-    <div class="iQuestEvents-speaker">
-        <canvas class="iQuestEvents-speaker-picture" slide-part member="speakerImageUrl" label="Speaker image url" id="speakerImage" width="200" height="158"></canvas>
-        <div slide-part member="speakerName" label="Speaker's name" class="iQuestEvents-speaker-name">SPEAKER NAME</div>
+<div class="event-template ng-scope">
+    <div class="event-picture-container">
+        <img slide-part class="event-picture" member="picture" label="Picture URL" />
+
+        <div class="event-picture-cut-left"></div>
+        <div class="event-picture-cut-right"></div>
     </div>
-    <div class="iQuestEvents-date">
-        <div slide-part member="day" label="Day" class="iQuestEvents-date-day">day</div>
-        <div slide-part member="monthYear" label="Month year" class="iQuestEvents-date-month-year">january 1970</div>
+
+    <div class="event-header">
+        <div slide-part class="event-name" member="eventName" label="Event Name">Event Name</div>
+        <div slide-part class="event-theme" member="eventTheme" label="Event Theme">Event Theme</div>
     </div>
-    <div class="iQuestEvents-hour-location">
-        <div slide-part member="hour" label="Hour" class="iQuestEvents-hour">hour</div>
-        <div slide-part member="location" label="Location" class="iQuestEvents-location">location</div>
+
+    <div class="event-highlights">
+        <div class="event-highlight">
+            <div slide-part class="event-highlight-no" member="firstHighlight" label="First Highlight">1</div>
+            <div slide-part class="event-highlight-desc" member="firstHighlightDesc" label="First Highlight Description">Description</div>
+        </div>
+
+        <div class="event-highlight">
+            <div slide-part class="event-highlight-no" member="secondHighlight" label="Second Highlight">1</div>
+            <div slide-part class="event-highlight-desc" member="secondHighlightDesc" label="Second Highlight Description">Description</div>
+        </div>
+
+        <div class="event-highlight">
+            <div slide-part class="event-highlight-no" member="thirdHighlight" label="Third Highlight">1</div>
+            <div slide-part class="event-highlight-desc" member="thirdHighlightDesc" label="Third Highlight Description">Description</div>
+        </div>
     </div>
-    <div class="iQuestEvents-description">
-        <div class="iQuestEvents-description-text">
-            <span slide-part member="description" label="Description">description</span></div>
+
+    <div class="event-body">
+        <div class="event-content">
+            <div slide-part class="event-text" type="html" member="text" label="Text">
+                <p>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut dignissim mi nec tristique fermentum.
+                    Nullam porta fermentum velit, nec ultricies lectus elementum a. Class aptent taciti sociosqu ad
+                    litora torquent per conubia nostra, per inceptos himenaeos. Vestibulum nec maximus lorem.
+                    Fusce varius sit amet nulla id fermentum. Sed gravida ante at diam egestas, quis hendrerit lectus ornare.
+                </p>
+            </div>
+        </div>
+
+        <div class="event-details">
+            <div class="event-date">
+                <div class="event-date-label">When:</div>
+                <div slide-part class="event-date-day" member="day" label="Day">Day</div>
+                <div slide-part class="event-date-month" member="month" label="Month">Month</div>
+                <div slide-part class="event-date-year" member="year" label="Year">Year</div>
+            </div>
+
+            <div class="event-location">
+                <div class="event-location-label">Where:</div>
+                <div slide-part class="event-location-city" member="city" label="City">City</div>
+                <div slide-part class="event-location-details" member="location" label="Location">Location</div>
+            </div>
+        </div>
+
+        <div class="event-audience">
+            <div class="event-audience-label">For:</div>
+            <div slide-part class="event-audience-text" member="audience" label="Audience">Audience</div>
+
+            <div slide-part class="event-audience-contact" type="html" member="contact" label="Contact Info">
+                <p>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                    <a href="mailto:person@example.com">person@example.com</a>
+                </p>
+            </div>
+        </div>
     </div>
-    <div class="iQuestEvents-contact">
-        <div slide-part member="contact" label="Contact" class="iQuestEvents-contact-text">contact</div>
+
+    <div class="event-qr-logo">
+        <div qr-device-interaction class="event-qr" qr-config="qrConfig"></div>
+
+        <div class="event-logo"></div>
     </div>
-    <canvas class="iQuestEvents-picture" slide-part member="pictureUrl" label="Event's image url" id="eventsPicture" width="628" height="1080"></canvas>
-    <div class="iQuestEvents-bottom-side"></div>
 </div>

@@ -12,3 +12,42 @@
 .preview-slideshow .slideShow {
     position: inherit !important
 }
+
+[ng-player] {
+    position: relative;
+}
+
+.slideShow {
+    position: absolute !important;
+    visibility: hidden;
+    top: 0;
+    left: 0;
+
+    &.loaded {
+        visibility: visible;
+    }
+
+    &.ng-hide {
+        display: block !important;
+
+        &.enter-top {
+            top: -5000px;
+            left: auto;
+        }
+
+        &.enter-left {
+            top: auto;
+            left: 5000px;
+        }
+
+        &.enter-right {
+            top: auto;
+            left: -5000px;
+        }
+
+        &.enter-bottom {
+            top: 5000px;
+            left: auto;
+        }
+    }
+}

@@ -234,16 +234,27 @@
     };
 
     exports.filteredNames = function (req, res, next, nameFilter) {
-        Device.find({name: getNameFilterExpression(nameFilter)}).exec(function (err, devices) {
+        Config.findOne(function (err, config) {
             if (err) {
-                return next(err);
+                error(err);
+                return;
             }
-            if (!devices) {
-                req.filteredNames = [];
+            var query = Device.find({name: getNameFilterExpression(nameFilter)});
+            if (config !== null) {
+                query = query.limit(config.sizeOfAutocompleteListForTags);
             }
-            req.filteredNames = lodash.map(devices, mapDeviceToFilteredName);
-            next();
+            query.exec(function (err, devices) {
+                if (err) {
+                    return next(err);
+                }
+                if (!devices) {
+                    req.filteredNames = [];
+                }
+                req.filteredNames = lodash.map(devices, mapDeviceToFilteredName);
+                next();
+            });
         });
+
     };
 
     exports.getFilteredNames = function (req, res,  next) {

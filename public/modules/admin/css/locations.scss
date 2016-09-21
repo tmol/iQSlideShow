@@ -1,2 +1,51 @@
+@import '../../core/css/variables.scss';
+@import '../../core/css/mixins.scss';
+
 .iqss-admin-locations-container {
+    width: 40%;
+    @include standardMainArea;
+    padding: 0;
+
+    [location-item] {
+        display: flex;
+        padding: 10px 15px;
+        border-top: 1px solid #ddd;
+        align-items: center;
+
+        &:first-child {
+            border-top: 0;
+        }
+
+        .location-item-name {
+            flex: 1;
+            font-weight: bold;
+            line-height: 25px;
+        }
+
+        .location-item-edit {
+            flex: 1;
+        }
+
+        .location-item-delete {
+            background: url(../../../modules/core/img/delete.svg) left center no-repeat;
+            background-size: 12px 12px;
+            color: #009da5;
+            min-width: 60px;
+            margin-left: 10px;
+            font-weight: bold;
+            text-align: right;
+            cursor: pointer;
+        }
+    }
+}
+
+.iqss-admin-locations-add {
+    background: url(../../../modules/core/img/add.svg) left center no-repeat;
+    background-size: 20px 20px;
+    flex: 1;
+    line-height: 44px;
+    width: 100px;
+    padding-left: 25px;
+    cursor: pointer;
+    color: #009da5;
 }

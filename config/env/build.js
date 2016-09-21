@@ -31,11 +31,12 @@
                         'public/lib/qrcode/lib/qrcode.min.js',
                         'public/lib/angular-qr/angular-qr.min.js',
                         'public/lib/pubnub/pubnub.min.js',
-                        'public/lib/ui-select/dist/select.min.js',
+                        'public/lib/angular-ui-select/dist/select.min.js',
                         'public/lib/angular-ui-grid/ui-grid.min.js',
                         'public/lib/lodash/dist/lodash.min.js',
                         'public/lib/angular-ui-slider/src/slider.js',
-                        'public/lib/jquery-ui/ui/minified/jquery-ui.min.js'
+                        'public/lib/jquery-ui/ui/minified/jquery-ui.min.js',
+                        'public/lib/jquery-textfill/source/jquery.textfill.min.js'
                     ],
                     playerCss: [
                         'public/lib/bootstrap/dist/css/bootstrap.min.css',
@@ -61,24 +62,25 @@
                         'public/lib/qrcode/lib/qrcode.min.js',
                         'public/lib/angular-qr/angular-qr.min.js',
                         'public/lib/pubnub/pubnub.min.js',
-                        'public/lib/ui-select/dist/select.min.js',
+                        'public/lib/angular-ui-select/dist/select.min.js',
                         'public/lib/angular-ui-grid/ui-grid.min.js',
                         'public/lib/lodash/dist/lodash.min.js',
                         'public/lib/angular-ui-slider/src/slider.js',
-                        'public/lib/jquery-ui/ui/minified/jquery-ui.min.js'
+                        'public/lib/jquery-ui/ui/minified/jquery-ui.min.js',
+                        'public/lib/jquery-textfill/source/jquery.textfill.min.js'
                     ],
                 },
                 adminCss: [
                     'public/lib/font-awesome/css/font-awesome.min.css',
                     'public/lib/textAngular/dist/textAngular.css',
-                    'public/lib/ui-select/dist/select.min.css',
+                    'public/lib/angular-ui-select/dist/select.min.css',
                     'public/lib/angular-ui-grid/ui-grid.min.css',
                     'public/css/*.css'
                 ],
                 playerCss: [
                     'public/lib/font-awesome/css/font-awesome.min.css',
                     'public/lib/textAngular/dist/textAngular.css',
-                    'public/lib/ui-select/dist/select.min.css',
+                    'public/lib/angular-ui-select/dist/select.min.css',
                     'public/lib/angular-ui-grid/ui-grid.min.css',
                     'public/css/*.css'
                 ],

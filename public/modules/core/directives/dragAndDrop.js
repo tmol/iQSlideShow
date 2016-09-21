@@ -71,6 +71,7 @@ angular.module('core').directive('dragAndDrop', ['$document', function ($documen
             var relativePosition = getRelativePosition(event);
             moveTo(relativePosition.x, relativePosition.y);
             broadcastEvent('drag', event);
+            element.addClass(scope.dragAndDropDraggingClass);
             lastPageX = event.pageX;
             lastPageY = event.pageY;
 
@@ -84,6 +85,7 @@ angular.module('core').directive('dragAndDrop', ['$document', function ($documen
 
         function mouseup(event) {
             broadcastEvent('drop', event);
+            element.removeClass(scope.dragAndDropDraggingClass);
             x = 0;
             y = 0;
             moveTo(0, 0);
@@ -109,6 +111,7 @@ angular.module('core').directive('dragAndDrop', ['$document', function ($documen
             dragAndDropHeaderHeight: '=',
             dragAndDropFooterHeight: '=',
             dragAndDropMoveEventName: '=',
+            dragAndDropDraggingClass: '=',
             dragAndDropMode: '='
         }
     };
