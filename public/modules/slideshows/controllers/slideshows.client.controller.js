@@ -499,6 +499,7 @@
                     draftSlides: []
                 });
                 $scope.displayPreview = false;
+                initSlideShowJson();
             }
         }]);
 }());
