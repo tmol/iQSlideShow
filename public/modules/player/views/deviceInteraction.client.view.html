@@ -28,7 +28,7 @@
         <div class='iqss-device-interaction-content-slideshows'>
             <div class="iqss-device-interaction-content-slideshows-title">
                 <section ng-show="slideShowFilter">{{slideShowFilter}}</section>
-                <section ng-show="!slideShowFilter">All slideshows ({{numberOfSlidehsows}})</section>
+                <section ng-show="!slideShowFilter">All slideshows</section>
 
                 <form ng-show="displayFilter" ng-submit="applyFilter()">
                     <input class="iqss-device-interaction-search" type="text" ng-blur="applyFilter()" ng-model="slideShowFilter" focus-on="displayFilter"/>

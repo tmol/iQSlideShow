@@ -42,7 +42,6 @@
                 var messageToBroadcast = $scope.playSlideShow ? 'resetOnHold' : 'putPlayerOnHold';
                 $scope.playerContext.playerScope.$broadcast(messageToBroadcast, $scope.viewPlayerId);
             };
-            $scope.numberOfSlidehsows = 0;
             $scope.nameFilter = "";
             var applyFilterInternal = function () {
                 $scope.$emit("ShowLoaderIndicator");
@@ -52,7 +51,6 @@
                 }, function(result) {
                     $scope.$emit("HideLoaderIndicator");
                     $scope.slideshows = result.data;
-                    $scope.numberOfSlidehsows = result.data.length;
                 });
             };
             applyFilterInternal();
