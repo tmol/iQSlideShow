@@ -9,6 +9,11 @@
             var slideShowSelected = false;
             var i = document.body;
 
+            $scope.filterParameters = {
+                pageSize: 20,
+                fullyLoaded: false
+            };
+
             // go full-screen: POC - will be removed after tests
             if (i.requestFullscreen) {
                 i.requestFullscreen();
@@ -43,16 +48,35 @@
                 $scope.playerContext.playerScope.$broadcast(messageToBroadcast, $scope.viewPlayerId);
             };
             $scope.nameFilter = "";
-            var applyFilterInternal = function () {
+
+            var executeFilter = function (callback) {
                 $scope.$emit("ShowLoaderIndicator");
                 DeviceInteractionService.getSlideShowsByFilter({
-                    pageSize: 1000,
-                    namesAndTagsFilter: $scope.slideShowFilter
+                    pageSize: $scope.filterParameters.pageSize,
+                    namesAndTagsFilter: $scope.slideShowFilter,
+                    lastPageLastItemCreated: $scope.filterParameters.lastPageLastItemCreated
                 }, function(result) {
                     $scope.$emit("HideLoaderIndicator");
-                    $scope.slideshows = result.data;
+                    callback(result);
                 });
             };
+
+            var applyFilterInternal = function () {
+                delete $scope.filterParameters.lastPageLastItemCreated;
+                delete $scope.filterParameters.fullyLoaded;
+                
+                executeFilter(function(result) {
+                    if (result.length > 0) {
+                        $scope.filterParameters.lastPageLastItemCreated = _.last(result).created;
+                    }
+
+                    if (result.data.length < $scope.filterParameters.pageSize) {
+                        $scope.filterParameters.fullyLoaded = true;
+                    }
+
+                    $scope.slideshows = result.data;
+                });
+            }
             applyFilterInternal();
 
             $scope.selectSlideShow = function (slideShow) {
@@ -77,6 +101,24 @@
 
             $scope.enableFilter = function () {
                 $scope.displayFilter = true;
+            };
+
+            $scope.getNextChunk = function () {
+                if ($scope.filterParameters.fullyLoaded) {
+                    return;
+                }
+
+                executeFilter(function(result) {
+                    if (result.length > 0) {
+                        $scope.filterParameters.lastPageLastItemCreated = _.last(result).created;
+                    }
+
+                    if (result.data.length < $scope.filterParameters.pageSize) {
+                        $scope.filterParameters.fullyLoaded = true;
+                    }
+
+                    $scope.slideshows = _.concat($scope.slideshows, result.data);
+                });
             };
 
             $scope.$on("slideShowClicked", function(event, position) {

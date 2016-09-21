@@ -25,7 +25,7 @@
                 <div class="iqss-device-interaction-created-on">Published on: {{publishedOnDate | date}}</div>
             </div>
         </div>
-        <div class='iqss-device-interaction-content-slideshows'>
+        <div class='iqss-device-interaction-content-slideshows' infinite-scroll scroll-element='true' handler='getNextChunk()'>
             <div class="iqss-device-interaction-content-slideshows-title">
                 <section ng-show="slideShowFilter">{{slideShowFilter}}</section>
                 <section ng-show="!slideShowFilter">All slideshows</section>
