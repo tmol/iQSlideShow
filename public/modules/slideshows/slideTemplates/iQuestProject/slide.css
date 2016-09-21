@@ -1,0 +1,108 @@
+.project-template {
+  width: 1920px;
+  height: 1080px;
+  position: relative;
+  padding-top: 125px;
+  padding-left: 105px;
+  color: #444;
+  font-family: 'Segoe UI', sans-serif; }
+  .project-template .project-picture-container .project-picture {
+    top: 0;
+    left: 0;
+    width: 1920px;
+    height: 1080px;
+    position: absolute;
+    z-index: -2; }
+  .project-template .project-picture-container .project-picture-cut-left {
+    top: -5px;
+    right: 600px;
+    width: 10000px;
+    height: 1090px;
+    background: #fff;
+    position: absolute;
+    z-index: -1;
+    transform: skewX(-10deg); }
+  .project-template .project-picture-container .project-picture-cut-right {
+    top: -5px;
+    left: 1770px;
+    width: 10000px;
+    height: 1090px;
+    background: #fff;
+    position: absolute;
+    z-index: -1;
+    transform: skewX(-10deg); }
+  .project-template .project-name {
+    width: 1260px;
+    height: 90px;
+    font-size: 80px;
+    font-weight: 500;
+    line-height: 85px;
+    text-transform: uppercase;
+    color: #0095d6; }
+  .project-template .project-body {
+    width: 1080px; }
+    .project-template .project-body a {
+      color: #0095d6 !important;
+      text-decoration: none; }
+    .project-template .project-body .project-type {
+      font-size: 45px;
+      font-weight: 500;
+      color: #0095d6; }
+    .project-template .project-body .project-timeframe-label {
+      font-size: 30px; }
+    .project-template .project-body .project-timeframe {
+      color: #0095d6;
+      font-size: 45px;
+      font-weight: 500;
+      letter-spacing: 3px; }
+    .project-template .project-body .project-content {
+      margin-top: 20px;
+      height: 105px;
+      font-size: 30px;
+      font-weight: 200; }
+      .project-template .project-body .project-content p {
+        margin-bottom: 25px; }
+        .project-template .project-body .project-content p:last-child {
+          margin-bottom: 0; }
+    .project-template .project-body .project-team-label {
+      margin-top: 30px;
+      font-size: 30px; }
+    .project-template .project-body .project-team {
+      font-size: 30px;
+      font-weight: 500; }
+    .project-template .project-body .project-techologies-label {
+      margin-top: 10px;
+      font-size: 30px; }
+    .project-template .project-body .project-techologies {
+      font-size: 30px;
+      font-weight: 500; }
+    .project-template .project-body .project-manager-label {
+      margin-top: 20px;
+      font-size: 30px; }
+    .project-template .project-body .project-manager {
+      color: #0095d6;
+      font-size: 45px;
+      font-weight: 500;
+      letter-spacing: 3px;
+      text-transform: uppercase; }
+    .project-template .project-body .project-contact {
+      font-size: 30px;
+      font-weight: 200;
+      line-height: 35px; }
+  .project-template .project-qr-logo {
+    right: 15px;
+    bottom: 15px;
+    width: 140px;
+    position: absolute; }
+    .project-template .project-qr-logo .project-qr {
+      display: block;
+      width: 100px;
+      height: 100px;
+      margin: 20px auto; }
+    .project-template .project-qr-logo .project-logo {
+      display: block;
+      width: 125px;
+      height: 31px;
+      margin: 0 auto;
+      background-image: url("[RELATIVE-PATH]/logo.png");
+      background-size: cover; }
