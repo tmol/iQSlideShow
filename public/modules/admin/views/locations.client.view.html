@@ -4,7 +4,7 @@
             <div class="iqss-admin-locations-add" ng-click="addLocation()" ng-disabled="isAnyLocationEdited">Add location</div>
         </div>
     </div>
-    
+
     <div class="iqss-admin-locations-container">
         <div location-item ng-repeat="location in locations" location="location" editMode='true' is-Location-Name-Unique='isLocationNameUnique(location)' edit-Enabled='editEnabled()'></div>
     </div>

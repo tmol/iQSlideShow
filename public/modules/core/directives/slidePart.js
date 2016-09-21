@@ -53,7 +53,7 @@
                                 return;
                             }
                         }
-                        
+
                         if (content) {
                             var text = content;
                             if (element.attr("encoded") === "true") {

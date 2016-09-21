@@ -101,7 +101,7 @@
 
                 if (devices.length !== 0) {
                     var errorMessage = 'The slideshow cannot be deleted because it is the only slideshow for the ';
-                    
+
                     if (devices.length === 1) {
                         errorMessage += 'device ' + devices[0].name + '.';
                     } else {
