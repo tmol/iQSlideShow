@@ -49,8 +49,8 @@
                             return;
                         }
 
-                        var sx = parent.width() / elementToScale.width();
-                        var sy = parent.height() / elementToScale.height();
+                        var sx = parent[0].offsetWidth / elementToScale[0].offsetWidth;
+                        var sy = parent[0].offsetHeight / elementToScale[0].offsetHeight;
                         var scale = Math.min(sx, sy);
 
                         elementToScale.css("transform", "scale(" + scale + ") translate(-50%, -50%)");
@@ -67,8 +67,8 @@
                         scope.zoomPercent = scope.referenceSlide.zoomPercent || 100;
                         scope.indicatorSize = Math.max(scope.resolution.width, scope.resolution.height) * 10 / 100;
 
-                        var sx = element.parent().width() / scope.resolution.width;
-                        var sy = element.parent().height() / scope.resolution.height;
+                        var sx = element.parent()[0].offsetWidth / scope.resolution.width;
+                        var sy = element.parent()[0].offsetHeight / scope.resolution.height;
                         var appliedScale = Math.min(sx, sy);
 
                         element.find(".slideshow-placeholder").css("transform", "scale(" + appliedScale + ") translate(-50%, -50%)");

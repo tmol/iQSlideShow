@@ -20,4 +20,4 @@ public/dist/js/admin.js
 public/dist/js/player.js
 !public/dist/css/*.min.css
 !public/css/*
-
+!public/modules/slideshows/slideTemplates/**/*.css

@@ -103,51 +103,58 @@
             $scope.isNewSlideShow = function () {
                 return !$scope.slideshow._id;
             }
-            // Update existing Slideshow
-            $scope.upsert = function (onSuccessCallback) {
+
+            $scope.save = function (callback) {
+                var currentSlideIndex;
+                var error = checkMandatoryFields();
+
+                if (error) {
+                    $scope.error = error;
+                    return;
+                }
+
                 if ($scope.waitingForServerSideProcessingAndThenForResultDialog) {
                     return;
                 }
-                var slideshow = $scope.slideshow,
-                    currentSlideIndex,
-                    handleUpsertSuccess = function (msg, okCallback) {
-                        $scope.error = '';
-                        initSlideShowJson();
-                        $scope.waitingForServerSideProcessingAndThenForResultDialog = false;
-                        showOkDialog(msg, function () {
-                            // I don't know why the binding is lost, but this solves it
-                            if (currentSlideIndex >= 0) {
-                                $scope.setCurrentSlide($scope.slideshow.draftSlides[currentSlideIndex]);
-                            }
-                            if (okCallback) {
-                                okCallback();
-                            }
-                            if (onSuccessCallback) {
-                                onSuccessCallback();
-                            }
-                        });
-                    },
-                    mandatoryFieldsCheckMsg = checkMandatoryFields();
 
                 if ($scope.currentSlide) {
                     currentSlideIndex = $scope.slideshow.draftSlides.indexOf($scope.currentSlide);
                 }
 
-                if (mandatoryFieldsCheckMsg && mandatoryFieldsCheckMsg.length > 0) {
-                    $scope.error = mandatoryFieldsCheckMsg;
-                    return;
+                $scope.waitingForServerSideProcessingAndThenForResultDialog = true;
+
+                function internalSuccessHandler () {
+                    $scope.error = '';
+                    $scope.waitingForServerSideProcessingAndThenForResultDialog = false;
+                    initSlideShowJson();
+
+                    // I don't know why the binding is lost, but this solves it
+                    if (currentSlideIndex >= 0) {
+                        $scope.setCurrentSlide($scope.slideshow.draftSlides[currentSlideIndex]);
+                    }
                 }
 
-                $scope.waitingForServerSideProcessingAndThenForResultDialog = true;
-                if (!$scope.isNewSlideShow()) {
-                    slideshow.$update(function () {
-                        handleUpsertSuccess('Update succeeded.');
+                if ($scope.isNewSlideShow()) {
+                    $scope.slideshow.$save(function (slideshow) {
+                        internalSuccessHandler();
+
+                        if (callback) {
+                            callback();
+                        } else {
+                            showOkDialog('Create succeeded.', function () {
+                                $state.go('editSlideshow', { slideshowId: slideshow._id });
+                            });
+                        }
                     }, handleErrorOnUpsert);
                 } else {
-                    $scope.slideshow.$save(function (slideshow) {
-                        handleUpsertSuccess('Create succeeded.', function () {
-                            $state.go($state.current, { slideshowId: slideshow._id }, {reload: false, inherit: false});
-                        });
+                    $scope.slideshow.$update(function () {
+                        internalSuccessHandler();
+
+                        if (callback) {
+                            callback();
+                        } else {
+                            showOkDialog('Update succeeded.');
+                        }
                     }, handleErrorOnUpsert);
                 }
             };
@@ -189,20 +196,20 @@
                         .then(function () {
                             $scope.waitingForServerSideProcessingAndThenForResultDialog = false;
                             showOkDialog('Publish succeeded.', function () {
-                                $state.go($state.current, $stateParams, {reload: true, inherit: false});
+                                $state.go('editSlideshow', { slideshowId: $scope.slideshow._id });
                             });
                         });
                 };
                 if ($scope.isNewSlideShow()) {
                     ActionResultDialogService.showOkCancelDialog('The slideshow will be automatically saved before publishing. Do you agree?', $scope, function () {
-                        $scope.upsert(function () {
+                        $scope.save(function () {
                             $scope.waitingForServerSideProcessingAndThenForResultDialog = true;
                             publish();
                         });
                     });
                 } else if (slideShowChanged()) {
                     ActionResultDialogService.showOkCancelDialog('The slideshow changed and will be automatically saved before publishing. Do you agree?', $scope, function () {
-                        $scope.upsert(function () {
+                        $scope.save(function () {
                             $scope.waitingForServerSideProcessingAndThenForResultDialog = true;
                             publish();
                         });
@@ -499,6 +506,7 @@
                     draftSlides: []
                 });
                 $scope.displayPreview = false;
+                initSlideShowJson();
             }
         }]);
 }());
