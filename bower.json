@@ -19,7 +19,7 @@
     "angular-ui-utils": "~0.2",
     "bootstrap": "~3",
     "textAngular": "1.5.0",
-    "angular-ui-select": "https://github.com/CMircea/ui-select.git#^0.19.4",
+    "angular-ui-select": "https://github.com/CMircea/ui-select.git#master",
     "fastclick": "^1.0.6",
     "lodash": "^4.10.0",
     "jquery-textfill": "^0.6.0"
