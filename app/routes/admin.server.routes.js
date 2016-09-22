@@ -9,15 +9,15 @@
             locations = require('../../app/controllers/locations.server.controller');
 
         app.route('/admin/config')
-            .get(config.getConfig)
+            .get(users.requiresLogin, config.getConfig)
             .put(users.requiresLogin, config.updateConfig);
 
         app.route('/admin/reload')
-            .get(reload.reload);
+            .get(users.requiresLogin, reload.reload);
 
         // Location Routes
         app.route('/admin/location')
-            .get(locations.list)
+            .get(users.requiresLogin, locations.list)
             .post(users.requiresLogin, locations.create);
 
         app.route('/admin/location/:locationId')
