@@ -1,6 +1,8 @@
 <section data-ng-controller="ReloadController">
     <div class='iqss-page-header'>
-        <div class='iqss-admin-config-reloadLink' ng-click="reload()">Reload</div>
+        <div>
+            <div class='iqss-admin-config-reloadLink' ng-click="reload()">Reload</div>
+        </div>
     </div>
     <div class="iqss-admin-config-reloadResult" ng-show="reloadedDevices && reloadedDevices.length > 0">
         The reload message was sent to all devices (name and location):<BR><BR>
