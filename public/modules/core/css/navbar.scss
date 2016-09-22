@@ -79,6 +79,10 @@
 
 .iqss-navbar-right {
     padding-right: 10px;
+
+    @media (min-width: 768px) {
+        margin-right: -10px;
+    }
 }
 
 .iqss-navbar-right > li {
