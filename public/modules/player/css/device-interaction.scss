@@ -11,12 +11,12 @@
 }
 .iqss-device-interaction {
     @media (orientation: portrait) {
-        padding-top: 70px;
+        padding-top: 71px; // 70px = header, 1px = header bottom border
         padding-left: 0px;
         padding-right: 0px;
     }
     @media (orientation: landscape) {
-        padding-top: 70px;
+        padding-top: 71px; // 70px = header, 1px = header bottom border
         padding-left: 0px;
         padding-right: 0px;
     }
