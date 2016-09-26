@@ -159,6 +159,28 @@
         return promise;
     };
 
+    function listSlideshowsFiltered (req, res, searchParam, filterExtend) {
+        var filter = {name : FindInStringRegex.getFindInTextRegExp(searchParam)};
+
+        if (filterExtend) {
+            filter = filterExtend(filter);
+        }
+
+        Slideshow.find(filter).sort('-created').exec(function (err, slideshowsFound) {
+            if (err) {
+                return res.status(400).send({
+                    message: errorHandler.getErrorMessage(err)
+                });
+            }
+            if (!slideshowsFound) {
+                return res.status(400).send({
+                    message: 'Failed to search for active slideshows by name with the following search parameter: ' + searchParam
+                });
+            }
+
+            res.jsonp(slideshowsFound);
+        });
+    }
 
     exports.getFilteredNamesAndTags = function (req, res) {
         NamesAndTagsFilter.getFilteredNamesAndTags(req, preparePromiseForFilter, function (filterResult) {
@@ -183,22 +205,28 @@
         });
     };
 
-    exports.filterByName = function (req, res) {
-        var searchParam = req.query.nameFilter,
-            filter = {name : FindInStringRegex.getFindInTextRegExp(searchParam)};
-        Slideshow.find(filter).sort('-created').exec(function (err, slideshowsFound) {
-            if (err) {
-                return res.status(400).send({
-                    message: errorHandler.getErrorMessage(err)
-                });
-            }
-            if (!slideshowsFound) {
-                return res.status(400).send({
-                    message: 'Failed to search for active slideshows by name with the following search parameter: ' + searchParam
-                });
-            }
+    exports.listPublished = function (req, res) {
+        NamesAndTagsFilter.filter(req, Slideshow, function (select) {
+            processShowOnlyMineFilter(req, select);
+            select.slides = { $not: { $size: 0 } };
+            return select;
+        }, function (filterResult) {
+            res.jsonp(filterResult);
+        }, function (error) {
+            return res.status(400).send({
+                message: errorHandler.getErrorMessage(error)
+            });
+        });
+    };
 
-            res.jsonp(slideshowsFound);
+    exports.filterByName = function (req, res) {
+        listSlideshowsFiltered(req, res, req.query.nameFilter);
+    };
+
+    exports.filterPublishedByName = function (req, res) {
+        listSlideshowsFiltered(req, res, req.query.nameFilter, function (filter) {
+            filter.slides = { $size: { $not: 0 } };
+            return filter;
         });
     };
 

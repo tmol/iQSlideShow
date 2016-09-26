@@ -6,8 +6,8 @@ module.exports = function (app) {
     var pptOnline = require('../../app/controllers/pdfProxy.server.controller');
 
 	app.route('/deviceInteraction/slideshows/filter')
-		.get(slideshows.list);
+		.get(slideshows.listPublished);
 
 	app.route('/deviceInteraction/slideshows/filterByName')
-		.get(slideshows.filterByName);
+		.get(slideshows.filterPublishedByName);
 };
