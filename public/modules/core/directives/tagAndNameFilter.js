@@ -66,12 +66,18 @@ angular.module('core').directive('tagAndNameFilter', ['$cacheFactory', '$timeout
                         scope.filterParameters.filterItems.push(scope.filterParameters.namesAndTagsFilter);
                     }
                     scope.filterParameters.namesAndTagsFilter = '';
+                    
+                    // HACK: Fix IQSLDSH-367; ui-select will be completely replaced in the future
+                    select.search = "";
                 } else {
                     scope.filterParameters.namesAndTagsFilter = select.search;
                 }
             } else {
                 if (clickTriggeredTheSelect) {
                     scope.filterParameters.namesAndTagsFilter = scope.filterParameters.namesAndTagsFilter.name;
+                    
+                    // HACK: Fix IQSLDSH-367; ui-select will be completely replaced in the future
+                    select.search = "";
                 } else {
                     scope.filterParameters.namesAndTagsFilter = select.search;
                 }
