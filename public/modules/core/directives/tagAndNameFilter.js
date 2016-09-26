@@ -1,6 +1,6 @@
 /*global angular, _*/
 /*jslint nomen: true, es5: true */
-angular.module('core').directive('tagAndNameFilter', ['$cacheFactory', function ($cacheFactory) {
+angular.module('core').directive('tagAndNameFilter', ['$cacheFactory', '$timeout', function ($cacheFactory, $timeout) {
     'use strict';
 
     function link(scope, element, attrs) {
@@ -115,6 +115,13 @@ angular.module('core').directive('tagAndNameFilter', ['$cacheFactory', function 
         scope.$on("$destroy", function () {
             scope.cache.put(cachedFilterParametersId, scope.filterParameters);
         });
+
+        // HACK: Fix IQSLDSH-367; ui-select will be completely replaced in the future
+        $timeout(function () {
+            element.find('.ui-select-search').click(function() {
+                element.find('.ui-select-toggle').click();
+            });
+        }, 0, false);
     }
 
     return {
