@@ -1,6 +1,20 @@
 @import '../../core/css/variables.scss';
 @import 'mixins.scss';
 
+.iqss-navbar {
+    min-height: 40px;
+
+    .iqss-navbar-header {
+        min-height: 40px;
+
+        .iqss-navbar-brand {
+            height: 40px;
+            min-height: 40px;
+            line-height: 40px;
+        }
+    }
+}
+
 .iqss-device-interaction-navbar {
     @media (orientation: landscape) {
         display: none;
@@ -11,12 +25,12 @@
 }
 .iqss-device-interaction {
     @media (orientation: portrait) {
-        padding-top: 71px; // 70px = header, 1px = header bottom border
+        padding-top: 41px; // 40px = header, 1px = header bottom border
         padding-left: 0px;
         padding-right: 0px;
     }
     @media (orientation: landscape) {
-        padding-top: 71px; // 70px = header, 1px = header bottom border
+        padding-top: 41px; // 40px = header, 1px = header bottom border
         padding-left: 0px;
         padding-right: 0px;
     }
