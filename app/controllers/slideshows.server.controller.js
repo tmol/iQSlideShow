@@ -65,7 +65,11 @@
     exports.update = function (req, res) {
         var slideshow = req.slideshow;
 
+        // This is a terrible idea. The user could change anything about a slideshow behind our backs.
+        // The Mongoose version __v field is overwritten, causing all sorts of bugs when saving a slideshow multiple times.
+        var slideshowVersion = slideshow.__v;
         slideshow = lodash.extend(slideshow, req.body);
+        slideshow.__v = slideshowVersion;
 
         slideshow.published = false;
         slideshow.modified = new Date();
