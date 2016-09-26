@@ -212,7 +212,7 @@
     exports.listPublished = function (req, res) {
         NamesAndTagsFilter.filter(req, Slideshow, function (select) {
             processShowOnlyMineFilter(req, select);
-            select.slides = { $not: { $size: 0 } };
+            select.slides = { published: true };
             return select;
         }, function (filterResult) {
             res.jsonp(filterResult);
@@ -229,7 +229,7 @@
 
     exports.filterPublishedByName = function (req, res) {
         listSlideshowsFiltered(req, res, req.query.nameFilter, function (filter) {
-            filter.slides = { $size: { $not: 0 } };
+            filter.slides = { published: true };
             return filter;
         });
     };
