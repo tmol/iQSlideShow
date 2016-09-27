@@ -19,7 +19,7 @@
                     qrConfig: '=',
                     slideWidth: "=",
                     slideHeight: "=",
-                    referenceSlide: "=",
+                    referenceSlide: "&",
                     isPlaying: "=",
                     emitSlideLoadedEvent: "="
                 },
@@ -32,6 +32,7 @@
                     scope.indicatorSize = 0;
                     scope.slideReady = false;
                     scope.slideHasQrCode = false;
+                    scope.slide = null;
                     var appliedScale = 1;
                     var getSizeMeasurementContainer = function () {
                         var container = $("#measurementContainer");
@@ -60,11 +61,11 @@
                         if (scope.emitSlideLoadedEvent === true) {
                             scope.$emit("slideLoadedInSlideView");
                         }
-                        if (!scope.referenceSlide) {
+                        if (!scope.slide) {
                             return;
                         }
-                        scope.resolution = scope.referenceSlide.resolution || resolutions[0];
-                        scope.zoomPercent = scope.referenceSlide.zoomPercent || 100;
+                        scope.resolution = scope.slide.resolution || resolutions[0];
+                        scope.zoomPercent = scope.slide.zoomPercent || 100;
                         scope.indicatorSize = Math.max(scope.resolution.width, scope.resolution.height) * 10 / 100;
 
                         var sx = element.parent()[0].offsetWidth / scope.resolution.width;
@@ -122,25 +123,29 @@
                         $rootScope.$broadcast("slideShowClicked", {percentX : percentX, percentY : percentY});
                     };
 
-                    scope.$watch("referenceSlide", function (newValue, oldValue) {
+                    scope.$watch("referenceSlide()", function (newValue, oldValue) {
+                        if (!newValue) {
+                            return;
+                        }
+                        scope.slide = newValue;
                         SlideSetup.setup(scope, element);
                     });
-                    scope.$watch("referenceSlide.resolution", function (newValue, oldValue) {
+                    scope.$watch("slide.resolution", function (newValue, oldValue) {
                         if (!scope.isPlaying) {
                             update();
                         }
                     });
-                    scope.$watch("referenceSlide.zoomPercent", function (newValue, oldValue) {
+                    scope.$watch("slide.zoomPercent", function (newValue, oldValue) {
                         if (!scope.isPlaying) {
                             update();
                         }
                     });
 
                     scope.$on("getSlideContentPart", function (event, contentPartName, callback) {
-                        if (!scope.referenceSlide) {
+                        if (!scope.slide) {
                             return;
                         }
-                        var content = scope.referenceSlide.content || {};
+                        var content = scope.slide.content || {};
                         callback(content[contentPartName]);
                     });
                     scope.$on("getTemplatePath", function (event, callback) {
@@ -168,7 +173,7 @@
                     });
 
                     scope.$on("currentSlideChanged", function (event, currentSlideIndex) {
-                        if (scope.referenceSlide.index !== currentSlideIndex) {
+                        if (scope.slide.index !== currentSlideIndex) {
                             // This will hide the player QR code.
                             scope.slideHasQrCode = true;
                         } else {
@@ -192,21 +197,22 @@
                     });
 
                     scope.templateLoaded = function () {
-                        if (!scope.referenceSlide) {
+                        if (!scope.slide) {
                             // no slide was specified, for exampel empty slideshow edit page
                             return;
                         }
                         templateLoaded = true;
                         scope.slideLoaded = true;
                         SlideSetup.loadScripts(scope, element).then(function () {
-                            if (scope.referenceSlide.setupFinishedPromise) {
-                                scope.referenceSlide.setupFinishedPromise.resolve();
+                            if (scope.slide.setupFinishedPromise) {
+                                scope.slide.setupFinishedPromise.resolve();
                             }
+
                            $timeout(update,20);
                         });
                     };
                 }
             };
         }
-                                                    ]);
+    ]);
 }());

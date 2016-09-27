@@ -37,7 +37,7 @@ function GoogleSlideShowScript($scope, $http) {
     };
     return {
         expand: function (callback) {
-            var slide = $scope.referenceSlide || {};
+            var slide = $scope.slide || {};
 
             if (!slide.content || slide.content.isExpanded) {
                 callback(null);
