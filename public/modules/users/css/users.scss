@@ -20,6 +20,17 @@
     @include standardSubHeaderAction;
 }
 
+.iqss-user-signIn-submitButton {
+    background: url(../../../modules/core/img/login.svg) left center no-repeat;
+    border: 0;
+    padding: 0;
+    padding-left: 25px;
+    width: 75px;
+    text-align: left;
+    line-height: 20px;
+    color: $blue-color;
+}
+
 .iqss-user-content {
     width: 80%;
     max-width: 500px;
