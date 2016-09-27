@@ -8,7 +8,7 @@
 
             var template = '<div class="slide-content-container" style="width:100%;height:100%;position:relative;"><div class="slideshow-placeholder" style="position:absolute;width:{{resolution.width}}px;height:{{resolution.height}}px;transform-origin: 0px 0px 0;left:50%;top:50%;" touch-start="onSlideClicked($event)" ng-show="slideReady">';
             template += "<div class='toBeScaled' style='position:absolute;display:inline-block;transform-origin: 0px 0px 0;left:50%;top:50%;'>";
-            template += "<div ng-class=\"{'iqss-hidden':!slideLoaded}\" ng-include='templateUrl' onload='templateLoaded()' class='ng-slide-view' style='transform:scale({{zoomPercent/100}})'></div>";
+            template += "<div ng-class=\"{'iqss-hidden':!slideLoaded}\" ng-include='templateUrl' onload='templateLoaded()' class='ng-slide-view'></div>";
             template += "<div ng-show='!slideLoaded' style='top: 50%; position: absolute; left: 50%;  transform: translate(-50%,-50%);z-index:100' >LOADING...</div>";
             template += "</div>";
             template += '</div>';
@@ -65,7 +65,6 @@
                             return;
                         }
                         scope.resolution = scope.slide.resolution || resolutions[0];
-                        scope.zoomPercent = scope.slide.zoomPercent || 100;
                         scope.indicatorSize = Math.max(scope.resolution.width, scope.resolution.height) * 10 / 100;
 
                         var sx = element.parent()[0].offsetWidth / scope.resolution.width;
@@ -131,11 +130,6 @@
                         SlideSetup.setup(scope, element);
                     });
                     scope.$watch("slide.resolution", function (newValue, oldValue) {
-                        if (!scope.isPlaying) {
-                            update();
-                        }
-                    });
-                    scope.$watch("slide.zoomPercent", function (newValue, oldValue) {
                         if (!scope.isPlaying) {
                             update();
                         }
