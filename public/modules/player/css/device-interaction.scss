@@ -1,7 +1,7 @@
 @import '../../core/css/variables.scss';
 @import 'mixins.scss';
 
-.iqss-navbar {
+.iqss-device-interaction-navbar {
     min-height: 40px;
 
     .iqss-navbar-header {
@@ -13,16 +13,16 @@
             line-height: 40px;
         }
     }
-}
 
-.iqss-device-interaction-navbar {
     @media (orientation: landscape) {
         display: none;
     }
+    
     @media (orientation: portrait) {
         width: 100%;
     }
 }
+
 .iqss-device-interaction {
     @media (orientation: portrait) {
         padding-top: 41px; // 40px = header, 1px = header bottom border
