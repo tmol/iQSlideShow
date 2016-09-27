@@ -26,14 +26,14 @@
         }
 
         .location-item-delete {
-            background: url(../../../modules/core/img/delete.svg) left center no-repeat;
+            background: url(../../../modules/core/img/delete.svg) center no-repeat;
             background-size: 12px 12px;
             color: #009da5;
-            min-width: 60px;
-            margin-left: 10px;
             font-weight: bold;
             text-align: right;
             cursor: pointer;
+            width: 20px;
+            height: 20px;
         }
     }
 }
