@@ -34,6 +34,7 @@
                     scope.slideHasQrCode = false;
                     scope.slide = null;
                     var appliedScale = 1;
+                    var refreshed = false;
                     var getSizeMeasurementContainer = function () {
                         var container = $("#measurementContainer");
                         if (container.length) {
@@ -50,14 +51,14 @@
                             return;
                         }
 
-                        var sx = parent[0].offsetWidth / elementToScale[0].offsetWidth;
-                        var sy = parent[0].offsetHeight / elementToScale[0].offsetHeight;
+                        var sx = scope.resolution.width / elementToScale[0].offsetWidth;
+                        var sy = scope.resolution.height / elementToScale[0].offsetHeight;
                         var scale = Math.min(sx, sy);
-
                         elementToScale.css("transform", "scale(" + scale + ") translate(-50%, -50%)");
                     }
 
                     var scaleElementToResolution = function () {
+                        scope.slideReady = true;
                         if (scope.emitSlideLoadedEvent === true) {
                             scope.$emit("slideLoadedInSlideView");
                         }
@@ -74,7 +75,17 @@
 
                         element.find(".slideshow-placeholder").css("transform", "scale(" + appliedScale + ") translate(-50%, -50%)");
                         zoomContentToElement();
-                        scope.slideReady = true;
+
+                        //PLEASE DON'T QUESTION THIS.
+                        //I'M ALREADY ASHAMED OF IT.
+                        //If you really want to question it, ask the Safari developers team
+                        if (!refreshed) {
+                            refreshed = true;
+                            element.find('svg').hide();
+                            $timeout(function(){
+                                element.find('svg').show();
+                            },1);
+                        }
                     };
 
                     var detectSlideQrCode = function () {
@@ -83,6 +94,7 @@
 
                     var lastTimeout;
                     var update = function () {
+                        refreshed = false;
                         window.clearTimeout(lastTimeout);
 
                         detectSlideQrCode();
