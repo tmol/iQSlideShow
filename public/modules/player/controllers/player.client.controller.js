@@ -23,14 +23,16 @@
             var timers = new Timers();
             var handleDeviceSetup = null;
 
-            $scope.qrConfig = {
-                slideUrl: $location.$$absUrl,
-                size: 100,
-                correctionLevel: '',
-                typeNumber: 0,
-                inputMode: '',
-                image: true
-            };
+            if (!$scope.isPreview()) {
+                $scope.qrConfig = {
+                    slideUrl: $location.$$absUrl,
+                    size: 100,
+                    correctionLevel: '',
+                    typeNumber: 0,
+                    inputMode: '',
+                    image: true
+                };
+            }
 
             $scope.slides = [];
 
@@ -219,8 +221,10 @@
             });
 
             $scope.$on("currentSlideChanged", function (event, currentIndex, slideShowId) {
-                var url = $location.$$absUrl.split("/slideshow")[0];
-                $scope.qrConfig.slideUrl = url + "/slideshow#!/deviceInteraction/" + $scope.deviceId + "/" + slideShowId + "/" + (currentIndex + 1);
+                if (!$scope.isPreview()) {
+                    var url = $location.$$absUrl.split("/slideshow")[0];
+                    $scope.qrConfig.slideUrl = url + "/slideshow#!/deviceInteraction/" + $scope.deviceId + "/" + slideShowId + "/" + (currentIndex + 1);
+                }
             });
 
             $scope.$on("$destroy", function () {
