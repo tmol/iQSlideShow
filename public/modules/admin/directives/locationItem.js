@@ -78,10 +78,7 @@ angular.module('admin').directive('locationItem', ['Admin', '$document', '$timeo
             }
         }
         focusOutHanlder = function (event) {
-            var adminService,
-                isThereAtLeastOnDeviceAttachedToLocation,
-                msg,
-                confirmationResult;
+            var adminService = new Admin(scope.location);
 
             if (scope.editMode !== true) {
                 return;
@@ -112,30 +109,28 @@ angular.module('admin').directive('locationItem', ['Admin', '$document', '$timeo
                 return;
             }
 
-            Devices.getByLocationName({locationName: scope.locationNameOriginalValue}, function (devices) {
-                adminService = new Admin(scope.location);
-                isThereAtLeastOnDeviceAttachedToLocation = devices.length > 0;
-
-                if (scope.location._id) {
-                    if (isThereAtLeastOnDeviceAttachedToLocation === true) {
-                        msg = 'There are devices attached to the location. Please confirm that the devices locations will be updated. The attached devices: ' + formatDevicesNamesToCommaSeparatedString(devices);
+            if (scope.locationNameOriginalValue) {
+                Devices.getByLocationName({ locationName: scope.locationNameOriginalValue }, function (devices) {
+                    if (devices.length !== 0) {
+                        var msg = 'There are devices attached to the location. Please confirm that the devices locations will be updated. The attached devices: ' + formatDevicesNamesToCommaSeparatedString(devices);
                         if (confirm(msg) === false) {
                             scope.ensureReadOnlyMode();
                             return;
                         }
                     }
+
                     adminService.$updateLocation(function () {
                         rememberActualLocationName();
                         scope.ensureReadOnlyMode();
                     });
-                } else {
-                    adminService.$saveLocation(function (savedLocation) {
-                        scope.location._id = savedLocation._id;
-                        rememberActualLocationName();
-                        scope.ensureReadOnlyMode();
-                    });
-                }
-            });
+                });
+            } else {
+                adminService.$saveLocation(function (savedLocation) {
+                    scope.location._id = savedLocation._id;
+                    rememberActualLocationName();
+                    scope.ensureReadOnlyMode();
+                });
+            }
         };
 
         element.on('focusout', focusOutHanlder);
