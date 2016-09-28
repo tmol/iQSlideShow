@@ -441,9 +441,7 @@
 .iqss-slideshowedit-slide-preview {
     border-bottom: 1px solid $darker-grey-color;
     padding: 0 $slideshow-edit-slide-indexWidth + $slideshow-edit-slide-leftRightPadding;
-    width: $slideshow-edit-slide-previewWidth;
     height: $slideshow-edit-slide-preview-height;
-    display: inline-block;
     overflow: hidden;
 }
 
