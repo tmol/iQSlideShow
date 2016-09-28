@@ -65,7 +65,11 @@
     exports.update = function (req, res) {
         var slideshow = req.slideshow;
 
+        // This is a terrible idea. The user could change anything about a slideshow behind our backs.
+        // The Mongoose version __v field is overwritten, causing all sorts of bugs when saving a slideshow multiple times.
+        var slideshowVersion = slideshow.__v;
         slideshow = lodash.extend(slideshow, req.body);
+        slideshow.__v = slideshowVersion;
 
         slideshow.published = false;
         slideshow.modified = new Date();
@@ -159,6 +163,28 @@
         return promise;
     };
 
+    function listSlideshowsFiltered (req, res, searchParam, filterExtend) {
+        var filter = {name : FindInStringRegex.getFindInTextRegExp(searchParam)};
+
+        if (filterExtend) {
+            filter = filterExtend(filter);
+        }
+
+        Slideshow.find(filter).sort('-created').exec(function (err, slideshowsFound) {
+            if (err) {
+                return res.status(400).send({
+                    message: errorHandler.getErrorMessage(err)
+                });
+            }
+            if (!slideshowsFound) {
+                return res.status(400).send({
+                    message: 'Failed to search for active slideshows by name with the following search parameter: ' + searchParam
+                });
+            }
+
+            res.jsonp(slideshowsFound);
+        });
+    }
 
     exports.getFilteredNamesAndTags = function (req, res) {
         NamesAndTagsFilter.getFilteredNamesAndTags(req, preparePromiseForFilter, function (filterResult) {
@@ -183,22 +209,28 @@
         });
     };
 
-    exports.filterByName = function (req, res) {
-        var searchParam = req.query.nameFilter,
-            filter = {name : FindInStringRegex.getFindInTextRegExp(searchParam)};
-        Slideshow.find(filter).sort('-created').exec(function (err, slideshowsFound) {
-            if (err) {
-                return res.status(400).send({
-                    message: errorHandler.getErrorMessage(err)
-                });
-            }
-            if (!slideshowsFound) {
-                return res.status(400).send({
-                    message: 'Failed to search for active slideshows by name with the following search parameter: ' + searchParam
-                });
-            }
+    exports.listPublished = function (req, res) {
+        NamesAndTagsFilter.filter(req, Slideshow, function (select) {
+            processShowOnlyMineFilter(req, select);
+            select.published = true;
+            return select;
+        }, function (filterResult) {
+            res.jsonp(filterResult);
+        }, function (error) {
+            return res.status(400).send({
+                message: errorHandler.getErrorMessage(error)
+            });
+        });
+    };
 
-            res.jsonp(slideshowsFound);
+    exports.filterByName = function (req, res) {
+        listSlideshowsFiltered(req, res, req.query.nameFilter);
+    };
+
+    exports.filterPublishedByName = function (req, res) {
+        listSlideshowsFiltered(req, res, req.query.nameFilter, function (filter) {
+            filter.published = true;
+            return filter;
         });
     };
 

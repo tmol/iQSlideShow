@@ -8,7 +8,7 @@
 
             var template = '<div class="slide-content-container" style="width:100%;height:100%;position:relative;"><div class="slideshow-placeholder" style="position:absolute;width:{{resolution.width}}px;height:{{resolution.height}}px;transform-origin: 0px 0px 0;left:50%;top:50%;" touch-start="onSlideClicked($event)" ng-show="slideReady">';
             template += "<div class='toBeScaled' style='position:absolute;display:inline-block;transform-origin: 0px 0px 0;left:50%;top:50%;'>";
-            template += "<div ng-class=\"{'iqss-hidden':!slideLoaded}\" ng-include='templateUrl' onload='templateLoaded()' class='ng-slide-view' style='transform:scale({{zoomPercent/100}})'></div>";
+            template += "<div ng-class=\"{'iqss-hidden':!slideLoaded}\" ng-include='templateUrl' onload='templateLoaded()' class='ng-slide-view'></div>";
             template += "<div ng-show='!slideLoaded' style='top: 50%; position: absolute; left: 50%;  transform: translate(-50%,-50%);z-index:100' >LOADING...</div>";
             template += "</div>";
             template += '</div>';
@@ -19,7 +19,7 @@
                     qrConfig: '=',
                     slideWidth: "=",
                     slideHeight: "=",
-                    referenceSlide: "=",
+                    referenceSlide: "&",
                     isPlaying: "=",
                     emitSlideLoadedEvent: "="
                 },
@@ -32,7 +32,9 @@
                     scope.indicatorSize = 0;
                     scope.slideReady = false;
                     scope.slideHasQrCode = false;
+                    scope.slide = null;
                     var appliedScale = 1;
+                    var refreshed = false;
                     var getSizeMeasurementContainer = function () {
                         var container = $("#measurementContainer");
                         if (container.length) {
@@ -49,22 +51,21 @@
                             return;
                         }
 
-                        var sx = parent[0].offsetWidth / elementToScale[0].offsetWidth;
-                        var sy = parent[0].offsetHeight / elementToScale[0].offsetHeight;
+                        var sx = scope.resolution.width / elementToScale[0].offsetWidth;
+                        var sy = scope.resolution.height / elementToScale[0].offsetHeight;
                         var scale = Math.min(sx, sy);
-
                         elementToScale.css("transform", "scale(" + scale + ") translate(-50%, -50%)");
                     }
 
                     var scaleElementToResolution = function () {
+                        scope.slideReady = true;
                         if (scope.emitSlideLoadedEvent === true) {
                             scope.$emit("slideLoadedInSlideView");
                         }
-                        if (!scope.referenceSlide) {
+                        if (!scope.slide) {
                             return;
                         }
-                        scope.resolution = scope.referenceSlide.resolution || resolutions[0];
-                        scope.zoomPercent = scope.referenceSlide.zoomPercent || 100;
+                        scope.resolution = scope.slide.resolution || resolutions[0];
                         scope.indicatorSize = Math.max(scope.resolution.width, scope.resolution.height) * 10 / 100;
 
                         var sx = element.parent()[0].offsetWidth / scope.resolution.width;
@@ -73,7 +74,17 @@
 
                         element.find(".slideshow-placeholder").css("transform", "scale(" + appliedScale + ") translate(-50%, -50%)");
                         zoomContentToElement();
-                        scope.slideReady = true;
+
+                        //PLEASE DON'T QUESTION THIS.
+                        //I'M ALREADY ASHAMED OF IT.
+                        //If you really want to question it, ask the Safari developers team
+                        if (!refreshed) {
+                            refreshed = true;
+                            element.find('svg').hide();
+                            $timeout(function(){
+                                element.find('svg').show();
+                            },1);
+                        }
                     };
 
                     var detectSlideQrCode = function () {
@@ -82,6 +93,7 @@
 
                     var lastTimeout;
                     var update = function () {
+                        refreshed = false;
                         window.clearTimeout(lastTimeout);
 
                         detectSlideQrCode();
@@ -122,25 +134,24 @@
                         $rootScope.$broadcast("slideShowClicked", {percentX : percentX, percentY : percentY});
                     };
 
-                    scope.$watch("referenceSlide", function (newValue, oldValue) {
+                    scope.$watch("referenceSlide()", function (newValue, oldValue) {
+                        if (!newValue) {
+                            return;
+                        }
+                        scope.slide = newValue;
                         SlideSetup.setup(scope, element);
                     });
-                    scope.$watch("referenceSlide.resolution", function (newValue, oldValue) {
-                        if (!scope.isPlaying) {
-                            update();
-                        }
-                    });
-                    scope.$watch("referenceSlide.zoomPercent", function (newValue, oldValue) {
+                    scope.$watch("slide.resolution", function (newValue, oldValue) {
                         if (!scope.isPlaying) {
                             update();
                         }
                     });
 
                     scope.$on("getSlideContentPart", function (event, contentPartName, callback) {
-                        if (!scope.referenceSlide) {
+                        if (!scope.slide) {
                             return;
                         }
-                        var content = scope.referenceSlide.content || {};
+                        var content = scope.slide.content || {};
                         callback(content[contentPartName]);
                     });
                     scope.$on("getTemplatePath", function (event, callback) {
@@ -168,7 +179,7 @@
                     });
 
                     scope.$on("currentSlideChanged", function (event, currentSlideIndex) {
-                        if (scope.referenceSlide.index !== currentSlideIndex) {
+                        if (scope.slide.index !== currentSlideIndex) {
                             // This will hide the player QR code.
                             scope.slideHasQrCode = true;
                         } else {
@@ -192,21 +203,22 @@
                     });
 
                     scope.templateLoaded = function () {
-                        if (!scope.referenceSlide) {
+                        if (!scope.slide) {
                             // no slide was specified, for exampel empty slideshow edit page
                             return;
                         }
                         templateLoaded = true;
                         scope.slideLoaded = true;
                         SlideSetup.loadScripts(scope, element).then(function () {
-                            if (scope.referenceSlide.setupFinishedPromise) {
-                                scope.referenceSlide.setupFinishedPromise.resolve();
+                            if (scope.slide.setupFinishedPromise) {
+                                scope.slide.setupFinishedPromise.resolve();
                             }
+
                            $timeout(update,20);
                         });
                     };
                 }
             };
         }
-                                                    ]);
+    ]);
 }());

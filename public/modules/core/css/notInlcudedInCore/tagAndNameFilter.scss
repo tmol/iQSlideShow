@@ -132,3 +132,12 @@ $search-box-placeholder-font-size: 15px;
 .iqss-tag-tagAndNameFilterSummaryElement-remove {
     cursor: pointer;
 }
+
+// HACK: Fix IQSLDSH-367; ui-select will be completely replaced in the future
+.iqss-ui-select .ui-select-toggle {
+    display: none !important;
+}
+
+.iqss-ui-select .ui-select-search {
+    display: block !important;
+}

@@ -35,11 +35,11 @@
 
             return {
                 setup: function (scope, element) {
-                    if (scope.referenceSlide) {
-                        scope.templateUrl = 'modules/slideshows/slideTemplates/' + (scope.referenceSlide.templateName || 'default') + '/slide.html?version=' + Date();
-                        scope.cssUrl = 'modules/slideshows/slideTemplates/' + (scope.referenceSlide.templateName || 'default') + '/slide.css?version=' + Date();
-                        scope.jsUrl = 'modules/slideshows/slideTemplates/' + (scope.referenceSlide.templateName || 'default') + '/slide.js?version=' + Date();
-                        scope.referencePath = 'modules/slideshows/slideTemplates/' + (scope.referenceSlide.templateName || 'default') + '/';
+                    if (scope.slide) {
+                        scope.templateUrl = 'modules/slideshows/slideTemplates/' + (scope.slide.templateName || 'default') + '/slide.html?version=' + Date();
+                        scope.cssUrl = 'modules/slideshows/slideTemplates/' + (scope.slide.templateName || 'default') + '/slide.css?version=' + Date();
+                        scope.jsUrl = 'modules/slideshows/slideTemplates/' + (scope.slide.templateName || 'default') + '/slide.js?version=' + Date();
+                        scope.referencePath = 'modules/slideshows/slideTemplates/' + (scope.slide.templateName || 'default') + '/';
                     } else {
                         scope.templateUrl = 'modules/slideshows/slideTemplates/default/slide.html?version=' + Date();
                     }
@@ -72,7 +72,7 @@
                                 return;
                             }
 
-                            expand(scope.referenceSlide, element, scope.slideConfiguration.expand).then(function (successResult) {
+                            expand(scope.slide, element, scope.slideConfiguration.expand).then(function (successResult) {
                                 resolveSetupPromise(scope, deferred);
                             }, function (errResult) {
                                 resolveSetupPromise(scope, deferred);

@@ -66,8 +66,8 @@
                 delete $scope.filterParameters.fullyLoaded;
                 
                 executeFilter(function(result) {
-                    if (result.length > 0) {
-                        $scope.filterParameters.lastPageLastItemCreated = _.last(result).created;
+                    if (result.data.length > 0) {
+                        $scope.filterParameters.lastPageLastItemCreated = _.last(result.data).created;
                     }
 
                     if (result.data.length < $scope.filterParameters.pageSize) {
@@ -109,8 +109,8 @@
                 }
 
                 executeFilter(function(result) {
-                    if (result.length > 0) {
-                        $scope.filterParameters.lastPageLastItemCreated = _.last(result).created;
+                    if (result.data.length > 0) {
+                        $scope.filterParameters.lastPageLastItemCreated = _.last(result.data).created;
                     }
 
                     if (result.data.length < $scope.filterParameters.pageSize) {

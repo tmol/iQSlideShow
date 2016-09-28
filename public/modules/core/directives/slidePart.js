@@ -5,8 +5,8 @@
         function (ScriptInjector) {
             return {
                 link: function postLink(scope, element, attrs) {
-                    if (scope.referenceSlide
-                            && scope.referenceSlide.fireSetTemplateElementEvent
+                    if (scope.slide
+                            && scope.slide.fireSetTemplateElementEvent
                             && element.attr("type") !== "script"
                             && element.attr("hiddenPart") !== "true") {
                         scope.$emit("setTemplateElement", attrs.member, {
@@ -14,6 +14,12 @@
                             label: attrs.label || attrs.member
                         });
                     }
+
+                    scope.$watch("slide.content." + attrs.member, function(newValue,oldValue) {
+                        if (newValue!=oldValue) {
+                            update(newValue);
+                        }
+                    });
 
                     var slide;
                     var templatePath;

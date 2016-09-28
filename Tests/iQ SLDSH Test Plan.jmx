@@ -597,7 +597,6 @@ vars.remove(&quot;searchWord&quot;);</stringProp>
         &#xd;
       },&#xd;
       &quot;dragAndDropId&quot;: &quot;Id0.5197240933550684&quot;,&#xd;
-      &quot;zoomPercent&quot;: 100,&#xd;
       &quot;durationInSeconds&quot;: 2,&#xd;
       &quot;animationType&quot;: &quot;enter-top&quot;,&#xd;
       &quot;resolution&quot;: {&#xd;
@@ -650,7 +649,6 @@ vars.remove(&quot;searchWord&quot;);</stringProp>
         &quot;title&quot;: &quot;ghgf&quot;&#xd;
       },&#xd;
       &quot;dragAndDropId&quot;: &quot;Id0.4303627368802059&quot;,&#xd;
-      &quot;zoomPercent&quot;: 100,&#xd;
       &quot;durationInSeconds&quot;: 2,&#xd;
       &quot;animationType&quot;: &quot;enter-top&quot;,&#xd;
       &quot;resolution&quot;: {&#xd;

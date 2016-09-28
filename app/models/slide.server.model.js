@@ -28,12 +28,6 @@
             required: 'Please fill the Duration in seconds',
             trim: true
         },
-        zoomPercent: {
-            type: Number,
-            default: 100,
-            required: 'Please fill the zoom percent',
-            trim: true
-        },
         animationType: {
             type: String,
             default: '',

@@ -52,8 +52,12 @@
                 }
                 if (config !== null) {
                     // This is not ideal; all the results will be loaded and filtered in memory.
-                    filterResult.names = lodash.take(filterResult.names, config.sizeOfAutocompleteListForTags);
-                    filterResult.tags = lodash.take(filterResult.tags, config.sizeOfAutocompleteListForTags);
+                    var remaining = config.sizeOfAutocompleteListForTags;
+
+                    filterResult.names = lodash.take(filterResult.names, remaining);
+                    remaining -= filterResult.names.length;
+
+                    filterResult.tags = lodash.take(filterResult.tags, remaining);
                 }
                 success(filterResult);
             });

@@ -2,21 +2,35 @@
 @import 'mixins.scss';
 
 .iqss-device-interaction-navbar {
+    min-height: 40px;
+
+    .iqss-navbar-header {
+        min-height: 40px;
+
+        .iqss-navbar-brand {
+            height: 40px;
+            min-height: 40px;
+            line-height: 40px;
+        }
+    }
+
     @media (orientation: landscape) {
         display: none;
     }
-    @media (orientation: portait) {
+    
+    @media (orientation: portrait) {
         width: 100%;
     }
 }
+
 .iqss-device-interaction {
     @media (orientation: portrait) {
-        padding-top: 70px;
+        padding-top: 41px; // 40px = header, 1px = header bottom border
         padding-left: 0px;
         padding-right: 0px;
     }
     @media (orientation: landscape) {
-        padding-top: 70px;
+        padding-top: 41px; // 40px = header, 1px = header bottom border
         padding-left: 0px;
         padding-right: 0px;
     }

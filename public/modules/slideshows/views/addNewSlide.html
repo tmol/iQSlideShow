@@ -8,7 +8,7 @@
                     <section data-ng-repeat="template in filteredTemplates">
                         <div iqss-slideshowedit-addNewSlide-item-name>{{template}}</div>
                         <div class="iqss-slideshowedit-addNewSlide-item" ng-click="setTemplate(template);close();">
-                            <div ng-slide-view reference-slide='{templateName: template, zoomPercent: 100, resolution: {width: 1600, height: 900}}' class="ng-slide-view-container">
+                            <div ng-slide-view reference-slide='{templateName: template, resolution: {width: 1600, height: 900}}' class="ng-slide-view-container">
                             </div>
                         </div>
                     </section>

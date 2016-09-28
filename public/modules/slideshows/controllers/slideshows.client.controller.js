@@ -407,7 +407,6 @@
                         };
                         $scope.slideshow.draftSlides.push(newSlide);
                         newSlide.dragAndDropId = 'Id' + Math.random();
-                        newSlide.zoomPercent = 100;
                         newSlide.durationInSeconds = $scope.adminConfig.defaultSlideDuration;
                         newSlide.animationType = $scope.adminConfig.defaultAnimationType;
                     }
