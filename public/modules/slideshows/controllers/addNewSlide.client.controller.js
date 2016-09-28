@@ -6,8 +6,15 @@
         function ($scope, Tags, SlideBlueprints, SlideBlueprintsSearch, $timeout, Templates, slidesConcatenatedTagsListWithLimitedLength) {
             $scope.newSlideData = {};
 
+            var getSlides = function(templates) {
+                return _.map(templates, function(item) {
+                    return {
+                        templateName: item, resolution: {width: 1600, height: 900}
+                    }
+                })
+            }
             Templates.getAll(function (response) {
-                $scope.filteredTemplates = response;
+                $scope.filteredTemplates = getSlides(response);
                 $scope.templates = response;
             });
 
@@ -57,7 +64,8 @@
             }
 
             $scope.searchTemplates = function (search) {
-                $scope.filteredTemplates = executeTemplatesSearch(search);
+                var templates = executeTemplatesSearch(search);
+                $scope.filteredTemplates = getSlides(templates);
             };
 
             $scope.templatesSearchProvider = {
