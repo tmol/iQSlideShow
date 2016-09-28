@@ -1,0 +1,18 @@
+.template-default {
+    width: 1920px;
+    height: 1080px;
+    padding: 35px 50px;
+    font-family: 'Segoe UI', sans-serif;
+
+    .default-title {
+        font-size: 80px;
+        font-weight: 500;
+        line-height: 85px;
+    }
+
+    .default-content {
+        margin-top: 10px;
+        font-size: 35px;
+        line-height: 40px;
+    }
+}
