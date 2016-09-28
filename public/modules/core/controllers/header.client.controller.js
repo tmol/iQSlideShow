@@ -12,6 +12,7 @@ angular.module('core').controller('HeaderController', ['$scope', '$window', 'Aut
 
         $(document).keydown(function (e) {
 			if (e.keyCode == 80 && e.ctrlKey) {
+				e.preventDefault();
                 $window.open('/slideshow#!/player', '_blank');
             }
         });
