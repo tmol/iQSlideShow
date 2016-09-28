@@ -84,7 +84,8 @@
             };
 
             $scope.setTemplate = function (template) {
-                $scope.newSlideData.templateName = template;
+                $scope.newSlideData.templateName = template.templateName;
+                $scope.newSlideData.resolution = template.resolution;
             };
 
             $scope.searchBlueprints();
