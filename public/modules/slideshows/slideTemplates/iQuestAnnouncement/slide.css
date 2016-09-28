@@ -1,4 +1,4 @@
-.announcement-template {
+.template-iquest-announcement {
   width: 1920px;
   height: 1080px;
   position: relative;
@@ -6,14 +6,14 @@
   padding-left: 105px;
   color: #444;
   font-family: 'Segoe UI', sans-serif; }
-  .announcement-template .announcement-picture-container .announcement-picture {
+  .template-iquest-announcement .announcement-picture-container .announcement-picture {
     top: 0;
     left: 0;
     width: 1920px;
     height: 1080px;
     position: absolute;
     z-index: -2; }
-  .announcement-template .announcement-picture-container .announcement-picture-cut-left {
+  .template-iquest-announcement .announcement-picture-container .announcement-picture-cut-left {
     top: -5px;
     right: 600px;
     width: 10000px;
@@ -22,7 +22,7 @@
     position: absolute;
     z-index: -1;
     transform: skewX(-10deg); }
-  .announcement-template .announcement-picture-container .announcement-picture-cut-right {
+  .template-iquest-announcement .announcement-picture-container .announcement-picture-cut-right {
     top: -5px;
     left: 1770px;
     width: 10000px;
@@ -31,59 +31,59 @@
     position: absolute;
     z-index: -1;
     transform: skewX(-10deg); }
-  .announcement-template .announcement-title {
+  .template-iquest-announcement .announcement-title {
     width: 1260px;
     height: 115px;
     font-weight: 500;
     text-transform: uppercase; }
-  .announcement-template .announcement-body {
+  .template-iquest-announcement .announcement-body {
     width: 1080px; }
-    .announcement-template .announcement-body a {
+    .template-iquest-announcement .announcement-body a {
       color: #0095d6;
       text-decoration: none; }
-    .announcement-template .announcement-body .announcement-audience {
+    .template-iquest-announcement .announcement-body .announcement-audience {
       margin-top: 70px; }
-      .announcement-template .announcement-body .announcement-audience .announcement-audience-label {
+      .template-iquest-announcement .announcement-body .announcement-audience .announcement-audience-label {
         font-size: 30px; }
-      .announcement-template .announcement-body .announcement-audience .announcement-audience-text {
+      .template-iquest-announcement .announcement-body .announcement-audience .announcement-audience-text {
         height: 90px;
         color: #0095d6;
         font-size: 45px;
         font-weight: 500;
         letter-spacing: 3px;
         text-transform: uppercase; }
-    .announcement-template .announcement-body .announcement-content {
+    .template-iquest-announcement .announcement-body .announcement-content {
       height: 200px;
       margin-top: 50px;
       font-size: 36px;
       font-weight: 200; }
-    .announcement-template .announcement-body .announcement-responsible {
+    .template-iquest-announcement .announcement-body .announcement-responsible {
       margin-top: 50px; }
-      .announcement-template .announcement-body .announcement-responsible .announcement-responsible-label {
+      .template-iquest-announcement .announcement-body .announcement-responsible .announcement-responsible-label {
         font-size: 30px; }
-      .announcement-template .announcement-body .announcement-responsible .announcement-responsible-name {
+      .template-iquest-announcement .announcement-body .announcement-responsible .announcement-responsible-name {
         color: #0095d6;
         font-size: 45px;
         font-weight: 500;
         letter-spacing: 3px;
         text-transform: uppercase; }
-      .announcement-template .announcement-body .announcement-responsible .announcement-responsible-desc {
+      .template-iquest-announcement .announcement-body .announcement-responsible .announcement-responsible-desc {
         font-size: 30px;
         font-weight: 500; }
-      .announcement-template .announcement-body .announcement-responsible .announcement-responsible-contact {
+      .template-iquest-announcement .announcement-body .announcement-responsible .announcement-responsible-contact {
         margin-top: 50px;
         font-size: 30px; }
-  .announcement-template .announcement-qr-logo {
+  .template-iquest-announcement .announcement-qr-logo {
     right: 15px;
     bottom: 15px;
     width: 140px;
     position: absolute; }
-    .announcement-template .announcement-qr-logo .announcement-qr {
+    .template-iquest-announcement .announcement-qr-logo .announcement-qr {
       display: block;
       width: 100px;
       height: 100px;
       margin: 20px auto; }
-    .announcement-template .announcement-qr-logo .announcement-logo {
+    .template-iquest-announcement .announcement-qr-logo .announcement-logo {
       display: block;
       width: 125px;
       height: 31px;

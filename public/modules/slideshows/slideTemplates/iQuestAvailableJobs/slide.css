@@ -1,4 +1,4 @@
-.jobs-template {
+.template-iquest-available-jobs {
   width: 1920px;
   height: 1080px;
   position: relative;
@@ -6,14 +6,14 @@
   padding-left: 105px;
   color: #444;
   font-family: 'Segoe UI', sans-serif; }
-  .jobs-template .jobs-picture-container .jobs-picture {
+  .template-iquest-available-jobs .jobs-picture-container .jobs-picture {
     top: 0;
     left: 0;
     width: 1920px;
     height: 1080px;
     position: absolute;
     z-index: -2; }
-  .jobs-template .jobs-picture-container .jobs-picture-cut-left {
+  .template-iquest-available-jobs .jobs-picture-container .jobs-picture-cut-left {
     top: -5px;
     right: 600px;
     width: 10000px;
@@ -22,7 +22,7 @@
     position: absolute;
     z-index: -1;
     transform: skewX(-10deg); }
-  .jobs-template .jobs-picture-container .jobs-picture-cut-right {
+  .template-iquest-available-jobs .jobs-picture-container .jobs-picture-cut-right {
     top: -5px;
     left: 1770px;
     width: 10000px;
@@ -31,66 +31,66 @@
     position: absolute;
     z-index: -1;
     transform: skewX(-10deg); }
-  .jobs-template .jobs-heading {
+  .template-iquest-available-jobs .jobs-heading {
     width: 1260px;
     height: 90px;
     font-size: 80px;
     font-weight: 500;
     line-height: 85px;
     text-transform: uppercase; }
-  .jobs-template .jobs-body {
+  .template-iquest-available-jobs .jobs-body {
     width: 1080px;
     margin-top: 105px; }
-    .jobs-template .jobs-body a {
+    .template-iquest-available-jobs .jobs-body a {
       color: #0095d6 !important;
       text-decoration: none; }
-    .jobs-template .jobs-body .jobs-title-label {
+    .template-iquest-available-jobs .jobs-body .jobs-title-label {
       font-size: 30px; }
-    .jobs-template .jobs-body .jobs-title {
+    .template-iquest-available-jobs .jobs-body .jobs-title {
       color: #0095d6;
       font-size: 65px;
       font-weight: 500;
       letter-spacing: 3px;
       text-transform: uppercase; }
-    .jobs-template .jobs-body .jobs-location-label {
+    .template-iquest-available-jobs .jobs-body .jobs-location-label {
       font-size: 30px; }
-    .jobs-template .jobs-body .jobs-location {
+    .template-iquest-available-jobs .jobs-body .jobs-location {
       color: #0095d6;
       font-size: 45px;
       font-weight: 500;
       letter-spacing: 3px; }
-    .jobs-template .jobs-body .jobs-content {
+    .template-iquest-available-jobs .jobs-body .jobs-content {
       height: 225px;
       margin-top: 50px;
       font-size: 36px;
       font-weight: 200; }
-      .jobs-template .jobs-body .jobs-content p {
+      .template-iquest-available-jobs .jobs-body .jobs-content p {
         margin-bottom: 25px; }
-        .jobs-template .jobs-body .jobs-content p:last-child {
+        .template-iquest-available-jobs .jobs-body .jobs-content p:last-child {
           margin-bottom: 0; }
-    .jobs-template .jobs-body .jobs-message {
+    .template-iquest-available-jobs .jobs-body .jobs-message {
       margin-top: 20px;
       color: #0095d6;
       font-size: 45px;
       font-weight: 500;
       letter-spacing: 3px;
       text-transform: uppercase; }
-    .jobs-template .jobs-body .jobs-contact {
+    .template-iquest-available-jobs .jobs-body .jobs-contact {
       margin-top: 35px;
       font-size: 30px;
       font-weight: 200;
       line-height: 35px; }
-  .jobs-template .jobs-qr-logo {
+  .template-iquest-available-jobs .jobs-qr-logo {
     right: 15px;
     bottom: 15px;
     width: 140px;
     position: absolute; }
-    .jobs-template .jobs-qr-logo .jobs-qr {
+    .template-iquest-available-jobs .jobs-qr-logo .jobs-qr {
       display: block;
       width: 100px;
       height: 100px;
       margin: 20px auto; }
-    .jobs-template .jobs-qr-logo .jobs-logo {
+    .template-iquest-available-jobs .jobs-qr-logo .jobs-logo {
       display: block;
       width: 125px;
       height: 31px;
