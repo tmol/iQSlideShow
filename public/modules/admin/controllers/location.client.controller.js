@@ -24,7 +24,9 @@
             };
 
             $scope.addLocation = function () {
-                $scope.locations.push({});
+                if ($scope.editEnabled()) {
+                    $scope.locations.push({});
+                }
             };
 
             $scope.isAnyLocationEdited = false;
