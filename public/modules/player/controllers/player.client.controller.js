@@ -185,7 +185,9 @@
                 });
             };
             var reportHealth = function () {
-                HealthReporter.report({deviceId: $scope.deviceId});
+                if ($scope.deviceId) {
+                    HealthReporter.report({deviceId: $scope.deviceId});
+                }
             };
 
             timers.registerInterval('healthReport', function () {
