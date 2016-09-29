@@ -11,32 +11,45 @@ angular.module('admin').directive('locationItem', ['Admin', '$document', '$timeo
     template += '</div>'
 
     function link(scope, element, attrs) {
-        var rememberActualLocationName,
-            formatDevicesNamesToCommaSeparatedString,
-            keyDownHandler;
+        var ensureReadOnlyMode = function () {
+            if (scope.editMode) {
+                scope.editMode = false;
+                scope.$emit('locationNotEdited');
+            }
+        };
 
-        rememberActualLocationName = function () {
+        var rememberActualLocationName = function () {
             scope.locationNameOriginalValue = scope.location.name;
         };
+
+        var formatDevicesNamesToCommaSeparatedString = function (devices) {
+            var res = '',
+                device;
+
+            res = devices.map(function (device) {return device.name; }).join(", ");
+
+            return res;
+        };
+
+        scope.editMode = false;
+        rememberActualLocationName();
+
+        if (!scope.location._id) {
+            scope.editMode = true;
+            scope.$emit('locationEdited');
+        }
 
         scope.editLocation = function () {
             if (!scope.editEnabled()) {
                 return;
             }
 
-            if (scope.editMode === false) {
+            if (!scope.editMode) {
                 scope.editMode = true;
-                scope.$root.$broadcast('locationEdited');
+                scope.$emit('locationEdited');
                 $timeout(function () {
                     scope.$apply();
                 });
-            }
-        };
-
-        scope.ensureReadOnlyMode = function () {
-            if (scope.editMode === true) {
-                scope.editMode = false;
-                scope.$root.$broadcast('locationNotEdited');
             }
         };
 
@@ -45,12 +58,12 @@ angular.module('admin').directive('locationItem', ['Admin', '$document', '$timeo
                 event.stopPropagation();
             }
 
-            if (scope.editMode === true) {
-                scope.ensureReadOnlyMode();
+            if (scope.editMode) {
+                ensureReadOnlyMode();
             }
 
             if (!scope.location._id) {
-                scope.$root.$broadcast('locationAddCanceled', scope.location);
+                scope.$emit('locationAddCanceled', scope.location);
                 return;
             }
 
@@ -66,55 +79,9 @@ angular.module('admin').directive('locationItem', ['Admin', '$document', '$timeo
 
                 adminService = new Admin(scope.location);
                 adminService.$deleteLocation();
-                scope.$root.$broadcast('locationDeleted');
+                scope.$emit('locationDeleted');
             });
         };
-
-        formatDevicesNamesToCommaSeparatedString = function (devices) {
-            var res = '',
-                device;
-
-            res = devices.map(function (device) {return device.name; }).join(", ");
-
-            return res;
-        };
-
-        var keyDownHandler = function (event) {
-            if (scope.editMode !== true) {
-                return;
-            }
-            
-            switch (event.keyCode) {
-                case 13: // enter
-                    event.preventDefault();
-                    scope.saveLocation();
-                    break;
-
-                case 27: // escape
-                    event.preventDefault();
-                    scope.ensureReadOnlyMode();
-                    if (scope.location._id) {
-                        scope.location.name = scope.locationNameOriginalValue;
-                    } else {
-                        scope.$root.$broadcast('locationAddCanceled', scope.location);
-                    }
-                    break;
-            }
-        };
-
-        element.on('keydown', keyDownHandler);
-
-        scope.$on("$destroy", function () {
-            element.off('keydown', keyDownHandler);
-        });
-
-        scope.editMode = false;
-        rememberActualLocationName();
-
-        if (!scope.location._id) {
-            scope.editMode = true;
-            scope.$root.$broadcast('locationEdited');
-        }
 
         scope.saveLocation = function (event) {
             var adminService = new Admin(scope.location);
@@ -123,7 +90,7 @@ angular.module('admin').directive('locationItem', ['Admin', '$document', '$timeo
                 event.stopPropagation();
             }
 
-            if (scope.editMode !== true) {
+            if (!scope.editMode) {
                 return;
             }
 
@@ -138,7 +105,7 @@ angular.module('admin').directive('locationItem', ['Admin', '$document', '$timeo
             }
 
             if (scope.locationNameOriginalValue === scope.location.name) {
-                scope.ensureReadOnlyMode();
+                ensureReadOnlyMode();
                 return;
             }
 
@@ -147,24 +114,53 @@ angular.module('admin').directive('locationItem', ['Admin', '$document', '$timeo
                     if (devices.length !== 0) {
                         var msg = 'There are devices attached to the location. Please confirm that the devices locations will be updated. The attached devices: ' + formatDevicesNamesToCommaSeparatedString(devices);
                         if (confirm(msg) === false) {
-                            scope.ensureReadOnlyMode();
+                            ensureReadOnlyMode();
                             return;
                         }
                     }
 
                     adminService.$updateLocation(function () {
                         rememberActualLocationName();
-                        scope.ensureReadOnlyMode();
+                        ensureReadOnlyMode();
                     });
                 });
             } else {
                 adminService.$saveLocation(function (savedLocation) {
                     scope.location._id = savedLocation._id;
                     rememberActualLocationName();
-                    scope.ensureReadOnlyMode();
+                    ensureReadOnlyMode();
                 });
             }
         };
+
+        var keyDownHandler = function (event) {
+            if (!scope.editMode) {
+                return;
+            }
+            
+            switch (event.keyCode) {
+                case 13: // enter
+                    event.preventDefault();
+                    scope.saveLocation();
+                    break;
+
+                case 27: // escape
+                    event.preventDefault();
+                    ensureReadOnlyMode();
+                    if (scope.location._id) {
+                        scope.location.name = scope.locationNameOriginalValue;
+                    } else {
+                        scope.$emit('locationAddCanceled', scope.location);
+                    }
+                    break;
+            }
+        };
+
+        element.on('keydown', keyDownHandler);
+
+        scope.$on("$destroy", function () {
+            element.off('keydown', keyDownHandler);
+        });
     }
 
     return {
