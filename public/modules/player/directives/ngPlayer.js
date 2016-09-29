@@ -35,6 +35,7 @@
 
                     var emitCurrentSlideChanged = function (slide) {
                         var slideInfo = {
+                            index: slide.index,
                             slideShowName : slide.slideShowName,
                             author : slide.author,
                             publishedOnDate : new Date(slide.publishedOnDate),

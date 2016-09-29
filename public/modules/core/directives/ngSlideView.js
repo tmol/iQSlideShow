@@ -12,7 +12,7 @@
             template += "<div ng-show='!slideLoaded' style='top: 50%; position: absolute; left: 50%;  transform: translate(-50%,-50%);z-index:100' >LOADING...</div>";
             template += "</div>";
             template += '</div>';
-            template += '<div qr-device-interaction ng-if="!slideHasQrCode" qr-config="qrConfig" style="position: fixed;right: 10px;bottom: 10px;"></div>';
+            template += '<div qr-device-interaction ng-if="!slideHasQrCode" qr-config="qrConfig" style="position: absolute;right: 10px;bottom: 10px; z-index: 10000"></div>';
             template += '</div>';
             return {
                 scope: {
@@ -31,7 +31,7 @@
                     scope.indicatorVisible = false;
                     scope.indicatorSize = 0;
                     scope.slideReady = false;
-                    scope.slideHasQrCode = false;
+                    scope.slideHasQrCode = true;
                     scope.slide = null;
                     var appliedScale = 1;
                     var refreshed = false;
@@ -178,12 +178,12 @@
                         }, 10);
                     });
 
-                    scope.$on("currentSlideChanged", function (event, currentSlideIndex) {
-                        if (scope.slide.index !== currentSlideIndex) {
+                    scope.$on("currentSlideChanged", function (event, currentSlideIndex, slideShowId, slideInfo) {
+                        if (scope.slide.slideShowId === slideShowId && scope.slide.index === slideInfo.index) {
+                            detectSlideQrCode();
+                        } else {
                             // This will hide the player QR code.
                             scope.slideHasQrCode = true;
-                        } else {
-                            detectSlideQrCode();
                         }
                     });
 
@@ -209,6 +209,7 @@
                         }
                         templateLoaded = true;
                         scope.slideLoaded = true;
+                        detectSlideQrCode();
                         SlideSetup.loadScripts(scope, element).then(function () {
                             if (scope.slide.setupFinishedPromise) {
                                 scope.slide.setupFinishedPromise.resolve();
