@@ -153,7 +153,10 @@
 
 .iqss-slideshowedit-preview-footer-title {
     flex: 1;
+    overflow: hidden;
     text-align: center;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 .iqss-slideshowedit-preview-footer-fullScreen-container {
