@@ -161,6 +161,19 @@ angular.module('admin').directive('locationItem', ['Admin', '$document', '$timeo
         scope.$on("$destroy", function () {
             element.off('keydown', keyDownHandler);
         });
+
+        scope.$on('$stateChangeStart', function (event) {
+            if (!scope.editMode) {
+                return;
+            }
+
+            var msg = "The locations were changed. Are you sure you want to leave this page?";
+            var answer = confirm(msg);
+
+            if (!answer) {
+                event.preventDefault();
+            }
+        });
     }
 
     return {
