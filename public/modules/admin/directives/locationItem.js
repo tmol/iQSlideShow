@@ -3,10 +3,11 @@
 angular.module('admin').directive('locationItem', ['Admin', '$document', '$timeout', 'Devices', 'ActionResultDialogService', function (Admin, $document, $timeout, Devices, ActionResultDialogService) {
     'use strict';
 
-    var template = '';
-    template += '<span class="location-item-name" ng-show="!editMode" ng-click="editLocation()">{{location.name}}</span>';
+    var template = '<div class="location-item" ng-click="editLocation()">';
+    template += '<span class="location-item-name" ng-show="!editMode">{{location.name}}</span>';
     template += '<input class="location-item-edit" type="text" placeholder="New location" ng-show="editMode" ng-model="location.name" focus-on="editMode" select-on="editMode" />';
     template += '<span class="location-item-delete" ng-click="deleteLocation()"></span>';
+    template += '</div>'
 
     function link(scope, element, attrs) {
         var rememberActualLocationName,

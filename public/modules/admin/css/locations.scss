@@ -7,14 +7,17 @@
     padding: 0;
 
     [location-item] {
-        display: flex;
-        padding: 10px 15px;
         border-top: 1px solid #ddd;
-        align-items: center;
 
         &:first-child {
             border-top: 0;
         }
+    }
+
+    .location-item {
+        display: flex;
+        padding: 10px 15px;
+        align-items: center;
 
         .location-item-name {
             flex: 1;
