@@ -52,6 +52,7 @@
                         deviceId: deviceId,
                         active: false,
                         location: 'To be defined',
+                        lastHealthReport: new Date(),
                         name: 'New Device',
                         slideAgregation: {
                             agregationMode: "sequential",
