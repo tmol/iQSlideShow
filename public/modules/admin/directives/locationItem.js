@@ -6,18 +6,14 @@ angular.module('admin').directive('locationItem', ['Admin', '$document', '$timeo
     var template = '<div class="location-item" ng-click="editLocation()">';
     template += '<span class="location-item-name" ng-show="!editMode">{{location.name}}</span>';
     template += '<input class="location-item-edit" type="text" placeholder="New location" ng-show="editMode" ng-model="location.name" focus-on="editMode" select-on="editMode" />';
-    template += '<span class="location-item-delete" ng-click="deleteLocation()"></span>';
+    template += '<span class="location-item-save" ng-click="saveLocation($event)" ng-show="editMode"></span>';
+    template += '<span class="location-item-delete" ng-click="deleteLocation($event)"></span>';
     template += '</div>'
 
     function link(scope, element, attrs) {
         var rememberActualLocationName,
             formatDevicesNamesToCommaSeparatedString,
-            focusOutHanlder,
-            keyPressHandler;
-
-        scope.getEditMode = function () {
-            return scope.editMode;
-        };
+            keyDownHandler;
 
         rememberActualLocationName = function () {
             scope.locationNameOriginalValue = scope.location.name;
@@ -44,9 +40,18 @@ angular.module('admin').directive('locationItem', ['Admin', '$document', '$timeo
             }
         };
 
-        scope.deleteLocation = function () {
+        scope.deleteLocation = function (event) {
+            if (event) {
+                event.stopPropagation();
+            }
+
             if (scope.editMode === true) {
                 scope.ensureReadOnlyMode();
+            }
+
+            if (!scope.location._id) {
+                scope.$root.$broadcast('locationAddCanceled', scope.location);
+                return;
             }
 
             Devices.getByLocationName({locationName: scope.location.name}, function (devices) {
@@ -73,35 +78,62 @@ angular.module('admin').directive('locationItem', ['Admin', '$document', '$timeo
 
             return res;
         };
-        keyPressHandler = function (event) {
-            if (event.keyCode == 13) {
-                focusOutHanlder();
+
+        var keyDownHandler = function (event) {
+            if (scope.editMode !== true) {
+                return;
             }
+            
+            switch (event.keyCode) {
+                case 13: // enter
+                    event.preventDefault();
+                    scope.saveLocation();
+                    break;
+
+                case 27: // escape
+                    event.preventDefault();
+                    scope.ensureReadOnlyMode();
+                    if (scope.location._id) {
+                        scope.location.name = scope.locationNameOriginalValue;
+                    } else {
+                        scope.$root.$broadcast('locationAddCanceled', scope.location);
+                    }
+                    break;
+            }
+        };
+
+        element.on('keydown', keyDownHandler);
+
+        scope.$on("$destroy", function () {
+            element.off('keydown', keyDownHandler);
+        });
+
+        scope.editMode = false;
+        rememberActualLocationName();
+
+        if (!scope.location._id) {
+            scope.editMode = true;
+            scope.$root.$broadcast('locationEdited');
         }
-        focusOutHanlder = function (event) {
+
+        scope.saveLocation = function (event) {
             var adminService = new Admin(scope.location);
+            
+            if (event) {
+                event.stopPropagation();
+            }
 
             if (scope.editMode !== true) {
                 return;
             }
 
             if (!scope.location.name) {
-                if (scope.locationNameOriginalValue) {
-                    scope.location.name = scope.locationNameOriginalValue;
-
-                    ActionResultDialogService.showOkDialog('The location must have a name!', scope);
-                } else {
-                    scope.$root.$broadcast('locationAddCanceled', scope.location);
-                }
-
-                scope.ensureReadOnlyMode();
+                ActionResultDialogService.showOkDialog('The location must have a name!', scope);
                 return;
             }
 
             if (!scope.isLocationNameUnique({location: scope.location})) {
                 ActionResultDialogService.showOkDialog('The location name must be unique!', scope);
-                scope.location.name = scope.locationNameOriginalValue;
-                scope.ensureReadOnlyMode();
                 return;
             }
 
@@ -110,7 +142,7 @@ angular.module('admin').directive('locationItem', ['Admin', '$document', '$timeo
                 return;
             }
 
-            if (scope.locationNameOriginalValue) {
+            if (scope.location._id) {
                 Devices.getByLocationName({ locationName: scope.locationNameOriginalValue }, function (devices) {
                     if (devices.length !== 0) {
                         var msg = 'There are devices attached to the location. Please confirm that the devices locations will be updated. The attached devices: ' + formatDevicesNamesToCommaSeparatedString(devices);
@@ -133,26 +165,6 @@ angular.module('admin').directive('locationItem', ['Admin', '$document', '$timeo
                 });
             }
         };
-
-        element.on('focusout', focusOutHanlder);
-
-        element.on('keypress', keyPressHandler);
-
-
-        scope.$on("$destroy", function () {
-            element.off('focusout', focusOutHanlder);
-            element.off('keyPress', keyPressHandler);
-
-        });
-
-        rememberActualLocationName();
-        scope.editMode = false;
-        if (scope.location._id === undefined) {
-            // just added
-            scope.editMode = true;
-            element[0].focus();
-            scope.$root.$broadcast('locationEdited');
-        }
     }
 
     return {

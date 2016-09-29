@@ -28,6 +28,17 @@
             flex: 1;
         }
 
+        .location-item-save {
+            background: url(../../../modules/core/img/save.svg) center no-repeat;
+            background-size: 12px 12px;
+            color: #009da5;
+            font-weight: bold;
+            text-align: right;
+            cursor: pointer;
+            width: 20px;
+            height: 20px;
+        }
+
         .location-item-delete {
             background: url(../../../modules/core/img/delete.svg) center no-repeat;
             background-size: 12px 12px;
