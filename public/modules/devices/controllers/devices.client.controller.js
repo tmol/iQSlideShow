@@ -78,54 +78,23 @@
             $scope.filterParameters = $scope.cache.get('devices.client.controller.filterParameters');
             if (angular.isUndefined($scope.filterParameters)) {
                 $scope.filterParameters = {
-                    filterEventName: 'filterDevices',
-                    removeItemFromFilter: function (filterItem) {
-                        _.pull(this.filterItems, filterItem);
-                        $scope.filterDevices();
-                    },
-                    filterItems: [],
-                    isNotEmpty: function () {
-                        return this.filterItems.length > 0;
-                    },
-                    clear: function () {
-                        this.filterItems = [];
-                        $scope.filterDevices();
+                    namesAndTagsFilterParameters: {},
+                    noFilterApplied: function () {
+                        return this.showOnlyMine === false
+                            && this.namesAndTagsFilterParameters.filterItems.length === 0
+                            && this.namesAndTagsFilterParameters.nameFilters.length === 0
+                            && this.namesAndTagsFilterParameters.tagFilters.length === 0
+                            && (this.namesAndTagsFilterParameters.namesAndTagsFilter === ''
+                                || !this.namesAndTagsFilterParameters.namesAndTagsFilter);
                     }
                 };
             }
 
-            $scope.possibleSearchedDeviceNames = [ ];
-
-            $scope.refreshPossibleSearchedDeviceNamesAndDevices = function (search) {
-                $scope.filterParameters.name = search;
-                if (search.length === 0) {
-                    $scope.possibleSearchedDeviceNames = [];
-                    $scope.filterDevices();
-                    return;
-                }
-
-                Devices.getFilteredNames({
-                    nameFilter: search
-                }, function (filteredNames) {
-                    var uniqueDevicesName = _.uniq(_.map(filteredNames, 'name'));
-                    $scope.possibleSearchedDeviceNames = _.sortBy(uniqueDevicesName, function (name) {
-                        return name.toLowerCase();
-                    });
-                });
-            };
-
-            $scope.initNameSearchFilter = function (select) {
-                var searchFilter = $scope.filterParameters.name;
-                select.search = angular.isUndefined(searchFilter)
-                    ? '' : searchFilter;
-            };
-
-            $scope.filterDevices = function (select) {
-                if (!angular.isUndefined(select) && select.clickTriggeredSelect === false) {
-                    $scope.filterParameters.name = select.placeholder;
-                }
-                Devices.query({
-                    name: $scope.filterParameters.name
+            $scope.filterDevices = function () {
+                Devices.list({
+                    nameFilters: $scope.filterParameters.namesAndTagsFilterParameters.nameFilters,
+                    tagFilters: $scope.filterParameters.namesAndTagsFilterParameters.tagFilters,
+                    namesAndTagsFilter: $scope.filterParameters.namesAndTagsFilterParameters.namesAndTagsFilter
                 }, function (result) {
                     $scope.devices = result;
                 });
@@ -135,7 +104,7 @@
                 filterEventName: 'filterDevices',
                 cacheId: 'devicesFilter',
                 filter: function (filterParameters) {
-                    $scope.filterParameters.name = filterParameters.namesAndTagsFilter;
+                    $scope.filterParameters.namesAndTagsFilterParameters = filterParameters;
                     $scope.filterDevices();
                 },
                 getPossibleFilterValues: function (search, callback) {

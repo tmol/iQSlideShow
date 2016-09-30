@@ -14,6 +14,7 @@
         lodash = require('lodash'),
         Promise = require('promise'),
         User = mongoose.model('User'),
+        NamesAndTagsFilter = require('../services/namesAndTagsFilter'),
         messageHandler = require('../services/messaging/messageHandler');
 
     /**
@@ -130,11 +131,14 @@
     };
 
     exports.list = function (req, res) {
-        Device.findByFilter(req.query, function (devices) {
-            res.jsonp(devices);
-        }, function (err) {
-            res.status(400).send({
-                message: errorHandler.getErrorMessage(err)
+        NamesAndTagsFilter.filter(req, Device, function (select) {
+            return select;
+        }, function (filterResult) {
+            res.jsonp(filterResult);
+        }, function (error) {
+            console.log(error);
+            return res.status(400).send({
+                message: errorHandler.getErrorMessage(error)
             });
         });
     };

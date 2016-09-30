@@ -97,7 +97,7 @@
         if (namesAndTagsFilter && namesAndTagsFilter.length > 0) {
             select = { $or: [
                 {name : FindInStringRegex.getFindInTextRegExp(namesAndTagsFilter)},
-                {tags : { $elemMatch: new RegExp('.*' + namesAndTagsFilter + '.*', 'i')}}
+                {tags : { $elemMatch: {$regex: '.*' + namesAndTagsFilter + '.*', $options: 'i' }}}
             ]
                 };
         }
