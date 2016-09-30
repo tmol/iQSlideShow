@@ -11,7 +11,7 @@
         app.route('/devices')
             .get(users.requiresLogin, devices.list);
 
-        app.route('/devices/names/:nameFilter')
+        app.route('/devices/names')
             .get(users.requiresLogin, devices.getFilteredNames)
 
         app.route('/devices/healthReport/:deviceId')
@@ -32,6 +32,5 @@
         app.param('deviceId', devices.deviceByID);
         app.param('deviceWithSlidesid', devices.deviceWithSlidesByID);
         app.param('locationName', devices.devicesByLocation);
-        app.param('nameFilter', devices.filteredNames);
     };
 }());

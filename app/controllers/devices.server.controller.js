@@ -136,7 +136,6 @@
         }, function (filterResult) {
             res.jsonp(filterResult);
         }, function (error) {
-            console.log(error);
             return res.status(400).send({
                 message: errorHandler.getErrorMessage(error)
             });
@@ -237,32 +236,30 @@
         return {_id: device._id, name: device.name};
     };
 
-    exports.filteredNames = function (req, res, next, nameFilter) {
-        Config.findOne(function (err, config) {
-            if (err) {
-                error(err);
-                return;
-            }
-            var query = Device.find({name: getNameFilterExpression(nameFilter)});
-            if (config !== null) {
-                query = query.limit(config.sizeOfAutocompleteListForTags);
-            }
-            query.exec(function (err, devices) {
+    var preparePromiseForFilter = function (select, req, actionOnFind) {
+        var promise = new Promise(function (resolve, reject) {
+            Device.find(select).exec(function (err, devicesFound) {
                 if (err) {
-                    return next(err);
+                    reject(err);
+                    return;
                 }
-                if (!devices) {
-                    req.filteredNames = [];
-                }
-                req.filteredNames = lodash.map(devices, mapDeviceToFilteredName);
-                next();
+
+                actionOnFind(devicesFound);
+                resolve();
             });
         });
 
+        return promise;
     };
 
     exports.getFilteredNames = function (req, res,  next) {
-        res.jsonp(req.filteredNames);
+        NamesAndTagsFilter.getFilteredNamesAndTags(req, preparePromiseForFilter, function (filterResult) {
+            res.jsonp(filterResult);
+        }, function (error) {
+            return res.status(400).send({
+                message: errorHandler.getErrorMessage(error)
+            });
+        });
     };
 
     exports.hasAuthorization = function (req, res, next) {

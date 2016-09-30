@@ -107,12 +107,12 @@
                     $scope.filterParameters.namesAndTagsFilterParameters = filterParameters;
                     $scope.filterDevices();
                 },
-                getPossibleFilterValues: function (search, callback) {
+                getPossibleFilterValues: function (search, excluded, callback) {
                     Devices.getFilteredNames({
-                        nameFilter: search
-                    }, function (filteredNames) {
-                        var uniqueDevicesName = _.uniq(filteredNames);
-                        callback({names: uniqueDevicesName});
+                        namesAndTagsFilter: search,
+                        excluded: excluded
+                    }, function (filterResult) {
+                        callback(filterResult);
                     });
                 }
             };

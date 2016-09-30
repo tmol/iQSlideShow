@@ -16,8 +16,7 @@
                 },
                 getFilteredNames: {
                     method: 'GET',
-                    url: '/devices/names/:nameFilter',
-                    isArray: true
+                    url: '/devices/names'
                 },
                 update: {
                     method: 'PUT'
