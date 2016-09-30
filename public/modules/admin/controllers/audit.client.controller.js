@@ -2,8 +2,11 @@
 (function () {
     'use strict';
 
-    angular.module('admin').controller('AuditController', ['$scope', 'Admin', 'ActionResultDialogService',
-        function ($scope, Admin, ActionResultDialogService) {
+    angular.module('admin').controller('AuditController', ['$scope', '$location', 'Authentication', 'Admin', 'ActionResultDialogService',
+        function ($scope, $location, Authentication, Admin, ActionResultDialogService) {
+            // If user is not signed in then redirect back home
+            if (!Authentication.user) $location.path('/');
+
 
             $scope.fromDate = new Date();
             $scope.toDate = new Date();
