@@ -107,7 +107,9 @@ angular.module('core').directive('tagAndNameFilter', ['$cacheFactory', '$timeout
                 return item.name.toLowerCase();
             };
 
-            scope.searchProvider.getPossibleFilterValues(scope.filterParameters.namesAndTagsFilter, function (filterResult) {
+            var excluded = _.uniq(_.concat(scope.filterParameters.nameFilters, scope.filterParameters.tagFilters));
+
+            scope.searchProvider.getPossibleFilterValues(scope.filterParameters.namesAndTagsFilter, excluded, function (filterResult) {
                 var tags;
 
                 scope.possibleFilterValues = _.sortBy(filterResult.names, toLowerCase);

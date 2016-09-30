@@ -39,9 +39,10 @@
                     $scope.blueprintsFilterParameters = blueprintsFilterParameters;
                     $scope.searchBlueprints();
                 },
-                getPossibleFilterValues: function (search, callback) {
+                getPossibleFilterValues: function (search, excluded, callback) {
                     SlideBlueprints.getFilteredNamesAndTags({
-                        namesAndTagsFilter: search
+                        namesAndTagsFilter: search,
+                        excluded: excluded
                     }, function (filterResult) {
                         callback(filterResult);
                     });
@@ -52,13 +53,19 @@
 
             $scope.templatesFilterParameters = {namesAndTagsFilter: '', noFilterSummary: true};
 
-            function executeTemplatesSearch(search) {
+            function executeTemplatesSearch(search, excluded) {
                 search = _.toLower(search);
 
                 var filterResult = _.filter($scope.templates, function (aTemplate) {
                     var regExp = new RegExp('.*' + search + '.*', 'i');
                     return regExp.test(_.toLower(aTemplate));
                 });
+
+                if (excluded && excluded.length > 0) {
+                    filterResult = _.reject(filterResult, function (aTemplate) {
+                        return _.includes(excluded, aTemplate);
+                    });
+                }
 
                 return filterResult;
             }
@@ -74,8 +81,8 @@
                 filter: function (templatesFilterParameters) {
                     $scope.searchTemplates(templatesFilterParameters.namesAndTagsFilter);
                 },
-                getPossibleFilterValues: function (search, callback) {
-                    var searchResult = executeTemplatesSearch(search);
+                getPossibleFilterValues: function (search, excluded, callback) {
+                    var searchResult = executeTemplatesSearch(search, excluded);
                     searchResult = _.map(searchResult, function (item) {
                         return ({name : item});
                     });

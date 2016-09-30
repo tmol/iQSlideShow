@@ -66,10 +66,11 @@
                     $scope.filterParameters.namesAndTagsFilterParameters = filterParameters;
                     $scope.filterSlideShows();
                 },
-                getPossibleFilterValues: function (search, callback) {
+                getPossibleFilterValues: function (search, excluded, callback) {
                     Slideshows.getFilteredNamesAndTags({
                         showOnlyMine: $scope.filterParameters.showOnlyMine,
-                        namesAndTagsFilter: search
+                        namesAndTagsFilter: search,
+                        excluded: excluded
                     }, function (filterResult) {
                         callback(filterResult);
                     });

@@ -23,16 +23,30 @@
             promise,
             filterResult = { names: [], tags: [] },
             namesAndTagsFilter = req.query.namesAndTagsFilter,
+            excluded = req.query.excluded || [],
             tagsRegExp = FindInStringRegex.getFindInTextRegExp(namesAndTagsFilter);
 
+        if (!lodash.isArray(excluded)) {
+            excluded = [excluded];
+        }
+
         if (namesAndTagsFilter !== null && namesAndTagsFilter.length > 0) {
-            select = {name : tagsRegExp};
+            select = { $and: [
+                { name: tagsRegExp },
+                { name: { $nin: excluded } }
+            ]};
+
             promise = preparePromiseForFilter(select, req, function (itemsFound) {
                 filterResult.names =  lodash.map(lodash.uniq(itemsFound), mapItemToFilteredName);
             });
             promises.push(promise);
 
-            select = {tags : { $elemMatch: {$regex: '.*' + namesAndTagsFilter + '.*', $options: 'i' }}};
+            select = { $and: [
+                { tags: { $elemMatch: { $regex: '.*' + namesAndTagsFilter + '.*', $options: 'i' } } },
+                { tags: { $nin: excluded } },
+                { tags: { $not: {$size: 0 } } }
+            ]};
+
             promise = preparePromiseForFilter(select, req, function (itemsFound) {
                 filterResult.tags = lodash.map(itemsFound, mapItemToTags);
                 filterResult.tags = lodash.flatten(filterResult.tags);

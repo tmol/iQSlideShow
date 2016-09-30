@@ -20,9 +20,10 @@
                     $scope.filterParameters = filterParameters;
                     $scope.search();
                 },
-                getPossibleFilterValues: function (search, callback) {
+                getPossibleFilterValues: function (search, excluded, callback) {
                     SlideBlueprints.getFilteredNamesAndTags({
-                        namesAndTagsFilter: search
+                        namesAndTagsFilter: search,
+                        excluded: excluded
                     }, function (filterResult) {
                         callback(filterResult);
                     });
