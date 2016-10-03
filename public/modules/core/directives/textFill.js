@@ -33,6 +33,14 @@
                     }
                 });
 
+                scope.$on("currentSlideChanged", function () {
+                    $timeout(applyTextFill, 100, false);
+                });
+
+                scope.$on("slideTemplateLoaded", function () {
+                    $timeout(applyTextFill, 100, false);
+                });
+
                 $timeout(applyTextFill, 100, false);
             }
         };

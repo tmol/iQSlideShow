@@ -210,6 +210,7 @@
                         templateLoaded = true;
                         scope.slideLoaded = true;
                         detectSlideQrCode();
+                        scope.$broadcast("slideTemplateLoaded");
                         SlideSetup.loadScripts(scope, element).then(function () {
                             if (scope.slide.setupFinishedPromise) {
                                 scope.slide.setupFinishedPromise.resolve();
