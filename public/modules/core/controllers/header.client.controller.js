@@ -5,6 +5,7 @@ angular.module('core').controller('HeaderController', ['$scope', '$window', 'Aut
 		$scope.authentication = Authentication;
 		$scope.isCollapsed = false;
 		$scope.menu = Menus.getMenu('topbar');
+		$scope.settings = Menus.getMenu('settings');
 
 		$scope.toggleCollapsibleMenu = function() {
 			$scope.isCollapsed = !$scope.isCollapsed;

@@ -11,6 +11,11 @@
             Menus.addSubMenuItem('topbar', 'admin', 'Reload', 'reload');
             Menus.addSubMenuItem('topbar', 'admin', 'Locations', 'locations');
             Menus.addSubMenuItem('topbar', 'admin', 'Audit', 'audit');
+
+            // Set user settings menu items
+            Menus.addMenuItem('settings', 'Settings', 'settings', 'dropdown');
+            Menus.addSubMenuItem('settings', 'settings', 'Edit Profile', 'settings/profile');
+            Menus.addSubMenuItem('settings', 'settings', 'Change Password', 'settings/password');
         }
-        ]);
+    ]);
 }());

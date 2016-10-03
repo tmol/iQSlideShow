@@ -38,27 +38,25 @@
 
 // These very specific and nested selectors are necessary to overwrite Bootstrap's
 // styling for dropdown menus because they use very specific selectors too. :-/
-.iqss-navbar-nav-menu-container {
-    .iqss-navbar-nav {
-        > li {
-            > a {
-                @include verticalAlignTextMiddle;
-                padding-left: 0;
-                padding-right: 40px;
-            }
+.iqss-navbar-nav, .iqss-navbar-right {
+    > li {
+        > a {
+            @include verticalAlignTextMiddle;
+            padding-left: 0;
+            padding-right: 40px;
+        }
 
-            > ul.dropdown-menu {
-                padding: 0;
+        > ul.dropdown-menu {
+            padding: 0;
 
-                > li {
-                    &.active {
-                        > a {
-                            color: $orange-color;
-                            background: #707070;
+            > li {
+                &.active {
+                    > a {
+                        color: $orange-color;
+                        background: #707070;
 
-                            &:hover, &:focus {
-                                background: #575757;
-                            }
+                        &:hover, &:focus {
+                            background: #575757;
                         }
                     }
                 }
@@ -126,11 +124,6 @@
         margin-top: 5px;
         border: 1px solid #ccc;
         border: 1px solid rgba(0, 0, 0, 0.15);
-
-        > li > a {
-            color: #333;
-            padding: 3px 20px;
-        }
     }
 }
 
