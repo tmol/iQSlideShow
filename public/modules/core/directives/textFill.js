@@ -14,15 +14,11 @@
                 maxFontSize: "=",
             },
             link: function postLink(scope, element, attrs) {
-                if ($(element).find('.text-fill').length === 0) {
-                    return;
-                }
-
                 var applyTextFill = function() {
                     $(element).textfill({
                         minFontPixels: scope.minFontSize,
                         maxFontPixels: scope.maxFontSize,
-                        innerTag: '.text-fill'
+                        innerTag: '*'
                     });
                 }
 
