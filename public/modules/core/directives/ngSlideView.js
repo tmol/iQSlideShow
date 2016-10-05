@@ -147,13 +147,6 @@
                         }
                     });
 
-                    scope.$on("getSlideContentPart", function (event, contentPartName, callback) {
-                        if (!scope.slide) {
-                            return;
-                        }
-                        var content = scope.slide.content || {};
-                        callback(content[contentPartName]);
-                    });
                     scope.$on("getTemplatePath", function (event, callback) {
                         callback(scope.referencePath);
                     });
