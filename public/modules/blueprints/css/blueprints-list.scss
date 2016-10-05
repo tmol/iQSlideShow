@@ -12,10 +12,6 @@
     height: 100%;
 }
 
-.iqss-blueprintslist-content * {
-    line-height: $font-size;
-}
-
 .iqss-blueprintslist-content > div {
     padding-top: $blueprints-list-header-content-top-padding;
     max-width: 90%;
@@ -106,17 +102,20 @@
 
 .iqss-blueprintslist-slideshow-details {
     padding: 3px 2 * $blueprints-list-default-horizontal-padding;
-    height: 34px;
+    height: 30px;
     overflow: hidden;
     font-size: $small-font-size;
+    line-height: $font-size;
 }
 
 .iqss-blueprintslist-slideshow-authorName {
     padding: 3px 2 * $blueprints-list-default-horizontal-padding;
     padding-top: 6px;
+    line-height: $font-size;
 }
 
 .iqss-blueprintslist-slideshow-savedOn {
     padding: 0px 2 * $blueprints-list-default-horizontal-padding;
     font-size: $small-font-size;
+    line-height: $font-size;
 }
