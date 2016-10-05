@@ -174,6 +174,8 @@
                     scope.$on("currentSlideChanged", function (event, currentSlideIndex, slideShowId, slideInfo) {
                         if (scope.slide.slideShowId === slideShowId && scope.slide.index === slideInfo.index) {
                             detectSlideQrCode();
+
+                            scope.$broadcast("slideShown");
                         } else {
                             // This will hide the player QR code.
                             scope.slideHasQrCode = true;
