@@ -19,6 +19,10 @@
                             return;
                         }
 
+                        if (!content || /^\s+$/.test(content)) {
+                            content = "";
+                        }
+
                         if (content === oldContent) {
                             return;
                         }
@@ -27,7 +31,7 @@
                         
                         switch (element.prop("tagName").toUpperCase()) {
                             case "IMG":
-                                element.attr("src", content || 'modules/slideshows/css/img/default.jpg');
+                                element.attr("src", content || 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAAA1BMVEXMzMzKUkQnAAAACklEQVR4XmNgAAAAAgAB3p6PvwAAAABJRU5ErkJggg==');
 
                                 break;
 
