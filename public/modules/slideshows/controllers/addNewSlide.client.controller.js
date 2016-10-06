@@ -101,5 +101,9 @@
                 $scope.newSlideData.slide = slide;
                 $scope.$close($scope.newSlideData);
             };
+
+            $scope.tabSwitched = function () {
+                $scope.$broadcast('updateSlide');
+            };
         }]);
 }());

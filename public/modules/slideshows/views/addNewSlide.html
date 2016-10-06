@@ -1,6 +1,6 @@
 <div>
     <uib-tabset>
-        <uib-tab heading="New from templates">
+        <uib-tab heading="New from templates" select="tabSwitched()">
             <div class='iqss-slideshowedit-addNewSlide-tab-container'>
                 <div tag-and-name-filter no-summary='true' search-Provider="templatesSearchProvider" label='"Search"'></div>
 
@@ -25,7 +25,7 @@
                 </div>
             </div>
         </uib-tab>
-        <uib-tab heading="From repository">
+        <uib-tab heading="From repository" select="tabSwitched()">
             <div class='iqss-slideshowedit-addNewSlide-tab-container'>
                 <div tag-and-name-filter label='"Search"' search-Provider="blueprintsSearchProvider" class='iqss-slideshowedit-addNewSlide-selectFromBluerprints-search'></div>
                 <div class='iqss-slideshowedit-addNewSlide-items'>

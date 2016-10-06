@@ -192,6 +192,10 @@
                         }
                     });
 
+                    scope.$on("updateSlide", function () {
+                        $timeout(update, 20);
+                    })
+
                     scope.$on("$destroy", function () {
                         contentResizeSenzorDestroy();
                         parentResizeSenzorDestroy();

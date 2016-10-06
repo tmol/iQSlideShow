@@ -59,6 +59,10 @@
                     }
                 });
 
+                scope.$on("updateSlide", function () {
+                    startApplyTextFill();
+                })
+
                 scope.$on("slideShown", function (event) {
                     startApplyTextFill();
                 });
