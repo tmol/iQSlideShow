@@ -32,8 +32,6 @@ $slideshow-edit-slide-height: $slideshow-edit-slide-preview-height + $slideshow-
 
 $slideshow-edit-attributes-height: 40px;
 
-$addNewSlide-item-width: 120px;
+$addNewSlide-item-width: 155px;
 
-$addNewSlide-item-margin-right: 20px;
-
-$addNewSlide-item-height: 79px;
+$addNewSlide-item-height: round($addNewSlide-item-width / 16 * 9);
