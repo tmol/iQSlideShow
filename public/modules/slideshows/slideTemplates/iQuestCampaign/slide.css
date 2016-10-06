@@ -48,7 +48,8 @@
     .template-iquest-campaign .campaign-body .campaign-content {
       height: 325px;
       font-size: 36px;
-      font-weight: 200; }
+      font-weight: 200;
+      word-wrap: break-word; }
       .template-iquest-campaign .campaign-body .campaign-content p {
         margin-bottom: 25px; }
         .template-iquest-campaign .campaign-body .campaign-content p:last-child {

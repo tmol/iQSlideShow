@@ -57,7 +57,8 @@
       height: 200px;
       margin-top: 50px;
       font-size: 36px;
-      font-weight: 200; }
+      font-weight: 200;
+      word-wrap: break-word; }
     .template-iquest-announcement .announcement-body .announcement-responsible {
       margin-top: 50px; }
       .template-iquest-announcement .announcement-body .announcement-responsible .announcement-responsible-label {

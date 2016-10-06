@@ -10,4 +10,5 @@
   .template-default .default-content {
     margin-top: 10px;
     font-size: 35px;
-    line-height: 40px; }
+    line-height: 40px;
+    word-wrap: break-word; }

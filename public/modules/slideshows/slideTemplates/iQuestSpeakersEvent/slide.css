@@ -85,7 +85,8 @@
       height: 145px;
       font-size: 27px;
       font-weight: 200;
-      line-height: 35px; }
+      line-height: 35px;
+      word-wrap: break-word; }
     .template-iquest-speakers-event .event-body .event-details {
       margin-top: 15px; }
       .template-iquest-speakers-event .event-body .event-details:after {
@@ -134,7 +135,8 @@
         margin-top: 10px;
         font-size: 30px;
         font-weight: 200;
-        line-height: 35px; }
+        line-height: 35px;
+        word-wrap: break-word; }
   .template-iquest-speakers-event .event-qr-logo {
     right: 15px;
     bottom: 15px;

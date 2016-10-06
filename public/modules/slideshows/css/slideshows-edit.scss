@@ -126,6 +126,7 @@
     @include border;
     background: white;
     flex: 1;
+    min-width: 0;
 }
 
 .iqss-slideshowedit-preview {
@@ -541,6 +542,10 @@
     width: 24px;
     height: 24px;
     padding: 0;
+}
+
+.iqss-slideshowedit-data-tab .ta-text {
+    word-wrap: break-word;
 }
 
 .iqss-slideshowedit-saveSlideToBlueprints-container .modal-dialog {
