@@ -329,14 +329,16 @@
     width: 100%;
 }
 
-.iqss-slideshowedit-slide-current {
-    border: 1px solid $very-dark-grey-color;
-}
-
 .iqss-slideshowedit-slide-container {
     display: flex;
     flex-direction: column;
     height: 100%;
+    border: 1px solid transparent;
+    cursor: default;
+}
+
+.iqss-slideshowedit-slide-current {
+    border-color: $very-dark-grey-color;
 }
 
 @keyframes moveTop{

@@ -102,7 +102,7 @@
                                 <div class='iqss-form-label'>{{value.label}}</div>
                                 <div class="controls">
                                     <input ng-if="value.type=='text'" type="text" ng-model="currentSlide.content[templateElement]">
-                                    <div text-angular ng-if="value.type=='html'" type="text" ng-model="currentSlide.content[templateElement]"></div>
+                                    <div text-angular ng-if="value.type=='html'" type="text" ng-model="currentSlide.content[templateElement]" ng-model-options="{ debounce: 25 }"></div>
                                 </div>
                             </div>
                         </div>
