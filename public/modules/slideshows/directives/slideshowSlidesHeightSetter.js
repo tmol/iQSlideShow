@@ -22,7 +22,7 @@ angular.module('slideshows').directive('slideshowSlidesHeightSetter', ['$window'
                 if (!$rootScope.$$phase) {
                     $rootScope.$apply();
                 }
-                element.css('overflow-Y', overflowY);
+                element.css('overflow-y', overflowY);
             });
         };
 
