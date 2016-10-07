@@ -97,7 +97,11 @@ angular.module('core').directive('tagAndNameFilter', ['$cacheFactory', '$timeout
 
             if (!scope.filterParameters.namesAndTagsFilter || scope.filterParameters.namesAndTagsFilter.length === 0) {
                 scope.possibleFilterValues = [];
-                filter();
+
+                if (scope.filterParameters.filterItems.length === 0) {
+                    filter();
+                }
+                
                 return;
             }
 
