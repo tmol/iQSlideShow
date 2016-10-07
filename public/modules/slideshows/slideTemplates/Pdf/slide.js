@@ -3,10 +3,11 @@
 function PdfScript($scope, $q, $timeout) {
     'use strict';
 
-    /*temporary testing*/
+    if (!$scope.slide.content) {
+        $scope.slide.content = {};
+    }
 
-    var content = $scope.slide.content || {},
-        url = '/pdfProxy/' + encodeURIComponent(content.url),
+    var content = $scope.slide.content,
         pageRendering = false,
         pageNrPending = null,
         canvas,
@@ -114,11 +115,11 @@ function PdfScript($scope, $q, $timeout) {
 
         PDFJS.workerSrc = '/modules/slideshows/slideTemplates/Pdf/pdf.worker.js';
         if (!content.url) {
-            $scope.pdfDocLoaded = true;
+            $scope.pdfDocLoaded = false;
             return;
         }
 
-        PDFJS.getDocument(url).then(function (pdfDoc_) {
+        PDFJS.getDocument('/pdfProxy/' + encodeURIComponent(content.url)).then(function (pdfDoc_) {
             pdfDoc = pdfDoc_;
             $scope.pdfDocLoaded = true;
             applyScopeIfNotPhase();
@@ -145,6 +146,15 @@ function PdfScript($scope, $q, $timeout) {
             }
         });
     }
+
+    $scope.$watch("slide.content.url", function () {
+        if (pdfScriptLoaded()) {
+            pdfDoc = null;
+            $scope.pdfDocLoaded = false;
+
+            ensurePdfIsLoaded();
+        }
+    });
 
     function executeExpansion(callback) {
         if (!pdfDoc) {
