@@ -153,9 +153,15 @@
                         });
 
                         scope.$on("slidesLoaded", function (e, slideIndex) {
-                            slideNumber = -1;
                             scope.slidesLoaded = true;
-                            loadNextSlide();
+                            
+                            if (scope.onHold) {
+                                slideNumber = 0;
+                            } else {
+                                slideNumber = -1;
+
+                                loadNextSlide();
+                            }
                         });
                     }
 
