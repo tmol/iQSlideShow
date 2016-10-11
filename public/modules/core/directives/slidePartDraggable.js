@@ -3,7 +3,6 @@
     'use strict';
     angular.module('core').directive('slidePartDraggable', ['$document',
         function ($document) {
-
             return {
                 link: function postLink(scope, element, attrs) {
                     var leftLimit = parseFloat(attrs.draggableLeftLimit);
@@ -66,6 +65,12 @@
 
                         scope.$watch("slide.content." + attrs.draggableMember, function (offset) {
                             element.css("left", offset + "px");
+                        });
+
+                        scope.$on("$destroy", function () {
+                            container.off("mousedown", mousedown);
+                            $document.off("mousemove", mousemove);
+                            $document.off("mouseup", mouseup);
                         });
                     }
                 }
