@@ -32,6 +32,12 @@
     padding: 0;
     width: $slideshow-list-slideshow-width;
     box-shadow: 2px 2px 3px $grey-color;
+    
+    .ng-slide-view {
+        > * {
+            cursor: pointer !important;
+        }
+    }
 }
 
 .iqss-slideshowlist-slideshow-createNew-container {

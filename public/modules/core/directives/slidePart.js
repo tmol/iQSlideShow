@@ -7,13 +7,12 @@
                 link: function postLink(scope, element, attrs) {
                     var oldContent;
 
-
                     var injectScript = function (templatePath) {
                         ScriptInjector.inject(templatePath + element.attr("url"), element.attr("tag") || element.attr("url"));
                     };
 
                     var update = function (content) {
-                        if (element.attr("type") === "script" && element.attr("url") && !scope.isEdit) {
+                        if (element.attr("type") === "script" && element.attr("url")) {
                             scope.$emit("getTemplatePath", injectScript);
 
                             return;

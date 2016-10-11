@@ -295,6 +295,12 @@
     height: $addNewSlide-item-height;
     border: 1px solid $dark-grey-color;
     overflow: hidden;
+
+    .ng-slide-view {
+        > * {
+            cursor: pointer !important;
+        }
+    }
 }
 
 .iqss-slideshowedit-addNewSlide-selectFromBluerprints-search hr {

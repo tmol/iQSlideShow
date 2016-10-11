@@ -284,10 +284,15 @@
                 $scope.currentSlide = slide;
                 $scope.view.selectedResolution = -1;
 
+                _.each($scope.slideshow.draftSlides, function (slide) {
+                    slide.isEdit = false;
+                });
+
                 if (!slide) {
                     return;
                 }
 
+                slide.isEdit = true;
                 slide.resolution = defResolution; //todo: remove this later
                 $scope.currentSlide.fireSetTemplateElementEvent = true;
                 updateTemplate();
