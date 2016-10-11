@@ -83,6 +83,9 @@
                     }
 
                     scope.$watch("slide.content." + attrs.member, update);
+                },
+                controller: function SlidePartController () {
+                    // nothing to do, used for directives that depend on slide-part
                 }
             };
         }

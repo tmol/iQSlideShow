@@ -4,6 +4,7 @@
     angular.module('core').directive('slidePartDraggable', ['$document',
         function ($document) {
             return {
+                require: 'slidePart',
                 link: function postLink(scope, element, attrs) {
                     var leftLimit = parseFloat(attrs.draggableLeftLimit);
                     var rightLimit = parseFloat(attrs.draggableRightLimit);
