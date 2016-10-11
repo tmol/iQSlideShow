@@ -5,11 +5,11 @@
   padding-top: 125px;
   padding-left: 105px;
   color: #444;
-  font-family: 'Segoe UI', sans-serif; }
+  font-family: 'Segoe UI', sans-serif;
+  cursor: default; }
   .template-iquest-available-jobs .jobs-picture-container .jobs-picture {
     top: 0;
-    left: 0;
-    width: 1920px;
+    left: -55px;
     height: 1080px;
     position: absolute;
     z-index: -2; }

@@ -1,6 +1,13 @@
 <div class="template-iquest-speakers-event ng-scope">
     <div class="event-picture-container">
-        <img slide-part class="event-picture" member="picture" label="Picture URL" />
+        <img class="event-picture"
+             slide-part
+             slide-part-draggable
+             label="Picture URL"
+             member="picture"
+             draggable-member="pictureOffset"
+             draggable-left-limit="695"
+             draggable-right-limit="-55" />
 
         <div class="event-picture-cut-left"></div>
         <div class="event-picture-cut-right"></div>

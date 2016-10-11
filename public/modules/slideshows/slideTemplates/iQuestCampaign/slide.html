@@ -1,6 +1,13 @@
 <div class="template-iquest-campaign ng-scope">
     <div class="campaign-picture-container">
-        <img slide-part class="campaign-picture" member="picture" label="Picture URL" />
+        <img class="campaign-picture"
+             slide-part
+             slide-part-draggable
+             label="Picture URL"
+             member="picture"
+             draggable-member="pictureOffset"
+             draggable-left-limit="695"
+             draggable-right-limit="-55" />
 
         <div class="campaign-picture-cut-left"></div>
         <div class="campaign-picture-cut-right"></div>

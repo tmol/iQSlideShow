@@ -1,6 +1,13 @@
 <div class="template-iquest-available-jobs ng-scope">
     <div class="jobs-picture-container">
-        <img slide-part class="jobs-picture" member="picture" label="Picture URL" />
+        <img class="jobs-picture"
+             slide-part
+             slide-part-draggable
+             label="Picture URL"
+             member="picture"
+             draggable-member="pictureOffset"
+             draggable-left-limit="695"
+             draggable-right-limit="-55" />
 
         <div class="jobs-picture-cut-left"></div>
         <div class="jobs-picture-cut-right"></div>

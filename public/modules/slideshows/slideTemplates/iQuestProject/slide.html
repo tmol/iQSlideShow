@@ -1,6 +1,13 @@
 <div class="template-iquest-project ng-scope">
     <div class="project-picture-container">
-        <img slide-part class="project-picture" member="picture" label="Picture URL" />
+        <img class="project-picture"
+             slide-part
+             slide-part-draggable
+             label="Picture URL"
+             member="picture"
+             draggable-member="pictureOffset"
+             draggable-left-limit="695"
+             draggable-right-limit="-55" />
 
         <div class="project-picture-cut-left"></div>
         <div class="project-picture-cut-right"></div>
