@@ -20,7 +20,9 @@
                     $scope.members = [];
 
                     this.addMember = function(member) {
-                        if (!_.includes($scope.members)) {
+                        member = 'slide.content.' + member;
+
+                        if (!_.includes($scope.members, member)) {
                             $scope.members.push(member);
                         }
                     };
