@@ -65,6 +65,7 @@
     "grunt-node-inspector": "~0.4.1",
     "grunt-nodemon": "~0.4",
     "jasmine-core": "^2.5.0",
+    "jshint": "^2.9.3",
     "karma": "~0.12",
     "karma-chrome-launcher": "~0.1",
     "karma-coverage": "~0.3",

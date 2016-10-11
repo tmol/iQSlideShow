@@ -1,11 +1,14 @@
+/*global _*/
 /*global angular*/
-(function () {
+
+(function() {
     'use strict';
-    angular.module('core').directive('slideSection', ['ScriptInjector',
-        function (ScriptInjector) {
+
+    angular.module('core').directive('slideSection',
+        function() {
             return {
                 link: function postLink(scope, element, attrs) {
-                    scope.$watchGroup(scope.members, function (values) {
+                    scope.$watchGroup(scope.members, function(values) {
                         if (_.some(values)) {
                             element.show();
                         } else {
@@ -24,5 +27,5 @@
                 }]
             };
         }
-    ]);
+    );
 }());
