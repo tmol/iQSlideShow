@@ -4,7 +4,8 @@
     angular.module('core').directive('slidePart', ['ScriptInjector',
         function (ScriptInjector) {
             return {
-                link: function postLink(scope, element, attrs) {
+                require: "?^^slideSection",
+                link: function postLink(scope, element, attrs, section) {
                     var oldContent;
 
                     var injectScript = function (templatePath) {
@@ -66,6 +67,10 @@
 
                         scope.$broadcast("slidePartUpdated", content, attrs.member);
                     };
+
+                    if (section) {
+                        section.addMember(attrs.member);
+                    }
 
                     if (scope.slide
                             && scope.slide.fireSetTemplateElementEvent
