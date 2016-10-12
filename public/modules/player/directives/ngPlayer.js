@@ -9,7 +9,7 @@
             var template = '';
             template += '<div ng-repeat="slide in slides() track by $index" ng-show="$index==currentIndex" ng-class="{loaded: slidesLoaded}"';
             template += '     class="{{slide.animationType}} slideShow" style="width:100%;height:100%;position:relative;display:block;overflow:hidden"';
-            template += '     ng-slide-view is-playing="true" reference-slide="slide" qr-config="qrConfig">';
+            template += '     ng-slide-view is-playing="true" interaction-mode="interaction" reference-slide="slide" qr-config="qrConfig">';
             template += '</div>';
 
             return {
@@ -17,6 +17,7 @@
                     slides: '&',
                     qrConfig: '=',
                     ngPlayerOnHold: '&',
+                    ngPlayerInteraction: '&',
                     ngPlayerIgnoreMessages: "&",
                     slideShowId: '='
                 },
@@ -28,6 +29,9 @@
                     var ignoreMessages = false;
                     if (scope.ngPlayerIgnoreMessages) {
                         ignoreMessages = scope.ngPlayerIgnoreMessages();
+                    }
+                    if (scope.ngPlayerInteraction) {
+                        scope.interaction = scope.ngPlayerInteraction();
                     }
                     if (scope.ngPlayerOnHold) {
                         scope.onHold = scope.ngPlayerOnHold();

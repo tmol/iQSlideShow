@@ -20,6 +20,7 @@
                     slideWidth: "=",
                     slideHeight: "=",
                     referenceSlide: "&",
+                    interactionMode: "=?",
                     isPlaying: "=",
                     emitSlideLoadedEvent: "="
                 },
@@ -112,6 +113,10 @@
                     var parentResizeSenzorDestroy = resizeSenzor(element.find(".slide-content-container")[0], update);
 
                     scope.onSlideClicked = function (event) {
+                        if (!scope.interactionMode) {
+                            return;
+                        }
+
                         var pageX = 0;
                         var pageY = 0;
                         if (event.originalEvent.touches && event.originalEvent.touches.length > 0) {
