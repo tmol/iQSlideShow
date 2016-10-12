@@ -22,7 +22,8 @@
     "angular-ui-select": "https://github.com/CMircea/ui-select.git#master",
     "fastclick": "^1.0.6",
     "lodash": "^4.10.0",
-    "jquery-textfill": "https://github.com/CMircea/jquery-textfill.git#master"
+    "jquery-textfill": "https://github.com/CMircea/jquery-textfill.git#master",
+    "jquery": "3.1.0"
   },
   "resolutions": {
     "angular": "~1.4.x"
