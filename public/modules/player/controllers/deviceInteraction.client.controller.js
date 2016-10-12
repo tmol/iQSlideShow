@@ -64,7 +64,7 @@
             var applyFilterInternal = function () {
                 delete $scope.filterParameters.lastPageLastItemCreated;
                 delete $scope.filterParameters.fullyLoaded;
-                
+
                 executeFilter(function(result) {
                     if (result.data.length > 0) {
                         $scope.filterParameters.lastPageLastItemCreated = _.last(result.data).created;
@@ -92,9 +92,7 @@
             }
 
             $scope.applyFilter = function () {
-                if ($scope.slideShowFilter) {
-                    applyFilterInternal();
-                }
+                applyFilterInternal();
 
                 $scope.displayFilter = false;
             };
