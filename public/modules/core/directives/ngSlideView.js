@@ -127,8 +127,8 @@
                         var y = pageY - target.offset().top;
 
 
-                        var percentX = x * 100 / (scope.resolution.width * appliedScale);
-                        var percentY = y * 100 / (scope.resolution.height * appliedScale);
+                        var percentX = x * 100 / target.width();
+                        var percentY = y * 100 / target.height();
 
 
                         $rootScope.$broadcast("slideShowClicked", {percentX : percentX, percentY : percentY});
