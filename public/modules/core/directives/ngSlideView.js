@@ -66,6 +66,9 @@
                         if (!scope.slide) {
                             return;
                         }
+                        if (element.parent().length === 0) {
+                            return;
+                        }
                         scope.resolution = scope.slide.resolution || resolutions[0];
                         scope.indicatorSize = Math.max(scope.resolution.width, scope.resolution.height) * 10 / 100;
 
