@@ -59,7 +59,7 @@
                                 if (content) {
                                     var text = content;
                                     if (element.attr('encoded') === 'true') {
-                                        eval('text="' + content + '"');
+                                        eval("text='" + content + "'");
                                     }
                                     element.html(text);
                                 }
