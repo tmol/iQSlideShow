@@ -147,8 +147,8 @@ function PdfScript($scope, $q, $timeout) {
         });
     }
 
-    $scope.$watch("slide.content.url", function () {
-        if (pdfScriptLoaded()) {
+    $scope.$watch("slide.content.url", function (newVal, oldVal) {
+        if (pdfScriptLoaded() && newVal !== oldVal) {
             pdfDoc = null;
             $scope.pdfDocLoaded = false;
 
