@@ -181,6 +181,7 @@
                     delete draftSlide.dragAndDropId;
                     delete draftSlide.pageNr;
                     delete draftSlide.numPages;
+                    delete draftSlide.isEdit;
                 });
 
                 return JSON.stringify(clone) !== $scope.slideshowJson;
