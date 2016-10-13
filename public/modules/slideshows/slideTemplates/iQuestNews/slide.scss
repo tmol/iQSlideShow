@@ -54,8 +54,6 @@
             font-size: 30px;
             font-weight: 200;
             color: #444444;
-            word-wrap: break-word;
-            overflow: hidden;
 
             a {
                 color: #0095d6;
@@ -68,6 +66,8 @@
 
             .news-text {
                 height: 322px;
+                word-wrap: break-word;
+                overflow: hidden;
             }
 
             .news-source {
