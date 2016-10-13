@@ -53,6 +53,9 @@ $picture-cut-offset: 5px;
         height: 115px;
         font-size: 80px;
         font-weight: 500;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
     }
 
     .announcement-body {
@@ -76,6 +79,9 @@ $picture-cut-offset: 5px;
                 font-size: 45px;
                 font-weight: 500;
                 letter-spacing: 3px;
+                overflow: hidden;
+                white-space: nowrap;
+                text-overflow: ellipsis;
             }
         }
 
@@ -100,16 +106,25 @@ $picture-cut-offset: 5px;
                 font-size: 45px;
                 font-weight: 500;
                 letter-spacing: 3px;
+                overflow: hidden;
+                white-space: nowrap;
+                text-overflow: ellipsis;
             }
 
             .announcement-responsible-desc {
                 font-size: 30px;
                 font-weight: 500;
+                overflow: hidden;
+                white-space: nowrap;
+                text-overflow: ellipsis;
             }
 
             .announcement-responsible-contact {
                 margin-top: 50px;
                 font-size: 30px;
+                overflow: hidden;
+                white-space: nowrap;
+                text-overflow: ellipsis;
             }
         }
     }

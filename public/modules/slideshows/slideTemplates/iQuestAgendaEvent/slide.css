@@ -37,12 +37,18 @@
     .template-iquest-agenda-event .event-header .event-name {
       height: 90px;
       font-size: 80px;
-      line-height: 85px; }
+      line-height: 85px;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis; }
     .template-iquest-agenda-event .event-header .event-theme {
       height: 50px;
       font-size: 45px;
       line-height: 45px;
-      color: #0095d6; }
+      color: #0095d6;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis; }
   .template-iquest-agenda-event .event-agenda {
     margin-top: 60px; }
     .template-iquest-agenda-event .event-agenda:after {
@@ -57,9 +63,15 @@
       .template-iquest-agenda-event .event-agenda .event-agenda-item .event-agenda-item-hours {
         font-size: 45px;
         font-weight: 500;
-        color: #0095d6; }
+        color: #0095d6;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis; }
       .template-iquest-agenda-event .event-agenda .event-agenda-item .event-agenda-item-desc {
-        font-size: 30px; }
+        font-size: 30px;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis; }
   .template-iquest-agenda-event .event-body {
     width: 1080px;
     margin-top: 45px; }
@@ -88,10 +100,16 @@
           font-size: 108px;
           font-weight: 500;
           color: #0095d6;
-          line-height: 115px; }
+          line-height: 115px;
+          overflow: hidden;
+          white-space: nowrap;
+          text-overflow: ellipsis; }
         .template-iquest-agenda-event .event-body .event-details .event-date .event-date-month, .template-iquest-agenda-event .event-body .event-details .event-date .event-date-year {
           font-size: 30px;
-          font-weight: 500; }
+          font-weight: 500;
+          overflow: hidden;
+          white-space: nowrap;
+          text-overflow: ellipsis; }
       .template-iquest-agenda-event .event-body .event-details .event-location {
         width: 640px;
         float: right; }
@@ -101,11 +119,17 @@
           font-size: 108px;
           font-weight: 500;
           color: #0095d6;
-          line-height: 115px; }
+          line-height: 115px;
+          overflow: hidden;
+          white-space: nowrap;
+          text-overflow: ellipsis; }
         .template-iquest-agenda-event .event-body .event-details .event-location .event-location-details {
           width: 425px;
           font-size: 30px;
-          font-weight: 500; }
+          font-weight: 500;
+          overflow: hidden;
+          white-space: nowrap;
+          text-overflow: ellipsis; }
     .template-iquest-agenda-event .event-body .event-audience {
       margin-top: 15px; }
       .template-iquest-agenda-event .event-body .event-audience .event-audience-label {
@@ -114,13 +138,18 @@
         color: #0095d6;
         font-size: 45px;
         font-weight: 500;
-        line-height: 55px; }
+        line-height: 55px;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis; }
       .template-iquest-agenda-event .event-body .event-audience .event-audience-contact {
         margin-top: 10px;
         font-size: 30px;
         font-weight: 200;
         line-height: 35px;
-        word-wrap: break-word; }
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis; }
   .template-iquest-agenda-event .event-qr-logo {
     right: 15px;
     bottom: 15px;

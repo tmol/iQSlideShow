@@ -37,7 +37,10 @@
     font-size: 80px;
     font-weight: 500;
     line-height: 85px;
-    color: #0095d6; }
+    color: #0095d6;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis; }
   .template-iquest-campaign .campaign-body {
     width: 1080px;
     margin-top: 105px; }
@@ -69,10 +72,16 @@
           font-size: 108px;
           font-weight: 500;
           color: #0095d6;
-          line-height: 115px; }
+          line-height: 115px;
+          overflow: hidden;
+          white-space: nowrap;
+          text-overflow: ellipsis; }
         .template-iquest-campaign .campaign-body .campaign-details .campaign-date .campaign-date-month, .template-iquest-campaign .campaign-body .campaign-details .campaign-date .campaign-date-year {
           font-size: 30px;
-          font-weight: 500; }
+          font-weight: 500;
+          overflow: hidden;
+          white-space: nowrap;
+          text-overflow: ellipsis; }
       .template-iquest-campaign .campaign-body .campaign-details .campaign-location {
         width: 640px;
         float: right; }
@@ -82,16 +91,25 @@
           font-size: 108px;
           font-weight: 500;
           color: #0095d6;
-          line-height: 115px; }
+          line-height: 115px;
+          overflow: hidden;
+          white-space: nowrap;
+          text-overflow: ellipsis; }
         .template-iquest-campaign .campaign-body .campaign-details .campaign-location .campaign-location-details {
           width: 425px;
           font-size: 30px;
-          font-weight: 500; }
+          font-weight: 500;
+          overflow: hidden;
+          white-space: nowrap;
+          text-overflow: ellipsis; }
     .template-iquest-campaign .campaign-body .campaign-contact {
       margin-top: 35px;
       font-size: 30px;
       font-weight: 200;
-      line-height: 35px; }
+      line-height: 35px;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis; }
   .template-iquest-campaign .campaign-qr-logo {
     right: 15px;
     bottom: 15px;

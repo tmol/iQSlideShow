@@ -22,12 +22,18 @@
       .template-iquest-news .news-header .news-title-line .news-title {
         color: #fff;
         font-size: 82px;
-        font-weight: 500; }
+        font-weight: 500;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis; }
       .template-iquest-news .news-header .news-title-line .news-subtitle {
         color: #fff;
         font-size: 45px;
         font-weight: 500;
-        letter-spacing: 2px; }
+        letter-spacing: 2px;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis; }
   .template-iquest-news .news-body {
     margin: 105px; }
     .template-iquest-news .news-body:after {
@@ -39,34 +45,46 @@
       width: 1260px;
       font-size: 30px;
       font-weight: 200;
-      color: #444444;
+      color: #444444; }
       .template-iquest-news .news-body .news-content a {
         color: #0095d6;
         text-decoration: none; }
       .template-iquest-news .news-body .news-content p {
         margin-bottom: 40px; }
       .template-iquest-news .news-body .news-content .news-text {
-        height: 322px; }
+        height: 322px;
         word-wrap: break-word;
         overflow: hidden; }
       .template-iquest-news .news-body .news-content .news-source {
-        margin-top: 50px; }
+        margin-top: 50px;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis; }
     .template-iquest-news .news-body .news-date {
       float: right;
       width: 345px; }
       .template-iquest-news .news-body .news-date .news-date-label {
         font-size: 35px;
         font-weight: 400;
-        letter-spacing: 4px; }
+        letter-spacing: 4px;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis; }
       .template-iquest-news .news-body .news-date .news-date-month {
         font-size: 65px;
         font-weight: 500;
         line-height: 1;
         letter-spacing: 4px;
-        color: #0095d6; }
+        color: #0095d6;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis; }
       .template-iquest-news .news-body .news-date .news-date-year {
         font-size: 30px;
-        font-weight: 500; }
+        font-weight: 500;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis; }
   .template-iquest-news .news-qr-logo {
     right: 15px;
     bottom: 15px;

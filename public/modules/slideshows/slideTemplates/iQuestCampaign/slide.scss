@@ -55,6 +55,9 @@ $picture-cut-offset: 5px;
         font-weight: 500;
         line-height: 85px;
         color: #0095d6;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
     }
 
     .campaign-body {
@@ -104,11 +107,17 @@ $picture-cut-offset: 5px;
                     font-weight: 500;
                     color: #0095d6;
                     line-height: 115px;
+                    overflow: hidden;
+                    white-space: nowrap;
+                    text-overflow: ellipsis;
                 }
 
                 .campaign-date-month, .campaign-date-year {
                     font-size: 30px;
                     font-weight: 500;
+                    overflow: hidden;
+                    white-space: nowrap;
+                    text-overflow: ellipsis;
                 }
             }
 
@@ -125,12 +134,18 @@ $picture-cut-offset: 5px;
                     font-weight: 500;
                     color: #0095d6;
                     line-height: 115px;
+                    overflow: hidden;
+                    white-space: nowrap;
+                    text-overflow: ellipsis;
                 }
 
                 .campaign-location-details {
                     width: 425px;
                     font-size: 30px;
                     font-weight: 500;
+                    overflow: hidden;
+                    white-space: nowrap;
+                    text-overflow: ellipsis;
                 }
             }
         }
@@ -140,6 +155,9 @@ $picture-cut-offset: 5px;
             font-size: 30px;
             font-weight: 200;
             line-height: 35px;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
         }
     }
 

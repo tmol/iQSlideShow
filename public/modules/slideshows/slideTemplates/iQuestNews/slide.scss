@@ -28,6 +28,9 @@
                 color: #fff;
                 font-size: 82px;
                 font-weight: 500;
+                overflow: hidden;
+                white-space: nowrap;
+                text-overflow: ellipsis;
             }
 
             .news-subtitle {
@@ -35,6 +38,9 @@
                 font-size: 45px;
                 font-weight: 500;
                 letter-spacing: 2px;
+                overflow: hidden;
+                white-space: nowrap;
+                text-overflow: ellipsis;
             }
         }
     }
@@ -72,6 +78,9 @@
 
             .news-source {
                 margin-top: 50px;
+                overflow: hidden;
+                white-space: nowrap;
+                text-overflow: ellipsis;
             }
         }
 
@@ -83,6 +92,9 @@
                 font-size: 35px;
                 font-weight: 400;
                 letter-spacing: 4px;
+                overflow: hidden;
+                white-space: nowrap;
+                text-overflow: ellipsis;
             }
 
             .news-date-month {
@@ -91,11 +103,17 @@
                 line-height: 1;
                 letter-spacing: 4px;
                 color: #0095d6;
+                overflow: hidden;
+                white-space: nowrap;
+                text-overflow: ellipsis;
             }
 
             .news-date-year {
                 font-size: 30px;
                 font-weight: 500;
+                overflow: hidden;
+                white-space: nowrap;
+                text-overflow: ellipsis;
             }
         }
     }

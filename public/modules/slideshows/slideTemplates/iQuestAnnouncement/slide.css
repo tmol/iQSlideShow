@@ -35,7 +35,10 @@
     width: 1260px;
     height: 115px;
     font-size: 80px;
-    font-weight: 500; }
+    font-weight: 500;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis; }
   .template-iquest-announcement .announcement-body {
     width: 1080px; }
     .template-iquest-announcement .announcement-body a {
@@ -50,7 +53,10 @@
         color: #0095d6;
         font-size: 45px;
         font-weight: 500;
-        letter-spacing: 3px; }
+        letter-spacing: 3px;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis; }
     .template-iquest-announcement .announcement-body .announcement-content {
       height: 200px;
       margin-top: 50px;
@@ -66,13 +72,22 @@
         color: #0095d6;
         font-size: 45px;
         font-weight: 500;
-        letter-spacing: 3px; }
+        letter-spacing: 3px;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis; }
       .template-iquest-announcement .announcement-body .announcement-responsible .announcement-responsible-desc {
         font-size: 30px;
-        font-weight: 500; }
+        font-weight: 500;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis; }
       .template-iquest-announcement .announcement-body .announcement-responsible .announcement-responsible-contact {
         margin-top: 50px;
-        font-size: 30px; }
+        font-size: 30px;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis; }
   .template-iquest-announcement .announcement-qr-logo {
     right: 15px;
     bottom: 15px;
