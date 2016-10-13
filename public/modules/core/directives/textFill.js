@@ -36,7 +36,7 @@
                     scope.$emit("textFillStarted", scope.member);
 
                     $(element).textfill({
-                        minFontPixels: scope.minFontSize,
+                        minFontPixels: scope.minFontSize || 8, // default to 8 px minimum font size
                         maxFontPixels: scope.maxFontSize,
 
                         // We don't care what type of element contains the text.
