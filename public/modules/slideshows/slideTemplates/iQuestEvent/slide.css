@@ -81,7 +81,8 @@
       font-size: 27px;
       font-weight: 200;
       line-height: 35px;
-      word-wrap: break-word; }
+      word-wrap: break-word;
+      overflow: hidden; }
     .template-iquest-event .event-body .event-details {
       margin-top: 15px; }
       .template-iquest-event .event-body .event-details:after {

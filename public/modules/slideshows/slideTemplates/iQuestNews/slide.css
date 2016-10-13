@@ -42,7 +42,8 @@
       font-size: 30px;
       font-weight: 200;
       color: #444444;
-      word-wrap: break-word; }
+      word-wrap: break-word;
+      overflow: hidden; }
       .template-iquest-news .news-body .news-content a {
         color: #0095d6;
         text-decoration: none; }

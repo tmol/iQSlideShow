@@ -16,7 +16,7 @@
                 maxFontSize: "="
             },
             link: function postLink(scope, element, attrs) {
-                var failCounter = 1, maxFailCounter = 25;
+                var failCounter = 1, maxFailCounter = 10;
                 var applyInterval, applyTextFill;
 
                 var stopApplyTextFill = function () {
@@ -46,7 +46,7 @@
                 applyTextFill = function() {
                     scope.$emit("textFillStarted", scope.member);
 
-                    $(element).textfill({
+                    element.textfill({
                         minFontPixels: scope.minFontSize || 8, // default to 8 px minimum font size
                         maxFontPixels: scope.maxFontSize,
 
@@ -56,6 +56,7 @@
                         success: function () {
                             stopApplyTextFill();
 
+                            element.removeClass("text-fill-error");
                             scope.$emit("textFillSuccessful", scope.member);
 
                             if (scope.slide.isEdit) {
@@ -71,7 +72,14 @@
                             if (failCounter > maxFailCounter) {
                                 stopApplyTextFill();
 
+                                element.addClass("text-fill-error");
                                 scope.$emit("textFillFailed", scope.member);
+
+                                if (scope.slide.isEdit) {
+                                    var fontSizeMember = scope.member + "FontSize";
+
+                                    delete scope.slide.content[fontSizeMember];
+                                }
                             }
                         },
                     });
