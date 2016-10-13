@@ -9,20 +9,20 @@
                 require: 'slidePart',
 
                 link: function postLink(scope, element, attrs) {
-                    var leftLimit = parseFloat(attrs.draggableLeftLimit);
-                    var rightLimit = parseFloat(attrs.draggableRightLimit);
+                    var minOffset = parseFloat(attrs.draggableMinOffset);
+                    var maxOffset = parseFloat(attrs.draggableMaxOffset);
 
                     if (!scope.slide.content) {
                         scope.slide.content = {};
                     }
 
                     if (!scope.slide.content[attrs.draggableMember]) {
-                        scope.slide.content[attrs.draggableMember] = rightLimit;
+                        scope.slide.content[attrs.draggableMember] = maxOffset;
                     }
 
                     var container = element.parents('.ng-slide-view');
 
-                    var active = false;
+                    var active  = false;
                     var enabled = false;
 
                     var startX = 0;
@@ -30,17 +30,17 @@
 
                     var mousemove = function(event) {
                         if (active) {
-                            lastX = event.pageX - startX;
+                            lastX = startX - event.pageX;
 
-                            if (lastX < rightLimit) {
-                                lastX = rightLimit;
+                            if (lastX < minOffset) {
+                                lastX = minOffset;
                             }
 
-                            if (lastX > (element[0].width - leftLimit)) {
-                                lastX = element[0].width - leftLimit;
+                            if (lastX > maxOffset) {
+                                lastX = maxOffset;
                             }
 
-                            element.css('left', lastX + 'px');
+                            element.css('right', lastX + 'px');
                             scope.slide.content[attrs.draggableMember] = lastX;
                         }
                     };
@@ -54,7 +54,7 @@
 
                         if (enabled) {
                             active = true;
-                            startX = event.pageX - lastX;
+                            startX = event.pageX + lastX;
                         }
                     };
 
@@ -68,7 +68,7 @@
                         });
 
                         scope.$watch('slide.content.' + attrs.draggableMember, function(offset) {
-                            element.css('left', offset + 'px');
+                            element.css('right', offset + 'px');
                         });
 
                         scope.$on('$destroy', function() {

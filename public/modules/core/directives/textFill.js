@@ -2,6 +2,7 @@
 (function () {
     'use strict';
 
+    // slide attribute = slide containing the text-fill element (required)
     // member attribute = member in slide to watch for changes (required)
     // min-font-size attribute = minimum font size in pixels (optional)
     // max-font-size attribute = maximum font size in pixels (required)
@@ -9,12 +10,13 @@
     angular.module('core').directive('textFill', ["$interval", function ($interval) {
         return {
             scope: {
+                slide: "=",
                 member: "@",
                 minFontSize: "=?",
                 maxFontSize: "="
             },
             link: function postLink(scope, element, attrs) {
-                var failCounter = 1, maxFailCounter = 25;
+                var failCounter = 1, maxFailCounter = 10;
                 var applyInterval, applyTextFill;
 
                 var stopApplyTextFill = function () {
@@ -28,26 +30,56 @@
 
                 var startApplyTextFill = function () {
                     stopApplyTextFill();
-                    
-                    applyInterval = $interval(applyTextFill, 10, 0, false);
+
+                    if (scope.slide.isEdit) {
+                        applyInterval = $interval(applyTextFill, 10, 0, false);
+                    } else {
+                        var fontSizeMember = scope.member + "FontSize";
+                        var fontSize = scope.slide.content[fontSizeMember];
+
+                        if (fontSize) {
+                            $(element).children().eq(0).css("font-size", fontSize);
+                        }
+                    }
                 };
 
                 applyTextFill = function() {
-                    $(element).textfill({
-                        minFontPixels: scope.minFontSize,
+                    scope.$emit("textFillStarted", scope.member);
+
+                    element.textfill({
+                        minFontPixels: scope.minFontSize || 8, // default to 8 px minimum font size
                         maxFontPixels: scope.maxFontSize,
 
                         // We don't care what type of element contains the text.
                         innerTag: '*',
 
-                        success: stopApplyTextFill,
+                        success: function () {
+                            stopApplyTextFill();
+
+                            element.removeClass("text-fill-error");
+                            scope.$emit("textFillSuccessful", scope.member);
+
+                            if (scope.slide.isEdit) {
+                                var fontSize = parseFloat($(element).children().eq(0).css("font-size"));
+                                var fontSizeMember = scope.member + "FontSize";
+
+                                scope.slide.content[fontSizeMember] = fontSize;
+                            }
+                        },
                         fail: function () {
                             failCounter++;
 
                             if (failCounter > maxFailCounter) {
                                 stopApplyTextFill();
 
+                                element.addClass("text-fill-error");
                                 scope.$emit("textFillFailed", scope.member);
+
+                                if (scope.slide.isEdit) {
+                                    var fontSizeMember = scope.member + "FontSize";
+
+                                    delete scope.slide.content[fontSizeMember];
+                                }
                             }
                         },
                     });

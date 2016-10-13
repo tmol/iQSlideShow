@@ -19,7 +19,7 @@ $picture-cut-offset: 5px;
     .project-picture-container {
         .project-picture {
             top: 0;
-            left: -55px;
+            right: 55px;
             height: 1080px;
             position: absolute;
             z-index: -2;
@@ -54,8 +54,10 @@ $picture-cut-offset: 5px;
         font-size: 80px;
         font-weight: 500;
         line-height: 85px;
-        text-transform: uppercase;
         color: #0095d6;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
     }
 
     .project-body {
@@ -70,6 +72,9 @@ $picture-cut-offset: 5px;
             font-size: 45px;
             font-weight: 500;
             color: #0095d6;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
         }
 
         .project-timeframe-label {
@@ -81,6 +86,9 @@ $picture-cut-offset: 5px;
             font-size: 45px;
             font-weight: 500;
             letter-spacing: 3px;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
         }
 
         .project-content {
@@ -89,6 +97,7 @@ $picture-cut-offset: 5px;
             font-size: 30px;
             font-weight: 200;
             word-wrap: break-word;
+            overflow: hidden;
 
             p {
                 margin-bottom: 25px;
@@ -107,6 +116,9 @@ $picture-cut-offset: 5px;
         .project-team {
             font-size: 30px;
             font-weight: 500;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
         }
 
         .project-techologies-label {
@@ -117,6 +129,9 @@ $picture-cut-offset: 5px;
         .project-techologies {
             font-size: 30px;
             font-weight: 500;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
         }
 
         .project-manager-label {
@@ -129,13 +144,18 @@ $picture-cut-offset: 5px;
             font-size: 45px;
             font-weight: 500;
             letter-spacing: 3px;
-            text-transform: uppercase;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
         }
 
         .project-contact {
             font-size: 30px;
             font-weight: 200;
             line-height: 35px;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
         }
     }
 

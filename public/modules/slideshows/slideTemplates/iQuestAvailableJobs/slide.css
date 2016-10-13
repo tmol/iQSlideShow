@@ -9,7 +9,7 @@
   cursor: default; }
   .template-iquest-available-jobs .jobs-picture-container .jobs-picture {
     top: 0;
-    left: -55px;
+    right: 55px;
     height: 1080px;
     position: absolute;
     z-index: -2; }
@@ -37,7 +37,9 @@
     font-size: 80px;
     font-weight: 500;
     line-height: 85px;
-    text-transform: uppercase; }
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis; }
   .template-iquest-available-jobs .jobs-body {
     width: 1080px;
     margin-top: 105px; }
@@ -51,20 +53,26 @@
       font-size: 65px;
       font-weight: 500;
       letter-spacing: 3px;
-      text-transform: uppercase; }
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis; }
     .template-iquest-available-jobs .jobs-body .jobs-location-label {
       font-size: 30px; }
     .template-iquest-available-jobs .jobs-body .jobs-location {
       color: #0095d6;
       font-size: 45px;
       font-weight: 500;
-      letter-spacing: 3px; }
+      letter-spacing: 3px;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis; }
     .template-iquest-available-jobs .jobs-body .jobs-content {
       height: 225px;
       margin-top: 50px;
       font-size: 36px;
       font-weight: 200;
-      word-wrap: break-word; }
+      word-wrap: break-word;
+      overflow: hidden; }
       .template-iquest-available-jobs .jobs-body .jobs-content p {
         margin-bottom: 25px; }
         .template-iquest-available-jobs .jobs-body .jobs-content p:last-child {
@@ -75,12 +83,17 @@
       font-size: 45px;
       font-weight: 500;
       letter-spacing: 3px;
-      text-transform: uppercase; }
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis; }
     .template-iquest-available-jobs .jobs-body .jobs-contact {
       margin-top: 35px;
       font-size: 30px;
       font-weight: 200;
-      line-height: 35px; }
+      line-height: 35px;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis; }
   .template-iquest-available-jobs .jobs-qr-logo {
     right: 15px;
     bottom: 15px;

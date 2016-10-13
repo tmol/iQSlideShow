@@ -9,7 +9,7 @@
   cursor: default; }
   .template-iquest-speakers-event .event-picture-container .event-picture {
     top: 0;
-    left: -55px;
+    right: 55px;
     height: 1080px;
     position: absolute;
     z-index: -2; }
@@ -33,17 +33,22 @@
     transform: skewX(-10deg); }
   .template-iquest-speakers-event .event-header {
     width: 1260px;
-    font-weight: 500;
-    text-transform: uppercase; }
+    font-weight: 500; }
     .template-iquest-speakers-event .event-header .event-name {
       height: 90px;
       font-size: 80px;
-      line-height: 85px; }
+      line-height: 85px;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis; }
     .template-iquest-speakers-event .event-header .event-theme {
       height: 50px;
       font-size: 45px;
       line-height: 45px;
-      color: #0095d6; }
+      color: #0095d6;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis; }
   .template-iquest-speakers-event .event-speakers {
     margin-top: 60px; }
     .template-iquest-speakers-event .event-speakers:after {
@@ -69,12 +74,18 @@
         width: 270px;
         margin-left: 120px;
         font-size: 30px;
-        font-weight: 500; }
+        font-weight: 500;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis; }
       .template-iquest-speakers-event .event-speakers .event-speaker .event-speaker-title {
         width: 270px;
         width: 270px;
         margin-left: 120px;
-        font-size: 30px; }
+        font-size: 30px;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis; }
   .template-iquest-speakers-event .event-body {
     width: 1080px;
     margin-top: 80px; }
@@ -86,7 +97,8 @@
       font-size: 27px;
       font-weight: 200;
       line-height: 35px;
-      word-wrap: break-word; }
+      word-wrap: break-word;
+      overflow: hidden; }
     .template-iquest-speakers-event .event-body .event-details {
       margin-top: 15px; }
       .template-iquest-speakers-event .event-body .event-details:after {
@@ -102,10 +114,16 @@
           font-size: 108px;
           font-weight: 500;
           color: #0095d6;
-          line-height: 115px; }
+          line-height: 115px;
+          overflow: hidden;
+          white-space: nowrap;
+          text-overflow: ellipsis; }
         .template-iquest-speakers-event .event-body .event-details .event-date .event-date-month, .template-iquest-speakers-event .event-body .event-details .event-date .event-date-year {
           font-size: 30px;
-          font-weight: 500; }
+          font-weight: 500;
+          overflow: hidden;
+          white-space: nowrap;
+          text-overflow: ellipsis; }
       .template-iquest-speakers-event .event-body .event-details .event-location {
         width: 640px;
         float: right; }
@@ -116,11 +134,16 @@
           font-weight: 500;
           color: #0095d6;
           line-height: 115px;
-          text-transform: uppercase; }
+          overflow: hidden;
+          white-space: nowrap;
+          text-overflow: ellipsis; }
         .template-iquest-speakers-event .event-body .event-details .event-location .event-location-details {
           width: 425px;
           font-size: 30px;
-          font-weight: 500; }
+          font-weight: 500;
+          overflow: hidden;
+          white-space: nowrap;
+          text-overflow: ellipsis; }
     .template-iquest-speakers-event .event-body .event-audience {
       margin-top: 15px; }
       .template-iquest-speakers-event .event-body .event-audience .event-audience-label {
@@ -130,13 +153,17 @@
         font-size: 45px;
         font-weight: 500;
         line-height: 55px;
-        text-transform: uppercase; }
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis; }
       .template-iquest-speakers-event .event-body .event-audience .event-audience-contact {
         margin-top: 10px;
         font-size: 30px;
         font-weight: 200;
         line-height: 35px;
-        word-wrap: break-word; }
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis; }
   .template-iquest-speakers-event .event-qr-logo {
     right: 15px;
     bottom: 15px;

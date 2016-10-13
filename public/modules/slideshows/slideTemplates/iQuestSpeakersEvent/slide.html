@@ -6,8 +6,8 @@
              label="Picture URL"
              member="picture"
              draggable-member="pictureOffset"
-             draggable-left-limit="695"
-             draggable-right-limit="-55" />
+             draggable-min-offset="-385"
+             draggable-max-offset="55" />
 
         <div class="event-picture-cut-left"></div>
         <div class="event-picture-cut-right"></div>
@@ -39,7 +39,7 @@
     </div>
 
     <div class="event-body">
-        <div text-fill class="event-content" member="text" max-font-size="27">
+        <div text-fill class="event-content" member="text" slide="slide" max-font-size="27">
             <div slide-part type="html" member="text" label="Text">
                 <p>
                     Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut dignissim mi nec tristique fermentum.
@@ -67,13 +67,7 @@
         <div class="event-audience">
             <div class="event-audience-label">For:</div>
             <div slide-part class="event-audience-text" member="audience" label="Audience">Audience</div>
-
-            <div slide-part class="event-audience-contact" type="html" member="contact" label="Contact Info">
-                <p>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                    <a href="mailto:person@example.com">person@example.com</a>
-                </p>
-            </div>
+            <div slide-part class="event-audience-contact" member="contact" label="Contact Info">person@example.com</a></div>
         </div>
     </div>
 
