@@ -33,6 +33,8 @@
                 };
 
                 applyTextFill = function() {
+                    scope.$emit("textFillStarted", scope.member);
+
                     $(element).textfill({
                         minFontPixels: scope.minFontSize,
                         maxFontPixels: scope.maxFontSize,
@@ -40,7 +42,11 @@
                         // We don't care what type of element contains the text.
                         innerTag: '*',
 
-                        success: stopApplyTextFill,
+                        success: function () {
+                            stopApplyTextFill();
+
+                            scope.$emit("textFillSuccessful", scope.member);
+                        },
                         fail: function () {
                             failCounter++;
 
