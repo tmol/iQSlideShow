@@ -9,7 +9,7 @@
   cursor: default; }
   .template-iquest-announcement .announcement-picture-container .announcement-picture {
     top: 0;
-    left: -55px;
+    right: 55px;
     height: 1080px;
     position: absolute;
     z-index: -2; }
