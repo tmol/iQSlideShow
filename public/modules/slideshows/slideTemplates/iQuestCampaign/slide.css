@@ -37,7 +37,6 @@
     font-size: 80px;
     font-weight: 500;
     line-height: 85px;
-    text-transform: uppercase;
     color: #0095d6; }
   .template-iquest-campaign .campaign-body {
     width: 1080px;
@@ -83,8 +82,7 @@
           font-size: 108px;
           font-weight: 500;
           color: #0095d6;
-          line-height: 115px;
-          text-transform: uppercase; }
+          line-height: 115px; }
         .template-iquest-campaign .campaign-body .campaign-details .campaign-location .campaign-location-details {
           width: 425px;
           font-size: 30px;

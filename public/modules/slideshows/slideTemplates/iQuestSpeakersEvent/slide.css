@@ -33,8 +33,7 @@
     transform: skewX(-10deg); }
   .template-iquest-speakers-event .event-header {
     width: 1260px;
-    font-weight: 500;
-    text-transform: uppercase; }
+    font-weight: 500; }
     .template-iquest-speakers-event .event-header .event-name {
       height: 90px;
       font-size: 80px;
@@ -116,8 +115,7 @@
           font-size: 108px;
           font-weight: 500;
           color: #0095d6;
-          line-height: 115px;
-          text-transform: uppercase; }
+          line-height: 115px; }
         .template-iquest-speakers-event .event-body .event-details .event-location .event-location-details {
           width: 425px;
           font-size: 30px;
@@ -130,8 +128,7 @@
         color: #0095d6;
         font-size: 45px;
         font-weight: 500;
-        line-height: 55px;
-        text-transform: uppercase; }
+        line-height: 55px; }
       .template-iquest-speakers-event .event-body .event-audience .event-audience-contact {
         margin-top: 10px;
         font-size: 30px;

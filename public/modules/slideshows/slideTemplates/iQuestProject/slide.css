@@ -37,7 +37,6 @@
     font-size: 80px;
     font-weight: 500;
     line-height: 85px;
-    text-transform: uppercase;
     color: #0095d6; }
   .template-iquest-project .project-body {
     width: 1080px; }
@@ -85,8 +84,7 @@
       color: #0095d6;
       font-size: 45px;
       font-weight: 500;
-      letter-spacing: 3px;
-      text-transform: uppercase; }
+      letter-spacing: 3px; }
     .template-iquest-project .project-body .project-contact {
       font-size: 30px;
       font-weight: 200;
