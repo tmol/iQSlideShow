@@ -8,8 +8,6 @@
             return {
                 require: '?^^slideSection',
                 link: function postLink(scope, element, attrs, section) {
-                    var oldContent;
-
                     var injectScript = function(templatePath) {
                         ScriptInjector.inject(templatePath + element.attr('url'), element.attr('tag') || element.attr('url'));
                     };
@@ -26,16 +24,16 @@
                         if (!content || /^\s+$/.test(content)) {
                             content = '';
 
-                            showPlaceholder = !oldContent;
+                            showPlaceholder = !scope.oldContent;
                         } else {
                             showPlaceholder = false;
                         }
 
-                        if (content === oldContent) {
+                        if (content === scope.oldContent) {
                             return;
                         }
 
-                        oldContent = content;
+                        scope.oldContent = content;
 
                         if (showPlaceholder) {
                             content = attrs.placeholder;
