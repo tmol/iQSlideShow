@@ -5,6 +5,7 @@
              slide-part-draggable
              label="Picture URL"
              member="picture"
+             placeholder="/modules/slideshows/slideTemplates/iQuestAnnouncement/placeholder.png"
              draggable-member="pictureOffset"
              draggable-min-offset="-385"
              draggable-max-offset="55" />
@@ -13,38 +14,31 @@
         <div class="project-picture-cut-right"></div>
     </div>
 
-    <div slide-part class="project-name" member="projectName" label="Project Name">Project Name</div>
+    <div slide-part class="project-name" member="projectName" label="Project Name" placeholder="Project Name"></div>
 
     <div class="project-body">
-        <div slide-part class="project-type" member="projectType" label="Project Type">Project Type</div>
+        <div slide-part class="project-type" member="projectType" label="Project Type" placeholder="Project Type"></div>
 
         <div class="project-timeframe-label">Timeframe:</div>
-        <div slide-part class="project-timeframe" member="projectTimeframe" label="Timeframe">Month Year</div>
+        <div slide-part class="project-timeframe" member="projectTimeframe" label="Timeframe" placeholder="Month Year"></div>
 
         <div text-fill class="project-content" member="projectDesc" slide="slide" max-font-size="30">
-            <div slide-part type="html" member="projectDesc" label="Text">
-                <p>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut dignissim mi nec tristique fermentum.
-                    Nullam porta fermentum velit, nec ultricies lectus elementum ad.
-                </p>
-            </div>
+            <div slide-part type="html" member="projectDesc" label="Text" placeholder="Lorem ipsum dolor sit amet, consectetur adipiscing elit."></div>
         </div>
 
         <div class="project-team-label">Team:</div>
-        <div slide-part class="project-team" member="projectTeam" label="Team">Team members</div>
+        <div slide-part class="project-team" member="projectTeam" label="Team" placeholder="Team members"></div>
 
         <div class="project-techologies-label">Used Technologies:</div>
-        <div slide-part class="project-techologies" member="projectTechnologies" label="Technologies">Project technologies</div>
+        <div slide-part class="project-techologies" member="projectTechnologies" label="Technologies" placeholder="Project technologies"></div>
 
         <div class="project-manager-label">Project Manager:</div>
-        <div slide-part class="project-manager" member="projectManager" label="Project Manager">Project Manager</div>
+        <div slide-part class="project-manager" member="projectManager" label="Project Manager" placeholder="Project Manager"></div>
 
         <div class="project-contact">
             Contact:
 
-            <a slide-part class="project-contact-email" member="contactEmail" label="Contact Email" href="mailto:person@example.com">
-                person@example.com
-            </a>
+            <a slide-part class="project-contact-email" member="contactEmail" label="Contact Email" placeholder="person@example.com"></a>
         </div>
     </div>
 

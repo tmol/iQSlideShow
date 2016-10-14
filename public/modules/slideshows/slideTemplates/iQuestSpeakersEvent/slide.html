@@ -5,6 +5,7 @@
              slide-part-draggable
              label="Picture URL"
              member="picture"
+             placeholder="/modules/slideshows/slideTemplates/iQuestAnnouncement/placeholder.png"
              draggable-member="pictureOffset"
              draggable-min-offset="-385"
              draggable-max-offset="55" />
@@ -14,60 +15,54 @@
     </div>
 
     <div class="event-header">
-        <div slide-part class="event-name" member="eventName" label="Event Name">Event Name</div>
-        <div slide-part class="event-theme" member="eventTheme" label="Event Theme">Event Theme</div>
+        <div slide-part class="event-name" member="eventName" label="Event Name" placeholder="Event Name"></div>
+        <div slide-part class="event-theme" member="eventTheme" label="Event Theme" placeholder="Event Theme"></div>
     </div>
 
     <div class="event-speakers">
         <div class="event-speaker">
-            <img slide-part class="event-speaker-picture" member="firstSpeakerPictur" label="First Speaker Picture" src="/modules/slideshows/slideTemplates/img/default-avatar.png" />
-            <div slide-part class="event-speaker-name" member="firstSpeakerName" label="First Speaker Name">First Speaker</div>
-            <div slide-part class="event-speaker-title" member="firstSpeakerTitle" label="First Speaker Title">First Speaker Title</div>
+            <img slide-part class="event-speaker-picture" member="firstSpeakerPictur" label="First Speaker Picture" placeholder="/modules/slideshows/slideTemplates/img/default-avatar.png" />
+            <div slide-part class="event-speaker-name" member="firstSpeakerName" label="First Speaker Name" placeholder="First Speaker"></div>
+            <div slide-part class="event-speaker-title" member="firstSpeakerTitle" label="First Speaker Title" placeholder="First Speaker Title"></div>
         </div>
 
         <div class="event-speaker">
-            <img slide-part class="event-speaker-picture" member="secondSpeakerPictur" label="Second Speaker Picture" src="/modules/slideshows/slideTemplates/img/default-avatar.png" />
-            <div slide-part class="event-speaker-name" member="secondSpeakerName" label="Second Speaker Name">Second Speaker</div>
-            <div slide-part class="event-speaker-title" member="secondSpeakerTitle" label="Second Speaker Title">Second Speaker Title</div>
+            <img slide-part class="event-speaker-picture" member="secondSpeakerPictur" label="Second Speaker Picture" placeholder="/modules/slideshows/slideTemplates/img/default-avatar.png" />
+            <div slide-part class="event-speaker-name" member="secondSpeakerName" label="Second Speaker Name" placeholder="Second Speaker"></div>
+            <div slide-part class="event-speaker-title" member="secondSpeakerTitle" label="Second Speaker Title" placeholder="Second Speaker Title"></div>
         </div>
 
         <div class="event-speaker">
-            <img slide-part class="event-speaker-picture" member="thirdSpeakerPictur" label="Third Speaker Picture" src="/modules/slideshows/slideTemplates/img/default-avatar.png" />
-            <div slide-part class="event-speaker-name" member="thirdSpeakerName" label="Third Speaker Name">Third Speaker</div>
-            <div slide-part class="event-speaker-title" member="thirdSpeakerTitle" label="Third Speaker Title">Third Speaker Title</div>
+            <img slide-part class="event-speaker-picture" member="thirdSpeakerPictur" label="Third Speaker Picture" placeholder="/modules/slideshows/slideTemplates/img/default-avatar.png" />
+            <div slide-part class="event-speaker-name" member="thirdSpeakerName" label="Third Speaker Name" placeholder="Third Speaker"></div>
+            <div slide-part class="event-speaker-title" member="thirdSpeakerTitle" label="Third Speaker Title" placeholder="Third Speaker Title"></div>
         </div>
     </div>
 
     <div class="event-body">
         <div text-fill class="event-content" member="text" slide="slide" max-font-size="27">
-            <div slide-part type="html" member="text" label="Text">
-                <p>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut dignissim mi nec tristique fermentum.
-                    Nullam porta fermentum velit, nec ultricies lectus elementum a. Class aptent taciti sociosqu ad
-                    litora torquent per conubia nostra, per inceptos himenaeos. Vestibulum nec maximus lorem.
-                </p>
-            </div>
+            <div slide-part type="html" member="text" label="Text" placeholder="Lorem ipsum dolor sit amet, consectetur adipiscing elit."></div>
         </div>
 
         <div class="event-details">
             <div class="event-date">
                 <div class="event-date-label">When:</div>
-                <div slide-part class="event-date-day" member="day" label="Day">Day</div>
-                <div slide-part class="event-date-month" member="month" label="Month">Month</div>
-                <div slide-part class="event-date-year" member="year" label="Year">Year</div>
+                <div slide-part class="event-date-day" member="day" label="Day" placeholder="Day"></div>
+                <div slide-part class="event-date-month" member="month" label="Month" placeholder="Month"></div>
+                <div slide-part class="event-date-year" member="year" label="Year" placeholder="Year"></div>
             </div>
 
             <div class="event-location">
                 <div class="event-location-label">Where:</div>
-                <div slide-part class="event-location-city" member="city" label="City">City</div>
-                <div slide-part class="event-location-details" member="location" label="Location">Location</div>
+                <div slide-part class="event-location-city" member="city" label="City" placeholder="City"></div>
+                <div slide-part class="event-location-details" member="location" label="Location" placeholder="Location"></div>
             </div>
         </div>
 
         <div class="event-audience">
             <div class="event-audience-label">For:</div>
-            <div slide-part class="event-audience-text" member="audience" label="Audience">Audience</div>
-            <div slide-part class="event-audience-contact" member="contact" label="Contact Info">person@example.com</a></div>
+            <div slide-part class="event-audience-text" member="audience" label="Audience" placeholder="Audience"></div>
+            <div slide-part class="event-audience-contact" member="contact" label="Contact Info" placeholder="person@example.com"></div>
         </div>
     </div>
 
