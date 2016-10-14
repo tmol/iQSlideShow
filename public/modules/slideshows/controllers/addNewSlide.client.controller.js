@@ -9,7 +9,9 @@
             var getSlides = function(templates) {
                 return _.map(templates, function(item) {
                     return {
-                        templateName: item, resolution: {width: 1600, height: 900}
+                        templateName: item,
+                        resolution: { width: 1600, height: 900 },
+                        fireSetTemplateElementEvent: true
                     }
                 })
             }
@@ -89,6 +91,14 @@
                     callback({names: searchResult});
                 }
             };
+
+            $scope.$on("setTemplateElement", function (event, name, info, slide) {
+                slide.content = slide.content || {};
+
+                if (!slide.content.hasOwnProperty(name)) {
+                    slide.content[name] = info.value;
+                }
+            });
 
             $scope.setTemplate = function (template) {
                 $scope.newSlideData.templateName = template.templateName;
