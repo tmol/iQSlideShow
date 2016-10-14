@@ -57,7 +57,8 @@
       color: #0095d6;
       overflow: hidden;
       white-space: nowrap;
-      text-overflow: ellipsis; }
+      text-overflow: ellipsis;
+      margin-bottom: 10px; }
     .template-iquest-project .project-body .project-timeframe-label {
       font-size: 30px; }
     .template-iquest-project .project-body .project-timeframe {
@@ -67,9 +68,9 @@
       letter-spacing: 3px;
       overflow: hidden;
       white-space: nowrap;
-      text-overflow: ellipsis; }
+      text-overflow: ellipsis;
+      margin-bottom: 10px; }
     .template-iquest-project .project-body .project-content {
-      margin-top: 20px;
       height: 105px;
       font-size: 30px;
       font-weight: 200;

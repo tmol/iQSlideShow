@@ -53,6 +53,7 @@ $picture-cut-offset: 5px;
     .event-header {
         width: 1260px;
         font-weight: 500;
+        margin-bottom: 60px;
 
         .event-name {
             height: 90px;
@@ -76,7 +77,7 @@ $picture-cut-offset: 5px;
 
     .event-agenda {
         width: 1220px;
-        margin-top: 60px;
+        margin-bottom: 45px;
 
         .event-agenda-label {
             font-size: 30px;
@@ -115,7 +116,6 @@ $picture-cut-offset: 5px;
 
     .event-body {
         width: 1080px;
-        margin-top: 45px;
         display: flex;
         flex-flow: column;
         flex: 1;

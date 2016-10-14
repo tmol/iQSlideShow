@@ -42,10 +42,10 @@
     color: #0095d6;
     overflow: hidden;
     white-space: nowrap;
-    text-overflow: ellipsis; }
+    text-overflow: ellipsis;
+    margin-bottom: 105px; }
   .template-iquest-campaign .campaign-body {
     width: 1080px;
-    margin-top: 105px;
     display: flex;
     flex-flow: column;
     flex: 1; }

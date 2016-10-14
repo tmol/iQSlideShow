@@ -53,6 +53,7 @@ $picture-cut-offset: 5px;
     .event-header {
         width: 1260px;
         font-weight: 500;
+        margin-bottom: 60px;
 
         .event-name {
             height: 90px;
@@ -76,9 +77,9 @@ $picture-cut-offset: 5px;
 
     .event-speakers {
         width: 1220px;
-        margin-top: 60px;
         display: flex;
         flex-flow: row;
+        margin-bottom: 80px;
 
         .event-speaker {
             min-width: 390px;
@@ -114,7 +115,6 @@ $picture-cut-offset: 5px;
 
     .event-body {
         width: 1080px;
-        margin-top: 80px;
         display: flex;
         flex-flow: column;
         flex: 1;

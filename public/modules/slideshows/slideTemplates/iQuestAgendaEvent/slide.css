@@ -35,7 +35,8 @@
     transform: skewX(-10deg); }
   .template-iquest-agenda-event .event-header {
     width: 1260px;
-    font-weight: 500; }
+    font-weight: 500;
+    margin-bottom: 60px; }
     .template-iquest-agenda-event .event-header .event-name {
       height: 90px;
       font-size: 80px;
@@ -53,7 +54,7 @@
       text-overflow: ellipsis; }
   .template-iquest-agenda-event .event-agenda {
     width: 1220px;
-    margin-top: 60px; }
+    margin-bottom: 45px; }
     .template-iquest-agenda-event .event-agenda .event-agenda-label {
       font-size: 30px; }
     .template-iquest-agenda-event .event-agenda .event-agenda-items {
@@ -78,7 +79,6 @@
           margin-left: 0; }
   .template-iquest-agenda-event .event-body {
     width: 1080px;
-    margin-top: 45px;
     display: flex;
     flex-flow: column;
     flex: 1; }

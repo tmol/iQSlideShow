@@ -41,10 +41,10 @@
     line-height: 85px;
     overflow: hidden;
     white-space: nowrap;
-    text-overflow: ellipsis; }
+    text-overflow: ellipsis;
+    margin-bottom: 105px; }
   .template-iquest-available-jobs .jobs-body {
     width: 1080px;
-    margin-top: 105px;
     display: flex;
     flex-flow: column;
     flex: 1; }
@@ -70,10 +70,10 @@
       letter-spacing: 3px;
       overflow: hidden;
       white-space: nowrap;
-      text-overflow: ellipsis; }
+      text-overflow: ellipsis;
+      margin-bottom: 50px; }
     .template-iquest-available-jobs .jobs-body .jobs-content {
       height: 225px;
-      margin-top: 50px;
       font-size: 36px;
       font-weight: 200;
       word-wrap: break-word;

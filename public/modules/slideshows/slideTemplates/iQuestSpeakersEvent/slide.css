@@ -35,7 +35,8 @@
     transform: skewX(-10deg); }
   .template-iquest-speakers-event .event-header {
     width: 1260px;
-    font-weight: 500; }
+    font-weight: 500;
+    margin-bottom: 60px; }
     .template-iquest-speakers-event .event-header .event-name {
       height: 90px;
       font-size: 80px;
@@ -53,9 +54,9 @@
       text-overflow: ellipsis; }
   .template-iquest-speakers-event .event-speakers {
     width: 1220px;
-    margin-top: 60px;
     display: flex;
-    flex-flow: row; }
+    flex-flow: row;
+    margin-bottom: 80px; }
     .template-iquest-speakers-event .event-speakers .event-speaker {
       min-width: 390px;
       display: flex;
@@ -79,7 +80,6 @@
           text-overflow: ellipsis; }
   .template-iquest-speakers-event .event-body {
     width: 1080px;
-    margin-top: 80px;
     display: flex;
     flex-flow: column;
     flex: 1; }
