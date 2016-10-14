@@ -470,7 +470,7 @@
 
                 $scope.currentSlide.content = $scope.currentSlide.content || {};
 
-                if (!$scope.currentSlide.content[name]) {
+                if (!$scope.currentSlide.content.hasOwnProperty(name)) {
                     $scope.currentSlide.content[name] = info.value;
                 }
             });
