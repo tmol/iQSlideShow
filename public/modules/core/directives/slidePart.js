@@ -15,6 +15,8 @@
                     };
 
                     var update = function(content) {
+                        var showPlaceholder;
+
                         if (element.attr('type') === 'script' && element.attr('url')) {
                             scope.$emit('getTemplatePath', injectScript);
 
@@ -23,6 +25,10 @@
 
                         if (!content || /^\s+$/.test(content)) {
                             content = '';
+
+                            showPlaceholder = !oldContent;
+                        } else {
+                            showPlaceholder = false;
                         }
 
                         if (content === oldContent) {
@@ -31,37 +37,45 @@
 
                         oldContent = content;
 
+                        if (showPlaceholder) {
+                            content = attrs.placeholder;
+                        }
+
                         switch (element.prop('tagName').toUpperCase()) {
                             case 'IMG':
-                                element.attr('src', content || 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAAA1BMVEXMzMzKUkQnAAAACklEQVR4XmNgAAAAAgAB3p6PvwAAAABJRU5ErkJggg==');
+                                element.attr('src', content || attrs.placeholder);
 
                                 break;
 
                             case 'A':
-                                if (content) {
-                                    var href = content;
-                                    var httpRegex = /^https?:\/\//;
+                                var href = content;
+                                var httpRegex = /^https?:\/\//;
 
-                                    // Checking for @ is fine for our purposes; there is no point in validating the email address.
+                                // Checking for @ is fine for our purposes; there is no point in validating the email address.
+                                if (content) {
                                     if (content.indexOf('@') !== -1) {
                                         href = 'mailto:' + content;
                                     } else if (!httpRegex.test(content)) {
                                         href = 'http://' + content;
                                     }
-
-                                    element.attr('href', href);
-                                    element.text(content.replace(httpRegex, ''));
                                 }
+
+                                element.attr('href', href);
+                                element.text(content.replace(httpRegex, ''));
 
                                 break;
 
                             default:
-                                if (content) {
-                                    var text = content;
-                                    if (element.attr('encoded') === 'true') {
-                                        eval("text='" + content + "'");
-                                    }
+                                var text = content;
+
+                                if (element.attr('encoded') === 'true') {
+                                    eval("text='" + content + "'");
+                                }
+
+                                if (attrs.type === 'html') {
                                     element.html(text);
+                                } else {
+                                    element.text(text);
                                 }
 
                                 break;
@@ -81,7 +95,8 @@
 
                         scope.$emit('setTemplateElement', attrs.member, {
                             type: attrs.type || 'text',
-                            label: attrs.label || attrs.member
+                            label: attrs.label || attrs.member,
+                            value: attrs.placeholder
                         });
                     }
 

@@ -462,11 +462,14 @@
                 $scope.$emit("slideContextUnloaded");
             });
 
-            $scope.$on("setTemplateElement", function (event, name, value) {
+            $scope.$on("setTemplateElement", function (event, name, info) {
                 var slidePartId = event.targetScope.$id;
 
                 $scope.templateElements = $scope.templateElements || {};
-                $scope.templateElements[name] = value;
+                $scope.templateElements[name] = info;
+
+                $scope.currentSlide.content = $scope.currentSlide.content || {};
+                $scope.currentSlide.content[name] = info.value;
             });
 
             $scope.$on('$stateChangeStart', function (event) {

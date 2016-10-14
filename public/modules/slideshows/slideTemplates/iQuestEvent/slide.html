@@ -5,6 +5,7 @@
              slide-part-draggable
              label="Picture URL"
              member="picture"
+             placeholder="/modules/slideshows/slideTemplates/iQuestAnnouncement/placeholder.png"
              draggable-member="pictureOffset"
              draggable-min-offset="-385"
              draggable-max-offset="55" />
@@ -14,57 +15,51 @@
     </div>
 
     <div class="event-header">
-        <div slide-part class="event-name" member="eventName" label="Event Name">Event Name</div>
-        <div slide-part class="event-theme" member="eventTheme" label="Event Theme">Event Theme</div>
+        <div slide-part class="event-name" member="eventName" label="Event Name" placeholder="Event Name"></div>
+        <div slide-part class="event-theme" member="eventTheme" label="Event Theme" placeholder="Event Theme"></div>
     </div>
 
     <div class="event-highlights">
         <div class="event-highlight">
-            <div slide-part class="event-highlight-no" member="firstHighlight" label="First Highlight">1</div>
-            <div slide-part class="event-highlight-desc" member="firstHighlightDesc" label="First Highlight Description">Description</div>
+            <div slide-part class="event-highlight-no" member="firstHighlight" label="First Highlight" placeholder="1"></div>
+            <div slide-part class="event-highlight-desc" member="firstHighlightDesc" label="First Highlight Description" placeholder="Description"></div>
         </div>
 
         <div class="event-highlight">
-            <div slide-part class="event-highlight-no" member="secondHighlight" label="Second Highlight">1</div>
-            <div slide-part class="event-highlight-desc" member="secondHighlightDesc" label="Second Highlight Description">Description</div>
+            <div slide-part class="event-highlight-no" member="secondHighlight" label="Second Highlight" placeholder="2"></div>
+            <div slide-part class="event-highlight-desc" member="secondHighlightDesc" label="Second Highlight Description" placeholder="Description"></div>
         </div>
 
         <div class="event-highlight">
-            <div slide-part class="event-highlight-no" member="thirdHighlight" label="Third Highlight">1</div>
-            <div slide-part class="event-highlight-desc" member="thirdHighlightDesc" label="Third Highlight Description">Description</div>
+            <div slide-part class="event-highlight-no" member="thirdHighlight" label="Third Highlight" placeholder="3"></div>
+            <div slide-part class="event-highlight-desc" member="thirdHighlightDesc" label="Third Highlight Description" placeholder="Description"></div>
         </div>
     </div>
 
     <div class="event-body">
         <div text-fill class="event-content" member="text" slide="slide" max-font-size="27">
-            <div slide-part type="html" member="text" label="Text">
-                <p>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut dignissim mi nec tristique fermentum.
-                    Nullam porta fermentum velit, nec ultricies lectus elementum a. Class aptent taciti sociosqu ad
-                    litora torquent per conubia nostra, per inceptos himenaeos. Vestibulum nec maximus lorem.
-                </p>
-            </div>
+            <div slide-part type="html" member="text" label="Text" placeholder="Lorem ipsum dolor sit amet, consectetur adipiscing elit."></div>
         </div>
 
         <div class="event-details">
             <div class="event-date">
                 <div class="event-date-label">When:</div>
-                <div slide-part class="event-date-day" member="day" label="Day">Day</div>
-                <div slide-part class="event-date-month" member="month" label="Month">Month</div>
-                <div slide-part class="event-date-year" member="year" label="Year">Year</div>
+                <div slide-part class="event-date-day" member="day" label="Day" placeholder="Day"></div>
+                <div slide-part class="event-date-month" member="month" label="Month" placeholder="Month"></div>
+                <div slide-part class="event-date-year" member="year" label="Year" placeholder="Year"></div>
             </div>
 
             <div class="event-location">
                 <div class="event-location-label">Where:</div>
-                <div slide-part class="event-location-city" member="city" label="City">City</div>
-                <div slide-part class="event-location-details" member="location" label="Location">Location</div>
+                <div slide-part class="event-location-city" member="city" label="City" placeholder="City"></div>
+                <div slide-part class="event-location-details" member="location" label="Location" placeholder="Location"></div>
             </div>
         </div>
 
         <div class="event-audience">
             <div class="event-audience-label">For:</div>
-            <div slide-part class="event-audience-text" member="audience" label="Audience">Audience</div>
-            <div slide-part class="event-audience-contact" member="contact" label="Contact Info">person@example.com</div>
+            <div slide-part class="event-audience-text" member="audience" label="Audience" placeholder="Audience"></div>
+            <div slide-part class="event-audience-contact" member="contact" label="Contact Info" placeholder="person@example.com"></div>
         </div>
     </div>
 
