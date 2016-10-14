@@ -12,6 +12,8 @@ $picture-cut-offset: 5px;
     color: #444;
     font-family: 'Segoe UI', sans-serif;
     cursor: default;
+    display: flex;
+    flex-flow: column;
 
     // The picture is "cut" by the two divs on the left and the right.
     // Using the clip-path feature would have been a better solution,
@@ -73,36 +75,40 @@ $picture-cut-offset: 5px;
     }
 
     .event-agenda {
+        width: 1220px;
         margin-top: 60px;
-
-        &:after {
-            display: table;
-            content: "";
-            clear: both;
-        }
 
         .event-agenda-label {
             font-size: 30px;
         }
 
-        .event-agenda-item {
-            width: 390px;
-            float: left;
+        .event-agenda-items {
+            display: flex;
+            flex-flow: row;
 
-            .event-agenda-item-hours {
-                font-size: 45px;
-                font-weight: 500;
-                color: #0095d6;
-                overflow: hidden;
-                white-space: nowrap;
-                text-overflow: ellipsis;
-            }
+            .event-agenda-item {
+                min-width: 390px;
+                margin-left: 20px;
 
-            .event-agenda-item-desc {
-                font-size: 30px;
-                overflow: hidden;
-                white-space: nowrap;
-                text-overflow: ellipsis;
+                .event-agenda-item-hours {
+                    font-size: 45px;
+                    font-weight: 500;
+                    color: #0095d6;
+                    overflow: hidden;
+                    white-space: nowrap;
+                    text-overflow: ellipsis;
+                }
+
+                .event-agenda-item-desc {
+                    font-size: 30px;
+                    overflow: hidden;
+                    white-space: nowrap;
+                    text-overflow: ellipsis;
+                }
+
+                &:first-child {
+                    margin-left: 0;
+                }
             }
         }
     }
@@ -110,6 +116,9 @@ $picture-cut-offset: 5px;
     .event-body {
         width: 1080px;
         margin-top: 45px;
+        display: flex;
+        flex-flow: column;
+        flex: 1;
 
         a {
             color: #0095d6 !important;
@@ -123,20 +132,16 @@ $picture-cut-offset: 5px;
             line-height: 35px;
             word-wrap: break-word;
             overflow: hidden;
+            flex: 1;
         }
 
         .event-details {
             margin-top: 15px;
-
-            &:after {
-                display: table;
-                content: "";
-                clear: both;
-            }
+            display: flex;
+            flex-flow: row;
 
             .event-date {
-                width: 340px;
-                float: left;
+                min-width: 340px;
 
                 .event-date-label {
                     font-size: 30px;
@@ -162,8 +167,7 @@ $picture-cut-offset: 5px;
             }
 
             .event-location {
-                width: 640px;
-                float: right;
+                min-width: 640px;
 
                 .event-location-label {
                     font-size: 30px;

@@ -17,7 +17,7 @@
     <div slide-part class="announcement-title" member="title" label="Title" placeholder="Title"></div>
 
     <div class="announcement-body">
-        <div class="announcement-audience">
+        <div slide-section class="announcement-audience" slide="slide">
             <div class="announcement-audience-label">For:</div>
             <div slide-part class="announcement-audience-text" member="audience" label="Audience" placeholder="Audience"></div>
         </div>
@@ -27,11 +27,13 @@
         </div>
 
         <div class="announcement-responsible">
-            <div class="announcement-responsible-label">Responsible:</div>
-            <div slide-part class="announcement-responsible-name" member="responsibleName" label="Responsible Name" placeholder="Responsible"></div>
-            <div slide-part class="announcement-responsible-desc" member="responsibleDesc" label="Responsible Job Description" placeholder="Job Description"></div>
+            <div slide-section slide="slide">
+                <div class="announcement-responsible-label">Responsible:</div>
+                <div slide-part class="announcement-responsible-name" member="responsibleName" label="Responsible Name" placeholder="Responsible"></div>
+                <div slide-part class="announcement-responsible-desc" member="responsibleDesc" label="Responsible Job Description" placeholder="Job Description"></div>
+            </div>
 
-            <div class="announcement-responsible-contact">
+            <div slide-section class="announcement-responsible-contact" slide="slide">
                 Contact:
 
                 <a slide-part class="announcement-responsible-contact-email" member="responsibleEmail" label="Responsible Email" placeholder="person@example.com"></a>

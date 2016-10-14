@@ -17,11 +17,15 @@
     <div slide-part class="jobs-heading" member="heading" label="Slide Title" placeholder="Available Jobs"></div>
 
     <div class="jobs-body">
-        <div class="jobs-title-label">Job title:</div>
-        <div slide-part class="jobs-title" member="title" label="Job Title" placeholder="Job Title"></div>
+        <div slide-section slide="slide">
+            <div class="jobs-title-label">Job title:</div>
+            <div slide-part class="jobs-title" member="title" label="Job Title" placeholder="Job Title"></div>
+        </div>
 
-        <div class="jobs-location-label">Where:</div>
-        <div slide-part class="jobs-location" member="location" label="Job Location" placeholder="City Name / Office"></div>
+        <div slide-section slide="slide">
+            <div class="jobs-location-label">Where:</div>
+            <div slide-part class="jobs-location" member="location" label="Job Location" placeholder="City Name / Office"></div>
+        </div>
 
         <div text-fill class="jobs-content" member="text" slide="slide" max-font-size="36">
             <div slide-part type="html" member="text" label="Text" placeholder="Lorem ipsum dolor sit amet, consectetur adipiscing elit."></div>
@@ -29,7 +33,7 @@
 
         <div slide-part class="jobs-message" member="message" label="Footer Message" placeholder="Join our team!"></div>
 
-        <div class="jobs-contact">
+        <div slide-section class="jobs-contact" slide="slide">
             Contact:
 
             <a slide-part class="jobs-contact-email" member="contactEmail" label="Contact Email" placeholder="person@example.com"></a>

@@ -6,7 +6,9 @@
   padding-left: 105px;
   color: #444;
   font-family: 'Segoe UI', sans-serif;
-  cursor: default; }
+  cursor: default;
+  display: flex;
+  flex-flow: column; }
   .template-iquest-available-jobs .jobs-picture-container .jobs-picture {
     top: 0;
     right: 55px;
@@ -42,7 +44,10 @@
     text-overflow: ellipsis; }
   .template-iquest-available-jobs .jobs-body {
     width: 1080px;
-    margin-top: 105px; }
+    margin-top: 105px;
+    display: flex;
+    flex-flow: column;
+    flex: 1; }
     .template-iquest-available-jobs .jobs-body a {
       color: #0095d6 !important;
       text-decoration: none; }
@@ -72,7 +77,8 @@
       font-size: 36px;
       font-weight: 200;
       word-wrap: break-word;
-      overflow: hidden; }
+      overflow: hidden;
+      flex: 1; }
       .template-iquest-available-jobs .jobs-body .jobs-content p {
         margin-bottom: 25px; }
         .template-iquest-available-jobs .jobs-body .jobs-content p:last-child {

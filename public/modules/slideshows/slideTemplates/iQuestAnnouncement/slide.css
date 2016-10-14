@@ -6,7 +6,9 @@
   padding-left: 105px;
   color: #444;
   font-family: 'Segoe UI', sans-serif;
-  cursor: default; }
+  cursor: default;
+  display: flex;
+  flex-flow: column; }
   .template-iquest-announcement .announcement-picture-container .announcement-picture {
     top: 0;
     right: 55px;
@@ -40,7 +42,10 @@
     white-space: nowrap;
     text-overflow: ellipsis; }
   .template-iquest-announcement .announcement-body {
-    width: 1080px; }
+    width: 1080px;
+    display: flex;
+    flex-flow: column;
+    flex: 1; }
     .template-iquest-announcement .announcement-body a {
       color: #0095d6;
       text-decoration: none; }
@@ -63,7 +68,8 @@
       font-size: 36px;
       font-weight: 200;
       word-wrap: break-word;
-      overflow: hidden; }
+      overflow: hidden;
+      flex: 1; }
     .template-iquest-announcement .announcement-body .announcement-responsible {
       margin-top: 50px; }
       .template-iquest-announcement .announcement-body .announcement-responsible .announcement-responsible-label {
