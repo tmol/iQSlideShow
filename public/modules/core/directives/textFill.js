@@ -33,7 +33,7 @@
 
                     if (scope.slide.isEdit) {
                         applyInterval = $interval(applyTextFill, 10, 0, false);
-                    } else {
+                    } else if (scope.slide.content) {
                         var fontSizeMember = scope.member + "FontSize";
                         var fontSize = scope.slide.content[fontSizeMember];
 
@@ -63,6 +63,7 @@
                                 var fontSize = parseFloat($(element).children().eq(0).css("font-size"));
                                 var fontSizeMember = scope.member + "FontSize";
 
+                                scope.slide.content = scope.slide.content || {};
                                 scope.slide.content[fontSizeMember] = fontSize;
                             }
                         },
@@ -75,7 +76,7 @@
                                 element.addClass("text-fill-error");
                                 scope.$emit("textFillFailed", scope.member);
 
-                                if (scope.slide.isEdit) {
+                                if (scope.slide.isEdit && scope.slide.content) {
                                     var fontSizeMember = scope.member + "FontSize";
 
                                     delete scope.slide.content[fontSizeMember];
@@ -86,9 +87,7 @@
                 };
 
                 scope.$on("slidePartUpdated", function (event, content, member) {
-                    if (member === scope.member) {
-                        startApplyTextFill();
-                    }
+                    startApplyTextFill();
                 });
 
                 scope.$on("updateSlide", function () {
