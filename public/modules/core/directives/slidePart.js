@@ -8,8 +8,6 @@
             return {
                 require: '?^^slideSection',
                 link: function postLink(scope, element, attrs, section) {
-                    var oldContent;
-
                     var injectScript = function(templatePath) {
                         ScriptInjector.inject(templatePath + element.attr('url'), element.attr('tag') || element.attr('url'));
                     };
@@ -26,16 +24,16 @@
                         if (!content || /^\s+$/.test(content)) {
                             content = '';
 
-                            showPlaceholder = !oldContent;
+                            showPlaceholder = !scope.oldContent;
                         } else {
                             showPlaceholder = false;
                         }
 
-                        if (content === oldContent) {
+                        if (content === scope.oldContent) {
                             return;
                         }
 
-                        oldContent = content;
+                        scope.oldContent = content;
 
                         if (showPlaceholder) {
                             content = attrs.placeholder;
@@ -48,34 +46,44 @@
                                 break;
 
                             case 'A':
-                                var href = content;
-                                var httpRegex = /^https?:\/\//;
-
-                                // Checking for @ is fine for our purposes; there is no point in validating the email address.
                                 if (content) {
-                                    if (content.indexOf('@') !== -1) {
-                                        href = 'mailto:' + content;
-                                    } else if (!httpRegex.test(content)) {
-                                        href = 'http://' + content;
-                                    }
-                                }
+                                    element.show();
 
-                                element.attr('href', href);
-                                element.text(content.replace(httpRegex, ''));
+                                    var href = content;
+                                    var httpRegex = /^https?:\/\//;
+
+                                    // Checking for @ is fine for our purposes; there is no point in validating the email address.
+                                        if (content.indexOf('@') !== -1) {
+                                            href = 'mailto:' + content;
+                                        } else if (!httpRegex.test(content)) {
+                                            href = 'http://' + content;
+                                        }
+
+                                    element.attr('href', href);
+                                    element.text(content.replace(httpRegex, ''));
+                                } else {
+                                    element.hide();
+                                }
 
                                 break;
 
                             default:
-                                var text = content;
+                                if (content) {
+                                    element.show();
 
-                                if (element.attr('encoded') === 'true') {
-                                    eval("text='" + content + "'");
-                                }
+                                    var text = content;
 
-                                if (attrs.type === 'html') {
-                                    element.html(text);
+                                    if (element.attr('encoded') === 'true') {
+                                        eval("text='" + content + "'");
+                                    }
+
+                                    if (attrs.type === 'html') {
+                                        element.html(text);
+                                    } else {
+                                        element.text(text);
+                                    }
                                 } else {
-                                    element.text(text);
+                                    element.hide();
                                 }
 
                                 break;
@@ -93,11 +101,13 @@
                         element.attr('type') !== 'script' &&
                         element.attr('hiddenPart') !== 'true') {
 
-                        scope.$emit('setTemplateElement', attrs.member, {
+                        var info = {
                             type: attrs.type || 'text',
                             label: attrs.label || attrs.member,
                             value: attrs.placeholder
-                        });
+                        };
+
+                        scope.$emit('setTemplateElement', attrs.member, info, scope.slide);
                     }
 
                     scope.$watch('slide.content.' + attrs.member, update);

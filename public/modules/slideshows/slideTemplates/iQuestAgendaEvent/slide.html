@@ -14,27 +14,29 @@
         <div class="event-picture-cut-right"></div>
     </div>
 
-    <div class="event-header">
+    <div slide-section class="event-header" slide="slide">
         <div slide-part class="event-name" member="eventName" label="Event Name" placeholder="Event Name"></div>
         <div slide-part class="event-theme" member="eventTheme" label="Event Theme" placeholder="Event Theme"></div>
     </div>
 
-    <div class="event-agenda">
+    <div slide-section class="event-agenda" slide="slide">
         <div class="event-agenda-label">Agenda:</div>
 
-        <div class="event-agenda-item">
-            <div slide-part class="event-agenda-item-hours" member="firstAgendaName" label="First Agenda Hours" placeholder="01:00-02:00"></div>
-            <div slide-part class="event-agenda-item-desc" member="firstAgendaTitle" label="First Agenda Description" placeholder="First Agenda Description"></div>
-        </div>
+        <div class="event-agenda-items">
+            <div slide-section class="event-agenda-item" slide="slide">
+                <div slide-part class="event-agenda-item-hours" member="firstAgendaName" label="First Agenda Hours" placeholder="01:00-02:00"></div>
+                <div slide-part class="event-agenda-item-desc" member="firstAgendaTitle" label="First Agenda Description" placeholder="First Agenda Description"></div>
+            </div>
 
-        <div class="event-agenda-item">
-            <div slide-part class="event-agenda-item-hours" member="secondAgendaName" label="Second Agenda Hours" placeholder="02:00-03:00"></div>
-            <div slide-part class="event-agenda-item-desc" member="secondAgendaTitle" label="Second Agenda Description" placeholder="Second Agenda Description"></div>
-        </div>
+            <div slide-section class="event-agenda-item" slide="slide">
+                <div slide-part class="event-agenda-item-hours" member="secondAgendaName" label="Second Agenda Hours" placeholder="02:00-03:00"></div>
+                <div slide-part class="event-agenda-item-desc" member="secondAgendaTitle" label="Second Agenda Description" placeholder="Second Agenda Description"></div>
+            </div>
 
-        <div class="event-agenda-item">
-            <div slide-part class="event-agenda-item-hours" member="thirdAgendaName" label="Third Agenda Hours" placeholder="03:00-04:00"></div>
-            <div slide-part class="event-agenda-item-desc" member="thirdAgendaTitle" label="Third Agenda Description" placeholder="Third Agenda Description"></div>
+            <div slide-section class="event-agenda-item" slide="slide">
+                <div slide-part class="event-agenda-item-hours" member="thirdAgendaName" label="Third Agenda Hours" placeholder="03:00-04:00"></div>
+                <div slide-part class="event-agenda-item-desc" member="thirdAgendaTitle" label="Third Agenda Description" placeholder="Third Agenda Description"></div>
+            </div>
         </div>
     </div>
 
@@ -43,22 +45,22 @@
             <div slide-part type="html" member="text" label="Text" placeholder="<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>"></div>
         </div>
 
-        <div class="event-details">
-            <div class="event-date">
+        <div slide-section class="event-details" slide="slide">
+            <div slide-section class="event-date" slide="slide">
                 <div class="event-date-label">When:</div>
                 <div slide-part class="event-date-day" member="day" label="Day" placeholder="Day"></div>
                 <div slide-part class="event-date-month" member="month" label="Month" placeholder="Month"></div>
                 <div slide-part class="event-date-year" member="year" label="Year" placeholder="Year"></div>
             </div>
 
-            <div class="event-location">
+            <div slide-section class="event-location" slide="slide">
                 <div class="event-location-label">Where:</div>
                 <div slide-part class="event-location-city" member="city" label="City" placeholder="City"></div>
                 <div slide-part class="event-location-details" member="location" label="Location" placeholder="Location"></div>
             </div>
         </div>
 
-        <div class="event-audience">
+        <div slide-section class="event-audience" slide="slide">
             <div class="event-audience-label">For:</div>
             <div slide-part class="event-audience-text" member="audience" label="Audience" placeholder="Audience"></div>
             <div slide-part class="event-audience-contact" member="contact" label="Contact Info" placeholder="person@example.com"></div>

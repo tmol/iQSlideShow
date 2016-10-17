@@ -12,6 +12,8 @@ $picture-cut-offset: 5px;
     color: #444;
     font-family: 'Segoe UI', sans-serif;
     cursor: default;
+    display: flex;
+    flex-flow: column;
 
     // The picture is "cut" by the two divs on the left and the right.
     // Using the clip-path feature would have been a better solution,
@@ -56,10 +58,14 @@ $picture-cut-offset: 5px;
         overflow: hidden;
         white-space: nowrap;
         text-overflow: ellipsis;
+        margin-bottom: 70px;
     }
 
     .announcement-body {
-        width: 1080px;;
+        width: 1080px;
+        display: flex;
+        flex-flow: column;
+        flex: 1;
 
         a {
             color: #0095d6;
@@ -67,7 +73,7 @@ $picture-cut-offset: 5px;
         }
 
         .announcement-audience {
-            margin-top: 70px;
+            margin-bottom: 50px;
 
             .announcement-audience-label {
                 font-size: 30px;
@@ -87,17 +93,16 @@ $picture-cut-offset: 5px;
 
         .announcement-content {
             height: 200px;
-            margin-top: 50px;
             font-size: 36px;
             font-weight: 200;
             word-wrap: break-word;
             overflow: hidden;
+            flex: 1;
         }
 
         .announcement-responsible {
-            margin-top: 50px;
-
             .announcement-responsible-label {
+                margin-top: 50px;
                 font-size: 30px;
             }
 

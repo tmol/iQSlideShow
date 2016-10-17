@@ -468,10 +468,12 @@
                 $scope.templateElements = $scope.templateElements || {};
                 $scope.templateElements[name] = info;
 
-                $scope.currentSlide.content = $scope.currentSlide.content || {};
+                if ($scope.currentSlide) {
+                    $scope.currentSlide.content = $scope.currentSlide.content || {};
 
-                if (!$scope.currentSlide.content[name]) {
-                    $scope.currentSlide.content[name] = info.value;
+                    if (!$scope.currentSlide.content.hasOwnProperty(name)) {
+                        $scope.currentSlide.content[name] = info.value;
+                    }
                 }
             });
 

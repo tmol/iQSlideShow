@@ -3,6 +3,8 @@
     height: 1080px;
     position: relative;
     font-family: 'Segoe UI', sans-serif;
+    display: flex;
+    flex-flow: column;
 
     .news-header {
         height: 472px;
@@ -47,19 +49,18 @@
 
     .news-body {
         margin: 105px;
-
-        &:after {
-            display: table;
-            content: "";
-            clear: both;
-        }
+        display: flex;
+        flex-flow: row;
+        flex: 1;
 
         .news-content {
-            float: left;
             width: 1260px;
             font-size: 30px;
             font-weight: 200;
             color: #444444;
+            display: flex;
+            flex-flow: column;
+            flex: 1;
 
             a {
                 color: #0095d6;
@@ -74,6 +75,7 @@
                 height: 322px;
                 word-wrap: break-word;
                 overflow: hidden;
+                flex: 1;
             }
 
             .news-source {
@@ -85,8 +87,7 @@
         }
 
         .news-date {
-            float: right;
-            width: 345px;
+            width: 445px;
 
             .news-date-label {
                 font-size: 35px;
