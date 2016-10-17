@@ -32,8 +32,10 @@
                         if (active) {
                             lastX = startX - event.pageX;
 
-                            if (lastX < minOffset) {
-                                lastX = minOffset;
+                            var minOffsetComputed = Math.abs(minOffset) - element[0].width;
+
+                            if (lastX < minOffsetComputed) {
+                                lastX = minOffsetComputed;
                             }
 
                             if (lastX > maxOffset) {
