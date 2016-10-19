@@ -53,7 +53,10 @@
     .template-iquest-announcement .announcement-body .announcement-audience {
       margin-bottom: 50px; }
       .template-iquest-announcement .announcement-body .announcement-audience .announcement-audience-label {
-        font-size: 30px; }
+        font-size: 30px;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis; }
       .template-iquest-announcement .announcement-body .announcement-audience .announcement-audience-text {
         height: 90px;
         color: #0095d6;
@@ -72,7 +75,10 @@
       flex: 1; }
     .template-iquest-announcement .announcement-body .announcement-responsible .announcement-responsible-label {
       margin-top: 50px;
-      font-size: 30px; }
+      font-size: 30px;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis; }
     .template-iquest-announcement .announcement-body .announcement-responsible .announcement-responsible-name {
       color: #0095d6;
       font-size: 45px;

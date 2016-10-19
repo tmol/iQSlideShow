@@ -56,7 +56,10 @@
     width: 1220px;
     margin-bottom: 45px; }
     .template-iquest-agenda-event .event-agenda .event-agenda-label {
-      font-size: 30px; }
+      font-size: 30px;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis; }
     .template-iquest-agenda-event .event-agenda .event-agenda-items {
       display: flex;
       flex-flow: row; }
@@ -100,7 +103,10 @@
       .template-iquest-agenda-event .event-body .event-details .event-date {
         min-width: 340px; }
         .template-iquest-agenda-event .event-body .event-details .event-date .event-date-label {
-          font-size: 30px; }
+          font-size: 30px;
+          overflow: hidden;
+          white-space: nowrap;
+          text-overflow: ellipsis; }
         .template-iquest-agenda-event .event-body .event-details .event-date .event-date-day {
           font-size: 108px;
           font-weight: 500;
@@ -118,7 +124,10 @@
       .template-iquest-agenda-event .event-body .event-details .event-location {
         min-width: 640px; }
         .template-iquest-agenda-event .event-body .event-details .event-location .event-location-label {
-          font-size: 30px; }
+          font-size: 30px;
+          overflow: hidden;
+          white-space: nowrap;
+          text-overflow: ellipsis; }
         .template-iquest-agenda-event .event-body .event-details .event-location .event-location-city {
           font-size: 108px;
           font-weight: 500;
@@ -137,7 +146,10 @@
     .template-iquest-agenda-event .event-body .event-audience {
       margin-top: 15px; }
       .template-iquest-agenda-event .event-body .event-audience .event-audience-label {
-        font-size: 30px; }
+        font-size: 30px;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis; }
       .template-iquest-agenda-event .event-body .event-audience .event-audience-text {
         color: #0095d6;
         font-size: 45px;

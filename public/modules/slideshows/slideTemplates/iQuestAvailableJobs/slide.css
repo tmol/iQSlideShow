@@ -52,7 +52,10 @@
       color: #0095d6 !important;
       text-decoration: none; }
     .template-iquest-available-jobs .jobs-body .jobs-title-label {
-      font-size: 30px; }
+      font-size: 30px;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis; }
     .template-iquest-available-jobs .jobs-body .jobs-title {
       color: #0095d6;
       font-size: 65px;
@@ -62,7 +65,10 @@
       white-space: nowrap;
       text-overflow: ellipsis; }
     .template-iquest-available-jobs .jobs-body .jobs-location-label {
-      font-size: 30px; }
+      font-size: 30px;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis; }
     .template-iquest-available-jobs .jobs-body .jobs-location {
       color: #0095d6;
       font-size: 45px;
