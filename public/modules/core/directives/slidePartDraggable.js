@@ -69,16 +69,16 @@
                             enabled = !!picture;
                         });
 
-                        scope.$watch('slide.content.' + attrs.draggableMember, function(offset) {
-                            element.css('right', offset + 'px');
-                        });
-
                         scope.$on('$destroy', function() {
                             container.off('mousedown', mousedown);
                             $document.off('mousemove', mousemove);
                             $document.off('mouseup', mouseup);
                         });
                     }
+
+                    scope.$watch('slide.content.' + attrs.draggableMember, function(offset) {
+                        element.css('right', offset + 'px');
+                    });
                 }
             };
         }
