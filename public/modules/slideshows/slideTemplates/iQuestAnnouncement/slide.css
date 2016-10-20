@@ -65,12 +65,10 @@
         white-space: nowrap;
         text-overflow: ellipsis; }
     .template-iquest-announcement .announcement-body .announcement-content {
-      height: 200px;
       font-size: 36px;
       font-weight: 200;
       word-wrap: break-word;
-      overflow: hidden;
-      flex: 1; }
+      overflow: hidden; }
     .template-iquest-announcement .announcement-body .announcement-responsible .announcement-responsible-label {
       margin-top: 50px;
       font-size: 30px;

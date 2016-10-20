@@ -77,12 +77,10 @@
       text-overflow: ellipsis;
       margin-bottom: 50px; }
     .template-iquest-available-jobs .jobs-body .jobs-content {
-      height: 225px;
       font-size: 36px;
       font-weight: 200;
       word-wrap: break-word;
-      overflow: hidden;
-      flex: 1; }
+      overflow: hidden; }
       .template-iquest-available-jobs .jobs-body .jobs-content p {
         margin-bottom: 25px; }
         .template-iquest-available-jobs .jobs-body .jobs-content p:last-child {

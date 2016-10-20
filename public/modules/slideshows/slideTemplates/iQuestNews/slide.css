@@ -60,10 +60,8 @@
       .template-iquest-news .news-body .news-content p {
         margin-bottom: 40px; }
       .template-iquest-news .news-body .news-content .news-text {
-        height: 322px;
         word-wrap: break-word;
-        overflow: hidden;
-        flex: 1; }
+        overflow: hidden; }
       .template-iquest-news .news-body .news-content .news-source {
         margin-top: 50px;
         overflow: hidden;

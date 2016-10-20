@@ -51,12 +51,10 @@
       color: #0095d6 !important;
       text-decoration: none; }
     .template-iquest-campaign .campaign-body .campaign-content {
-      height: 325px;
       font-size: 36px;
       font-weight: 200;
       word-wrap: break-word;
-      overflow: hidden;
-      flex: 1; }
+      overflow: hidden; }
       .template-iquest-campaign .campaign-body .campaign-content p {
         margin-bottom: 25px; }
         .template-iquest-campaign .campaign-body .campaign-content p:last-child {

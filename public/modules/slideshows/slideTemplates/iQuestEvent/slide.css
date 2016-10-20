@@ -81,12 +81,10 @@
       color: #0095d6;
       text-decoration: none; }
     .template-iquest-event .event-body .event-content {
-      height: 145px;
       font-size: 27px;
       font-weight: 200;
       word-wrap: break-word;
-      overflow: hidden;
-      flex: 1; }
+      overflow: hidden; }
     .template-iquest-event .event-body .event-details {
       margin-top: 15px;
       display: flex;
