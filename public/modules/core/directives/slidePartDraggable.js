@@ -59,6 +59,8 @@
 
                     var mouseup = function() {
                         active = false;
+
+                        scope.$apply();
                     };
 
                     var mousedown = function(event) {
