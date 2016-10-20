@@ -348,6 +348,7 @@
     flex-direction: column;
     height: 100%;
     border: 1px solid transparent;
+    border-bottom: 1px solid $darker-grey-color;
     cursor: default;
 }
 
@@ -458,9 +459,9 @@
 }
 
 .iqss-slideshowedit-slide-preview {
-    border-bottom: 1px solid $darker-grey-color;
-    padding: 0 $slideshow-edit-slide-indexWidth + $slideshow-edit-slide-leftRightPadding;
+    width: $slideshow-edit-slide-preview-width;
     height: $slideshow-edit-slide-preview-height;
+    margin-bottom: 10px;
     overflow: hidden;
 }
 
