@@ -19,10 +19,10 @@
     "angular-ui-utils": "~0.2",
     "bootstrap": "~3",
     "textAngular": "1.5.0",
-    "angular-ui-select": "https://github.com/CMircea/ui-select.git#master",
+    "angular-ui-select": "https://github.com/CMircea/ui-select.git#custom",
     "fastclick": "^1.0.6",
     "lodash": "^4.10.0",
-    "jquery-textfill": "https://github.com/CMircea/jquery-textfill.git#master",
+    "jquery-textfill": "https://github.com/CMircea/jquery-textfill.git#custom",
     "jquery": "3.1.0"
   },
   "resolutions": {

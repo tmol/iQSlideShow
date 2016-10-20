@@ -77,6 +77,9 @@ $picture-cut-offset: 5px;
 
             .announcement-audience-label {
                 font-size: 30px;
+                overflow: hidden;
+                white-space: nowrap;
+                text-overflow: ellipsis;
             }
 
             .announcement-audience-text {
@@ -104,6 +107,9 @@ $picture-cut-offset: 5px;
             .announcement-responsible-label {
                 margin-top: 50px;
                 font-size: 30px;
+                overflow: hidden;
+                white-space: nowrap;
+                text-overflow: ellipsis;
             }
 
             .announcement-responsible-name {

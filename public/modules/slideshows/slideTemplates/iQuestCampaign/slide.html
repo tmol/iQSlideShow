@@ -23,21 +23,21 @@
 
         <div slide-section class="campaign-details" slide="slide">
             <div slide-section class="campaign-date" slide="slide">
-                <div class="campaign-date-label">When:</div>
+                <div slide-part class="campaign-date-label" member="dateLabel" label="Date Label" placeholder="When:"></div>
                 <div slide-part class="campaign-date-day" member="day" label="Day" placeholder="Day"></div>
                 <div slide-part class="campaign-date-month" member="month" label="Month" placeholder="Month"></div>
                 <div slide-part class="campaign-date-year" member="year" label="Year" placeholder="Year"></div>
             </div>
 
             <div slide-section class="campaign-location" slide="slide">
-                <div class="campaign-location-label">Where:</div>
+                <div slide-part class="campaign-location-label" member="locationLabel" label="Location Label" placeholder="Where:"></div>
                 <div slide-part class="campaign-location-city" member="city" label="City" placeholder="City"></div>
                 <div slide-part class="campaign-location-details" member="location" label="Location" placeholder="Location"></div>
             </div>
         </div>
 
         <div slide-section class="campaign-contact" slide="slide">
-            Contact:
+            <span slide-part member="contactEmailPrefix" label="Contact Email Prefix" placeholder="Contact:"></span>
 
             <a slide-part class="campaign-contact-email" member="contactEmail" label="Contact Email" placeholder="person@example.com"></a>
         </div>

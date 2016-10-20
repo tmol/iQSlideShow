@@ -85,6 +85,9 @@ $picture-cut-offset: 5px;
 
         .project-timeframe-label {
             font-size: 30px;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
         }
 
         .project-timeframe {
@@ -118,6 +121,9 @@ $picture-cut-offset: 5px;
         .project-team-label {
             margin-top: 30px;
             font-size: 30px;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
         }
 
         .project-team {
@@ -131,6 +137,9 @@ $picture-cut-offset: 5px;
         .project-techologies-label {
             margin-top: 10px;
             font-size: 30px;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
         }
 
         .project-techologies {
@@ -144,6 +153,9 @@ $picture-cut-offset: 5px;
         .project-manager-label {
             margin-top: 20px;
             font-size: 30px;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
         }
 
         .project-manager {

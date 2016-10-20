@@ -60,7 +60,10 @@
       text-overflow: ellipsis;
       margin-bottom: 10px; }
     .template-iquest-project .project-body .project-timeframe-label {
-      font-size: 30px; }
+      font-size: 30px;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis; }
     .template-iquest-project .project-body .project-timeframe {
       color: #0095d6;
       font-size: 45px;
@@ -83,7 +86,10 @@
           margin-bottom: 0; }
     .template-iquest-project .project-body .project-team-label {
       margin-top: 30px;
-      font-size: 30px; }
+      font-size: 30px;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis; }
     .template-iquest-project .project-body .project-team {
       font-size: 30px;
       font-weight: 500;
@@ -92,7 +98,10 @@
       text-overflow: ellipsis; }
     .template-iquest-project .project-body .project-techologies-label {
       margin-top: 10px;
-      font-size: 30px; }
+      font-size: 30px;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis; }
     .template-iquest-project .project-body .project-techologies {
       font-size: 30px;
       font-weight: 500;
@@ -101,7 +110,10 @@
       text-overflow: ellipsis; }
     .template-iquest-project .project-body .project-manager-label {
       margin-top: 20px;
-      font-size: 30px; }
+      font-size: 30px;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis; }
     .template-iquest-project .project-body .project-manager {
       color: #0095d6;
       font-size: 45px;

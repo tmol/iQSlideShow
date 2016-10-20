@@ -75,6 +75,9 @@ $picture-cut-offset: 5px;
 
         .jobs-title-label {
             font-size: 30px;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
         }
 
         .jobs-title {
@@ -89,6 +92,9 @@ $picture-cut-offset: 5px;
 
         .jobs-location-label {
             font-size: 30px;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
         }
 
         .jobs-location {
