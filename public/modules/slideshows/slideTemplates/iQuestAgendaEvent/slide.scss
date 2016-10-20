@@ -56,18 +56,14 @@ $picture-cut-offset: 5px;
         margin-bottom: 60px;
 
         .event-name {
-            height: 90px;
             font-size: 80px;
-            line-height: 85px;
             overflow: hidden;
             white-space: nowrap;
             text-overflow: ellipsis;
         }
 
         .event-theme {
-            height: 50px;
             font-size: 45px;
-            line-height: 45px;
             color: #0095d6;
             overflow: hidden;
             white-space: nowrap;
@@ -132,7 +128,6 @@ $picture-cut-offset: 5px;
             height: 145px;
             font-size: 27px;
             font-weight: 200;
-            line-height: 35px;
             word-wrap: break-word;
             overflow: hidden;
             flex: 1;
@@ -157,7 +152,6 @@ $picture-cut-offset: 5px;
                     font-size: 108px;
                     font-weight: 500;
                     color: #0095d6;
-                    line-height: 115px;
                     overflow: hidden;
                     white-space: nowrap;
                     text-overflow: ellipsis;
@@ -186,7 +180,6 @@ $picture-cut-offset: 5px;
                     font-size: 108px;
                     font-weight: 500;
                     color: #0095d6;
-                    line-height: 115px;
                     overflow: hidden;
                     white-space: nowrap;
                     text-overflow: ellipsis;
@@ -217,7 +210,6 @@ $picture-cut-offset: 5px;
                 color: #0095d6;
                 font-size: 45px;
                 font-weight: 500;
-                line-height: 55px;
                 overflow: hidden;
                 white-space: nowrap;
                 text-overflow: ellipsis;
@@ -227,7 +219,6 @@ $picture-cut-offset: 5px;
                 margin-top: 10px;
                 font-size: 30px;
                 font-weight: 200;
-                line-height: 35px;
                 overflow: hidden;
                 white-space: nowrap;
                 text-overflow: ellipsis;
