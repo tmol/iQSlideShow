@@ -1,10 +1,17 @@
 <div class="template-iquest-news ng-scope">
     <div class="news-header">
+        <div class="news-background-bottom-clipper"></div>
+
         <img class="news-background"
              slide-part
+             slide-part-draggable
              label="Top Image Link"
              member="topImageLink"
-             placeholder="/modules/slideshows/slideTemplates/iQuestAnnouncement/placeholder.png" />
+             placeholder="/modules/slideshows/slideTemplates/iQuestAnnouncement/placeholder.png"
+             draggable-member="pictureOffset"
+             draggable-direction="vertical"
+             draggable-min-offset="695"
+             draggable-max-offset="0" />
 
         <div class="news-title-line">
             <div slide-part class="news-title" member="mainTitle" label="Title" placeholder="Title"></div>

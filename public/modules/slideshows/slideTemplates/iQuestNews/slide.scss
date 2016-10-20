@@ -10,14 +10,20 @@
         height: 472px;
         padding-top: 210px;
 
+        .news-background-bottom-clipper {
+            width: 100%;
+            height: 30px;
+            position: absolute;
+            top: 1070px;
+            background: white;
+        }
+
         .news-background {
             top: 0;
-            left: 0;
+            left: 1px;
             z-index: -1;
-            width: 1920px;
-            height: 1920px;
+            width: 1918px;
             position: absolute;
-            clip: rect(0px, 1920px, 472px, 0px);
         }
 
         .news-title-line {
@@ -48,7 +54,8 @@
     }
 
     .news-body {
-        margin: 105px;
+        padding: 105px;
+        background: white;
         display: flex;
         flex-flow: row;
         flex: 1;
