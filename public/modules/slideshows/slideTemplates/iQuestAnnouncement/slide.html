@@ -22,7 +22,9 @@
             <div slide-part class="announcement-audience-text" member="audience" label="Audience" placeholder="Audience"></div>
         </div>
 
-        <div text-overflow-warning class="announcement-content">
+        <div slide-part type="text" member="contentFontSize" label="Content Font Size" placeholder="36" ng-hide="true"></div>
+
+        <div text-overflow-warning text-resizer class="announcement-content" member="contentFontSize">
             <div slide-part
                  type="html"
                  member="content"

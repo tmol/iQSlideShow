@@ -21,7 +21,9 @@
 
     <div class="news-body">
         <div class="news-content">
-            <div text-overflow-warning class="news-text">
+            <div slide-part type="text" member="textFontSize" label="Text Font Size" placeholder="30" ng-hide="true"></div>
+
+            <div text-overflow-warning text-resizer class="news-text" member="textFontSize">
                 <div slide-part
                      type="html"
                      member="text"
