@@ -2,10 +2,29 @@
   width: 1920px;
   height: 1080px;
   position: relative;
-  padding: 100px;
+  padding: 25px 100px;
   color: #444;
   font-family: 'Segoe UI', sans-serif;
-  cursor: default; }
+  cursor: default;
+  background-color: white; }
+  .template-meeting-rooms .meeting-rooms-header {
+    display: flex;
+    width: 600px;
+    margin: auto;
+    margin-bottom: 35px; }
+    .template-meeting-rooms .meeting-rooms-header .meeting-rooms-logo {
+      display: inline-block;
+      width: 80px;
+      height: 80px;
+      background-image: url("[RELATIVE-PATH]/meeting-rooms-logo.png");
+      background-size: cover; }
+    .template-meeting-rooms .meeting-rooms-header .meeting-rooms-title {
+      display: inline-block;
+      margin: 0;
+      margin-left: 35px;
+      color: #0095d6;
+      font-size: 45px;
+      font-weight: 500; }
   .template-meeting-rooms .meeting-rooms-container:after {
     content: "";
     clear: both;
@@ -72,5 +91,5 @@
       width: 125px;
       height: 31px;
       margin: 0 auto;
-      background-image: url("[RELATIVE-PATH]/logo.png");
+      background-image: url("[RELATIVE-PATH]/iquest-logo.png");
       background-size: cover; }

@@ -1,20 +1,46 @@
 $slide-width: 1920px;
 $slide-height: 1080px;
-$slide-padding: 100px;
+$slide-padding-vertical: 25px;
+$slide-padding-horizontal: 100px;
 
 $meeting-rooms-per-row: 4;
 $meeting-room-margin: 30px;
 $meeting-room-total-margin: $meeting-room-margin * ($meeting-rooms-per-row - 1);
-$meeting-room-width: (($slide-width - ($slide-padding * 2) - $meeting-room-total-margin) / $meeting-rooms-per-row);
+$meeting-room-width: (($slide-width - ($slide-padding-horizontal * 2) - $meeting-room-total-margin) / $meeting-rooms-per-row);
 
 .template-meeting-rooms {
     width: $slide-width;
     height: $slide-height;
     position: relative;
-    padding: $slide-padding;
+    padding: $slide-padding-vertical $slide-padding-horizontal;
     color: #444;
     font-family: 'Segoe UI', sans-serif;
     cursor: default;
+    background-color: white;
+
+    .meeting-rooms-header {
+        display: flex;
+        width: 600px;
+        margin: auto;
+        margin-bottom: 35px;
+
+        .meeting-rooms-logo {
+            display: inline-block;
+            width: 80px;
+            height: 80px;
+            background-image: url('[RELATIVE-PATH]/meeting-rooms-logo.png');
+            background-size: cover;
+        }
+
+        .meeting-rooms-title {
+            display: inline-block;
+            margin: 0;
+            margin-left: 35px;
+            color: #0095d6;
+            font-size: 45px;
+            font-weight: 500;
+        }
+    }
 
     .meeting-rooms-container {
         &:after {
@@ -113,7 +139,7 @@ $meeting-room-width: (($slide-width - ($slide-padding * 2) - $meeting-room-total
             width: 125px;
             height: 31px;
             margin: 0 auto;
-            background-image: url('[RELATIVE-PATH]/logo.png');
+            background-image: url('[RELATIVE-PATH]/iquest-logo.png');
             background-size: cover;
         }
     }
