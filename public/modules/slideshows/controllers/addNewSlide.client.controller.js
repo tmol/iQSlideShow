@@ -93,6 +93,8 @@
             };
 
             $scope.$on("setTemplateElement", function (event, name, info, slide) {
+                event.stopPropagation();
+
                 slide.content = slide.content || {};
 
                 if (!slide.content.hasOwnProperty(name)) {
