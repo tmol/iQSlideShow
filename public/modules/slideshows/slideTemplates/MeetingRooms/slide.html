@@ -1,0 +1,25 @@
+<div class="template-meeting-rooms ng-scope">
+    <div class="meeting-rooms-container">
+        <div class="meeting-room-card" ng-repeat="room in rooms">
+            <div class="meeting-room-name">
+                {{ room.name }}
+
+                <div class="meeting-room-icon" ng-class="room.status"></div>
+            </div>
+
+            <div class="meeting-room-location">
+                {{ room.location }}
+            </div>
+
+            <div class="meeting-room-status" ng-class="room.status">
+                {{ room.statusDescription }}
+            </div>
+        </div>
+    </div>
+
+    <div class="meeting-rooms-qr-logo">
+        <div qr-device-interaction class="meeting-rooms-qr" qr-config="qrConfig"></div>
+
+        <div class="meeting-rooms-logo"></div>
+    </div>
+</div>

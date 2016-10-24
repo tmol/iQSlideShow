@@ -1,0 +1,120 @@
+$slide-width: 1920px;
+$slide-height: 1080px;
+$slide-padding: 100px;
+
+$meeting-rooms-per-row: 4;
+$meeting-room-margin: 30px;
+$meeting-room-total-margin: $meeting-room-margin * ($meeting-rooms-per-row - 1);
+$meeting-room-width: (($slide-width - ($slide-padding * 2) - $meeting-room-total-margin) / $meeting-rooms-per-row);
+
+.template-meeting-rooms {
+    width: $slide-width;
+    height: $slide-height;
+    position: relative;
+    padding: $slide-padding;
+    color: #444;
+    font-family: 'Segoe UI', sans-serif;
+    cursor: default;
+
+    .meeting-rooms-container {
+        &:after {
+            content: "";
+            clear: both;
+            display: table;
+        }
+
+        .meeting-room-card {
+            float: left;
+            width: $meeting-room-width;
+            margin-right: $meeting-room-margin;
+            margin-bottom: $meeting-room-margin;
+            box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
+
+            &:nth-child(#{$meeting-rooms-per-row }n) {
+                margin-right: 0;
+            }
+
+            .meeting-room-name {
+                position: relative;
+                padding-left: 15px;
+                padding-right: 45px;
+                margin-bottom: 5px;
+                background: #f0f0f0;
+                font-size: 25px;
+            }
+
+            .meeting-room-location {
+                padding-left: 15px;
+                padding-right: 15px;
+                margin-bottom: 5px;
+                font-size: 20px;
+            }
+
+            .meeting-room-status {
+                padding-left: 15px;
+                padding-right: 15px;
+                margin-bottom: 5px;
+                font-size: 17px;
+                font-weight: 500;
+
+                &.available {
+                    color: green;
+                }
+
+                &.not-available {
+                    color: red;
+                }
+
+                &.occupied {
+                    color: orange;
+                }
+            }
+
+            .meeting-room-icon {
+                width: 30px;
+                height: 30px;
+                position: absolute;
+                top: 2px;
+                right: 5px;
+                background-size: 25px 25px;
+                background-position: center;
+                background-repeat: no-repeat;
+
+                &.available {
+                    background-image: url(/modules/core/img/published-ok.svg);
+                }
+
+                &.not-available {
+                    background-image: url(/modules/core/img/warning.svg);
+                }
+
+                &.occupied {
+                    background-image: url(/modules/core/img/draft.svg);
+                }
+            }
+        }
+    }
+
+    .meeting-rooms-qr-logo {
+        right: 15px;
+        bottom: 15px;
+        width: 140px;
+        position: absolute;
+
+        .meeting-rooms-qr {
+            display: block;
+            width: 100px;
+            height: 100px;
+            margin: 20px auto;
+        }
+
+        .meeting-rooms-logo {
+            display: block;
+            width: 125px;
+            height: 31px;
+            margin: 0 auto;
+            background-image: url('[RELATIVE-PATH]/logo.png');
+            background-size: cover;
+        }
+    }
+}
