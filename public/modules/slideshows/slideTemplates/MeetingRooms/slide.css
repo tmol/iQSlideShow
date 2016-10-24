@@ -5,7 +5,8 @@
   padding: 25px 100px;
   color: #444;
   font-family: 'Segoe UI', sans-serif;
-  cursor: default; }
+  cursor: default;
+  background-color: white; }
   .template-meeting-rooms .meeting-rooms-header {
     display: flex;
     width: 600px;
