@@ -3,7 +3,8 @@
 function MeetingRooms($scope, $http, $interval) {
     'use strict';
 
-    var refreshInterval = 10000;
+    var minimumRefreshIntervalSeconds = 10;
+    var refreshInterval;
 
     var statusDescriptions = {
         'available': 'Available',
@@ -27,6 +28,31 @@ function MeetingRooms($scope, $http, $interval) {
         });
     };
 
+    var startRefresh = function(interval) {
+        refreshInterval = $interval(updateListOfRooms, interval);
+    };
+
+    var stopRefresh = function() {
+        $interval.cancel(refreshInterval);
+
+        refreshInterval = null;
+    };
+
     updateListOfRooms();
-    $interval(updateListOfRooms, refreshInterval);
+    startRefresh(minimumRefreshIntervalSeconds * 1000);
+
+    $scope.$watch('slide.content.refreshInterval', function(newValue, oldValue) {
+        var interval = parseFloat(newValue);
+
+        if (!interval || interval < minimumRefreshIntervalSeconds) {
+            interval  = minimumRefreshIntervalSeconds;
+        }
+
+        var restart = function() {
+            stopRefresh();
+            startRefresh(interval * 1000);
+        };
+
+        _.debounce(restart, 200)();
+    });
 }

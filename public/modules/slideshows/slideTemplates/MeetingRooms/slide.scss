@@ -18,6 +18,10 @@ $meeting-room-width: (($slide-width - ($slide-padding-horizontal * 2) - $meeting
     cursor: default;
     background-color: white;
 
+    .meeting-rooms-hidden {
+        display: none !important;
+    }
+
     .meeting-rooms-header {
         display: flex;
         width: 600px;
