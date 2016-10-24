@@ -39,5 +39,10 @@ module.exports = {
 				pass: process.env.MAILER_PASSWORD || 'MAILER_PASSWORD'
 			}
 		}
+	},
+	meetingRooms: {
+		endpoint: process.env.MEETING_ROOMS_ENDPOINT || 'https://stg-mrapp.iquestgroup.com/meetingroom/api/rooms/status',
+		username: process.env.MEETING_ROOMS_USERNAME || 'e9cfeac7284528d98eebe7627083b7cbf6de0fe6d7fe67a0e341a04fd3bca3a36f79dac27878745c50c6fa40929e427d3339952b7b57cbaf26955ef8fb45e5fd',
+		password: process.env.MEETING_ROOMS_PASSWORD || 'db1168866df94f7e6330400d047d27d342804b66579851114bf973e0216722a7548eae9cd29b1c6916ac2eb0ba437cc309cb1c4947968454a66105173b71f6a4'
 	}
 };

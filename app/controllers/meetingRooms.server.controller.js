@@ -4,43 +4,42 @@
     /**
      * Module dependencies.
      */
-    var mongoose = require('mongoose'),
-        errorHandler = require('./errors.server.controller'),
-        Device = mongoose.model('Device'),
-        lodash = require('lodash');
+    var _ = require('lodash'),
+        config = require('../../config/config'),
+        request = require('request'),
+        errorHandler = require('./errors.server.controller');
 
     exports.list = function (req, res) {
-        Device.find(function (err, devices) {
+        var endpoint = config.meetingRooms.endpoint;
+        var username = config.meetingRooms.username;
+        var password = config.meetingRooms.password;
+
+        var options = {
+            url: config.meetingRooms.endpoint,
+            auth: {
+                user: config.meetingRooms.username,
+                pass: config.meetingRooms.password
+            },
+            json: true
+        };
+
+        request.get(options, function(err, response, body) {
             if (err) {
                 return res.status(400).send({
                     message: errorHandler.getErrorMessage(err)
                 });
             }
 
-            if (!devices) {
-                req.devices = [];
-            }
-
-            var rooms = lodash.map(devices, function(device, index) {
-                var status = device.active ? 'available' : 'occupied';
-
-                if (!device.lastHealthReport) {
-                    status = 'not-available';
-                }
-
-                var lastHeathReport = new Date(device.lastHealthReport),
-                    minutesPassedSinceLastHealthReport = (new Date().getTime() - lastHeathReport.getTime()) / (1000 * 60);
-                if (minutesPassedSinceLastHealthReport > 5) {
-                    status = 'not-available';
-                }
-
+            var rooms = _.map(body, function(room) {
                 return {
-                    roomName: device.name,
-                    city: device.location,
-                    building: index % 2 === 1 ? device.location : null,
-                    status: status
-                }
+                    name: room.roomName,
+                    city: room.city,
+                    building: room.building,
+                    status: room.status.toLowerCase().replace('_', '-')
+                };
             });
+
+            rooms = _.sortBy(rooms, 'name');
 
             res.jsonp(rooms);
         });
