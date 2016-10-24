@@ -12,19 +12,34 @@ function MeetingRooms($scope, $http, $interval) {
         'occupied': 'Occupied'
     };
 
+    var filterListOfRooms = function() {
+        $scope.rooms = $scope.allRooms;
+
+        if ($scope.slide.content.city) {
+            $scope.rooms = _.filter($scope.rooms, { city: $scope.slide.content.city });
+        }
+
+        if ($scope.slide.content.building) {
+            $scope.rooms = _.filter($scope.rooms, { building: $scope.slide.content.building });
+        }
+    };
+
     var updateListOfRooms = function() {
         $http({
             method: 'GET',
             url: '/meeting-rooms/'
         }).then(function(response) {
-            $scope.rooms = _.map(response.data, function(room) {
+            $scope.allRooms = _.map(response.data, function(room) {
                 return {
                     name: room.name,
-                    location: room.city + ', ' + room.building,
+                    city: room.city,
+                    building: room.building,
                     status: room.status,
                     statusDescription: statusDescriptions[room.status]
                 };
             });
+
+            filterListOfRooms();
         });
     };
 
@@ -51,8 +66,13 @@ function MeetingRooms($scope, $http, $interval) {
         var restart = function() {
             stopRefresh();
             startRefresh(interval * 1000);
+
+            updateListOfRooms();
         };
 
         _.debounce(restart, 200)();
     });
+
+    $scope.$watch('slide.content.city', filterListOfRooms);
+    $scope.$watch('slide.content.building', filterListOfRooms);
 }
