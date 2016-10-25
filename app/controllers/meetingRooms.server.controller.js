@@ -5,20 +5,25 @@
      * Module dependencies.
      */
     var _ = require('lodash'),
-        config = require('../../config/config'),
         request = require('request'),
         errorHandler = require('./errors.server.controller');
 
     exports.list = function (req, res) {
-        var endpoint = config.meetingRooms.endpoint;
-        var username = config.meetingRooms.username;
-        var password = config.meetingRooms.password;
+        var endpoint = req.query.endpoint;
+        var username = req.query.username;
+        var password = req.query.password;
+
+        if (!endpoint || !username || !password) {
+            return res.status(400).send({
+                message: 'Missing API endpoint or credentials'
+            });
+        }
 
         var options = {
-            url: config.meetingRooms.endpoint,
+            url: endpoint,
             auth: {
-                user: config.meetingRooms.username,
-                pass: config.meetingRooms.password
+                user: username,
+                pass: password
             },
             json: true
         };

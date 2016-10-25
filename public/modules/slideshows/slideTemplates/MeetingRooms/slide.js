@@ -4,7 +4,8 @@ function MeetingRooms($scope, $http, $interval) {
     'use strict';
 
     var minimumRefreshIntervalSeconds = 10;
-    var refreshInterval;
+    var refreshInterval = minimumRefreshIntervalSeconds;
+    var refreshTimer;
 
     var statusDescriptions = {
         'available': 'Available',
@@ -27,7 +28,12 @@ function MeetingRooms($scope, $http, $interval) {
     var updateListOfRooms = function() {
         $http({
             method: 'GET',
-            url: '/meeting-rooms/'
+            url: '/meeting-rooms/',
+            params: {
+                endpoint: $scope.slide.content.endpoint,
+                username: $scope.slide.content.username,
+                password: $scope.slide.content.password
+            }
         }).then(function(response) {
             $scope.allRooms = _.map(response.data, function(room) {
                 return {
@@ -43,35 +49,36 @@ function MeetingRooms($scope, $http, $interval) {
         });
     };
 
-    var startRefresh = function(interval) {
-        refreshInterval = $interval(updateListOfRooms, interval);
+    var startRefresh = function() {
+        refreshTimer = $interval(updateListOfRooms, refreshInterval * 1000);
     };
 
     var stopRefresh = function() {
-        $interval.cancel(refreshInterval);
+        $interval.cancel(refreshTimer);
 
-        refreshInterval = null;
+        refreshTimer = null;
     };
 
-    updateListOfRooms();
-    startRefresh(minimumRefreshIntervalSeconds * 1000);
+    var restartRefresh = _.debounce(function() {
+        stopRefresh();
+        startRefresh();
 
-    $scope.$watch('slide.content.refreshInterval', function(newValue, oldValue) {
-        var interval = parseFloat(newValue);
+        updateListOfRooms();
+    }, 200);
 
-        if (!interval || interval < minimumRefreshIntervalSeconds) {
-            interval  = minimumRefreshIntervalSeconds;
+    $scope.$watch('slide.content.refreshTimer', function(newValue, oldValue) {
+        refreshInterval = parseFloat(newValue);
+
+        if (!refreshInterval || refreshInterval < minimumRefreshIntervalSeconds) {
+            refreshInterval  = minimumRefreshIntervalSeconds;
         }
 
-        var restart = function() {
-            stopRefresh();
-            startRefresh(interval * 1000);
-
-            updateListOfRooms();
-        };
-
-        _.debounce(restart, 200)();
+        restartRefresh();
     });
+
+    $scope.$watch('slide.content.endpoint', restartRefresh);
+    $scope.$watch('slide.content.username', restartRefresh);
+    $scope.$watch('slide.content.password', restartRefresh);
 
     $scope.$watch('slide.content.city', filterListOfRooms);
     $scope.$watch('slide.content.building', filterListOfRooms);
