@@ -18,7 +18,7 @@
       display: inline-block;
       width: 80px;
       height: 80px;
-      background-image: url("[RELATIVE-PATH]/meeting-rooms-logo.png");
+      background-image: url("[RELATIVE-PATH]/img/meeting-rooms-logo.png");
       background-size: cover; }
     .template-meeting-rooms .meeting-rooms-header .meeting-rooms-title {
       display: inline-block;
@@ -73,11 +73,11 @@
       background-position: center;
       background-repeat: no-repeat; }
       .template-meeting-rooms .meeting-rooms-container .meeting-room-card .meeting-room-icon.available {
-        background-image: url(/modules/core/img/published-ok.svg); }
+        background-image: url("[RELATIVE-PATH]/img/available.svg"); }
       .template-meeting-rooms .meeting-rooms-container .meeting-room-card .meeting-room-icon.not-available {
-        background-image: url(/modules/core/img/warning.svg); }
+        background-image: url("[RELATIVE-PATH]/img/not-available.svg"); }
       .template-meeting-rooms .meeting-rooms-container .meeting-room-card .meeting-room-icon.occupied {
-        background-image: url(/modules/core/img/draft.svg); }
+        background-image: url("[RELATIVE-PATH]/img/occupied.svg"); }
   .template-meeting-rooms .meeting-rooms-qr-logo {
     right: 15px;
     bottom: 15px;
@@ -93,5 +93,5 @@
       width: 125px;
       height: 31px;
       margin: 0 auto;
-      background-image: url("[RELATIVE-PATH]/iquest-logo.png");
+      background-image: url("[RELATIVE-PATH]/img/iquest-logo.png");
       background-size: cover; }

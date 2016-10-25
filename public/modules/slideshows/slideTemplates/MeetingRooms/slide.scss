@@ -32,7 +32,7 @@ $meeting-room-width: (($slide-width - ($slide-padding-horizontal * 2) - $meeting
             display: inline-block;
             width: 80px;
             height: 80px;
-            background-image: url('[RELATIVE-PATH]/meeting-rooms-logo.png');
+            background-image: url('[RELATIVE-PATH]/img/meeting-rooms-logo.png');
             background-size: cover;
         }
 
@@ -111,15 +111,15 @@ $meeting-room-width: (($slide-width - ($slide-padding-horizontal * 2) - $meeting
                 background-repeat: no-repeat;
 
                 &.available {
-                    background-image: url(/modules/core/img/published-ok.svg);
+                    background-image: url('[RELATIVE-PATH]/img/available.svg');
                 }
 
                 &.not-available {
-                    background-image: url(/modules/core/img/warning.svg);
+                    background-image: url('[RELATIVE-PATH]/img/not-available.svg');
                 }
 
                 &.occupied {
-                    background-image: url(/modules/core/img/draft.svg);
+                    background-image: url('[RELATIVE-PATH]/img/occupied.svg');
                 }
             }
         }
@@ -143,7 +143,7 @@ $meeting-room-width: (($slide-width - ($slide-padding-horizontal * 2) - $meeting
             width: 125px;
             height: 31px;
             margin: 0 auto;
-            background-image: url('[RELATIVE-PATH]/iquest-logo.png');
+            background-image: url('[RELATIVE-PATH]/img/iquest-logo.png');
             background-size: cover;
         }
     }
