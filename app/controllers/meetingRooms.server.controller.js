@@ -30,7 +30,7 @@
 
         request.get(options, function(err, response, body) {
             if (err) {
-                return res.status(400).send({
+                return res.status(200).send({
                     message: errorHandler.getErrorMessage(err)
                 });
             }
